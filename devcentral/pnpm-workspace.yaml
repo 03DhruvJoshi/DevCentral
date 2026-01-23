@@ -1,7 +1,10 @@
 packages:
-  - "apps/*"
-  - "packages/*"
-  - "!**/test/**"
+  - apps/*
+  - packages/*
+  - '!**/test/**'
 
 onlyBuiltDependencies:
+  - '@prisma/engines'
   - esbuild
+  - prisma
+  - sharp
