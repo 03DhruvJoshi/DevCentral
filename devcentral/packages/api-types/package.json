@@ -1,12 +1,9 @@
 {
-  "name": "api",
+  "name": "@devcentral/api-types",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
-  "dependencies": {
-    "@devcentral/database": "workspace:*",
-    "@devcentral/api-types": "workspace:*"
-  },
+  "main": "./src/index.ts",
+  "types": "./src/index.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
