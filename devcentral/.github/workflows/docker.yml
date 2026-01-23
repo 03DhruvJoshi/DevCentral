@@ -1,0 +1,43 @@
+# name: Docker Build & Push
+
+# on:
+#   push:
+#     branches: [main]
+
+# jobs:
+#   docker:
+#     runs-on: ubuntu-latest
+
+#     permissions:
+#       contents: read
+#       id-token: write
+
+#     steps:
+#       - name: Checkout repository
+#         uses: actions/checkout@v4
+
+#       - name: Azure Login
+#         uses: azure/login@v2
+#         with:
+#           client-id: ${{ secrets.AZURE_CLIENT_ID }}
+#           tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+#           subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+
+#       - name: Login to Azure Container Registry
+#         run: az acr login --name devcentralacr
+
+#       - name: Build & push API image
+#         uses: docker/build-push-action@v5
+#         with:
+#           context: .
+#           file: docker/Dockerfile.api
+#           push: true
+#           tags: devcentralacr.azurecr.io/devcentral-api:latest
+
+#       - name: Build & push Frontend image
+#         uses: docker/build-push-action@v5
+#         with:
+#           context: .
+#           file: docker/Dockerfile.frontend
+#           push: true
+#           tags: devcentralacr.azurecr.io/devcentral-frontend:latest
