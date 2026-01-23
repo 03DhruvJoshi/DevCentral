@@ -1,7 +1,6 @@
 name: Build
 
 on:
-  pull_request:
   push:
     branches: [main]
 
@@ -14,7 +13,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Install pnpm
-        run: npm install -g pnpm
+        uses: pnpm/action-setup@v3
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
@@ -25,8 +24,8 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
-      - name: Build backend
-        run: pnpm --filter api build
+      - name: Build docs
+        run: pnpm --filter docs build
 
-      - name: Build frontend
-        run: pnpm --filter frontend build
+      - name: Build web
+        run: pnpm --filter web build
