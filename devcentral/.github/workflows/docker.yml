@@ -26,18 +26,18 @@
 #       - name: Login to Azure Container Registry
 #         run: az acr login --name devcentralacr
 
-#       - name: Build & push API image
+#       - name: Build & push Docs image
 #         uses: docker/build-push-action@v5
 #         with:
 #           context: .
-#           file: docker/Dockerfile.api
+#           file: docs/Dockerfile.docs
 #           push: true
-#           tags: devcentralacr.azurecr.io/devcentral-api:latest
+#           tags: devcentralacr.azurecr.io/devcentral-docs:latest
 
-#       - name: Build & push Frontend image
+#       - name: Build & push Web image
 #         uses: docker/build-push-action@v5
 #         with:
 #           context: .
-#           file: docker/Dockerfile.frontend
+#           file: docs/Dockerfile.web
 #           push: true
-#           tags: devcentralacr.azurecr.io/devcentral-frontend:latest
+#           tags: devcentralacr.azurecr.io/devcentral-web:latest

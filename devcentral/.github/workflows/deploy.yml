@@ -19,14 +19,14 @@
 #           tenant-id: ${{ secrets.AZURE_TENANT_ID }}
 #           subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
 
-#       - name: Deploy API
+#       - name: Deploy Docs
 #         uses: azure/webapps-deploy@v3
 #         with:
-#           app-name: devcentral-api
-#           images: devcentralacr.azurecr.io/devcentral-api:latest
+#           app-name: devcentral-docs
+#           images: devcentralacr.azurecr.io/devcentral-docs:latest
 
-#       - name: Deploy Frontend
+#       - name: Deploy Web
 #         uses: azure/webapps-deploy@v3
 #         with:
-#           app-name: devcentral-frontend
-#           images: devcentralacr.azurecr.io/devcentral-frontend:latest
+#           app-name: devcentral-web
+#           images: devcentralacr.azurecr.io/devcentral-web:latest
