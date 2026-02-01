@@ -3,9 +3,11 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "type": "module",
   "dependencies": {
     "@devcentral/database": "workspace:*",
-    "eslint": "^9.39.2"
+    "eslint": "^9.39.2",
+    "@repo/ui": "workspace:*"
   },
   "scripts": {
     "build": "tsc",
@@ -13,6 +15,10 @@
     "lint": "eslint --max-warnings 0",
     "check-types": "tsc --noEmit",
     "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "devDependencies": {
+    "@repo/eslint-config": "workspace:*",
+    "@repo/typescript-config": "workspace:*"
   },
   "keywords": [],
   "author": "",
