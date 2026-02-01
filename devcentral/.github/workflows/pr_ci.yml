@@ -1,6 +1,6 @@
-name: CI for Pull Requests
+name: CI for Push Buils
 
-run-name: ${{ github.actor }} is testing out GitHub Actions 🚀
+run-name: ${{ github.event_name }} on ${{ github.ref_name }}
 
 on: [push]
 

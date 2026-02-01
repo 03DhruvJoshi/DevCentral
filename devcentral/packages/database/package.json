@@ -11,8 +11,8 @@
     "db:push": "prisma db push",
     "db:migrate": "prisma migrate dev",
     "db:studio": "prisma studio",
-    "lint": "echo \"No linting for database package\"",
-    "check-types": "echo \"No type checking for database package\"",
+    "lint": "echo \"Database package uses Prisma schema only - no linting needed\"",
+    "check-types": "echo \"Database package uses Prisma schema only - no type checking needed\"",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
