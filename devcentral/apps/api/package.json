@@ -7,6 +7,10 @@
     "@devcentral/database": "workspace:*"
   },
   "scripts": {
+    "build": "tsc",
+    "dev": "tsx watch express.ts",
+    "lint": "eslint . --max-warnings 0",
+    "check-types": "tsc --noEmit",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],

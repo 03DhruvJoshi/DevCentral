@@ -1,10 +1,11 @@
-name: CI for Pull Requests
+name: CI for Push Buils
 
-on:
-  pull_request:
+run-name: ${{ github.event_name }} on ${{ github.ref_name }}
+
+on: [push]
 
 jobs:
-  ci:
+  continuous-integration:
     runs-on: ubuntu-latest
 
     steps:
