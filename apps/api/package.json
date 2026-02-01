@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "dependencies": {
-    "@devcentral/database": "workspace:*"
+    "@devcentral/database": "workspace:*",
+    "eslint": "^9.39.2"
   },
   "scripts": {
     "build": "tsc",

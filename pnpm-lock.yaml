@@ -50,6 +50,9 @@ importers:
       '@devcentral/database':
         specifier: workspace:*
         version: link:../../packages/database
+      eslint:
+        specifier: ^9.39.2
+        version: 9.39.2(jiti@2.6.1)
 
   apps/docs:
     dependencies:
