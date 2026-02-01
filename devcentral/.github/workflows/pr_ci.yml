@@ -1,10 +1,11 @@
 name: CI for Pull Requests
 
-on:
-  push:
+run-name: ${{ github.actor }} is testing out GitHub Actions 🚀
+
+on: [push]
 
 jobs:
-  ci:
+  continuous-integration:
     runs-on: ubuntu-latest
 
     steps:
