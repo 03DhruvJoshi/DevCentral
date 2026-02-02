@@ -1,6 +1,6 @@
 // apps/web/src/App.tsx
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
-import { DashboardLayout } from "./components/layout/DashboardLayout";
+import { Header } from "./components/layout/Header";
 import { DashboardPage } from "./pages/dashboard/DashboardPage";
 import { ScaffolderPage } from "./pages/scaffolder/ScaffolderPage";
 import { GitOpsPage } from "./pages/gitops/GitOpsPage";
@@ -11,8 +11,7 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        {/* All routes inside this wrapper get the Header navigation */}
-        <Route element={<DashboardLayout />}>
+        <Route element={<Header />}>
           {/* Redirect the root URL to /dashboard */}
           <Route path="/" element={<Navigate to="/dashboard" replace />} />
 

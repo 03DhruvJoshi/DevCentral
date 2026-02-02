@@ -60,7 +60,7 @@ export function DashboardPage() {
               <CardTitle className="text-sm font-medium">
                 {metric.title}
               </CardTitle>
-              <metric.icon className={`h-4 w-4 ${metric.text}`} />
+              <metric.icon className={`h-4 w-4 ${metric.icon}`} />
             </CardHeader>
             <CardContent>
               <div className="text-2xl font-bold">{metric.value}</div>
