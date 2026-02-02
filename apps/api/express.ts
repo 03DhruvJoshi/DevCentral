@@ -1,5 +1,5 @@
 import express from "express";
-import { PrismaClient } from "@devcentral/database";
+import { PrismaClient } from "../../packages/database/prisma/generated/client";
 
 const prisma = new PrismaClient();
 const app = express();

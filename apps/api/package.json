@@ -5,7 +5,6 @@
   "main": "index.js",
   "type": "module",
   "dependencies": {
-    "@devcentral/database": "workspace:*",
     "eslint": "^9.39.2",
     "@repo/ui": "workspace:*"
   },
