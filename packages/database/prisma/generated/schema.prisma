@@ -1,0 +1,15 @@
+datasource db {
+  provider = "postgresql"
+}
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "./generated"
+}
+
+// Example Model
+model Project {
+  id        String   @id @default(uuid())
+  name      String
+  createdAt DateTime @default(now())
+}
