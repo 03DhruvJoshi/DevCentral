@@ -1,0 +1,54 @@
+@startuml name DevCentralPlatformUseCases
+@startuml name DevCentralPlatformUseCases
+left to right direction
+skinparam packageStyle rectangle
+
+actor "Security Engineer" as DevSecOps
+
+actor "GitHub / Azure DevOps" as ExternalSystem
+actor "SonarQube / Snyk" as SecurityTool
+
+package "DevCentral Platform" {
+    usecase "Administrate DevCentral Platform" as UC0
+  
+  package "Dashboard Module" {
+    usecase "View Dashboard Overview" as UC1
+  }
+
+  package "Developer Analytics Module" {
+    usecase "View DORA Analytics" as UC2
+    usecase "View Insights on Cloud Expenses" as UC9
+    usecase "View Security Reports" as UC11
+    usecase "View Code Quality and Dev Productivity Reports" as UC12
+  }
+  
+  package "Scaffolder Module" {
+    usecase "Browse Templates" as UC3
+    usecase "Generate Project from Template" as UC4
+    usecase "Create/Edit Templates" as UC5
+  }
+
+  package "GitOps Module" {
+    usecase "Monitor CI/CD Pipelines" as UC6
+    usecase "View Pull Requests" as UC7
+    usecase "Manage Security Alerts" as UC8
+    usecase "Monitor SLDC tasks" as UC10
+  }
+}
+
+' Relationships
+
+' Security Engineer
+DevSecOps --> UC1
+DevSecOps --> UC8
+DevSecOps --> UC11
+
+
+' External System Integrations
+UC6 ..> ExternalSystem : API Sync
+UC7 ..> ExternalSystem : API Sync
+UC8 ..> SecurityTool : API Sync
+UC2 ..> ExternalSystem : API Sync
+UC2 ..> SecurityTool : API Sync
+
+@enduml
