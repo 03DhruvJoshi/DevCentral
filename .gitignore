@@ -26,7 +26,6 @@ coverage
 out/
 build
 dist
-*.d.ts
 
 
 # Debug
@@ -39,3 +38,4 @@ yarn-error.log*
 *.pem
 
 # Prisma
+
