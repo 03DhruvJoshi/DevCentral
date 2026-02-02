@@ -5,8 +5,9 @@
   "main": "index.js",
   "type": "module",
   "dependencies": {
+    "@repo/ui": "workspace:*",
     "eslint": "^9.39.2",
-    "@repo/ui": "workspace:*"
+    "tsx": "^4.21.0"
   },
   "scripts": {
     "build": "tsc",

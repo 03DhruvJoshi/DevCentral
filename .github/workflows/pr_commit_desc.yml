@@ -1,0 +1,31 @@
+name: Add commit titles to PR
+
+on:
+  pull_request:
+    types: [opened]
+
+jobs:
+  update-pr:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Get commit titles
+        run: |
+          git fetch origin ${{ github.base_ref }}
+          git log origin/${{ github.base_ref }}..HEAD --pretty=format:"- %s" > commits.txt
+
+      - name: Update PR description
+        uses: actions/github-script@v6
+        with:
+          script: |
+            const fs = require('fs');
+            const commits = fs.readFileSync('commits.txt', 'utf8');
+            const currentBody = context.payload.pull_request.body || '';
+            const newBody = `${currentBody}\n\n### Commit Titles\n${commits}`;
+            await github.rest.pulls.update({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              pull_number: context.payload.pull_request.number,
+              body: newBody
+            });

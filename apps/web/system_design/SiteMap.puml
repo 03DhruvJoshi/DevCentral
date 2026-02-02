@@ -1,0 +1,26 @@
+@startwbs name SiteMap
+* DevCentral Platform
+** Dashboard (Home)
+*** Metrics Overview
+*** Recent Activity Feed
+*** Quick Actions
+** Template Scaffolder
+*** Tab: Browse Marketplace
+**** Search & Filter
+**** View YAML Modal
+*** Tab: Create Your Own Template
+**** Validation Form
+** GitOps Operations
+*** Pipeline activity Runs & Logs
+*** Pull Requests operations
+*** Security Alerts (Dependabot/SonarQube)
+** Developer Analytics
+*** DORA Metrics
+*** Financial Insights
+*** Security Reports
+*** Dev Productivity Reports
+** Settings
+*** User Profile
+*** Integrations (GitHub/Azure DevOps)
+*** System Preferences
+@endwbs

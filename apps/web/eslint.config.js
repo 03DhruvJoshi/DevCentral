@@ -1,4 +1,11 @@
-import { nextJsConfig } from "@repo/eslint-config/next-js";
+// eslint.config.js
+import { defineConfig } from "eslint/config";
 
-/** @type {import("eslint").Linter.Config[]} */
-export default nextJsConfig;
+export default defineConfig([
+  {
+    rules: {
+      semi: "error",
+      "prefer-const": "error",
+    },
+  },
+]);
