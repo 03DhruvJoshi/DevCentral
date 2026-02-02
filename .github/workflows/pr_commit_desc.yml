@@ -21,9 +21,11 @@ jobs:
           script: |
             const fs = require('fs');
             const commits = fs.readFileSync('commits.txt', 'utf8');
-            github.rest.issues.createComment({
+            const currentBody = context.payload.pull_request.body || '';
+            const newBody = `${currentBody}\n\n### Commit Titles\n${commits}`;
+            await github.rest.pulls.update({
               owner: context.repo.owner,
               repo: context.repo.repo,
-              issue_number: context.payload.pull_request.number,
-              body: `### Commit Titles\n${commits}`
+              pull_number: context.payload.pull_request.number,
+              body: newBody
             });
