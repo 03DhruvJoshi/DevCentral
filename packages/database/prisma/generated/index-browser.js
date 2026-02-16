@@ -121,9 +121,24 @@ exports.Prisma.TransactionIsolationLevel = makeStrictEnum({
 });
 
 exports.Prisma.ProjectScalarFieldEnum = {
-  id: 'id',
   name: 'name',
-  createdAt: 'createdAt'
+  createdAt: 'createdAt',
+  id: 'id'
+};
+
+exports.Prisma.TemplateScalarFieldEnum = {
+  title: 'title',
+  description: 'description',
+  categoryName: 'categoryName',
+  yaml: 'yaml',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  id: 'id'
+};
+
+exports.Prisma.CategoryScalarFieldEnum = {
+  name: 'name',
+  id: 'id'
 };
 
 exports.Prisma.SortOrder = {
@@ -138,7 +153,9 @@ exports.Prisma.QueryMode = {
 
 
 exports.Prisma.ModelName = {
-  Project: 'Project'
+  Project: 'Project',
+  Template: 'Template',
+  Category: 'Category'
 };
 
 /**

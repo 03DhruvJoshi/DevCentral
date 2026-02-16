@@ -1,12 +1,14 @@
 // apps/web/src/features/scaffolder/ScaffolderPage.tsx
 
-import { useState } from "react";
+import { useState, type ChangeEvent } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import * as z from "zod";
 import {
   Box,
-  FileCode,
+  Trash2,
+  Loader2,
   PlusCircle,
   Search,
   TerminalSquare,
@@ -31,8 +33,10 @@ import { Input } from "../../components/ui/input";
 import { Badge } from "../../components/ui/badge";
 import {
   Dialog,
+  DialogClose,
   DialogContent,
   DialogDescription,
+  DialogFooter,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
@@ -55,16 +59,162 @@ import {
 } from "../../components/ui/select";
 import { Textarea } from "../../components/ui/textarea";
 import { Separator } from "../../components/ui/separator";
-import { CATEGORIES, MOCK_TEMPLATES } from "./MockTemplates";
-import { type Template } from "./MockTemplates";
 import { formSchema } from "../../zod/ScaffolderZod";
+
+const API_BASE_URL =
+  (import.meta as unknown as { env?: Record<string, string> }).env
+    ?.VITE_API_BASE_URL ?? "http://localhost:4000";
+
+// API Template type (matches Express backend response)
+interface Template {
+  id: number;
+  title: string;
+  description: string;
+  categoryName: string;
+  yaml: string;
+  createdAt: string;
+  updatedAt: string;
+}
+
+interface Category {
+  id: number;
+  name: string;
+}
+
+const fetchCategories = async (): Promise<Category[]> => {
+  const response = await fetch(`${API_BASE_URL}/api/categories`);
+  if (!response.ok) {
+    throw new Error("Failed to fetch categories");
+  }
+  return response.json();
+};
+
+// Fetch templates from API
+const fetchTemplates = async (): Promise<Template[]> => {
+  const response = await fetch(`${API_BASE_URL}/api/templates`);
+  if (!response.ok) {
+    throw new Error("Failed to fetch templates");
+  }
+  return response.json();
+};
 
 // --- Main Component ---
 export function ScaffolderPage() {
   const [searchTerm, setSearchTerm] = useState("");
-  const [createdCategoryOptions, setCreatedCategoryOptions] = useState<
-    string[]
-  >([]);
+  const [showCreateCategory, setShowCreateCategory] = useState(false);
+  const [createCategoryError, setCreateCategoryError] = useState<string | null>(
+    null,
+  );
+  const queryClient = useQueryClient();
+
+  const {
+    data: templates = [],
+    isLoading,
+    isError,
+    error,
+  } = useQuery({
+    queryKey: ["templates"],
+    queryFn: fetchTemplates,
+  });
+
+  const {
+    data: categories = [],
+    isLoading: isLoadingCategories,
+
+    isError: isErrorCategories,
+    error: errorCategories,
+  } = useQuery({
+    queryKey: ["categories"],
+    queryFn: fetchCategories,
+  });
+
+  const createCategoryMutation = useMutation({
+    mutationFn: async (name: string): Promise<Category> => {
+      const response = await fetch(`${API_BASE_URL}/api/categories`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name }),
+      });
+
+      if (!response.ok) {
+        let detail = "Failed to create category";
+        try {
+          const json = (await response.json()) as { error?: string };
+          detail = json?.error ?? detail;
+        } catch {
+          // ignore
+        }
+        throw new Error(detail);
+      }
+
+      return response.json();
+    },
+    onSuccess: async (newCategory) => {
+      setCreateCategoryError(null);
+      await queryClient.invalidateQueries({ queryKey: ["categories"] });
+      form.setValue("categorySelection", newCategory.name, {
+        shouldValidate: true,
+        shouldDirty: true,
+      });
+      form.setValue("newCategoryName", "", {
+        shouldDirty: false,
+        shouldValidate: false,
+      });
+      setShowCreateCategory(false);
+    },
+    onError: (err) => {
+      setCreateCategoryError(err instanceof Error ? err.message : String(err));
+    },
+  });
+
+  const createTemplateMutation = useMutation({
+    mutationFn: async (payload: {
+      title: string;
+      description: string;
+      categoryName: string;
+      yaml: string;
+    }): Promise<Template> => {
+      const response = await fetch(`${API_BASE_URL}/api/templates`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+
+      if (!response.ok) {
+        let detail = "Failed to create template";
+        try {
+          const json = (await response.json()) as { error?: string };
+          detail = json?.error ?? detail;
+        } catch {
+          // ignore
+        }
+        throw new Error(detail);
+      }
+
+      return response.json();
+    },
+    onSuccess: async () => {
+      await queryClient.invalidateQueries({ queryKey: ["templates"] });
+      form.reset();
+    },
+  });
+
+  const deleteTemplateMutation = useMutation({
+    mutationFn: async (templateId: number): Promise<void> => {
+      const response = await fetch(
+        `${API_BASE_URL}/api/templates/${templateId}`,
+        {
+          method: "DELETE",
+        },
+      );
+      if (!response.ok) {
+        throw new Error("Failed to delete template");
+      }
+    },
+    onSuccess: async () => {
+      await queryClient.invalidateQueries({ queryKey: ["templates"] });
+    },
+  });
 
   // --- Form Handling ---
   const form = useForm<z.infer<typeof formSchema>>({
@@ -74,43 +224,48 @@ export function ScaffolderPage() {
       description: "",
       yamlContent: "",
       newCategoryName: "",
+      categorySelection: "",
     },
   });
 
-  // Watch the category selection to conditionally show the "New Category Name" input
-  const selectedCategoryOption = form.watch("categorySelection");
-  const isCreatingNew = selectedCategoryOption === "create_new_category";
-
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    // In a real app, this would POST to your Express backend endpoints: `/api/templates` and potentially `/api/categories`
-    console.log("Form submitted:", values);
-    const finalCategory = isCreatingNew
-      ? values.newCategoryName
-      : values.categorySelection;
-    alert(`Simulating creation of template in category: ${finalCategory}`);
-
-    // If created new, add to local state options for future use
-    if (isCreatingNew && values.newCategoryName) {
-      setCreatedCategoryOptions((prev) => [...prev, values.newCategoryName!]);
-    }
-    form.reset();
+  async function onSubmit(values: z.infer<typeof formSchema>) {
+    await createTemplateMutation.mutateAsync({
+      title: values.title,
+      description: values.description,
+      categoryName: values.categorySelection,
+      yaml: values.yamlContent,
+    });
   }
 
   // --- Filtering for Marketplace View ---
-  const filteredTemplates = MOCK_TEMPLATES.filter(
+  const filteredTemplates = templates.filter(
     (t) =>
       t.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      t.category.toLowerCase().includes(searchTerm.toLowerCase()),
+      t.categoryName.toLowerCase().includes(searchTerm.toLowerCase()),
   );
 
+  // Get unique categories from fetched templates + predefined ones
+  const allCategories = [
+    ...new Set([
+      ...categories.map((c) => c.name),
+      ...templates.map((t) => t.categoryName),
+    ]),
+  ];
+
   // Group templates by category for display
-  const groupedTemplates = CATEGORIES.reduce(
+  const groupedTemplates = allCategories.reduce(
     (acc, category) => {
-      acc[category] = filteredTemplates.filter((t) => t.category === category);
+      acc[category] = filteredTemplates.filter(
+        (t) => t.categoryName === category,
+      );
       return acc;
     },
     {} as Record<string, Template[]>,
   );
+
+  const deleteTemplate = async (templateId: number) => {
+    await deleteTemplateMutation.mutateAsync(templateId);
+  };
 
   return (
     <div className="flex flex-col gap-6">
@@ -137,85 +292,151 @@ export function ScaffolderPage() {
               type="search"
               placeholder="Search templates or categories..."
               value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
+              onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                setSearchTerm(e.target.value)
+              }
             />
             <Button size="icon" variant="ghost">
               <Search className="h-4 w-4" />
             </Button>
           </div>
 
-          <div className="space-y-8">
-            {CATEGORIES.map((category) => {
-              const catTemplates = groupedTemplates[category];
-              if (catTemplates.length === 0) return null;
+          {/* Loading State */}
+          {isLoading && (
+            <div className="flex items-center justify-center py-12">
+              <Loader2 className="h-8 w-8 animate-spin text-muted-foreground" />
+              <span className="ml-2 text-muted-foreground">
+                Loading templates...
+              </span>
+            </div>
+          )}
 
-              return (
-                <div key={category}>
-                  <h3 className="text-lg font-semibold mb-3 flex items-center gap-2">
-                    <Box className="h-5 w-5 text-primary/80" />
-                    {category}
-                  </h3>
-                  <Separator className="my-2" />
-                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-4">
-                    {catTemplates.map((template) => (
-                      <Card key={template.id} className="flex flex-col h-full">
-                        <CardHeader>
-                          <div className="flex justify-between items-start">
-                            <CardTitle className="text-lg">
-                              {template.title}
-                            </CardTitle>
-                            <FileCode className="h-5 w-5 text-muted-foreground" />
-                          </div>
-                          <CardDescription className="line-clamp-2">
-                            {template.description}
-                          </CardDescription>
-                        </CardHeader>
-                        <CardContent className="flex-1">
-                          <Badge variant="outline">{template.category}</Badge>
-                        </CardContent>
-                        <CardFooter className="flex gap-2">
-                          <Button className="flex-1" size="sm">
-                            <PlusCircle className="mr-2 h-4 w-4" /> Scaffold
-                          </Button>
+          {/* Error State */}
+          {isError && (
+            <div className="text-center py-12 text-destructive">
+              Failed to load templates:{" "}
+              {error instanceof Error ? error.message : "Unknown error"}
+            </div>
+          )}
 
-                          {/* Dialog to Preview YAML */}
-                          <Dialog>
-                            <DialogTrigger asChild>
-                              <Button variant="secondary" size="sm">
-                                <TerminalSquare className="mr-2 h-4 w-4" /> View
-                                YAML
-                              </Button>
-                            </DialogTrigger>
-                            <DialogContent className="max-w-2xl max-h-[80vh] bg-white overflow-hidden flex flex-col">
-                              <DialogHeader>
-                                <DialogTitle>
-                                  {template.title} - Blueprint
-                                </DialogTitle>
-                                <DialogDescription>
-                                  This is the raw YAML definition used to
-                                  generate this scaffold.
-                                </DialogDescription>
-                              </DialogHeader>
-                              <div className="flex-1 overflow-auto bg-white p-4 rounded-md mt-2">
-                                <pre className="text-sm font-mono">
-                                  <code>{template.yaml}</code>
-                                </pre>
-                              </div>
-                            </DialogContent>
-                          </Dialog>
-                        </CardFooter>
-                      </Card>
-                    ))}
+          {/* Templates List */}
+          {!isLoading && !isError && (
+            <div className="space-y-8">
+              {allCategories.map((category) => {
+                const catTemplates = groupedTemplates[category] ?? [];
+                if (catTemplates.length === 0) return null;
+
+                return (
+                  <div key={category}>
+                    <h3 className="text-lg font-semibold mb-3 flex items-center gap-2">
+                      <Box className="h-5 w-5 text-primary/80" />
+                      {category}
+                    </h3>
+                    <Separator className="my-2" />
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-4">
+                      {catTemplates.map((template) => (
+                        <Card
+                          key={template.id}
+                          className="flex flex-col h-full"
+                        >
+                          <CardHeader>
+                            <div className="flex justify-between items-start">
+                              <CardTitle className="text-lg">
+                                {template.title}
+                              </CardTitle>
+
+                              <Dialog>
+                                <form>
+                                  <DialogTrigger asChild>
+                                    <Button variant="ghost" size="icon">
+                                      <Trash2 className="h-auto w-auto" />
+                                    </Button>
+                                  </DialogTrigger>
+                                  <DialogContent className="sm:max-w-sm bg-white">
+                                    <DialogHeader>
+                                      <DialogTitle>Delete Template</DialogTitle>
+                                      <DialogDescription>
+                                        Are you sure you want to delete this
+                                        template? This action cannot be undone.
+                                      </DialogDescription>
+                                    </DialogHeader>
+                                    <DialogFooter>
+                                      <DialogClose asChild>
+                                        <Button
+                                          variant="outline"
+                                          onClick={() => {}}
+                                        >
+                                          Cancel
+                                        </Button>
+                                      </DialogClose>
+                                      <Button
+                                        type="submit"
+                                        className="bg-black hover:bg-red-700 border-white-600 hover:border-red-700 text-white"
+                                        onClick={async () => {
+                                          await deleteTemplate(template.id);
+                                        }}
+                                      >
+                                        Delete
+                                      </Button>
+                                    </DialogFooter>
+                                  </DialogContent>
+                                </form>
+                              </Dialog>
+                            </div>
+                            <CardDescription className="line-clamp-2">
+                              {template.description}
+                            </CardDescription>
+                          </CardHeader>
+                          <CardContent className="flex-1">
+                            <Badge variant="outline">
+                              {template.categoryName}
+                            </Badge>
+                          </CardContent>
+                          <CardFooter className="flex gap-2">
+                            <Button className="flex-1" size="sm">
+                              <PlusCircle className="mr-2 h-4 w-4" /> Scaffold
+                            </Button>
+
+                            <Dialog>
+                              <DialogTrigger asChild>
+                                <Button variant="secondary" size="sm">
+                                  <TerminalSquare className="mr-2 h-4 w-4" />{" "}
+                                  View YAML
+                                </Button>
+                              </DialogTrigger>
+                              <DialogContent className="max-w-2xl max-h-[80vh] bg-white overflow-hidden flex flex-col">
+                                <DialogHeader>
+                                  <DialogTitle>
+                                    {template.title} - Blueprint
+                                  </DialogTitle>
+                                  <DialogDescription>
+                                    This is the raw YAML definition used to
+                                    generate this scaffold.
+                                  </DialogDescription>
+                                </DialogHeader>
+                                <div className="flex-1 overflow-auto bg-white p-4 rounded-md mt-2">
+                                  <pre className="text-sm font-mono">
+                                    <code>{template.yaml}</code>
+                                  </pre>
+                                </div>
+                              </DialogContent>
+                            </Dialog>
+                          </CardFooter>
+                        </Card>
+                      ))}
+                    </div>
                   </div>
+                );
+              })}
+              {filteredTemplates.length === 0 && (
+                <div className="text-center py-12 text-muted-foreground">
+                  {templates.length === 0
+                    ? "No templates found. Create one to get started!"
+                    : "Does not look like anything to me. Try a different search term."}
                 </div>
-              );
-            })}
-            {filteredTemplates.length === 0 && (
-              <div className="text-center py-12 text-muted-foreground">
-                Does not look like anything to me. Try a different search term.
-              </div>
-            )}
-          </div>
+              )}
+            </div>
+          )}
         </TabsContent>
 
         {/* ================== TAB 2: CREATE/CONTRIBUTE ================== */}
@@ -240,7 +461,7 @@ export function ScaffolderPage() {
                       <FormField
                         control={form.control}
                         name="title"
-                        render={({ field }) => (
+                        render={({ field }: { field: any }) => (
                           <FormItem>
                             <FormLabel>Template Title</FormLabel>
                             <FormControl>
@@ -256,7 +477,7 @@ export function ScaffolderPage() {
                       <FormField
                         control={form.control}
                         name="description"
-                        render={({ field }) => (
+                        render={({ field }: { field: any }) => (
                           <FormItem>
                             <FormLabel>Description</FormLabel>
                             <FormControl>
@@ -276,7 +497,7 @@ export function ScaffolderPage() {
                         <FormField
                           control={form.control}
                           name="categorySelection"
-                          render={({ field }) => (
+                          render={({ field }: { field: any }) => (
                             <FormItem>
                               <FormLabel>Category Tagging</FormLabel>
                               <Select
@@ -289,27 +510,26 @@ export function ScaffolderPage() {
                                   </SelectTrigger>
                                 </FormControl>
                                 <SelectContent className="bg-white">
-                                  {/* Existing standard categories */}
-                                  {CATEGORIES.map((cat) => (
-                                    <SelectItem key={cat} value={cat}>
-                                      {cat}
-                                    </SelectItem>
-                                  ))}
-                                  {/* User created categories during this session */}
-                                  {createdCategoryOptions.map((cat) => (
-                                    <SelectItem key={cat} value={cat}>
-                                      {cat}
-                                    </SelectItem>
-                                  ))}
-                                  <Separator className="my-2" />
-                                  {/* Option to create new */}
-                                  <SelectItem
-                                    value="create_new_category"
-                                    className="font-semibold text-primary"
-                                  >
-                                    <PlusCircle className="inline mr-2 h-4 w-4" />
-                                    Create New Category...
-                                  </SelectItem>
+                                  {isLoadingCategories && (
+                                    <div className="px-2 py-1 text-sm text-muted-foreground">
+                                      Loading categories...
+                                    </div>
+                                  )}
+                                  {isErrorCategories && (
+                                    <div className="px-2 py-1 text-sm text-destructive">
+                                      Failed to load categories:{" "}
+                                      {errorCategories instanceof Error
+                                        ? errorCategories.message
+                                        : "Unknown error"}
+                                    </div>
+                                  )}
+                                  {!isLoadingCategories &&
+                                    !isErrorCategories &&
+                                    categories.map((cat) => (
+                                      <SelectItem key={cat.id} value={cat.name}>
+                                        {cat.name}
+                                      </SelectItem>
+                                    ))}
                                 </SelectContent>
                               </Select>
                               <FormDescription>
@@ -321,26 +541,85 @@ export function ScaffolderPage() {
                           )}
                         />
 
-                        {/* Conditionally render Input if "create_new_category" is selected */}
-                        {isCreatingNew && (
-                          <FormField
-                            control={form.control}
-                            name="newCategoryName"
-                            render={({ field }) => (
-                              <FormItem className="animate-in fade-in slide-in-from-top-2">
-                                <FormLabel className="text-primary">
-                                  New Category Name
-                                </FormLabel>
-                                <FormControl>
-                                  <Input
-                                    placeholder="e.g. Database Migrations"
-                                    {...field}
-                                  />
-                                </FormControl>
-                                <FormMessage />
-                              </FormItem>
+                        <div className="flex items-center gap-2">
+                          <Button
+                            type="button"
+                            variant="secondary"
+                            onClick={() => {
+                              setCreateCategoryError(null);
+                              setShowCreateCategory((v) => !v);
+                            }}
+                          >
+                            <PlusCircle className="mr-2 h-4 w-4" /> Create new
+                            category
+                          </Button>
+                          {createCategoryMutation.isPending && (
+                            <span className="text-sm text-muted-foreground flex items-center gap-2">
+                              <Loader2 className="h-4 w-4 animate-spin" />
+                              Creating...
+                            </span>
+                          )}
+                        </div>
+
+                        {showCreateCategory && (
+                          <div className="space-y-2 animate-in fade-in slide-in-from-top-2">
+                            <FormField
+                              control={form.control}
+                              name="newCategoryName"
+                              render={({ field }: { field: any }) => (
+                                <FormItem>
+                                  <FormLabel className="text-primary">
+                                    New Category Name
+                                  </FormLabel>
+                                  <FormControl>
+                                    <Input
+                                      placeholder="e.g. Database Migrations"
+                                      {...field}
+                                    />
+                                  </FormControl>
+                                </FormItem>
+                              )}
+                            />
+
+                            {createCategoryError && (
+                              <div className="text-sm text-destructive">
+                                {createCategoryError}
+                              </div>
                             )}
-                          />
+
+                            <div className="flex gap-2">
+                              <Button
+                                type="button"
+                                onClick={async () => {
+                                  setCreateCategoryError(null);
+                                  const name = (
+                                    form.getValues("newCategoryName") ?? ""
+                                  ).trim();
+                                  if (name.length < 5) {
+                                    setCreateCategoryError(
+                                      "Category name must be at least 5 characters long.",
+                                    );
+                                    return;
+                                  }
+                                  await createCategoryMutation.mutateAsync(
+                                    name,
+                                  );
+                                }}
+                              >
+                                Create Category
+                              </Button>
+                              <Button
+                                type="button"
+                                variant="ghost"
+                                onClick={() => {
+                                  setCreateCategoryError(null);
+                                  setShowCreateCategory(false);
+                                }}
+                              >
+                                Cancel
+                              </Button>
+                            </div>
+                          </div>
                         )}
                       </div>
                     </div>
@@ -349,7 +628,7 @@ export function ScaffolderPage() {
                     <FormField
                       control={form.control}
                       name="yamlContent"
-                      render={({ field }) => (
+                      render={({ field }: { field: any }) => (
                         <FormItem className="h-full flex flex-col">
                           <FormLabel>YAML Blueprint Definition</FormLabel>
                           <FormControl>
@@ -370,10 +649,26 @@ export function ScaffolderPage() {
                   </div>
 
                   <div className="flex justify-end">
-                    <Button type="submit" size="lg">
+                    <Button
+                      type="submit"
+                      size="lg"
+                      disabled={createTemplateMutation.isPending}
+                    >
+                      {createTemplateMutation.isPending && (
+                        <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                      )}
                       Publish Template
                     </Button>
                   </div>
+
+                  {createTemplateMutation.isError && (
+                    <div className="text-sm text-destructive">
+                      Failed to publish template:{" "}
+                      {createTemplateMutation.error instanceof Error
+                        ? createTemplateMutation.error.message
+                        : "Unknown error"}
+                    </div>
+                  )}
                 </form>
               </Form>
             </CardContent>
