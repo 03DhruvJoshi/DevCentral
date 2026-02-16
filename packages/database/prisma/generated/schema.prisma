@@ -1,15 +1,31 @@
-datasource db {
-  provider = "postgresql"
-}
-
 generator client {
   provider = "prisma-client-js"
   output   = "./generated"
 }
 
-// Example Model
+datasource db {
+  provider = "postgresql"
+}
+
 model Project {
-  id        String   @id @default(uuid())
   name      String
   createdAt DateTime @default(now())
+  id        Int      @id @default(autoincrement())
+}
+
+model Template {
+  title        String
+  description  String
+  categoryName String
+  yaml         String
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+  id           Int      @id @default(autoincrement())
+  category     Category @relation(fields: [categoryName], references: [name])
+}
+
+model Category {
+  name      String     @unique
+  id        Int        @id @default(autoincrement())
+  templates Template[]
 }

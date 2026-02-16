@@ -11,8 +11,9 @@ export default defineConfig({
       process.cwd(),
       "packages/database/prisma/prisma/migrations",
     ),
+    seed: "tsx packages/database/seed.ts",
   },
   datasource: {
-    url: process.env.DATABASE_URL,
+    url: process.env.DIRECT_DATABASE_URL,
   },
 });
