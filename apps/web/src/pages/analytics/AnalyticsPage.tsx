@@ -26,14 +26,14 @@ import {
   CardDescription,
   CardHeader,
   CardTitle,
-} from "../../components/ui/card";
+} from "../../components/ui/card.js";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "../../components/ui/select";
+} from "../../components/ui/select.js";
 
 import {
   DEPLOYMENT_DATA,
@@ -41,7 +41,7 @@ import {
   CHURN_DATA,
   SUCCESS_DATA,
   SUCCESS_COLORS,
-} from "./AnalyticsMockData";
+} from "./AnalyticsMockData.js";
 
 export function AnalyticsPage() {
   return (

@@ -94,9 +94,24 @@ exports.Prisma.TransactionIsolationLevel = makeStrictEnum({
 });
 
 exports.Prisma.ProjectScalarFieldEnum = {
-  id: 'id',
   name: 'name',
-  createdAt: 'createdAt'
+  createdAt: 'createdAt',
+  id: 'id'
+};
+
+exports.Prisma.TemplateScalarFieldEnum = {
+  title: 'title',
+  description: 'description',
+  categoryName: 'categoryName',
+  yaml: 'yaml',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  id: 'id'
+};
+
+exports.Prisma.CategoryScalarFieldEnum = {
+  name: 'name',
+  id: 'id'
 };
 
 exports.Prisma.SortOrder = {
@@ -111,7 +126,9 @@ exports.Prisma.QueryMode = {
 
 
 exports.Prisma.ModelName = {
-  Project: 'Project'
+  Project: 'Project',
+  Template: 'Template',
+  Category: 'Category'
 };
 /**
  * Create the Client
@@ -121,10 +138,10 @@ const config = {
   "clientVersion": "7.3.0",
   "engineVersion": "9d6ad21cbbceab97458517b147a6a09ff43aa735",
   "activeProvider": "postgresql",
-  "inlineSchema": "datasource db {\n  provider = \"postgresql\"\n}\n\ngenerator client {\n  provider = \"prisma-client-js\"\n  output   = \"./generated\"\n}\n\n// Example Model\nmodel Project {\n  id        String   @id @default(uuid())\n  name      String\n  createdAt DateTime @default(now())\n}\n"
+  "inlineSchema": "generator client {\n  provider = \"prisma-client-js\"\n  output   = \"./generated\"\n}\n\ndatasource db {\n  provider = \"postgresql\"\n}\n\nmodel Project {\n  name      String\n  createdAt DateTime @default(now())\n  id        Int      @id @default(autoincrement())\n}\n\nmodel Template {\n  title        String\n  description  String\n  categoryName String\n  yaml         String\n  createdAt    DateTime @default(now())\n  updatedAt    DateTime @updatedAt\n  id           Int      @id @default(autoincrement())\n  category     Category @relation(fields: [categoryName], references: [name])\n}\n\nmodel Category {\n  name      String     @unique\n  id        Int        @id @default(autoincrement())\n  templates Template[]\n}\n"
 }
 
-config.runtimeDataModel = JSON.parse("{\"models\":{\"Project\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"name\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"}],\"dbName\":null}},\"enums\":{},\"types\":{}}")
+config.runtimeDataModel = JSON.parse("{\"models\":{\"Project\":{\"fields\":[{\"name\":\"name\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"Int\"}],\"dbName\":null},\"Template\":{\"fields\":[{\"name\":\"title\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"description\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"categoryName\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"yaml\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"updatedAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"category\",\"kind\":\"object\",\"type\":\"Category\",\"relationName\":\"CategoryToTemplate\"}],\"dbName\":null},\"Category\":{\"fields\":[{\"name\":\"name\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"templates\",\"kind\":\"object\",\"type\":\"Template\",\"relationName\":\"CategoryToTemplate\"}],\"dbName\":null}},\"enums\":{},\"types\":{}}")
 defineDmmfProperty(exports.Prisma, config.runtimeDataModel)
 config.compilerWasm = {
       getRuntime: async () => require('./query_compiler_fast_bg.js'),
