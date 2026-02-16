@@ -22,5 +22,11 @@
       "cache": false
     }
   },
-  "globalEnv": ["DATABASE_URL", "DIRECT_DATABASE_URL", "TCP_DATABASE_URL"]
+  "globalEnv": [
+    "DATABASE_URL",
+    "DIRECT_DATABASE_URL",
+    "TCP_DATABASE_URL",
+    "GITHUB_TOKEN",
+    "GITHUB_USERNAME"
+  ]
 }
