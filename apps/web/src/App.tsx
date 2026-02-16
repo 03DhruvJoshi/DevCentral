@@ -1,11 +1,11 @@
 // apps/web/src/App.tsx
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { DashboardLayout } from "./components/layout/DashboardLayout";
-import { DashboardPage } from "./pages/dashboard/DashboardPage";
-import { ScaffolderPage } from "./pages/scaffolder/ScaffolderPage";
-import { GitOpsPage } from "./pages/gitops/GitOpsPage";
-import { AnalyticsPage } from "./pages/analytics/AnalyticsPage";
+import { DashboardLayout } from "./components/layout/DashboardLayout.js";
+import { DashboardPage } from "./pages/dashboard/DashboardPage.js";
+import { ScaffolderPage } from "./pages/scaffolder/ScaffolderPage.js";
+import { GitOpsPage } from "./pages/gitops/GitOpsPage.js";
+import { AnalyticsPage } from "./pages/analytics/AnalyticsPage.js";
 // import { AiAssistantPage } from "./pages/ai_assistant/AiAssistantPage";
 
 const queryClient = new QueryClient();

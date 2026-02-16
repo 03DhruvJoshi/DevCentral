@@ -13,7 +13,6 @@ dotenv.config({ path: path.resolve(__dirname, "../../.env") });
 
 const connectionString = `${process.env.DIRECT_DATABASE_URL}`;
 const githubToken = `${process.env.GITHUB_TOKEN}`;
-console.log(githubToken);
 
 const adapter = new PrismaPg({
   connectionString,
@@ -94,22 +93,31 @@ app.get("/api/categories", async (req, res) => {
 app.post("/api/categories", async (req, res) => {
   try {
     const { name }: { name: string } = req.body;
-    if (!name || name.length < 5) {
+    const trimmedName = name?.trim() || "";
+
+    if (!trimmedName || trimmedName.length < 5) {
       return res
         .status(400)
         .json({ error: "Category name must be at least 5 characters long." });
     }
+
     const newCategory = await prisma.category.create({
-      data: { name },
+      data: { name: trimmedName },
     });
     res.status(201).json(newCategory);
   } catch (error) {
     console.error("Failed to create category:", error);
+    if (error instanceof Error && "code" in error && error.code === "P2002") {
+      return res
+        .status(409)
+        .json({ error: "Category with this name already exists" });
+    }
+
     res.status(500).json({ error: "Failed to create category" });
   }
 });
 
-app.get("/api/templates", async (req, res) => {
+app.get("/api/templates", async (_req, res) => {
   try {
     const templates = await prisma.template.findMany({
       orderBy: { createdAt: "desc" },
@@ -128,9 +136,11 @@ app.post("/api/templates", async (req, res) => {
   try {
     const data: CreateTemplateRequest = req.body;
 
-    // Basic server-side validation
-    if (!data.title || !data.categoryName || !data.yaml) {
-      return res.status(400).json({ error: "Missing required fields" });
+    if (!data.title || !data.categoryName || !data.description || !data.yaml) {
+      return res.status(400).json({
+        error:
+          "Missing required fields: title, categoryName, description, and yaml are all required",
+      });
     }
 
     const newTemplate = await prisma.template.create({
@@ -145,6 +155,19 @@ app.post("/api/templates", async (req, res) => {
     res.status(201).json(newTemplate);
   } catch (error) {
     console.error("Failed to create template:", error);
+
+    // Handle foreign key constraint error (missing category)
+    if (error instanceof Error && "code" in error && error.code === "P2025") {
+      return res.status(400).json({ error: "Category does not exist" });
+    }
+
+    // Handle unique constraint error
+    if (error instanceof Error && "code" in error && error.code === "P2002") {
+      return res
+        .status(409)
+        .json({ error: "Template with this configuration already exists" });
+    }
+
     res.status(500).json({ error: "Failed to create template" });
   }
 });
@@ -152,12 +175,20 @@ app.post("/api/templates", async (req, res) => {
 app.delete("/api/templates/:id", async (req, res) => {
   try {
     const templateId = parseInt(req.params.id, 10);
+
+    if (isNaN(templateId)) {
+      return res.status(400).json({ error: "Invalid template ID" });
+    }
+
     await prisma.template.delete({
       where: { id: templateId },
     });
     res.status(204).send();
   } catch (error) {
     console.error("Failed to delete template:", error);
+    if (error instanceof Error && "code" in error && error.code === "P2025") {
+      return res.status(404).json({ error: "Template not found" });
+    }
     res.status(500).json({ error: "Failed to delete template" });
   }
 });

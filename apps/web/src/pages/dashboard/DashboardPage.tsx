@@ -15,9 +15,9 @@ import {
   CardHeader,
   CardTitle,
   CardDescription,
-} from "../../components/ui/card";
-import { Badge } from "../../components/ui/badge";
-import { Button } from "../../components/ui/button";
+} from "../../components/ui/card.js";
+import { Badge } from "../../components/ui/badge.js";
+import { Button } from "../../components/ui/button.js";
 import {
   Table,
   TableBody,
@@ -25,9 +25,9 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "../../components/ui/table";
+} from "../../components/ui/table.js";
 
-import { METRICS, RECENT_PIPELINES, AI_ALERTS } from "./DashboardMockData";
+import { METRICS, RECENT_PIPELINES, AI_ALERTS } from "./DashboardMockData.js";
 
 export function DashboardPage() {
   return (

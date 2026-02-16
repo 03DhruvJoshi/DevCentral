@@ -8,10 +8,7 @@ import {
   Github,
   ExternalLink,
   Lock,
-  Unlock,
   Loader2,
-  ChevronDown,
-  User,
   Calendar,
   AlertCircle,
 } from "lucide-react";
@@ -300,7 +297,11 @@ export function GitOpsPage() {
                           </TableCell>
                           <TableCell className="text-right">
                             <Button variant="ghost" size="sm" asChild>
-                              <a href={pr.html_url} target="_blank">
+                              <a
+                                href={pr.html_url}
+                                target="_blank"
+                                rel="noreferrer"
+                              >
                                 Review
                               </a>
                             </Button>

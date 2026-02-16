@@ -1,5 +1,5 @@
 export interface ProjectResponse {
-  id: string;
+  id: number;
   name: string;
   createdAt: string;
 }

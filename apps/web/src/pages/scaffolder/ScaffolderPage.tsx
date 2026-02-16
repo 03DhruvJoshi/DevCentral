@@ -19,7 +19,7 @@ import {
   TabsContent,
   TabsList,
   TabsTrigger,
-} from "../../components/ui/tabs";
+} from "../../components/ui/tabs.js";
 import {
   Card,
   CardContent,
@@ -27,10 +27,10 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from "../../components/ui/card";
-import { Button } from "../../components/ui/button";
-import { Input } from "../../components/ui/input";
-import { Badge } from "../../components/ui/badge";
+} from "../../components/ui/card.js";
+import { Button } from "../../components/ui/button.js";
+import { Input } from "../../components/ui/input.js";
+import { Badge } from "../../components/ui/badge.js";
 import {
   Dialog,
   DialogClose,
@@ -40,7 +40,7 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "../../components/ui/dialog";
+} from "../../components/ui/dialog.js";
 import {
   Form,
   FormControl,
@@ -49,17 +49,17 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "../../components/ui/form";
+} from "../../components/ui/form.js";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "../../components/ui/select";
-import { Textarea } from "../../components/ui/textarea";
-import { Separator } from "../../components/ui/separator";
-import { formSchema } from "../../zod/ScaffolderZod";
+} from "../../components/ui/select.js";
+import { Textarea } from "../../components/ui/textarea.js";
+import { Separator } from "../../components/ui/separator.js";
+import { formSchema } from "../../zod/ScaffolderZod.js";
 
 const API_BASE_URL =
   (import.meta as unknown as { env?: Record<string, string> }).env
@@ -346,41 +346,39 @@ export function ScaffolderPage() {
                               </CardTitle>
 
                               <Dialog>
-                                <form>
-                                  <DialogTrigger asChild>
-                                    <Button variant="ghost" size="icon">
-                                      <Trash2 className="h-auto w-auto" />
-                                    </Button>
-                                  </DialogTrigger>
-                                  <DialogContent className="sm:max-w-sm bg-white">
-                                    <DialogHeader>
-                                      <DialogTitle>Delete Template</DialogTitle>
-                                      <DialogDescription>
-                                        Are you sure you want to delete this
-                                        template? This action cannot be undone.
-                                      </DialogDescription>
-                                    </DialogHeader>
-                                    <DialogFooter>
-                                      <DialogClose asChild>
-                                        <Button
-                                          variant="outline"
-                                          onClick={() => {}}
-                                        >
-                                          Cancel
-                                        </Button>
-                                      </DialogClose>
+                                <DialogTrigger asChild>
+                                  <Button variant="ghost" size="icon">
+                                    <Trash2 className="h-auto w-auto" />
+                                  </Button>
+                                </DialogTrigger>
+                                <DialogContent className="sm:max-w-sm bg-white">
+                                  <DialogHeader>
+                                    <DialogTitle>Delete Template</DialogTitle>
+                                    <DialogDescription>
+                                      Are you sure you want to delete this
+                                      template? This action cannot be undone.
+                                    </DialogDescription>
+                                  </DialogHeader>
+                                  <DialogFooter>
+                                    <DialogClose asChild>
                                       <Button
-                                        type="submit"
-                                        className="bg-black hover:bg-red-700 border-white-600 hover:border-red-700 text-white"
-                                        onClick={async () => {
-                                          await deleteTemplate(template.id);
-                                        }}
+                                        variant="outline"
+                                        onClick={() => {}}
                                       >
-                                        Delete
+                                        Cancel
                                       </Button>
-                                    </DialogFooter>
-                                  </DialogContent>
-                                </form>
+                                    </DialogClose>
+                                    <Button
+                                      type="submit"
+                                      className="bg-black hover:bg-red-700 border-white-600 hover:border-red-700 text-white"
+                                      onClick={async () => {
+                                        await deleteTemplate(template.id);
+                                      }}
+                                    >
+                                      Delete
+                                    </Button>
+                                  </DialogFooter>
+                                </DialogContent>
                               </Dialog>
                             </div>
                             <CardDescription className="line-clamp-2">
