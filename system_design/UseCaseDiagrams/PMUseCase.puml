@@ -1,5 +1,5 @@
-@startuml name DevCentralPlatformUseCases
-@startuml name DevCentralPlatformUseCases
+ 
+@startuml name DevCentralPlatformPMUseCases
 left to right direction
 skinparam packageStyle rectangle
 

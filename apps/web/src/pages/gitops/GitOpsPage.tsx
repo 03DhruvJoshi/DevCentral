@@ -10,7 +10,6 @@ import {
   Lock,
   Loader2,
   Calendar,
-  AlertCircle,
 } from "lucide-react";
 
 import {
@@ -73,6 +72,32 @@ interface PullRequest {
   created_at: string;
 }
 
+interface Pipeline {
+  id: number;
+  name: string;
+  status: string;
+  conclusion: string | null;
+  head_branch: string;
+  event: string;
+  actor: {
+    login: string;
+    avatar_url: string;
+  };
+  html_url: string;
+  created_at: string;
+  run_number: number;
+}
+
+interface Release {
+  id: number;
+  name: string;
+  tag_name: string;
+  draft: boolean;
+  prerelease: boolean;
+  created_at: string;
+  html_url: string;
+}
+
 const API_BASE_URL =
   (import.meta as unknown as { env?: Record<string, string> }).env
     ?.VITE_API_BASE_URL ?? "http://localhost:4000";
@@ -83,8 +108,11 @@ export function GitOpsPage() {
   const [selectedRepo, setSelectedRepo] = useState<Repository | null>(null);
 
   const [prs, setPrs] = useState<PullRequest[]>([]);
+  const [pipelines, setPipelines] = useState<Pipeline[]>([]);
+  const [releases, setReleases] = useState<Release[]>([]); // For future use
   const [isPrsLoading, setIsPrsLoading] = useState(false);
-
+  const [isPipelinesLoading, setIsPipelinesLoading] = useState(false);
+  const [isReleasesLoading, setIsReleasesLoading] = useState(false);
   const [isReposLoading, setIsReposLoading] = useState(true);
 
   // --- 1. Fetch Repositories on Mount ---
@@ -133,6 +161,52 @@ export function GitOpsPage() {
     fetchPrs();
   }, [selectedRepo]); // Runs whenever the dropdown selection changes
 
+  // fetch pipelines
+
+  useEffect(() => {
+    if (!selectedRepo) return;
+
+    async function fetchPipelines() {
+      setIsPipelinesLoading(true);
+      try {
+        const url = `${API_BASE_URL}/api/github/repos/${selectedRepo?.owner}/${selectedRepo?.name}/actions`;
+        const res = await fetch(url);
+        if (!res.ok) throw new Error("Failed to fetch actions");
+        const data = await res.json();
+        setPipelines(data.workflow_runs);
+      } catch (err) {
+        console.error(err);
+        setPipelines([]);
+      } finally {
+        setIsPipelinesLoading(false);
+      }
+    }
+
+    fetchPipelines();
+  }, [selectedRepo]);
+
+  useEffect(() => {
+    if (!selectedRepo) return;
+
+    async function fetchReleases() {
+      setIsReleasesLoading(true);
+      try {
+        const url = `${API_BASE_URL}/api/github/repos/${selectedRepo?.owner}/${selectedRepo?.name}/releases`;
+        const res = await fetch(url);
+        if (!res.ok) throw new Error("Failed to fetch releases");
+        const data = await res.json();
+        setReleases(data);
+      } catch (err) {
+        console.error(err);
+        setReleases([]);
+      } finally {
+        setIsReleasesLoading(false);
+      }
+    }
+
+    fetchReleases();
+  }, [selectedRepo]);
+
   // --- Handlers ---
   const handleRepoChange = (repoId: string) => {
     const repo = repos.find((r) => r.id.toString() === repoId);
@@ -167,11 +241,7 @@ export function GitOpsPage() {
           Select Active Repository
         </label>
         <div className="flex items-center gap-4">
-          <Select
-            disabled={isReposLoading}
-            value={selectedRepo?.id.toString()}
-            onValueChange={handleRepoChange}
-          >
+          <Select disabled={isReposLoading} onValueChange={handleRepoChange}>
             <SelectTrigger className="w-[300px] bg-white">
               <SelectValue
                 placeholder={
@@ -209,11 +279,11 @@ export function GitOpsPage() {
       {/* CONTEXTUAL TABS (Only show if a repo is selected) */}
       {selectedRepo ? (
         <Tabs defaultValue="prs" className="w-full">
-          <TabsList className="grid w-full max-w-md grid-cols-2">
+          <TabsList className="grid w-auto max-w-xlg grid-cols-3">
             <TabsTrigger value="prs">Pull Requests</TabsTrigger>
-            <TabsTrigger value="security">Security & Alerts</TabsTrigger>
+            <TabsTrigger value="pipelines">CI/CD Pipelines</TabsTrigger>
+            <TabsTrigger value="releases">Releases</TabsTrigger>
           </TabsList>
-
           {/* === TAB 1: PULL REQUESTS === */}
           <TabsContent value="prs" className="mt-6">
             <Card>
@@ -315,24 +385,215 @@ export function GitOpsPage() {
             </Card>
           </TabsContent>
 
-          {/* === TAB 2: SECURITY (Placeholder) === */}
-          <TabsContent value="security" className="mt-6">
-            <Card className="bg-muted/40 border-dashed">
-              <CardContent className="py-12 flex flex-col items-center text-center text-muted-foreground">
-                <ShieldAlert className="h-12 w-12 mb-4 opacity-50 text-red-500" />
-                <h3 className="text-lg font-semibold text-foreground">
-                  Security Status for {selectedRepo.name}
-                </h3>
-                <p className="max-w-md mt-2 mb-6">
-                  Integrate SonarQube or Enable GitHub Dependabot to see
-                  vulnerability scanning results here.
-                </p>
-                <div className="flex gap-4">
-                  <Button variant="outline">
-                    <AlertCircle className="mr-2 h-4 w-4" /> View Dependabot
-                  </Button>
-                  <Button>Enable Scanning</Button>
-                </div>
+          <TabsContent value="pipelines" className="mt-6">
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <GitPullRequest className="h-5 w-5 text-purple-600" />
+                  CI-CD Status
+                </CardTitle>
+                <CardDescription>
+                  Showing recent Pipelines for{" "}
+                  <strong>{selectedRepo.name}</strong>
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                {isPipelinesLoading ? (
+                  <div className="flex justify-center py-12 text-muted-foreground">
+                    <Loader2 className="h-8 w-8 animate-spin mr-2" />
+                    Fetching CI-CD Pipelines...
+                  </div>
+                ) : pipelines.length === 0 ? (
+                  <div className="text-center py-12 text-muted-foreground border-2 border-dashed rounded-lg">
+                    <GitPullRequest className="h-10 w-10 mx-auto mb-2 opacity-20" />
+                    No CI-CD Pipelines found for this repository.
+                  </div>
+                ) : (
+                  <Table>
+                    <TableHeader>
+                      <TableRow>
+                        <TableHead>Run #</TableHead>
+                        <TableHead>Workflow</TableHead>
+                        <TableHead>Triggered by</TableHead>
+                        <TableHead>Date</TableHead>
+                        <TableHead>Status</TableHead>
+                        <TableHead>Branch</TableHead>
+                        <TableHead className="text-right">Action</TableHead>
+                      </TableRow>
+                    </TableHeader>
+                    <TableBody>
+                      {pipelines.map((pipeline) => (
+                        <TableRow key={pipeline.id}>
+                          <TableCell className="font-mono text-xs">
+                            #{pipeline.run_number}
+                          </TableCell>
+                          <TableCell className="font-medium">
+                            <div className="flex flex-col">
+                              <a
+                                href={pipeline.html_url}
+                                target="_blank"
+                                rel="noreferrer"
+                                className="hover:underline text-primary"
+                              >
+                                {pipeline.name}
+                              </a>
+                              <span className="text-xs text-muted-foreground">
+                                on {pipeline.event}
+                              </span>
+                            </div>
+                          </TableCell>
+                          <TableCell>
+                            <div className="flex items-center gap-2">
+                              <Avatar className="h-6 w-6">
+                                <AvatarImage src={pipeline.actor.avatar_url} />
+                                <AvatarFallback>
+                                  {pipeline.actor.login[0]}
+                                </AvatarFallback>
+                              </Avatar>
+                              <span className="text-sm text-muted-foreground">
+                                {pipeline.actor.login}
+                              </span>
+                            </div>
+                          </TableCell>
+                          <TableCell className="text-right text-sm text-muted-foreground">
+                            <div className="flex items-center gap-1">
+                              <Calendar className="h-3 w-3" />
+                              {new Date(
+                                pipeline.created_at,
+                              ).toLocaleDateString()}
+                            </div>
+                          </TableCell>
+                          <TableCell>
+                            <Badge
+                              variant={
+                                pipeline.conclusion === "success"
+                                  ? "default"
+                                  : pipeline.conclusion === "failure"
+                                    ? "destructive"
+                                    : "secondary"
+                              }
+                              className={
+                                pipeline.conclusion === "success"
+                                  ? "bg-green-600 hover:bg-green-700"
+                                  : ""
+                              }
+                            >
+                              {pipeline.status === "completed"
+                                ? pipeline.conclusion
+                                : pipeline.status}
+                            </Badge>
+                          </TableCell>
+                          <TableCell>
+                            <div className="flex items-center gap-1 text-sm">
+                              <GitBranch className="h-3 w-3 text-muted-foreground" />
+                              <code>{pipeline.head_branch}</code>
+                            </div>
+                          </TableCell>
+                          <TableCell className="text-right">
+                            <Button variant="ghost" size="sm" asChild>
+                              <a
+                                href={pipeline.html_url}
+                                target="_blank"
+                                rel="noreferrer"
+                              >
+                                Review
+                              </a>
+                            </Button>
+                          </TableCell>
+                        </TableRow>
+                      ))}
+                    </TableBody>
+                  </Table>
+                )}
+              </CardContent>
+            </Card>
+          </TabsContent>
+
+          <TabsContent value="releases" className="mt-6">
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <GitPullRequest className="h-5 w-5 text-purple-600" />
+                  Releases
+                </CardTitle>
+                <CardDescription>
+                  Showing recent Releases for{" "}
+                  <strong>{selectedRepo.name}</strong>
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                {isReleasesLoading ? (
+                  <div className="flex justify-center py-12 text-muted-foreground">
+                    <Loader2 className="h-8 w-8 animate-spin mr-2" />
+                    Fetching Releases...
+                  </div>
+                ) : releases.length === 0 ? (
+                  <div className="text-center py-12 text-muted-foreground border-2 border-dashed rounded-lg">
+                    <GitPullRequest className="h-10 w-10 mx-auto mb-2 opacity-20" />
+                    No Releases found for this repository.
+                  </div>
+                ) : (
+                  <Table>
+                    <TableHeader>
+                      <TableRow>
+                        <TableHead>Release #</TableHead>
+                        <TableHead>Release</TableHead>
+                        <TableHead>Tag Name</TableHead>
+                        <TableHead>Draft</TableHead>
+                        <TableHead>Prerelease</TableHead>
+
+                        <TableHead className="text-right">Action</TableHead>
+                      </TableRow>
+                    </TableHeader>
+                    <TableBody>
+                      {releases.map((release, index) => (
+                        <TableRow key={release.id}>
+                          <TableCell className="font-mono text-xs">
+                            #{releases.length - index}
+                          </TableCell>
+                          <TableCell>
+                            <div className="font-medium">
+                              {release.name || release.tag_name}
+                            </div>
+                          </TableCell>
+                          <TableCell className="font-mono text-xs">
+                            {release.tag_name}
+                          </TableCell>
+                          <TableCell>
+                            {release.draft ? (
+                              <Badge variant="outline">Draft</Badge>
+                            ) : (
+                              <Badge variant="secondary">Published</Badge>
+                            )}
+                          </TableCell>
+                          <TableCell>
+                            {release.prerelease ? (
+                              <Badge variant="outline">Prerelease</Badge>
+                            ) : (
+                              <span className="text-xs text-muted-foreground">
+                                No
+                              </span>
+                            )}
+                          </TableCell>
+                          <TableCell className="text-right">
+                            {release.html_url ? (
+                              <Button asChild size="sm" variant="outline">
+                                <a
+                                  href={release.html_url}
+                                  target="_blank"
+                                  rel="noreferrer"
+                                >
+                                  <ExternalLink className="h-4 w-4 mr-1" />
+                                  View
+                                </a>
+                              </Button>
+                            ) : null}
+                          </TableCell>
+                        </TableRow>
+                      ))}
+                    </TableBody>
+                  </Table>
+                )}
               </CardContent>
             </Card>
           </TabsContent>
