@@ -1,7 +1,6 @@
 import path from "path";
 import dotenv from "dotenv";
 import express from "express";
-import cors from "cors";
 import { fileURLToPath } from "url";
 import { IRouter } from "express";
 import { Octokit } from "octokit";
@@ -19,12 +18,20 @@ const octokit = new Octokit({
 
 const router: IRouter = express.Router();
 
-router.use(cors());
-router.use(express.json());
-
+const isValidRepoParam = (value: unknown): value is string => {
+  return (
+    typeof value === "string" &&
+    value.length > 0 &&
+    value.length <= 100 &&
+    /^[A-Za-z0-9_.-]+$/.test(value)
+  );
+};
 router.get("/api/analytics/sonar/:owner/:repo", async (req, res) => {
   try {
     const { owner, repo } = req.params;
+    if (!isValidRepoParam(owner) || !isValidRepoParam(repo)) {
+      return res.status(400).json({ error: "Invalid owner or repo parameter" });
+    }
 
     const projectKey = `${owner}_${repo}`;
 
@@ -74,24 +81,10 @@ router.get("/api/analytics/sonar/:owner/:repo", async (req, res) => {
     res.json(metricsMap);
   } catch (error) {
     console.error("SonarQube Error:", error);
+    res.status(400).json({ error: "Invalid request parameters" });
+    res.status(404).json({ error: "Project not found in SonarQube" });
+    res.status(401).json({ error: "Unauthorized: Invalid SonarQube token" });
     res.status(500).json({ error: "Failed to fetch metrics from SonarQube" });
-  }
-});
-
-router.get("/api/analytics/workflow/:owner/:repo", async (req, res) => {
-  try {
-    const { owner, repo } = req.params;
-    const { data } = await octokit.rest.actions.listWorkflowRunsForRepo({
-      owner,
-      repo,
-      per_page: 5,
-    });
-    res.json(data);
-  } catch (error) {
-    console.error("GitHub Error:", error);
-    res
-      .status(500)
-      .json({ error: "Failed to fetch workflow runs from GitHub" });
   }
 });
 
@@ -375,16 +368,31 @@ router.get("/api/analytics/cicd/:owner/:repo", async (req, res) => {
       : null;
 
     // 6. Deployment frequency (runs on default branch that succeeded — proxy for deploys)
+    const {
+      data: { default_branch: defaultBranch },
+    } = await octokit.rest.repos.get({ owner, repo });
     const deployRuns = runs.filter(
       (r) =>
         r.event === "push" &&
-        r.head_branch === runsData.workflow_runs[0]?.head_branch &&
+        r.head_branch === defaultBranch &&
         r.conclusion === "success",
     );
     const deployDays = new Set(
       deployRuns.map((r) => r.created_at.slice(0, 10)),
     );
-    const spanDays = successRateOverTime.length || 1;
+    let spanDays = 1;
+    if (deployRuns.length > 1) {
+      const deployTimestamps = deployRuns
+        .map((r) => new Date(r.created_at).getTime())
+        .filter((t) => Number.isFinite(t));
+      if (deployTimestamps.length > 1) {
+        const minTs = Math.min(...deployTimestamps);
+        const maxTs = Math.max(...deployTimestamps);
+        const msSpan = maxTs - minTs;
+        const daysSpan = msSpan / 86_400_000;
+        spanDays = daysSpan > 0 ? daysSpan : 1;
+      }
+    }
     const deployFreq = +(deployRuns.length / spanDays).toFixed(2);
 
     // 7. Mean time to recovery (avg time between a failure and next success on same workflow)

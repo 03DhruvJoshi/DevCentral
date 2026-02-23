@@ -96,21 +96,4 @@ router.get("/api/github/repos/:owner/:repo/releases", async (req, res) => {
   }
 });
 
-router.get("/api/github/repos/:owner/:repo/workflow", async (req, res) => {
-  try {
-    const { owner, repo } = req.params;
-    const { data } = await octokit.rest.actions.listWorkflowRunsForRepo({
-      owner,
-      repo,
-      per_page: 5,
-    });
-    res.json(data);
-  } catch (error) {
-    console.error("GitHub Error:", error);
-    res
-      .status(500)
-      .json({ error: "Failed to fetch workflow runs from GitHub" });
-  }
-});
-
 export default router;

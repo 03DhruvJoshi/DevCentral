@@ -1,5 +1,3 @@
-// apps/web/src/features/gitops/GitOpsPage.tsx
-
 import { useState, useEffect } from "react";
 import {
   GitBranch,
@@ -60,7 +58,6 @@ import {
   AreaChart,
   Area,
 } from "recharts";
-import { set } from "zod";
 
 interface Repository {
   id: number;
@@ -84,7 +81,7 @@ interface SonarMetrics {
   reliability_rating?: string;
 }
 
-interface velocity {
+interface Velocity {
   review_time: {
     avg_first_review_h: number | null;
     avg_merge_h: number | null;
@@ -174,7 +171,7 @@ export function AnalyticsPage() {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const [velocity, setVelocity] = useState<velocity | null>(null);
+  const [velocity, setVelocity] = useState<Velocity | null>(null);
   const [isVelocityLoading, setIsVelocityLoading] = useState(false);
   const [velocityError, setVelocityError] = useState<string | null>(null);
 
@@ -287,22 +284,26 @@ export function AnalyticsPage() {
   // Chart 1: Issue Breakdown (Bar Chart)
   const issueData = metrics
     ? [
-        { name: "Bugs", count: parseInt(metrics.bugs || "0"), fill: "#ef4444" }, // Red
+        {
+          name: "Bugs",
+          count: Number.parseInt(metrics.bugs || "0"),
+          fill: "#ef4444",
+        }, // Red
         {
           name: "Vulnerabilities",
-          count: parseInt(metrics.vulnerabilities || "0"),
+          count: Number.parseInt(metrics.vulnerabilities || "0"),
           fill: "#f97316",
         }, // Orange
         {
           name: "Code Smells",
-          count: parseInt(metrics.code_smells || "0"),
+          count: Number.parseInt(metrics.code_smells || "0"),
           fill: "#eab308",
         }, // Yellow
       ]
     : [];
 
   // Chart 2: Code Coverage (Donut Chart)
-  const coverageValue = parseFloat(metrics?.coverage || "0");
+  const coverageValue = Number.parseFloat(metrics?.coverage || "0");
   const coverageData = [
     { name: "Covered", value: coverageValue, fill: "#22c55e" }, // Green
     { name: "Uncovered", value: 100 - coverageValue, fill: "#f1f5f9" }, // Slate/Gray
@@ -1203,23 +1204,25 @@ export function AnalyticsPage() {
                             </p>
                           ) : (
                             <div className="space-y-3">
-                              {cicd.flaky_workflows.slice(0, 4).map((flake, i) => (
-                                <div
-                                  key={i}
-                                  className="flex flex-col justify-center text-sm p-3 bg-red-50/50 rounded-md border border-red-100 gap-1"
-                                >
-                                  <div className="flex justify-between items-center">
-                                    <span className="font-medium text-red-900">
-                                      {flake.workflow || "CI/CD"}
+                              {cicd.flaky_workflows
+                                .slice(0, 4)
+                                .map((flake, i) => (
+                                  <div
+                                    key={i}
+                                    className="flex flex-col justify-center text-sm p-3 bg-red-50/50 rounded-md border border-red-100 gap-1"
+                                  >
+                                    <div className="flex justify-between items-center">
+                                      <span className="font-medium text-red-900">
+                                        {flake.workflow || "CI/CD"}
+                                      </span>
+                                      <Badge variant="destructive">Flaky</Badge>
+                                    </div>
+                                    <span className="text-xs text-red-700 font-mono">
+                                      Commit: {flake.head_sha.substring(0, 7)} (
+                                      {flake.runs} runs)
                                     </span>
-                                    <Badge variant="destructive">Flaky</Badge>
                                   </div>
-                                  <span className="text-xs text-red-700 font-mono">
-                                    Commit: {flake.head_sha.substring(0, 7)} (
-                                    {flake.runs} runs)
-                                  </span>
-                                </div>
-                              ))}
+                                ))}
                             </div>
                           )}
                         </CardContent>

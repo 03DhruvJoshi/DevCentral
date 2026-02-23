@@ -546,9 +546,49 @@ export function GitOpsPage() {
                       </TableRow>
                     </TableHeader>
                     <TableBody>
-                      {releases.map((release) => (
+                      {releases.map((release, index) => (
                         <TableRow key={release.id}>
-                          <TableCell className="font-mono text-xs"></TableCell>
+                          <TableCell className="font-mono text-xs">
+                            #{releases.length - index}
+                          </TableCell>
+                          <TableCell>
+                            <div className="font-medium">
+                              {release.name || release.tag_name}
+                            </div>
+                          </TableCell>
+                          <TableCell className="font-mono text-xs">
+                            {release.tag_name}
+                          </TableCell>
+                          <TableCell>
+                            {release.draft ? (
+                              <Badge variant="outline">Draft</Badge>
+                            ) : (
+                              <Badge variant="secondary">Published</Badge>
+                            )}
+                          </TableCell>
+                          <TableCell>
+                            {release.prerelease ? (
+                              <Badge variant="outline">Prerelease</Badge>
+                            ) : (
+                              <span className="text-xs text-muted-foreground">
+                                No
+                              </span>
+                            )}
+                          </TableCell>
+                          <TableCell className="text-right">
+                            {release.html_url ? (
+                              <Button asChild size="sm" variant="outline">
+                                <a
+                                  href={release.html_url}
+                                  target="_blank"
+                                  rel="noreferrer"
+                                >
+                                  <ExternalLink className="h-4 w-4 mr-1" />
+                                  View
+                                </a>
+                              </Button>
+                            ) : null}
+                          </TableCell>
                         </TableRow>
                       ))}
                     </TableBody>
