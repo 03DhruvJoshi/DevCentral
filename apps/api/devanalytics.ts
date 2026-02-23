@@ -59,10 +59,12 @@ router.get("/api/analytics/sonar/:owner/:repo", async (req, res) => {
     }
 
     const data = await response.json();
-
-    // Map the array of metrics into a clean key-value object for the frontend
+    interface Measure {
+      metric: string;
+      value: number;
+    }
     const metricsMap = data.component.measures.reduce(
-      (acc: any, measure: any) => {
+      (acc: Record<string, number>, measure: Measure) => {
         acc[measure.metric] = measure.value;
         return acc;
       },
