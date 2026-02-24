@@ -118,11 +118,11 @@ export function GitOpsPage() {
   const [isReleasesLoading, setIsReleasesLoading] = useState(false);
   const [isReposLoading, setIsReposLoading] = useState(true);
 
-  const token = localStorage.getItem("devcentral_token");
-  if (!token) {
-    navigate("/login", { replace: true });
-    return;
-  }
+  // const token = localStorage.getItem("devcentral_token");
+  // if (!token) {
+  //   navigate("/login", { replace: true });
+  //   return;
+  // }
 
   // --- 1. Fetch Repositories on Mount ---
   useEffect(() => {
