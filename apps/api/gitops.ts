@@ -1,11 +1,36 @@
-import path from "path";
+import path from "node:path";
 import dotenv from "dotenv";
-import express from "express";
+
 import cors from "cors";
-import { fileURLToPath } from "url";
+import { fileURLToPath } from "node:url";
 import { Octokit } from "octokit";
-import { IRouter } from "express";
+
 import jwt from "jsonwebtoken";
+import express, { IRouter, Request, Response, NextFunction } from "express";
+
+interface AuthenticatedRequest extends Request {
+  user?: {
+    email: string;
+    name: string;
+    password: string;
+    githubUsername: string;
+  };
+}
+
+const isAuthenticatedUserPayload = (
+  decodedUser: string | jwt.JwtPayload | undefined,
+): decodedUser is AuthenticatedRequest["user"] => {
+  if (!decodedUser || typeof decodedUser === "string") {
+    return false;
+  }
+
+  return (
+    typeof decodedUser.email === "string" &&
+    typeof decodedUser.name === "string" &&
+    typeof decodedUser.password === "string" &&
+    typeof decodedUser.githubUsername === "string"
+  );
+};
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 dotenv.config({ path: path.resolve(__dirname, "../../.env") });
@@ -21,10 +46,14 @@ const router: IRouter = express.Router();
 router.use(cors());
 router.use(express.json());
 
-const authenticateToken = (req: any, res: any, next: any) => {
+const authenticateToken = (
+  req: AuthenticatedRequest,
+  res: Response,
+  next: NextFunction,
+) => {
   const authHeader = req.headers["authorization"];
 
-  const token = authHeader && authHeader.split(" ")[1];
+  const token = authHeader ? authHeader.split(" ")[1] : null;
 
   if (!token) {
     return res.status(401).json({ error: "Access denied. No token provided." });
@@ -33,8 +62,11 @@ const authenticateToken = (req: any, res: any, next: any) => {
   jwt.verify(
     token,
     process.env.JWT_SECRET as string,
-    (err: any, decodedUser: any) => {
-      if (err) {
+    (
+      err: jwt.VerifyErrors | null,
+      decodedUser: string | jwt.JwtPayload | undefined,
+    ) => {
+      if (err || !isAuthenticatedUserPayload(decodedUser)) {
         return res
           .status(403)
           .json({ error: "Invalid or expired session. Please log in again." });
@@ -49,9 +81,9 @@ const authenticateToken = (req: any, res: any, next: any) => {
 router.get(
   "/api/github/repos",
   authenticateToken,
-  async (req: any, res: any) => {
+  async (req: AuthenticatedRequest, res: Response) => {
     try {
-      const username = req.user.githubUsername;
+      const username = req.user?.githubUsername;
 
       if (!username) {
         return res
@@ -67,7 +99,7 @@ router.get(
         sort: "updated",
       });
 
-      const simpleRepos = data.map((repo: any) => ({
+      const simpleRepos = data.map((repo) => ({
         id: repo.id,
         name: repo.name,
         owner: repo.owner.login,
@@ -93,7 +125,7 @@ router.get(
 
 router.get(
   "/api/github/repos/:owner/:repo/pulls",
-  authenticateToken,
+
   async (req, res) => {
     try {
       const { owner, repo } = req.params;

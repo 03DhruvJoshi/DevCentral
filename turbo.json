@@ -28,6 +28,7 @@
     "TCP_DATABASE_URL",
     "GITHUB_TOKEN",
     "GITHUB_USERNAME",
-    "SONAR_TOKEN"
+    "SONAR_TOKEN",
+    "JWT_SECRET"
   ]
 }

@@ -1,10 +1,9 @@
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
-import express from "express";
-import { IRouter } from "express";
-import path from "path";
+import express, { IRouter } from "express";
+import path from "node:path";
 import dotenv from "dotenv";
-import { fileURLToPath } from "url";
+import { fileURLToPath } from "node:url";
 import { PrismaClient } from "../../packages/database/prisma/generated/client";
 import { PrismaPg } from "@prisma/adapter-pg";
 import cors from "cors";
@@ -40,12 +39,13 @@ router.post("/api/auth/register", async (req, res) => {
     const salt = await bcrypt.genSalt(10);
     const passwordHash = await bcrypt.hash(password, salt);
 
-    const newUser = await prisma.user.create({
+    await prisma.user.create({
       data: { email, name, passwordHash, githubUsername },
     });
 
     res.status(201).json({ message: "User created successfully" });
   } catch (error) {
+    console.error(error);
     res.status(500).json({ error: "Registration failed" });
   }
 });
@@ -77,6 +77,7 @@ router.post("/api/auth/login", async (req, res) => {
       },
     });
   } catch (error) {
+    console.error(error);
     res.status(500).json({ error: "Login failed" });
   }
 });

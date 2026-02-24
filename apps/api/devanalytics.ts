@@ -1,10 +1,33 @@
-import path from "path";
+import path from "node:path";
 import dotenv from "dotenv";
-import express from "express";
-import { fileURLToPath } from "url";
-import { IRouter } from "express";
+import express, { IRouter, Request, Response, NextFunction } from "express";
+import { fileURLToPath } from "node:url";
 import { Octokit } from "octokit";
 import jwt from "jsonwebtoken";
+
+interface AuthenticatedRequest extends Request {
+  user?: {
+    email: string;
+    name: string;
+    password: string;
+    githubUsername: string;
+  };
+}
+
+const isAuthenticatedUserPayload = (
+  decodedUser: string | jwt.JwtPayload | undefined,
+): decodedUser is AuthenticatedRequest["user"] => {
+  if (!decodedUser || typeof decodedUser === "string") {
+    return false;
+  }
+
+  return (
+    typeof decodedUser.email === "string" &&
+    typeof decodedUser.name === "string" &&
+    typeof decodedUser.password === "string" &&
+    typeof decodedUser.githubUsername === "string"
+  );
+};
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 dotenv.config({ path: path.resolve(__dirname, "../../.env") });
@@ -19,10 +42,14 @@ const octokit = new Octokit({
 
 const router: IRouter = express.Router();
 
-const authenticateToken = (req: any, res: any, next: any) => {
+const authenticateToken = (
+  req: AuthenticatedRequest,
+  res: Response,
+  next: NextFunction,
+) => {
   const authHeader = req.headers["authorization"];
 
-  const token = authHeader && authHeader.split(" ")[1];
+  const token = authHeader ? authHeader.split(" ")[1] : null;
 
   if (!token) {
     return res.status(401).json({ error: "Access denied. No token provided." });
@@ -31,8 +58,11 @@ const authenticateToken = (req: any, res: any, next: any) => {
   jwt.verify(
     token,
     process.env.JWT_SECRET as string,
-    (err: any, decodedUser: any) => {
-      if (err) {
+    (
+      err: jwt.VerifyErrors | null,
+      decodedUser: string | jwt.JwtPayload | undefined,
+    ) => {
+      if (err || !isAuthenticatedUserPayload(decodedUser)) {
         return res
           .status(403)
           .json({ error: "Invalid or expired session. Please log in again." });
@@ -121,137 +151,138 @@ router.get(
 );
 
 // Developer Velocity — single endpoint for PR quality & health metrics
-router.get(
-  "/api/analytics/velocity/:owner/:repo",
-  authenticateToken,
-  async (req, res) => {
-    try {
-      const { owner, repo } = req.params;
-      const now = Date.now();
-      const STALE_MS = 14 * 86_400_000;
+router.get("/api/analytics/velocity/:owner/:repo", async (req, res) => {
+  try {
+    const { owner, repo } = req.params;
+    const now = Date.now();
+    const STALE_MS = 14 * 86_400_000;
 
-      // Fetch open + recently closed PRs in parallel
-      const [{ data: open }, { data: closed }] = await Promise.all([
-        octokit.rest.pulls.list({ owner, repo, state: "open", per_page: 30 }),
-        octokit.rest.pulls.list({
+    // Fetch open + recently closed PRs in parallel
+    const [{ data: open }, { data: closed }] = await Promise.all([
+      octokit.rest.pulls.list({ owner, repo, state: "open", per_page: 30 }),
+      octokit.rest.pulls.list({
+        owner,
+        repo,
+        state: "closed",
+        sort: "updated",
+        direction: "desc",
+        per_page: 30,
+      }),
+    ]);
+
+    const merged = closed.filter((pr) => pr.merged_at);
+
+    // PR review time & merge time (from merged PRs)
+    const reviewStats = await Promise.all(
+      merged.slice(0, 15).map(async (pr) => {
+        const { data: reviews } = await octokit.rest.pulls.listReviews({
           owner,
           repo,
-          state: "closed",
-          sort: "updated",
-          direction: "desc",
-          per_page: 30,
-        }),
-      ]);
-
-      const merged = closed.filter((pr) => pr.merged_at);
-
-      // PR review time & merge time (from merged PRs)
-      const reviewStats = await Promise.all(
-        merged.slice(0, 15).map(async (pr) => {
-          const { data: reviews } = await octokit.rest.pulls.listReviews({
-            owner,
-            repo,
-            pull_number: pr.number,
-          });
-          const firstReview = reviews
-            .filter((r) => r.user?.id !== pr.user?.id)
-            .sort(
-              (a, b) =>
-                new Date(a.submitted_at!).getTime() -
-                new Date(b.submitted_at!).getTime(),
-            )[0];
-          const created = new Date(pr.created_at).getTime();
-          return {
-            number: pr.number,
-            title: pr.title,
-            time_to_first_review_h: firstReview
-              ? +(
-                  (new Date(firstReview.submitted_at!).getTime() - created) /
-                  3_600_000
-                ).toFixed(1)
-              : null,
-            time_to_merge_h: +(
-              (new Date(pr.merged_at!).getTime() - created) /
-              3_600_000
-            ).toFixed(1),
-          };
-        }),
-      );
-
-      const avg = (nums: number[]) =>
-        nums.length
-          ? +(nums.reduce((a, b) => a + b, 0) / nums.length).toFixed(1)
-          : null;
-      const reviewTimes = reviewStats
-        .map((r) => r.time_to_first_review_h)
-        .filter((v): v is number => v !== null);
-      const mergeTimes = reviewStats.map((r) => r.time_to_merge_h);
-
-      // PR size buckets
-      const sizeOf = (c: number) =>
-        c < 10 ? "XS" : c < 50 ? "S" : c < 250 ? "M" : c < 1000 ? "L" : "XL";
-      const allPRs = [...open, ...closed].slice(0, 30);
-      const sizes = await Promise.all(
-        allPRs.map(async (pr) => {
-          const { data } = await octokit.rest.pulls.get({
-            owner,
-            repo,
-            pull_number: pr.number,
-          });
-          return sizeOf(data.additions + data.deletions);
-        }),
-      );
-      const sizeDistribution = { XS: 0, S: 0, M: 0, L: 0, XL: 0 };
-      sizes.forEach((s) => sizeDistribution[s]++);
-
-      // Stale PRs (open, no update in 14 days)
-      const stalePRs = open
-        .filter((pr) => now - new Date(pr.updated_at).getTime() > STALE_MS)
-        .map((pr) => ({
+          pull_number: pr.number,
+        });
+        const firstReview = reviews
+          .filter((r) => r.user?.id !== pr.user?.id)
+          .sort(
+            (a, b) =>
+              new Date(a.submitted_at!).getTime() -
+              new Date(b.submitted_at!).getTime(),
+          )[0];
+        const created = new Date(pr.created_at).getTime();
+        return {
           number: pr.number,
           title: pr.title,
-          days_stale: +(
-            (now - new Date(pr.updated_at).getTime()) /
-            86_400_000
-          ).toFixed(0),
-        }));
+          time_to_first_review_h: firstReview
+            ? +(
+                (new Date(firstReview.submitted_at!).getTime() - created) /
+                3_600_000
+              ).toFixed(1)
+            : null,
+          time_to_merge_h: +(
+            (new Date(pr.merged_at!).getTime() - created) /
+            3_600_000
+          ).toFixed(1),
+        };
+      }),
+    );
 
-      // Merge conflicts (open PRs with dirty mergeable_state)
-      const conflicts = await Promise.all(
-        open.slice(0, 20).map(async (pr) => {
-          const { data } = await octokit.rest.pulls.get({
-            owner,
-            repo,
-            pull_number: pr.number,
-          });
-          return data.mergeable_state === "dirty"
-            ? { number: data.number, title: data.title }
-            : null;
-        }),
-      );
+    const avg = (nums: number[]) =>
+      nums.length
+        ? +(nums.reduce((a, b) => a + b, 0) / nums.length).toFixed(1)
+        : null;
+    const reviewTimes = reviewStats
+      .map((r) => r.time_to_first_review_h)
+      .filter((v): v is number => v !== null);
+    const mergeTimes = reviewStats.map((r) => r.time_to_merge_h);
 
-      res.json({
-        review_time: {
-          avg_first_review_h: avg(reviewTimes),
-          avg_merge_h: avg(mergeTimes),
-          prs: reviewStats,
-        },
-        pr_size_distribution: sizeDistribution,
-        stale_prs: stalePRs,
-        merge_conflicts: conflicts.filter(Boolean),
-        reopened_count: null, // requires timeline API; add if needed
-      });
-    } catch (error) {
-      console.error("GitHub Error:", error);
-      res.status(500).json({ error: "Failed to fetch velocity metrics" });
-    }
-  },
-);
+    // PR size buckets
+    const sizeOf = (c: number) => {
+      if (c < 10) return "XS";
+      if (c < 50) return "S";
+      if (c < 250) return "M";
+      if (c < 1000) return "L";
+      return "XL";
+    };
+    const allPRs = [...open, ...closed].slice(0, 30);
+    const sizes = await Promise.all(
+      allPRs.map(async (pr) => {
+        const { data } = await octokit.rest.pulls.get({
+          owner,
+          repo,
+          pull_number: pr.number,
+        });
+        return sizeOf(data.additions + data.deletions);
+      }),
+    );
+    const sizeDistribution = { XS: 0, S: 0, M: 0, L: 0, XL: 0 };
+    sizes.forEach((s) => sizeDistribution[s]++);
+
+    // Stale PRs (open, no update in 14 days)
+    const stalePRs = open
+      .filter((pr) => now - new Date(pr.updated_at).getTime() > STALE_MS)
+      .map((pr) => ({
+        number: pr.number,
+        title: pr.title,
+        days_stale: +(
+          (now - new Date(pr.updated_at).getTime()) /
+          86_400_000
+        ).toFixed(0),
+      }));
+
+    // Merge conflicts (open PRs with dirty mergeable_state)
+    const conflicts = await Promise.all(
+      open.slice(0, 20).map(async (pr) => {
+        const { data } = await octokit.rest.pulls.get({
+          owner,
+          repo,
+          pull_number: pr.number,
+        });
+        return data.mergeable_state === "dirty"
+          ? { number: data.number, title: data.title }
+          : null;
+      }),
+    );
+
+    res.json({
+      review_time: {
+        avg_first_review_h: avg(reviewTimes),
+        avg_merge_h: avg(mergeTimes),
+        prs: reviewStats,
+      },
+      pr_size_distribution: sizeDistribution,
+      stale_prs: stalePRs,
+      merge_conflicts: conflicts.filter(Boolean),
+      reopened_count: null, // requires timeline API; add if needed
+    });
+  } catch (error) {
+    console.error("GitHub Error:", error);
+    res.status(500).json({ error: "Failed to fetch velocity metrics" });
+  }
+});
 
 // CI/CD Quality Signals — pipeline health, flaky runs, slow jobs, queue time
 router.get(
   "/api/analytics/cicd/:owner/:repo",
-  authenticateToken,
+
   async (req, res) => {
     try {
       const { owner, repo } = req.params;
@@ -272,8 +303,9 @@ router.get(
       > = {};
       runs.forEach((r) => {
         const day = r.created_at.slice(0, 10);
-        if (!dailyStats[day])
+        if (!dailyStats[day]) {
           dailyStats[day] = { success: 0, failure: 0, total: 0 };
+        }
         dailyStats[day].total++;
         if (r.conclusion === "success") dailyStats[day].success++;
         if (r.conclusion === "failure") dailyStats[day].failure++;
@@ -380,7 +412,7 @@ router.get(
             );
             if (!jobs.length) return null;
             const queueMin = +(
-              (new Date(jobs[0]!.started_at!).getTime() -
+              (new Date(jobs[0]!.created_at!).getTime() -
                 new Date(run.created_at).getTime()) /
               60_000
             ).toFixed(1);
