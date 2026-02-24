@@ -29,3 +29,14 @@ model Category {
   id   Int @id @default(autoincrement())
   templates Template[]
 }
+
+model User {
+  id             String   @id @default(uuid())
+  email          String   @unique
+  name           String
+  passwordHash   String    
+  githubUsername String?   
+  role           String   @default("DEV") // "DEV" or "ADMIN"
+  createdAt      DateTime @default(now())
+}
+
