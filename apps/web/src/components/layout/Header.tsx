@@ -11,14 +11,14 @@ import {
   LogOut,
   CircleUserRound,
 } from "lucide-react";
-import { Button } from "../ui/button";
-import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
+import { Button } from "../ui/button.js";
+
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from "../ui/dropdown-menu";
+} from "../ui/dropdown-menu.js";
 
 const NAV_ITEMS = [
   { name: "Dashboard", path: "/dashboard", icon: LayoutDashboard },
@@ -30,6 +30,15 @@ const NAV_ITEMS = [
 
 export function Header() {
   const location = useLocation();
+
+  // --- 1. Create the Logout Handler ---
+  const handleLogout = () => {
+    // Remove the authentication tokens from the browser
+    localStorage.removeItem("devcentral_token");
+
+    // Redirect the user back to the login page
+    globalThis.location.href = "/login";
+  };
 
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur">
@@ -69,10 +78,6 @@ export function Header() {
               variant="ghost"
               className="relative h-9 w-9 rounded-full border"
             >
-              {/* <Avatar className="h-9 w-9">
-                <AvatarImage src="https://github.com/shadcn.png" alt="User" />
-                <AvatarFallback>DC</AvatarFallback>
-              </Avatar> */}
               <CircleUserRound className="relative h-9 w-9" />
             </Button>
           </DropdownMenuTrigger>
@@ -83,7 +88,12 @@ export function Header() {
             <DropdownMenuItem>
               <Settings className="mr-2 h-4 w-4" /> Settings
             </DropdownMenuItem>
-            <DropdownMenuItem className="text-red-600">
+
+            {/* --- 2. Attach the handler to the onClick event --- */}
+            <DropdownMenuItem
+              className="text-red-600 cursor-pointer"
+              onClick={handleLogout}
+            >
               <LogOut className="mr-2 h-4 w-4" />
               Log out
             </DropdownMenuItem>

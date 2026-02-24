@@ -102,6 +102,8 @@ const API_BASE_URL =
   (import.meta as unknown as { env?: Record<string, string> }).env
     ?.VITE_API_BASE_URL ?? "http://localhost:4000";
 
+const token = localStorage.getItem("devcentral_token");
+
 export function GitOpsPage() {
   // --- State ---
   const [repos, setRepos] = useState<Repository[]>([]);
@@ -119,7 +121,11 @@ export function GitOpsPage() {
   useEffect(() => {
     async function fetchRepos() {
       try {
-        const res = await fetch(`${API_BASE_URL}/api/github/repos`);
+        const res = await fetch(`${API_BASE_URL}/api/github/repos`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
         if (!res.ok) throw new Error("Failed to fetch repos");
         const data = await res.json();
         setRepos(data);
@@ -146,7 +152,9 @@ export function GitOpsPage() {
       try {
         // Construct the URL: /api/github/repos/:owner/:repo/pulls
         const url = `${API_BASE_URL}/api/github/repos/${selectedRepo?.owner}/${selectedRepo?.name}/pulls`;
-        const res = await fetch(url);
+        const res = await fetch(url, {
+          headers: { Authorization: `Bearer ${token}` },
+        });
         if (!res.ok) throw new Error("Failed to fetch PRs");
         const data = await res.json();
         setPrs(data);
@@ -170,7 +178,9 @@ export function GitOpsPage() {
       setIsPipelinesLoading(true);
       try {
         const url = `${API_BASE_URL}/api/github/repos/${selectedRepo?.owner}/${selectedRepo?.name}/actions`;
-        const res = await fetch(url);
+        const res = await fetch(url, {
+          headers: { Authorization: `Bearer ${token}` },
+        });
         if (!res.ok) throw new Error("Failed to fetch actions");
         const data = await res.json();
         setPipelines(data.workflow_runs);
@@ -192,7 +202,9 @@ export function GitOpsPage() {
       setIsReleasesLoading(true);
       try {
         const url = `${API_BASE_URL}/api/github/repos/${selectedRepo?.owner}/${selectedRepo?.name}/releases`;
-        const res = await fetch(url);
+        const res = await fetch(url, {
+          headers: { Authorization: `Bearer ${token}` },
+        });
         if (!res.ok) throw new Error("Failed to fetch releases");
         const data = await res.json();
         setReleases(data);

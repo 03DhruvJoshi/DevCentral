@@ -161,6 +161,8 @@ const API_BASE_URL =
   (import.meta as unknown as { env?: Record<string, string> }).env
     ?.VITE_API_BASE_URL ?? "http://localhost:4000";
 
+const token = localStorage.getItem("devcentral_token");
+
 export function AnalyticsPage() {
   const [repos, setRepos] = useState<Repository[]>([]);
   const [selectedRepo, setSelectedRepo] = useState<Repository | null>(null);
@@ -182,7 +184,11 @@ export function AnalyticsPage() {
   useEffect(() => {
     async function fetchRepos() {
       try {
-        const res = await fetch(`${API_BASE_URL}/api/github/repos`);
+        const res = await fetch(`${API_BASE_URL}/api/github/repos`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
         if (!res.ok) throw new Error("Failed to fetch repos");
         const data = await res.json();
         setRepos(data);
@@ -211,6 +217,11 @@ export function AnalyticsPage() {
       try {
         const res = await fetch(
           `${API_BASE_URL}/api/analytics/sonar/${selectedRepo?.owner}/${selectedRepo?.name}`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          },
         );
         if (!res.ok) {
           if (res.status === 404)
@@ -240,6 +251,11 @@ export function AnalyticsPage() {
       try {
         const res = await fetch(
           `${API_BASE_URL}/api/analytics/velocity/${selectedRepo?.owner}/${selectedRepo?.name}`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          },
         );
         if (!res.ok) throw new Error("Failed to fetch velocity metrics");
         const data = await res.json();
@@ -267,6 +283,11 @@ export function AnalyticsPage() {
       try {
         const res = await fetch(
           `${API_BASE_URL}/api/analytics/cicd/${selectedRepo?.owner}/${selectedRepo?.name}`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          },
         );
         if (!res.ok) throw new Error("Failed to fetch CICD metrics");
         const data = await res.json();
