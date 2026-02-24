@@ -1,10 +1,11 @@
-import path from "path";
+import path from "node:path";
 import dotenv from "dotenv";
-import express from "express";
+
 import cors from "cors";
-import { fileURLToPath } from "url";
+import { fileURLToPath } from "node:url";
 import { Octokit } from "octokit";
-import { IRouter } from "express";
+import express, { IRouter, Response } from "express";
+import { authenticateToken, AuthenticatedRequest } from "./authenticatetoken";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 dotenv.config({ path: path.resolve(__dirname, "../../.env") });
@@ -20,50 +21,72 @@ const router: IRouter = express.Router();
 router.use(cors());
 router.use(express.json());
 
-router.get("/api/github/repos", async (req, res) => {
-  try {
-    // Fetch repos for the authenticated user
-    const { data } = await octokit.rest.repos.listForAuthenticatedUser({
-      visibility: "all",
-      sort: "updated",
-      per_page: 10,
-    });
+router.get(
+  "/api/github/repos",
+  authenticateToken,
+  async (req: AuthenticatedRequest, res: Response) => {
+    try {
+      const username = req.user?.githubUsername;
 
-    const simpleRepos = data.map((repo) => ({
-      id: repo.id,
-      name: repo.name,
-      owner: repo.owner.login,
-      description: repo.description,
-      url: repo.html_url,
-      private: repo.private,
-      language: repo.language,
-      updated_at: repo.updated_at,
-    }));
+      if (!username) {
+        return res
+          .status(400)
+          .json({ error: "No GitHub username linked to this account." });
+      }
 
-    res.json(simpleRepos);
-  } catch (error) {
-    console.error("GitHub Error:", error);
-    res.status(500).json({ error: "Failed to fetch from GitHub" });
-  }
-});
+      console.log(`Fetching GitHub repositories for: ${username}`);
 
-router.get("/api/github/repos/:owner/:repo/pulls", async (req, res) => {
-  try {
-    const { owner, repo } = req.params;
-    const { data } = await octokit.rest.pulls.list({
-      owner,
-      repo,
-      state: "all",
-      per_page: 5,
-    });
-    res.json(data);
-  } catch (error) {
-    console.error("GitHub Error:", error);
-    res
-      .status(500)
-      .json({ error: "Failed to fetch pull requests from GitHub" });
-  }
-});
+      const { data } = await octokit.rest.repos.listForUser({
+        username: username,
+        type: "all",
+        sort: "updated",
+      });
+
+      const simpleRepos = data.map((repo) => ({
+        id: repo.id,
+        name: repo.name,
+        owner: repo.owner.login,
+        description: repo.description,
+        url: repo.html_url,
+        private: repo.private,
+        language: repo.language,
+        updated_at: repo.updated_at,
+      }));
+
+      res.json(simpleRepos);
+    } catch (error) {
+      console.error(
+        `GitHub Error fetching repos for ${req.user?.githubUsername}:`,
+        error,
+      );
+      res
+        .status(500)
+        .json({ error: "Failed to fetch repositories from GitHub" });
+    }
+  },
+);
+
+router.get(
+  "/api/github/repos/:owner/:repo/pulls",
+
+  async (req, res) => {
+    try {
+      const { owner, repo } = req.params;
+      const { data } = await octokit.rest.pulls.list({
+        owner,
+        repo,
+        state: "all",
+        per_page: 5,
+      });
+      res.json(data);
+    } catch (error) {
+      console.error("GitHub Error:", error);
+      res
+        .status(500)
+        .json({ error: "Failed to fetch pull requests from GitHub" });
+    }
+  },
+);
 
 router.get("/api/github/repos/:owner/:repo/actions", async (req, res) => {
   try {

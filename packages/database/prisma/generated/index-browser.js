@@ -141,6 +141,16 @@ exports.Prisma.CategoryScalarFieldEnum = {
   id: 'id'
 };
 
+exports.Prisma.UserScalarFieldEnum = {
+  id: 'id',
+  email: 'email',
+  name: 'name',
+  passwordHash: 'passwordHash',
+  githubUsername: 'githubUsername',
+  role: 'role',
+  createdAt: 'createdAt'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -151,11 +161,17 @@ exports.Prisma.QueryMode = {
   insensitive: 'insensitive'
 };
 
+exports.Prisma.NullsOrder = {
+  first: 'first',
+  last: 'last'
+};
+
 
 exports.Prisma.ModelName = {
   Project: 'Project',
   Template: 'Template',
-  Category: 'Category'
+  Category: 'Category',
+  User: 'User'
 };
 
 /**

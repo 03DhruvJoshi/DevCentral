@@ -58,6 +58,7 @@ import {
   AreaChart,
   Area,
 } from "recharts";
+import { useNavigate } from "react-router-dom";
 
 interface Repository {
   id: number;
@@ -162,6 +163,7 @@ const API_BASE_URL =
     ?.VITE_API_BASE_URL ?? "http://localhost:4000";
 
 export function AnalyticsPage() {
+  const navigate = useNavigate();
   const [repos, setRepos] = useState<Repository[]>([]);
   const [selectedRepo, setSelectedRepo] = useState<Repository | null>(null);
 
@@ -182,7 +184,17 @@ export function AnalyticsPage() {
   useEffect(() => {
     async function fetchRepos() {
       try {
-        const res = await fetch(`${API_BASE_URL}/api/github/repos`);
+        const token = localStorage.getItem("devcentral_token");
+        if (!token) {
+          navigate("/login", { replace: true });
+          return;
+        }
+
+        const res = await fetch(`${API_BASE_URL}/api/github/repos`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
         if (!res.ok) throw new Error("Failed to fetch repos");
         const data = await res.json();
         setRepos(data);
@@ -198,7 +210,7 @@ export function AnalyticsPage() {
       }
     }
     fetchRepos();
-  }, []);
+  }, [navigate]);
 
   useEffect(() => {
     if (!selectedRepo) return;
@@ -209,8 +221,19 @@ export function AnalyticsPage() {
       setMetrics(null);
 
       try {
+        const token = localStorage.getItem("devcentral_token");
+        if (!token) {
+          navigate("/login", { replace: true });
+          return;
+        }
+
         const res = await fetch(
           `${API_BASE_URL}/api/analytics/sonar/${selectedRepo?.owner}/${selectedRepo?.name}`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          },
         );
         if (!res.ok) {
           if (res.status === 404)
@@ -227,7 +250,7 @@ export function AnalyticsPage() {
     }
 
     fetchSonarMetrics();
-  }, [selectedRepo]);
+  }, [navigate, selectedRepo]);
 
   useEffect(() => {
     if (!selectedRepo) return;
@@ -238,8 +261,19 @@ export function AnalyticsPage() {
       setIsVelocityLoading(true);
 
       try {
+        const token = localStorage.getItem("devcentral_token");
+        if (!token) {
+          navigate("/login", { replace: true });
+          return;
+        }
+
         const res = await fetch(
           `${API_BASE_URL}/api/analytics/velocity/${selectedRepo?.owner}/${selectedRepo?.name}`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          },
         );
         if (!res.ok) throw new Error("Failed to fetch velocity metrics");
         const data = await res.json();
@@ -254,7 +288,7 @@ export function AnalyticsPage() {
       }
     }
     fetchVelocity();
-  }, [selectedRepo]);
+  }, [navigate, selectedRepo]);
 
   useEffect(() => {
     if (!selectedRepo) return;
@@ -265,8 +299,19 @@ export function AnalyticsPage() {
       setIsCicdLoading(true);
 
       try {
+        const token = localStorage.getItem("devcentral_token");
+        if (!token) {
+          navigate("/login", { replace: true });
+          return;
+        }
+
         const res = await fetch(
           `${API_BASE_URL}/api/analytics/cicd/${selectedRepo?.owner}/${selectedRepo?.name}`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          },
         );
         if (!res.ok) throw new Error("Failed to fetch CICD metrics");
         const data = await res.json();
@@ -279,7 +324,7 @@ export function AnalyticsPage() {
       }
     }
     fetchCicd();
-  }, [selectedRepo]);
+  }, [navigate, selectedRepo]);
 
   // Chart 1: Issue Breakdown (Bar Chart)
   const issueData = metrics
