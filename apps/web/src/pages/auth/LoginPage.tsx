@@ -19,7 +19,7 @@ export function LoginPage() {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
 
-  const handleLogin = async (e: React.FormEvent) => {
+  const handleLogin = async (e: SubmitEvent) => {
     e.preventDefault();
     try {
       const res = await fetch(`${API_BASE_URL}/api/auth/login`, {

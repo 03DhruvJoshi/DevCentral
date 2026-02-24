@@ -47,6 +47,7 @@ import {
   AvatarFallback,
   AvatarImage,
 } from "../../components/ui/avatar.js";
+import { useNavigate } from "react-router-dom";
 
 // --- Types ---
 interface Repository {
@@ -105,7 +106,7 @@ const API_BASE_URL =
 const token = localStorage.getItem("devcentral_token");
 
 export function GitOpsPage() {
-  // --- State ---
+  const navigate = useNavigate();
   const [repos, setRepos] = useState<Repository[]>([]);
   const [selectedRepo, setSelectedRepo] = useState<Repository | null>(null);
 
@@ -116,6 +117,12 @@ export function GitOpsPage() {
   const [isPipelinesLoading, setIsPipelinesLoading] = useState(false);
   const [isReleasesLoading, setIsReleasesLoading] = useState(false);
   const [isReposLoading, setIsReposLoading] = useState(true);
+
+  const token = localStorage.getItem("devcentral_token");
+  if (!token) {
+    navigate("/login", { replace: true });
+    return;
+  }
 
   // --- 1. Fetch Repositories on Mount ---
   useEffect(() => {

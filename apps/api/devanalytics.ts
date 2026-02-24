@@ -1,33 +1,9 @@
 import path from "node:path";
 import dotenv from "dotenv";
-import express, { IRouter, Request, Response, NextFunction } from "express";
+import express, { IRouter } from "express";
 import { fileURLToPath } from "node:url";
 import { Octokit } from "octokit";
-import jwt from "jsonwebtoken";
-
-interface AuthenticatedRequest extends Request {
-  user?: {
-    email: string;
-    name: string;
-    password: string;
-    githubUsername: string;
-  };
-}
-
-const isAuthenticatedUserPayload = (
-  decodedUser: string | jwt.JwtPayload | undefined,
-): decodedUser is AuthenticatedRequest["user"] => {
-  if (!decodedUser || typeof decodedUser === "string") {
-    return false;
-  }
-
-  return (
-    typeof decodedUser.email === "string" &&
-    typeof decodedUser.name === "string" &&
-    typeof decodedUser.password === "string" &&
-    typeof decodedUser.githubUsername === "string"
-  );
-};
+import { authenticateToken } from "./authenticatetoken";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 dotenv.config({ path: path.resolve(__dirname, "../../.env") });
@@ -42,38 +18,6 @@ const octokit = new Octokit({
 
 const router: IRouter = express.Router();
 
-const authenticateToken = (
-  req: AuthenticatedRequest,
-  res: Response,
-  next: NextFunction,
-) => {
-  const authHeader = req.headers["authorization"];
-
-  const token = authHeader ? authHeader.split(" ")[1] : null;
-
-  if (!token) {
-    return res.status(401).json({ error: "Access denied. No token provided." });
-  }
-
-  jwt.verify(
-    token,
-    process.env.JWT_SECRET as string,
-    (
-      err: jwt.VerifyErrors | null,
-      decodedUser: string | jwt.JwtPayload | undefined,
-    ) => {
-      if (err || !isAuthenticatedUserPayload(decodedUser)) {
-        return res
-          .status(403)
-          .json({ error: "Invalid or expired session. Please log in again." });
-      }
-
-      req.user = decodedUser;
-      next();
-    },
-  );
-};
-
 const isValidRepoParam = (value: unknown): value is string => {
   return (
     typeof value === "string" &&
@@ -82,6 +26,7 @@ const isValidRepoParam = (value: unknown): value is string => {
     /^[A-Za-z0-9_.-]+$/.test(value)
   );
 };
+
 router.get(
   "/api/analytics/sonar/:owner/:repo",
   authenticateToken,
@@ -142,10 +87,9 @@ router.get(
       res.json(metricsMap);
     } catch (error) {
       console.error("SonarQube Error:", error);
-      res.status(400).json({ error: "Invalid request parameters" });
-      res.status(404).json({ error: "Project not found in SonarQube" });
-      res.status(401).json({ error: "Unauthorized: Invalid SonarQube token" });
-      res.status(500).json({ error: "Failed to fetch metrics from SonarQube" });
+      return res
+        .status(500)
+        .json({ error: "Failed to fetch metrics from SonarQube" });
     }
   },
 );

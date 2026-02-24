@@ -58,6 +58,7 @@ import {
   AreaChart,
   Area,
 } from "recharts";
+import { useNavigate } from "react-router-dom";
 
 interface Repository {
   id: number;
@@ -161,9 +162,8 @@ const API_BASE_URL =
   (import.meta as unknown as { env?: Record<string, string> }).env
     ?.VITE_API_BASE_URL ?? "http://localhost:4000";
 
-const token = localStorage.getItem("devcentral_token");
-
 export function AnalyticsPage() {
+  const navigate = useNavigate();
   const [repos, setRepos] = useState<Repository[]>([]);
   const [selectedRepo, setSelectedRepo] = useState<Repository | null>(null);
 
@@ -184,6 +184,12 @@ export function AnalyticsPage() {
   useEffect(() => {
     async function fetchRepos() {
       try {
+        const token = localStorage.getItem("devcentral_token");
+        if (!token) {
+          navigate("/login", { replace: true });
+          return;
+        }
+
         const res = await fetch(`${API_BASE_URL}/api/github/repos`, {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -204,7 +210,7 @@ export function AnalyticsPage() {
       }
     }
     fetchRepos();
-  }, []);
+  }, [navigate]);
 
   useEffect(() => {
     if (!selectedRepo) return;
@@ -215,6 +221,12 @@ export function AnalyticsPage() {
       setMetrics(null);
 
       try {
+        const token = localStorage.getItem("devcentral_token");
+        if (!token) {
+          navigate("/login", { replace: true });
+          return;
+        }
+
         const res = await fetch(
           `${API_BASE_URL}/api/analytics/sonar/${selectedRepo?.owner}/${selectedRepo?.name}`,
           {
@@ -238,7 +250,7 @@ export function AnalyticsPage() {
     }
 
     fetchSonarMetrics();
-  }, [selectedRepo]);
+  }, [navigate, selectedRepo]);
 
   useEffect(() => {
     if (!selectedRepo) return;
@@ -249,6 +261,12 @@ export function AnalyticsPage() {
       setIsVelocityLoading(true);
 
       try {
+        const token = localStorage.getItem("devcentral_token");
+        if (!token) {
+          navigate("/login", { replace: true });
+          return;
+        }
+
         const res = await fetch(
           `${API_BASE_URL}/api/analytics/velocity/${selectedRepo?.owner}/${selectedRepo?.name}`,
           {
@@ -270,7 +288,7 @@ export function AnalyticsPage() {
       }
     }
     fetchVelocity();
-  }, [selectedRepo]);
+  }, [navigate, selectedRepo]);
 
   useEffect(() => {
     if (!selectedRepo) return;
@@ -281,6 +299,12 @@ export function AnalyticsPage() {
       setIsCicdLoading(true);
 
       try {
+        const token = localStorage.getItem("devcentral_token");
+        if (!token) {
+          navigate("/login", { replace: true });
+          return;
+        }
+
         const res = await fetch(
           `${API_BASE_URL}/api/analytics/cicd/${selectedRepo?.owner}/${selectedRepo?.name}`,
           {
@@ -300,7 +324,7 @@ export function AnalyticsPage() {
       }
     }
     fetchCicd();
-  }, [selectedRepo]);
+  }, [navigate, selectedRepo]);
 
   // Chart 1: Issue Breakdown (Bar Chart)
   const issueData = metrics

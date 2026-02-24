@@ -11,11 +11,7 @@ import {
   CardFooter,
 } from "../../components/ui/card.js";
 import { Github, Loader2 } from "lucide-react";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
-} from "../../components/ui/tooltip.js";
+import type { SubmitEvent } from "react";
 
 const API_BASE_URL =
   (import.meta as unknown as { env?: Record<string, string> }).env
@@ -31,7 +27,7 @@ export function RegisterPage() {
   const [isLoading, setIsLoading] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
 
-  const handleRegister = async (e: React.FormEvent) => {
+  const handleRegister = async (e: SubmitEvent) => {
     e.preventDefault();
     setIsLoading(true);
     setError(null);
@@ -147,7 +143,7 @@ export function RegisterPage() {
 
             <Button
               type="submit"
-              className="w-full mt-6 bg-grey-900 hover:bg-red-400 text-black"
+              className="w-full mt-6 bg-gray-900 hover:bg-red-400 text-black"
               disabled={isLoading}
             >
               {isLoading ? (
