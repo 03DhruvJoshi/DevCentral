@@ -5,6 +5,7 @@ import cors from "cors";
 import gitops from "./gitops.js";
 import scaffolder from "./scaffolder.js";
 import devanalytics from "./devanalytics.js";
+import auth from "./auth.js";
 
 const app = express();
 
@@ -15,6 +16,7 @@ app.use(express.json());
 app.use(gitops);
 app.use(scaffolder);
 app.use(devanalytics);
+app.use(auth);
 
 app.listen(PORT, () => {
   console.log(`🚀 API Server running on http://localhost:${PORT}`);
