@@ -4,8 +4,12 @@ import dotenv from "dotenv";
 import cors from "cors";
 import { fileURLToPath } from "node:url";
 import { Octokit } from "octokit";
+
 import express, { IRouter, Response } from "express";
-import { authenticateToken, AuthenticatedRequest } from "./authenticatetoken";
+import {
+  authenticateToken,
+  AuthenticatedRequest,
+} from "./authenticatetoken.js";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 dotenv.config({ path: path.resolve(__dirname, "../../.env") });

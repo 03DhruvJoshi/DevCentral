@@ -10,21 +10,6 @@ interface AuthenticatedRequest extends Request {
   };
 }
 
-const isAuthenticatedUserPayload = (
-  decodedUser: string | jwt.JwtPayload | undefined,
-): decodedUser is AuthenticatedRequest["user"] => {
-  if (!decodedUser || typeof decodedUser === "string") {
-    return false;
-  }
-
-  return (
-    typeof decodedUser.email === "string" &&
-    typeof decodedUser.name === "string" &&
-    typeof decodedUser.password === "string" &&
-    typeof decodedUser.githubUsername === "string"
-  );
-};
-
 const authenticateToken = (
   req: AuthenticatedRequest,
   res: Response,
@@ -45,16 +30,14 @@ const authenticateToken = (
       err: jwt.VerifyErrors | null,
       decodedUser: string | jwt.JwtPayload | undefined,
     ) => {
-      if (err || !isAuthenticatedUserPayload(decodedUser)) {
+      if (err || !decodedUser || typeof decodedUser === "string") {
         return res
           .status(403)
           .json({ error: "Invalid or expired session. Please log in again." });
       }
-
-      req.user = decodedUser;
+      req.user = decodedUser as AuthenticatedRequest["user"];
       next();
     },
   );
 };
-
 export { type AuthenticatedRequest, authenticateToken };
