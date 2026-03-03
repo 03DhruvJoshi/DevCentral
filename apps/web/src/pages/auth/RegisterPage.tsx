@@ -143,7 +143,7 @@ export function RegisterPage() {
 
             <Button
               type="submit"
-              className="w-full mt-6 bg-gray-900 hover:bg-red-400 text-black"
+              className="w-full mt-6  hover:bg-red-400 text-black"
               disabled={isLoading}
             >
               {isLoading ? (

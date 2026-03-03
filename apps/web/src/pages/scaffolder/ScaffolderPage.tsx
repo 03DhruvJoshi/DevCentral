@@ -60,45 +60,13 @@ import {
 import { Textarea } from "../../components/ui/textarea.js";
 import { Separator } from "../../components/ui/separator.js";
 import { formSchema } from "../../zod/ScaffolderZod.js";
+import type { Category, Template } from "./components/types.js";
+import {
+  API_BASE_URL,
+  fetchCategories,
+  fetchTemplates,
+} from "./components/types.js";
 
-const API_BASE_URL =
-  (import.meta as unknown as { env?: Record<string, string> }).env
-    ?.VITE_API_BASE_URL ?? "http://localhost:4000";
-
-// API Template type (matches Express backend response)
-interface Template {
-  id: number;
-  title: string;
-  description: string;
-  categoryName: string;
-  yaml: string;
-  createdAt: string;
-  updatedAt: string;
-}
-
-interface Category {
-  id: number;
-  name: string;
-}
-
-const fetchCategories = async (): Promise<Category[]> => {
-  const response = await fetch(`${API_BASE_URL}/api/categories`);
-  if (!response.ok) {
-    throw new Error("Failed to fetch categories");
-  }
-  return response.json();
-};
-
-// Fetch templates from API
-const fetchTemplates = async (): Promise<Template[]> => {
-  const response = await fetch(`${API_BASE_URL}/api/templates`);
-  if (!response.ok) {
-    throw new Error("Failed to fetch templates");
-  }
-  return response.json();
-};
-
-// --- Main Component ---
 export function ScaffolderPage() {
   const [searchTerm, setSearchTerm] = useState("");
   const [showCreateCategory, setShowCreateCategory] = useState(false);
