@@ -1,233 +1,519 @@
-import {
-  GitPullRequest,
-  CheckCircle2,
-  Clock,
-  Zap,
-  PlayCircle,
-  AlertTriangle,
-  Columns3Cog,
-  Pencil,
-  RefreshCcw,
-} from "lucide-react";
-import {
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-  CardDescription,
-} from "../../components/ui/card.js";
-import { Badge } from "../../components/ui/badge.js";
+// DashboardPage.tsx
+import { useState, useEffect, useRef, useCallback } from "react";
+import { useDebounce } from "use-debounce";
+import GridLayout from "react-grid-layout";
+import type { FallbackProps } from "react-error-boundary";
 import { Button } from "../../components/ui/button.js";
 import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "../../components/ui/table.js";
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "../../components/ui/dialog.js";
+import { Label } from "../../components/ui/label.js";
+import {
+  Loader2,
+  LayoutGrid,
+  Columns3Cog,
+  X,
+  Undo2,
+  Redo2,
+  Plus,
+  Check,
+} from "lucide-react";
+import { ErrorBoundary } from "react-error-boundary";
+import { ActionsWidget } from "./components/ActionsWidget.js";
+import { QuickScaffoldWidget } from "./components/QuickScaffolderWidget.js";
+import { API_BASE_URL } from "./types.js";
 
-import { METRICS, RECENT_PIPELINES, AI_ALERTS } from "./DashboardMockData.js";
+// --- TYPES ---
+type GridItem = {
+  i: string;
+  x: number;
+  y: number;
+  w: number;
+  h: number;
+  minW?: number;
+  minH?: number;
+  maxW?: number;
+  maxH?: number;
+  static?: boolean;
+};
 
+type WidgetDefinition = {
+  id: string;
+  label: string;
+  defaultW: number;
+  defaultH: number;
+  minW?: number;
+  minH?: number;
+  maxW?: number;
+  maxH?: number;
+  component: React.ComponentType;
+};
+
+// --- WIDGET CATALOG ---
+const WIDGET_CATALOG: WidgetDefinition[] = [
+  {
+    id: "action-center",
+    label: "Action Center (GitOps)",
+    defaultW: 2,
+    defaultH: 2,
+    component: ActionsWidget,
+  },
+  {
+    id: "quick-scaffold",
+    label: "Quick Scaffold (Templates)",
+    defaultW: 1,
+    defaultH: 2,
+    component: QuickScaffoldWidget,
+  },
+  {
+    id: "dora-metrics",
+    label: "DORA Metrics (Analytics)",
+    defaultW: 3,
+    defaultH: 1,
+    component: () => (
+      <div className="h-full w-full flex items-center justify-center border-dashed">
+        <p className="text-muted-foreground">Analytics Widget Placeholder</p>
+      </div>
+    ),
+  },
+];
+
+// --- ERROR BOUNDARY FALLBACK ---
+const WidgetErrorFallback = ({ error, resetErrorBoundary }: FallbackProps) => (
+  <div className="p-4 text-red-500">
+    <p>Something went wrong with this widget:</p>
+    <pre className="text-xs">{String(error)}</pre>
+    <Button onClick={resetErrorBoundary} variant="outline" size="sm">
+      Retry
+    </Button>
+  </div>
+);
+
+// --- RESIZE HANDLE ---
+const renderResizeHandle = (
+  axis: "s" | "w" | "e" | "n" | "sw" | "nw" | "se" | "ne",
+  ref: React.Ref<HTMLElement>,
+) => (
+  <span
+    ref={ref}
+    className="absolute bottom-1 right-1 h-4 w-4 cursor-se-resize rounded-sm bg-muted-foreground/40"
+    aria-label={`Resize handle ${axis}`}
+  />
+);
+
+// --- BREAKPOINT HOOK ---
+function useBreakpoint() {
+  const [cols, setCols] = useState(3);
+
+  useEffect(() => {
+    const onResize = () => {
+      if (window.innerWidth < 768) {
+        setCols(1);
+      } else if (window.innerWidth < 1200) {
+        setCols(2);
+      } else {
+        setCols(3);
+      }
+    };
+    onResize();
+    window.addEventListener("resize", onResize);
+    return () => window.removeEventListener("resize", onResize);
+  }, []);
+
+  return cols;
+}
+
+// --- LAYOUT MANAGEMENT HOOK ---
+function useDashboardLayout() {
+  const [layout, setLayout] = useState<GridItem[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [isSaving, setIsSaving] = useState(false);
+  const [history, setHistory] = useState<GridItem[][]>([]);
+  const [historyIndex, setHistoryIndex] = useState(-1);
+  const [debouncedLayout] = useDebounce(layout, 1000);
+
+  const canUndo = historyIndex > 0;
+  const canRedo = historyIndex < history.length - 1;
+
+  const pushToHistory = useCallback(
+    (newLayout: GridItem[]) => {
+      setHistory((prev) => {
+        const newHistory = prev.slice(0, historyIndex + 1);
+        return [...newHistory, newLayout];
+      });
+      setHistoryIndex((prev) => prev + 1);
+    },
+    [historyIndex],
+  );
+
+  const undo = useCallback(() => {
+    if (canUndo) {
+      const nextIndex = historyIndex - 1;
+      const nextLayout = history[nextIndex];
+      if (!nextLayout) return;
+      setHistoryIndex(nextIndex);
+      setLayout(nextLayout);
+    }
+  }, [canUndo, history, historyIndex]);
+
+  const redo = useCallback(() => {
+    if (canRedo) {
+      const nextIndex = historyIndex + 1;
+      const nextLayout = history[nextIndex];
+      if (!nextLayout) return;
+      setHistoryIndex(nextIndex);
+      setLayout(nextLayout);
+    }
+  }, [canRedo, history, historyIndex]);
+
+  const updateLayout = useCallback(
+    (newLayout: GridItem[]) => {
+      setLayout(newLayout);
+      pushToHistory(newLayout);
+    },
+    [pushToHistory],
+  );
+
+  const getNextY = useCallback((items: GridItem[]) => {
+    if (items.length === 0) {
+      return 0;
+    }
+
+    return Math.max(...items.map((item) => item.y + item.h));
+  }, []);
+
+  const addWidget = useCallback(
+    (widgetId: string) => {
+      if (layout.some((item) => item.i === widgetId)) {
+        return;
+      }
+
+      const catalogInfo = WIDGET_CATALOG.find((w) => w.id === widgetId);
+      if (!catalogInfo) return;
+
+      const newWidgetBase: GridItem = {
+        i: widgetId,
+        x: 0,
+        y: getNextY(layout),
+        w: catalogInfo.defaultW,
+        h: catalogInfo.defaultH,
+      };
+
+      const newWidget: GridItem = { ...newWidgetBase };
+
+      if (catalogInfo.minW === undefined) {
+        // no-op
+      } else {
+        newWidget.minW = catalogInfo.minW;
+      }
+
+      if (catalogInfo.minH === undefined) {
+        // no-op
+      } else {
+        newWidget.minH = catalogInfo.minH;
+      }
+
+      if (catalogInfo.maxW === undefined) {
+        // no-op
+      } else {
+        newWidget.maxW = catalogInfo.maxW;
+      }
+
+      if (catalogInfo.maxH === undefined) {
+        // no-op
+      } else {
+        newWidget.maxH = catalogInfo.maxH;
+      }
+
+      updateLayout([...layout, newWidget]);
+    },
+    [getNextY, layout, updateLayout],
+  );
+
+  const removeWidget = useCallback(
+    (widgetId: string) => {
+      updateLayout(layout.filter((w) => w.i !== widgetId));
+    },
+    [layout, updateLayout],
+  );
+
+  const saveLayoutToDB = useCallback(async (newLayout: GridItem[]) => {
+    setIsSaving(true);
+    try {
+      const token = localStorage.getItem("devcentral_token");
+      await fetch(`${API_BASE_URL}/api/dashboard/preferences`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({ widgets: newLayout }),
+      });
+    } catch (err) {
+      console.error(err);
+    } finally {
+      setIsSaving(false);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (debouncedLayout.length > 0) {
+      saveLayoutToDB(debouncedLayout);
+    }
+  }, [debouncedLayout, saveLayoutToDB]);
+
+  useEffect(() => {
+    const fetchLayout = async () => {
+      try {
+        const token = localStorage.getItem("devcentral_token");
+        const res = await fetch(`${API_BASE_URL}/api/dashboard/preferences`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        const data = await res.json();
+        if (data.widgets && data.widgets.length > 0) {
+          setLayout(data.widgets);
+        } else {
+          setLayout([
+            { i: "action-center", x: 0, y: 0, w: 2, h: 2 },
+            { i: "quick-scaffold", x: 2, y: 0, w: 1, h: 2 },
+            { i: "dora-metrics", x: 0, y: 2, w: 3, h: 1 },
+          ]);
+        }
+      } catch (err) {
+        console.error("Failed to load layout", err);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+    fetchLayout();
+  }, []);
+
+  return {
+    layout,
+    isLoading,
+    isSaving,
+    addWidget,
+    removeWidget,
+    updateLayout,
+    undo,
+    redo,
+    canUndo,
+    canRedo,
+  };
+}
+
+// --- MAIN COMPONENT ---
 export function DashboardPage() {
+  const {
+    layout,
+    isLoading,
+    isSaving,
+    addWidget,
+    removeWidget,
+    updateLayout,
+    undo,
+    redo,
+    canUndo,
+    canRedo,
+  } = useDashboardLayout();
+  const gridContainerRef = useRef<HTMLDivElement>(null);
+  const cols = useBreakpoint();
+  const [gridWidth, setGridWidth] = useState(1200);
+
+  useEffect(() => {
+    if (!gridContainerRef.current) {
+      return;
+    }
+
+    const observer = new ResizeObserver((entries) => {
+      const entry = entries[0];
+      if (!entry) {
+        return;
+      }
+      setGridWidth(Math.max(320, Math.floor(entry.contentRect.width - 32)));
+    });
+
+    observer.observe(gridContainerRef.current);
+    return () => observer.disconnect();
+  }, []);
+
+  const isWidgetActive = useCallback(
+    (widgetId: string) => layout.some((w) => w.i === widgetId),
+    [layout],
+  );
+
+  const toggleWidget = useCallback(
+    (widgetId: string, checked: boolean) => {
+      checked ? addWidget(widgetId) : removeWidget(widgetId);
+    },
+    [addWidget, removeWidget],
+  );
+
+  if (isLoading) {
+    return (
+      <div className="flex justify-center py-20">
+        <Loader2 className="animate-spin h-8 w-8 text-primary" />
+      </div>
+    );
+  }
+
   return (
     <div className="flex flex-col gap-6">
-      {/* 1. Header Section */}
-      <div className="flex justify-between items-center">
+      {/* HEADER & CONTROLS */}
+      <div className="flex justify-between items-center pb-4 border-b">
         <div>
           <h1 className="text-3xl font-bold tracking-tight">
             Platform Overview
           </h1>
           <p className="text-muted-foreground mt-1">
-            Welcome back. Here is the status of your ecosystem.
+            Drag and resize widgets to customise your workspace.
           </p>
         </div>
-        <div className="flex gap-2">
-          <Button variant="outline">
-            <RefreshCcw className="mr-2 h-4 w-4" /> Refresh
+        <div className="flex items-center gap-2">
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={undo}
+            disabled={!canUndo}
+            aria-label="Undo last layout change"
+          >
+            <Undo2 className="h-4 w-4" />
           </Button>
-          <Button variant="outline">
-            <Columns3Cog className="mr-2 h-4 w-4" /> Customise Dashboard
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={redo}
+            disabled={!canRedo}
+            aria-label="Redo last layout change"
+          >
+            <Redo2 className="h-4 w-4" />
           </Button>
+          <Dialog>
+            <DialogTrigger asChild>
+              <Button variant="outline" className="gap-2">
+                <LayoutGrid className="h-4 w-4" />
+                Manage Widgets
+              </Button>
+            </DialogTrigger>
+            <DialogContent className="bg-white">
+              <DialogHeader>
+                <DialogTitle>Widget Preferences</DialogTitle>
+              </DialogHeader>
+              <div className="flex flex-col gap-4 py-4">
+                {WIDGET_CATALOG.map((widget) => (
+                  <button
+                    type="button"
+                    key={widget.id}
+                    onClick={() =>
+                      toggleWidget(widget.id, !isWidgetActive(widget.id))
+                    }
+                    className="flex items-center justify-between border p-3 rounded bg-muted/10 hover:bg-muted/20 transition-colors"
+                  >
+                    <Label className="font-bold">{widget.label}</Label>
+                    {isWidgetActive(widget.id) ? (
+                      <span className="text-xs font-medium text-emerald-600 flex items-center gap-1">
+                        <Check className="h-4 w-4" /> Added
+                      </span>
+                    ) : (
+                      <span className="text-xs font-medium text-muted-foreground flex items-center gap-1">
+                        <Plus className="h-4 w-4" /> Add
+                      </span>
+                    )}
+                  </button>
+                ))}
+                {isSaving && (
+                  <span className="text-xs text-muted-foreground flex items-center gap-1">
+                    <Loader2 className="h-3 w-3 animate-spin" />
+                    Saving layout...
+                  </span>
+                )}
+              </div>
+            </DialogContent>
+          </Dialog>
         </div>
       </div>
 
-      {/* 2. Top Metric Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-        {METRICS.map((metric) => (
-          <Card key={metric.title}>
-            <CardHeader className="flex flex-row items-center justify-between pb-2">
-              <CardTitle className="text-sm font-medium">
-                {metric.title}
-              </CardTitle>
-              <metric.icon className={`h-4 w-4 ${metric.icon}`} />
-            </CardHeader>
-            <CardContent>
-              <div className="text-2xl font-bold">{metric.value}</div>
-              <p className="text-xs text-muted-foreground mt-1">
-                {metric.trend} from last week
-              </p>
-            </CardContent>
-          </Card>
-        ))}
-      </div>
-
-      {/* 3. Main Dashboard Grid */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        {/* Left Column (Span 2): CI/CD & PRs */}
-        <div className="lg:col-span-2 flex flex-col gap-6">
-          {/* CI/CD Pipelines Card */}
-          <Card className="col-span-2">
-            <CardHeader>
-              <CardTitle>Recent Pipelines</CardTitle>
-              <CardDescription>
-                Status of your continuous integration workflows across all
-                repos.
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              <Table>
-                <TableHeader>
-                  <TableRow>
-                    <TableHead>Run ID</TableHead>
-                    <TableHead>Repository</TableHead>
-                    <TableHead>Status</TableHead>
-                    <TableHead>Duration</TableHead>
-                    <TableHead className="text-right">Actions</TableHead>
-                  </TableRow>
-                </TableHeader>
-                <TableBody>
-                  {RECENT_PIPELINES.map((pipeline) => (
-                    <TableRow key={pipeline.id}>
-                      <TableCell className="font-medium">
-                        {pipeline.id}
-                      </TableCell>
-                      <TableCell>
-                        <div className="flex flex-col">
-                          <span className="font-medium">{pipeline.repo}</span>
-                          <span className="text-xs text-muted-foreground">
-                            branch: {pipeline.branch}
-                          </span>
-                        </div>
-                      </TableCell>
-                      <TableCell>
-                        {pipeline.status === "success" && (
-                          <Badge
-                            variant="default"
-                            className="bg-green-600 hover:bg-green-700"
-                          >
-                            Success
-                          </Badge>
-                        )}
-                        {pipeline.status === "running" && (
-                          <Badge
-                            variant="secondary"
-                            className="bg-blue-100 text-blue-800"
-                          >
-                            Running...
-                          </Badge>
-                        )}
-                        {pipeline.status === "failed" && (
-                          <Badge variant="destructive">Failed</Badge>
-                        )}
-                      </TableCell>
-                      <TableCell className="flex items-center gap-1 text-xs text-muted-foreground">
-                        <Clock className="h-3 w-3" /> {pipeline.duration}
-                      </TableCell>
-                      <TableCell className="text-right">
-                        <Button variant="ghost" size="icon">
-                          <PlayCircle className="h-4 w-4" />
-                        </Button>
-                      </TableCell>
-                    </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
-            </CardContent>
-          </Card>
-        </div>
-
-        {/* Repository Tasks List */}
-        <Card>
-          <CardHeader>
-            <CardTitle>My Repository Tasks</CardTitle>
-          </CardHeader>
-          <CardContent className="flex flex-col gap-2">
-            <Button variant="outline" className="justify-start">
-              <GitPullRequest className="mr-2 h-4 w-4" /> Review 3 pending PRs
-              <Pencil className="ml-auto h-4 w-4" />
-            </Button>
-            <Button variant="outline" className="justify-start">
-              <AlertTriangle className="mr-2 h-4 w-4" /> Resolve 2 SonarQube
-              bugs
-              <Pencil className="ml-auto h-4 w-4" />
-            </Button>
-
-            <Button variant="outline" className="justify-start">
-              <CheckCircle2 className="mr-2 h-4 w-4" /> Approve release to
-              Production
-              <Pencil className="ml-auto h-4 w-4" />
-            </Button>
-            <Button variant="outline" className="justify-start">
-              <GitPullRequest className="mr-2 h-4 w-4" /> Review 3 pending PRs
-              <Pencil className="ml-auto h-4 w-4" />
-            </Button>
-            <Button variant="outline" className="justify-start">
-              <AlertTriangle className="mr-2 h-4 w-4" /> Resolve 2 SonarQube
-              bugs
-              <Pencil className="ml-auto h-4 w-4" />
-            </Button>
-            <Button variant="outline" className="justify-start">
-              <CheckCircle2 className="mr-2 h-4 w-4" /> Approve release to
-              Production
-              <Pencil className="ml-auto h-4 w-4" />
-            </Button>
-            <Button variant="outline" className="justify-start">
-              <AlertTriangle className="mr-2 h-4 w-4" /> Resolve 2 SonarQube
-              bugs
-              <Pencil className="ml-auto h-4 w-4" />
-            </Button>
-          </CardContent>
-        </Card>
-
-        {/* Right Column (Span 1): Tasks & AI Insights */}
-        <div className="flex flex-col gap-6">
-          {/* AI Insights Card */}
-          <Card className="border-purple-200 bg-purple-50/50 dark:bg-purple-900/10">
-            <CardHeader>
-              <CardTitle className="flex items-center text-purple-700 dark:text-purple-400">
-                <Zap className="mr-2 h-4 w-4" /> AI Platform Insights
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="flex flex-col gap-3">
-              {AI_ALERTS.map((alert, index) => (
+      {/* DRAG AND DROP GRID */}
+      {layout.length > 0 ? (
+        <div
+          ref={gridContainerRef}
+          className="bg-muted/10 rounded-xl p-4 min-h-[500px] border border-dashed"
+        >
+          <GridLayout
+            className="layout"
+            layout={layout}
+            width={gridWidth}
+            gridConfig={{
+              cols,
+              rowHeight: 150,
+              margin: [24, 24],
+              containerPadding: [0, 0],
+            }}
+            dragConfig={{
+              enabled: true,
+              handle: ".drag-handle",
+              cancel: ".widget-close-btn",
+            }}
+            resizeConfig={{
+              enabled: true,
+              handles: ["se"],
+              handleComponent: renderResizeHandle,
+            }}
+            onLayoutChange={(newLayout) =>
+              updateLayout(newLayout as GridItem[])
+            }
+            onDragStop={(newLayout) => updateLayout(newLayout as GridItem[])}
+            onResizeStop={(newLayout) => updateLayout(newLayout as GridItem[])}
+          >
+            {layout.map((widget) => {
+              const widgetDef = WIDGET_CATALOG.find((w) => w.id === widget.i);
+              return (
                 <div
-                  key={index}
-                  className="flex items-start gap-3 text-sm p-3 bg-background rounded-lg border"
+                  key={widget.i}
+                  className="bg-white rounded-xl shadow-sm border flex flex-col overflow-hidden min-h-0"
                 >
-                  <AlertTriangle
-                    className={`h-4 w-4 mt-0.5 ${alert.level === "high" ? "text-red-500" : "text-yellow-500"}`}
-                  />
-                  <div>
-                    <p className="font-medium leading-none mb-1">
-                      {alert.message}
-                    </p>
-                    <span className="text-xs text-muted-foreground">
-                      {alert.time}
-                    </span>
+                  {/* Drag Handle + close */}
+                  <div className="drag-handle h-8 bg-muted/50 border-b cursor-grab active:cursor-grabbing flex items-center justify-between px-2">
+                    <div className="w-10 h-1 rounded-full bg-muted-foreground/30 mx-auto" />
+                    <Button
+                      type="button"
+                      size="icon"
+                      variant="ghost"
+                      className="widget-close-btn h-6 w-6 absolute right-2"
+                      onClick={() => removeWidget(widget.i)}
+                      aria-label={`Close ${widget.i} widget`}
+                    >
+                      <X className="h-4 w-4" />
+                    </Button>
+                  </div>
+                  {/* Widget Content */}
+                  <div className="flex-1 p-4 overflow-auto min-h-0">
+                    <ErrorBoundary FallbackComponent={WidgetErrorFallback}>
+                      {widgetDef ? (
+                        <widgetDef.component />
+                      ) : (
+                        <div>Unknown Widget</div>
+                      )}
+                    </ErrorBoundary>
                   </div>
                 </div>
-              ))}
-              <Button
-                variant="link"
-                className="text-purple-600 h-auto p-0 mt-2"
-              >
-                View all insights &rarr;
-              </Button>
-            </CardContent>
-          </Card>
+              );
+            })}
+          </GridLayout>
         </div>
-      </div>
+      ) : (
+        <div className="text-center py-20 text-muted-foreground">
+          <Columns3Cog className="h-12 w-12 mx-auto mb-4 opacity-20" />
+          <p>Your dashboard is empty.</p>
+          <p className="text-sm">Click "Manage Widgets" to enable widgets.</p>
+        </div>
+      )}
     </div>
   );
 }
