@@ -31,11 +31,12 @@ model Category {
 }
 
 model User {
-  id             String   @id @default(uuid())
-  email          String   @unique
-  name           String
-  passwordHash   String
-  githubUsername String?
-  role           String   @default("DEV") // "DEV" or "ADMIN"
-  createdAt      DateTime @default(now())
+  id                   String   @id @default(uuid())
+  email                String   @unique
+  name                 String
+  passwordHash         String
+  githubUsername       String?
+  role                 String   @default("DEV") // "DEV" or "ADMIN"
+  dashboardPreferences Json?
+  createdAt            DateTime @default(now())
 }
