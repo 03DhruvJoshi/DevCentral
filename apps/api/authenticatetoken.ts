@@ -3,10 +3,11 @@ import { Request, Response, NextFunction } from "express";
 
 interface AuthenticatedRequest extends Request {
   user?: {
+    id: string;
     email: string;
     name: string;
     password: string;
-    githubUsername: string;
+    githubUsername?: string;
   };
 }
 
