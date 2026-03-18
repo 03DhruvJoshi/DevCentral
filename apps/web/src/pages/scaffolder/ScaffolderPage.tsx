@@ -9,7 +9,7 @@ import {
   Box,
   Trash2,
   Loader2,
-  PlusCircle,
+  PlayCircle,
   Search,
   TerminalSquare,
 } from "lucide-react";
@@ -66,6 +66,9 @@ import {
   fetchCategories,
   fetchTemplates,
 } from "./components/types.js";
+
+import RunScaffoldModal from "./components/RunScaffoldModal.js";
+import EditTemplateModal from "./components/EditTemplateModal.js";
 
 export function ScaffolderPage() {
   const [searchTerm, setSearchTerm] = useState("");
@@ -359,10 +362,6 @@ export function ScaffolderPage() {
                             </Badge>
                           </CardContent>
                           <CardFooter className="flex gap-2">
-                            <Button className="flex-1" size="sm">
-                              <PlusCircle className="mr-2 h-4 w-4" /> Scaffold
-                            </Button>
-
                             <Dialog>
                               <DialogTrigger asChild>
                                 <Button variant="secondary" size="sm">
@@ -370,7 +369,7 @@ export function ScaffolderPage() {
                                   View YAML
                                 </Button>
                               </DialogTrigger>
-                              <DialogContent className="max-w-2xl max-h-[80vh] bg-white overflow-hidden flex flex-col">
+                              <DialogContent className="max-h-[90vh] w-[95vw] max-w-xl sm:max-w-2xl overflow-y-auto p-4 sm:p-6 bg-white">
                                 <DialogHeader>
                                   <DialogTitle>
                                     {template.title} - Blueprint
@@ -381,12 +380,22 @@ export function ScaffolderPage() {
                                   </DialogDescription>
                                 </DialogHeader>
                                 <div className="flex-1 overflow-auto bg-white p-4 rounded-md mt-2">
-                                  <pre className="text-sm font-mono">
+                                  <pre className="text-sm font-mono whitespace-pre-wrap">
                                     <code>{template.yaml}</code>
                                   </pre>
                                 </div>
                               </DialogContent>
                             </Dialog>
+
+                            <EditTemplateModal
+                              template={template}
+                              categories={categories}
+                            />
+
+                            <RunScaffoldModal
+                              templateId={template.id}
+                              templateName={template.title}
+                            />
                           </CardFooter>
                         </Card>
                       ))}
@@ -516,7 +525,7 @@ export function ScaffolderPage() {
                               setShowCreateCategory((v) => !v);
                             }}
                           >
-                            <PlusCircle className="mr-2 h-4 w-4" /> Create new
+                            <PlayCircle className="mr-2 h-4 w-4" /> Create new
                             category
                           </Button>
                           {createCategoryMutation.isPending && (
