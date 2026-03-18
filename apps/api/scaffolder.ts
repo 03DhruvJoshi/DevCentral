@@ -1,15 +1,17 @@
-import path from "path";
+import path from "node:path";
 import dotenv from "dotenv";
-import express from "express";
+import express, { IRouter, Response } from "express";
 import { PrismaClient } from "../../packages/database/prisma/generated/client";
 import cors from "cors";
 import { CreateTemplateRequest } from "./api_types/index";
 import { PrismaPg } from "@prisma/adapter-pg";
-import { fileURLToPath } from "url";
-import { IRouter } from "express";
+import { fileURLToPath } from "node:url";
 import yaml from "js-yaml";
 import { Octokit } from "octokit";
-import { authenticateToken } from "./authenticatetoken.js";
+import {
+  authenticateToken,
+  AuthenticatedRequest,
+} from "./authenticatetoken.js";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 dotenv.config({ path: path.resolve(__dirname, "../../.env") });
@@ -249,17 +251,10 @@ SCAFFOLD FUNCTION
 router.post(
   "/api/scaffolder/execute",
   authenticateToken,
-  async (req: any, res: any) => {
+  async (req: AuthenticatedRequest, res: Response) => {
     try {
-      if (!req.body || typeof req.body !== "object") {
-        return res.status(400).json({
-          error:
-            "Invalid request body. Expected JSON payload with templateId, targetRepoName, and isNewRepo.",
-        });
-      }
-
       const { templateId, targetRepoName, isNewRepo, description } = req.body;
-      const githubUsername = req.user.githubUsername;
+      const githubUsername = req.user?.githubUsername;
 
       if (!githubUsername) {
         return res
@@ -274,8 +269,9 @@ router.post(
       if (!template)
         return res.status(404).json({ error: "Template not found" });
 
-      const parsedYaml: any = yaml.load(template.yaml);
-      const filesToCreate = parsedYaml.files || [];
+      const parsedYaml = yaml.load(template.yaml) as Record<string, unknown>;
+      const filesToCreate =
+        (parsedYaml.files as Array<{ path: string; content: string }>) || [];
 
       let repoExists = false;
       try {
@@ -284,10 +280,15 @@ router.post(
           repo: targetRepoName,
         });
         repoExists = true; // If this succeeds without throwing, the repo exists
-      } catch (err: any) {
+      } catch (error: unknown) {
         // If the error is anything OTHER than 404 (Not Found), it's a real error (like 401 Unauthorized)
-        if (err.status !== 404) {
-          throw err;
+        if (
+          error &&
+          typeof error === "object" &&
+          "status" in error &&
+          error.status !== 404
+        ) {
+          throw error;
         }
       }
 
@@ -321,8 +322,8 @@ router.post(
       );
 
       for (const file of filesToCreate) {
-        const customizedContent = file.content.replace(
-          /{{projectName}}/g,
+        const customizedContent = file.content.replaceAll(
+          "{{projectName}}",
           targetRepoName,
         );
         const base64Content = Buffer.from(customizedContent).toString("base64");
@@ -338,10 +339,15 @@ router.post(
           if (!Array.isArray(existingFile.data)) {
             fileSha = existingFile.data.sha;
           }
-        } catch (err: any) {
+        } catch (error: unknown) {
           // A 404 here just means the file doesn't exist yet, which is perfect!
-          if (err.status !== 404) {
-            throw err;
+          if (
+            error &&
+            typeof error === "object" &&
+            "status" in error &&
+            error.status !== 404
+          ) {
+            throw error;
           }
         }
 
@@ -359,43 +365,15 @@ router.post(
         message: "Scaffolding complete!",
         url: `https://github.com/${githubUsername}/${targetRepoName}`,
       });
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error("Scaffolder Execution Error:", error);
 
       const errorMsg =
-        error.response?.data?.message ||
-        error.message ||
-        "Failed to execute template";
+        error instanceof Error ? error.message : "Failed to execute scaffold";
+
       res.status(500).json({ error: errorMsg });
     }
   },
 );
 
 export default router;
-
-// import { withAccelerate } from "@prisma/extension-accelerate";
-
-// const accelerateUrl = `${process.env.DATABASE_URL}`;
-// const accelerateUrl = `${process.env.TCP_DATABASE_URL}`;
-
-// const prisma = new PrismaClient({
-//   accelerateUrl,
-// }).$extends(withAccelerate());
-
-// if (!Number.isInteger(templateId) || templateId <= 0) {
-//   return res.status(400).json({
-//     error: "templateId must be a positive integer.",
-//   });
-// }
-
-// if (typeof targetRepoName !== "string" || !targetRepoName.trim()) {
-//   return res.status(400).json({
-//     error: "targetRepoName is required and must be a non-empty string.",
-//   });
-// }
-
-// if (typeof isNewRepo !== "boolean") {
-//   return res.status(400).json({
-//     error: "isNewRepo is required and must be a boolean.",
-//   });
-// }
