@@ -40,3 +40,7 @@ yarn-error.log*
 # Prisma
 
 apps/web/stale
+
+.claude/*
+
+.agents/*
