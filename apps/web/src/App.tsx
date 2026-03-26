@@ -7,6 +7,7 @@ import { GitOpsPage } from "./pages/gitops/GitOpsPage.js";
 import { AnalyticsPage } from "./pages/analytics/AnalyticsPage.js";
 import { LoginPage } from "./pages/auth/LoginPage.js";
 import { RegisterPage } from "./pages/auth/RegisterPage.js";
+import { AdminRoute } from "./pages/admin/AdminRoute.js";
 
 const queryClient = new QueryClient();
 
@@ -36,6 +37,7 @@ function App() {
             <Route path="/scaffold" element={<ScaffolderPage />} />
             <Route path="/analytics" element={<AnalyticsPage />} />
           </Route>
+          <Route path="/admin" element={<AdminRoute />} />
         </Routes>
       </BrowserRouter>
     </QueryClientProvider>
