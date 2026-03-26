@@ -148,6 +148,7 @@ exports.Prisma.UserScalarFieldEnum = {
   passwordHash: 'passwordHash',
   githubUsername: 'githubUsername',
   role: 'role',
+  status: 'status',
   dashboardPreferences: 'dashboardPreferences',
   createdAt: 'createdAt'
 };

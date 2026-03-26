@@ -4368,6 +4368,7 @@ export namespace Prisma {
     passwordHash: string | null
     githubUsername: string | null
     role: string | null
+    status: string | null
     createdAt: Date | null
   }
 
@@ -4378,6 +4379,7 @@ export namespace Prisma {
     passwordHash: string | null
     githubUsername: string | null
     role: string | null
+    status: string | null
     createdAt: Date | null
   }
 
@@ -4388,6 +4390,7 @@ export namespace Prisma {
     passwordHash: number
     githubUsername: number
     role: number
+    status: number
     dashboardPreferences: number
     createdAt: number
     _all: number
@@ -4401,6 +4404,7 @@ export namespace Prisma {
     passwordHash?: true
     githubUsername?: true
     role?: true
+    status?: true
     createdAt?: true
   }
 
@@ -4411,6 +4415,7 @@ export namespace Prisma {
     passwordHash?: true
     githubUsername?: true
     role?: true
+    status?: true
     createdAt?: true
   }
 
@@ -4421,6 +4426,7 @@ export namespace Prisma {
     passwordHash?: true
     githubUsername?: true
     role?: true
+    status?: true
     dashboardPreferences?: true
     createdAt?: true
     _all?: true
@@ -4505,6 +4511,7 @@ export namespace Prisma {
     passwordHash: string
     githubUsername: string | null
     role: string
+    status: string
     dashboardPreferences: JsonValue | null
     createdAt: Date
     _count: UserCountAggregateOutputType | null
@@ -4533,6 +4540,7 @@ export namespace Prisma {
     passwordHash?: boolean
     githubUsername?: boolean
     role?: boolean
+    status?: boolean
     dashboardPreferences?: boolean
     createdAt?: boolean
   }, ExtArgs["result"]["user"]>
@@ -4544,6 +4552,7 @@ export namespace Prisma {
     passwordHash?: boolean
     githubUsername?: boolean
     role?: boolean
+    status?: boolean
     dashboardPreferences?: boolean
     createdAt?: boolean
   }, ExtArgs["result"]["user"]>
@@ -4555,6 +4564,7 @@ export namespace Prisma {
     passwordHash?: boolean
     githubUsername?: boolean
     role?: boolean
+    status?: boolean
     dashboardPreferences?: boolean
     createdAt?: boolean
   }, ExtArgs["result"]["user"]>
@@ -4566,11 +4576,12 @@ export namespace Prisma {
     passwordHash?: boolean
     githubUsername?: boolean
     role?: boolean
+    status?: boolean
     dashboardPreferences?: boolean
     createdAt?: boolean
   }
 
-  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "email" | "name" | "passwordHash" | "githubUsername" | "role" | "dashboardPreferences" | "createdAt", ExtArgs["result"]["user"]>
+  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "email" | "name" | "passwordHash" | "githubUsername" | "role" | "status" | "dashboardPreferences" | "createdAt", ExtArgs["result"]["user"]>
 
   export type $UserPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "User"
@@ -4582,6 +4593,7 @@ export namespace Prisma {
       passwordHash: string
       githubUsername: string | null
       role: string
+      status: string
       dashboardPreferences: Prisma.JsonValue | null
       createdAt: Date
     }, ExtArgs["result"]["user"]>
@@ -5013,6 +5025,7 @@ export namespace Prisma {
     readonly passwordHash: FieldRef<"User", 'String'>
     readonly githubUsername: FieldRef<"User", 'String'>
     readonly role: FieldRef<"User", 'String'>
+    readonly status: FieldRef<"User", 'String'>
     readonly dashboardPreferences: FieldRef<"User", 'Json'>
     readonly createdAt: FieldRef<"User", 'DateTime'>
   }
@@ -5432,6 +5445,7 @@ export namespace Prisma {
     passwordHash: 'passwordHash',
     githubUsername: 'githubUsername',
     role: 'role',
+    status: 'status',
     dashboardPreferences: 'dashboardPreferences',
     createdAt: 'createdAt'
   };
@@ -5721,6 +5735,7 @@ export namespace Prisma {
     passwordHash?: StringFilter<"User"> | string
     githubUsername?: StringNullableFilter<"User"> | string | null
     role?: StringFilter<"User"> | string
+    status?: StringFilter<"User"> | string
     dashboardPreferences?: JsonNullableFilter<"User">
     createdAt?: DateTimeFilter<"User"> | Date | string
   }
@@ -5732,6 +5747,7 @@ export namespace Prisma {
     passwordHash?: SortOrder
     githubUsername?: SortOrderInput | SortOrder
     role?: SortOrder
+    status?: SortOrder
     dashboardPreferences?: SortOrderInput | SortOrder
     createdAt?: SortOrder
   }
@@ -5746,6 +5762,7 @@ export namespace Prisma {
     passwordHash?: StringFilter<"User"> | string
     githubUsername?: StringNullableFilter<"User"> | string | null
     role?: StringFilter<"User"> | string
+    status?: StringFilter<"User"> | string
     dashboardPreferences?: JsonNullableFilter<"User">
     createdAt?: DateTimeFilter<"User"> | Date | string
   }, "id" | "email">
@@ -5757,6 +5774,7 @@ export namespace Prisma {
     passwordHash?: SortOrder
     githubUsername?: SortOrderInput | SortOrder
     role?: SortOrder
+    status?: SortOrder
     dashboardPreferences?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     _count?: UserCountOrderByAggregateInput
@@ -5774,6 +5792,7 @@ export namespace Prisma {
     passwordHash?: StringWithAggregatesFilter<"User"> | string
     githubUsername?: StringNullableWithAggregatesFilter<"User"> | string | null
     role?: StringWithAggregatesFilter<"User"> | string
+    status?: StringWithAggregatesFilter<"User"> | string
     dashboardPreferences?: JsonNullableWithAggregatesFilter<"User">
     createdAt?: DateTimeWithAggregatesFilter<"User"> | Date | string
   }
@@ -5926,6 +5945,7 @@ export namespace Prisma {
     passwordHash: string
     githubUsername?: string | null
     role?: string
+    status?: string
     dashboardPreferences?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
   }
@@ -5937,6 +5957,7 @@ export namespace Prisma {
     passwordHash: string
     githubUsername?: string | null
     role?: string
+    status?: string
     dashboardPreferences?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
   }
@@ -5948,6 +5969,7 @@ export namespace Prisma {
     passwordHash?: StringFieldUpdateOperationsInput | string
     githubUsername?: NullableStringFieldUpdateOperationsInput | string | null
     role?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
     dashboardPreferences?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -5959,6 +5981,7 @@ export namespace Prisma {
     passwordHash?: StringFieldUpdateOperationsInput | string
     githubUsername?: NullableStringFieldUpdateOperationsInput | string | null
     role?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
     dashboardPreferences?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -5970,6 +5993,7 @@ export namespace Prisma {
     passwordHash: string
     githubUsername?: string | null
     role?: string
+    status?: string
     dashboardPreferences?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
   }
@@ -5981,6 +6005,7 @@ export namespace Prisma {
     passwordHash?: StringFieldUpdateOperationsInput | string
     githubUsername?: NullableStringFieldUpdateOperationsInput | string | null
     role?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
     dashboardPreferences?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -5992,6 +6017,7 @@ export namespace Prisma {
     passwordHash?: StringFieldUpdateOperationsInput | string
     githubUsername?: NullableStringFieldUpdateOperationsInput | string | null
     role?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
     dashboardPreferences?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -6233,6 +6259,7 @@ export namespace Prisma {
     passwordHash?: SortOrder
     githubUsername?: SortOrder
     role?: SortOrder
+    status?: SortOrder
     dashboardPreferences?: SortOrder
     createdAt?: SortOrder
   }
@@ -6244,6 +6271,7 @@ export namespace Prisma {
     passwordHash?: SortOrder
     githubUsername?: SortOrder
     role?: SortOrder
+    status?: SortOrder
     createdAt?: SortOrder
   }
 
@@ -6254,6 +6282,7 @@ export namespace Prisma {
     passwordHash?: SortOrder
     githubUsername?: SortOrder
     role?: SortOrder
+    status?: SortOrder
     createdAt?: SortOrder
   }
 
