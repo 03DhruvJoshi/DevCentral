@@ -1,12 +1,14 @@
-import path from "node:path";
-import dotenv from "dotenv";
 import express, { IRouter, Response } from "express";
-import { fileURLToPath } from "node:url";
+
 import { authenticateToken } from "./authenticatetoken.js";
+import { AuthenticatedRequest } from "./api_types/index.js";
+
+import cors from "cors";
 import { PrismaClient } from "../../packages/database/prisma/generated/client";
 import { PrismaPg } from "@prisma/adapter-pg";
-import { AuthenticatedRequest } from "./api_types/index.js";
-import cors from "cors";
+import path from "node:path";
+import dotenv from "dotenv";
+import { fileURLToPath } from "node:url";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 dotenv.config({ path: path.resolve(__dirname, "../../.env") });

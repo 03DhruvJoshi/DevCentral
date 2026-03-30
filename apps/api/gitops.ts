@@ -121,4 +121,35 @@ router.get("/api/github/repos/:owner/:repo/releases", async (req, res) => {
   }
 });
 
+router.get("/api/github/repos/:owner/:repo/issues", async (req, res) => {
+  try {
+    const { owner, repo } = req.params;
+    const { data } = await octokit.rest.issues.listForRepo({
+      owner,
+      repo,
+      state: "all",
+      per_page: 5,
+    });
+    res.json(data);
+  } catch (error) {
+    console.error("GitHub Error:", error);
+    res.status(500).json({ error: "Failed to fetch issues from GitHub" });
+  }
+});
+
+router.get("/api/github/repos/:owner/:repo/commits", async (req, res) => {
+  try {
+    const { owner, repo } = req.params;
+    const { data } = await octokit.rest.repos.listCommits({
+      owner,
+      repo,
+      per_page: 5,
+    });
+    res.json(data);
+  } catch (error) {
+    console.error("GitHub Error:", error);
+    res.status(500).json({ error: "Failed to fetch commits from GitHub" });
+  }
+});
+
 export default router;

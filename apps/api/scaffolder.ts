@@ -1,18 +1,23 @@
-import path from "node:path";
-import dotenv from "dotenv";
 import express, { IRouter, Response } from "express";
-import { PrismaClient } from "../../packages/database/prisma/generated/client";
 import cors from "cors";
 import { CreateTemplateRequest } from "./api_types/index";
-import { PrismaPg } from "@prisma/adapter-pg";
-import { fileURLToPath } from "node:url";
 import yaml from "js-yaml";
 import { Octokit } from "octokit";
-import {
-  authenticateToken,
- 
-} from "./authenticatetoken.js";
+import { authenticateToken } from "./authenticatetoken.js";
 import { AuthenticatedRequest } from "./api_types/index.js";
+import { PrismaClient } from "../../packages/database/prisma/generated/client";
+import { PrismaPg } from "@prisma/adapter-pg";
+import path from "node:path";
+import dotenv from "dotenv";
+import { fileURLToPath } from "node:url";
+
+const githubToken = `${process.env.GITHUB_TOKEN}`;
+
+const octokit = new Octokit({
+  auth: githubToken,
+});
+
+const router: IRouter = express.Router();
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 dotenv.config({ path: path.resolve(__dirname, "../../.env") });
@@ -26,14 +31,6 @@ const adapter = new PrismaPg({
 const prisma = new PrismaClient({
   adapter,
 });
-
-const githubToken = `${process.env.GITHUB_TOKEN}`;
-
-const octokit = new Octokit({
-  auth: githubToken,
-});
-
-const router: IRouter = express.Router();
 
 router.use(cors());
 router.use(express.json());
