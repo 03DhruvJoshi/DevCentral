@@ -8,7 +8,6 @@ import { fileURLToPath } from "node:url";
 import { AuthenticatedRequest } from "./api_types/index.js";
 
 import cors from "cors";
-import { AuthenticatedRequest } from "./api_types";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 dotenv.config({ path: path.resolve(__dirname, "../../.env") });
