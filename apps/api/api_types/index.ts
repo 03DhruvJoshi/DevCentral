@@ -28,7 +28,7 @@ export interface TemplateResponse {
 }
 
 export interface AuthenticatedRequest extends Request {
-  user?: {
+  user: {
     id: string;
     email: string;
     name: string;

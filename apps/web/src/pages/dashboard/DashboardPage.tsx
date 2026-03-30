@@ -25,6 +25,9 @@ import {
 import { ErrorBoundary } from "react-error-boundary";
 import { ActionsWidget } from "./components/ActionsWidget.js";
 import { QuickScaffoldWidget } from "./components/QuickScaffolderWidget.js";
+import { RepoPulseWidget } from "./components/RepoPulseWidget.js";
+import { PRVelocityWidget } from "./components/PRVelocityWidget.js";
+import { DeliveryHealthWidget } from "./components/DeliveryHealthWidget.js";
 import { API_BASE_URL } from "./types.js";
 
 // --- TYPES ---
@@ -71,14 +74,24 @@ const WIDGET_CATALOG: WidgetDefinition[] = [
   },
   {
     id: "dora-metrics",
-    label: "DORA Metrics (Analytics)",
-    defaultW: 3,
-    defaultH: 1,
-    component: () => (
-      <div className="h-full w-full flex items-center justify-center border-dashed">
-        <p className="text-muted-foreground">Analytics Widget Placeholder</p>
-      </div>
-    ),
+    label: "Delivery Health (CI/CD)",
+    defaultW: 1,
+    defaultH: 2,
+    component: DeliveryHealthWidget,
+  },
+  {
+    id: "repo-pulse",
+    label: "GitHub Issues (Repo)",
+    defaultW: 2,
+    defaultH: 2,
+    component: RepoPulseWidget,
+  },
+  {
+    id: "pr-velocity",
+    label: "PR Velocity (Review Flow)",
+    defaultW: 2,
+    defaultH: 2,
+    component: PRVelocityWidget,
   },
 ];
 
@@ -282,7 +295,9 @@ function useDashboardLayout() {
           setLayout([
             { i: "action-center", x: 0, y: 0, w: 2, h: 2 },
             { i: "quick-scaffold", x: 2, y: 0, w: 1, h: 2 },
-            { i: "dora-metrics", x: 0, y: 2, w: 3, h: 1 },
+            { i: "dora-metrics", x: 0, y: 2, w: 1, h: 2 },
+            { i: "repo-pulse", x: 1, y: 2, w: 2, h: 2 },
+            { i: "pr-velocity", x: 0, y: 4, w: 2, h: 2 },
           ]);
         }
       } catch (err) {
