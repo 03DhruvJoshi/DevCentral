@@ -5,6 +5,8 @@ import { PrismaPg } from "@prisma/adapter-pg";
 import path from "node:path";
 import dotenv from "dotenv";
 import { fileURLToPath } from "node:url";
+import { AuthenticatedRequest } from "./api_types/index.js";
+
 import cors from "cors";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -29,7 +31,7 @@ router.get(
   "/api/admin/users",
   authenticateToken,
   requireAdmin,
-  async (req: any, res: any) => {
+  async (req: AuthenticatedRequest, res: Response) => {
     try {
       const search = (req.query.search as string) || "";
 
@@ -64,12 +66,12 @@ router.patch(
   "/api/admin/users/:id",
   authenticateToken,
   requireAdmin,
-  async (req: any, res: any) => {
+  async (req: AuthenticatedRequest, res: Response) => {
     try {
-      const { id } = req.params;
+      const id = req.params.id as string;
       const { role, status } = req.body;
 
-      if (id === req.user.id) {
+      if (id === req.user!.id) {
         return res.status(400).json({
           error: "You cannot modify your own administrative account.",
         });
@@ -94,7 +96,7 @@ router.get(
   "/api/admin/analytics",
   authenticateToken,
   requireAdmin,
-  async (req: any, res: any) => {
+  async (req: AuthenticatedRequest, res: Response) => {
     try {
       const [totalUsers, activeUsers, totalTemplates, recentUsers] =
         await Promise.all([
@@ -123,13 +125,13 @@ router.put(
   "/api/admin/users/:id/role",
   authenticateToken,
   requireAdmin,
-  async (req: any, res: Response) => {
+  async (req: AuthenticatedRequest, res: Response) => {
     try {
-      const { id } = req.params;
+      const id = req.params.id as string;
       const { newRole } = req.body; // Expects "DEV" or "ADMIN"
 
       // Security: Prevent the admin from demoting themselves!
-      if (id === req.user.id) {
+      if (id === req.user!.id) {
         return res
           .status(400)
           .json({ error: "You cannot change your own role." });
@@ -152,11 +154,11 @@ router.delete(
   "/api/admin/users/:id",
   authenticateToken,
   requireAdmin,
-  async (req: any, res: Response) => {
+  async (req: AuthenticatedRequest, res: Response) => {
     try {
-      const { id } = req.params;
+      const id = req.params.id as string;
 
-      if (id === req.user.id) {
+      if (id === req.user!.id) {
         return res
           .status(400)
           .json({ error: "You cannot delete your own account." });

@@ -2,12 +2,10 @@ import path from "node:path";
 import dotenv from "dotenv";
 import express, { IRouter, Response } from "express";
 import { fileURLToPath } from "node:url";
-import {
-  authenticateToken,
-  type AuthenticatedRequest,
-} from "./authenticatetoken.js";
+import { authenticateToken } from "./authenticatetoken.js";
 import { PrismaClient } from "../../packages/database/prisma/generated/client";
 import { PrismaPg } from "@prisma/adapter-pg";
+import { AuthenticatedRequest } from "./api_types/index.js";
 import cors from "cors";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
