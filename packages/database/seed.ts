@@ -3,8 +3,17 @@ import { PrismaClient } from "./prisma/generated/client";
 import { PrismaPg } from "@prisma/adapter-pg";
 import bcrypt from "bcrypt";
 
+const connectionString =
+  process.env.DIRECT_DATABASE_URL ?? process.env.DATABASE_URL;
+
+if (!connectionString) {
+  throw new Error(
+    "Missing DATABASE_URL or DIRECT_DATABASE_URL for database seed connection.",
+  );
+}
+
 const adapter = new PrismaPg({
-  connectionString: process.env.DIRECT_DATABASE_URL!,
+  connectionString,
 });
 
 const prisma = new PrismaClient({ adapter });
