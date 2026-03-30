@@ -44,3 +44,4 @@ apps/web/stale
 .claude/*
 
 .agents/*
+/generated/prisma
