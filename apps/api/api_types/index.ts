@@ -1,3 +1,5 @@
+import { Request } from "express";
+
 export interface ProjectResponse {
   id: number;
   name: string;
@@ -23,4 +25,27 @@ export interface TemplateResponse {
   yaml: string;
   createdAt: string;
   updatedAt: string;
+}
+
+export interface AuthenticatedRequest extends Request {
+  user?: {
+    id: string;
+    email: string;
+    name: string;
+    password: string;
+    githubUsername?: string;
+    role: string;
+    dashboardPreferences?: {
+      widgets: Array<{
+        id: string;
+        type: string;
+        position: {
+          x: number;
+          y: number;
+          w: number;
+          h: number;
+        };
+      }>;
+    };
+  };
 }

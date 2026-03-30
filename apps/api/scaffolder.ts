@@ -10,8 +10,9 @@ import yaml from "js-yaml";
 import { Octokit } from "octokit";
 import {
   authenticateToken,
-  AuthenticatedRequest,
+ 
 } from "./authenticatetoken.js";
+import { AuthenticatedRequest } from "./api_types/index.js";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 dotenv.config({ path: path.resolve(__dirname, "../../.env") });

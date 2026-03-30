@@ -1,6 +1,6 @@
 // apps/web/src/components/layout/DashboardLayout.tsx
 import { Outlet } from "react-router-dom";
-import { Header } from "./Header";
+import { Header } from "./Header.js";
 
 export function DashboardLayout() {
   return (

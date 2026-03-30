@@ -1,17 +1,14 @@
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import express, { IRouter } from "express";
+
+import cors from "cors";
+
+import { PrismaClient } from "../../packages/database/prisma/generated/client";
+import { PrismaPg } from "@prisma/adapter-pg";
 import path from "node:path";
 import dotenv from "dotenv";
 import { fileURLToPath } from "node:url";
-import { PrismaClient } from "../../packages/database/prisma/generated/client";
-import { PrismaPg } from "@prisma/adapter-pg";
-import cors from "cors";
-
-const router: IRouter = express.Router();
-
-router.use(cors());
-router.use(express.json());
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 dotenv.config({ path: path.resolve(__dirname, "../../.env") });
@@ -25,6 +22,11 @@ const adapter = new PrismaPg({
 const prisma = new PrismaClient({
   adapter,
 });
+
+const router: IRouter = express.Router();
+
+router.use(cors());
+router.use(express.json());
 
 router.post("/api/auth/register", async (req, res) => {
   try {
@@ -63,8 +65,13 @@ router.post("/api/auth/login", async (req, res) => {
 
     // Generate JWT Token
     const token = jwt.sign(
-      { id: user.id, email: user.email, githubUsername: user.githubUsername },
-      process.env.JWT_SECRET!,
+      {
+        id: user.id,
+        email: user.email,
+        githubUsername: user.githubUsername,
+        role: user.role,
+      },
+      process.env.JWT_SECRET! || "fallback_secret",
       { expiresIn: "24h" },
     );
 
@@ -74,6 +81,7 @@ router.post("/api/auth/login", async (req, res) => {
         name: user.name,
         email: user.email,
         githubUsername: user.githubUsername,
+        role: user.role,
       },
     });
   } catch (error) {

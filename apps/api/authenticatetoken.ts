@@ -1,15 +1,6 @@
 import jwt from "jsonwebtoken";
-import { Request, Response, NextFunction } from "express";
-
-interface AuthenticatedRequest extends Request {
-  user?: {
-    id: string;
-    email: string;
-    name: string;
-    password: string;
-    githubUsername?: string;
-  };
-}
+import { Response, NextFunction } from "express";
+import { AuthenticatedRequest } from "./api_types/index.js";
 
 const authenticateToken = (
   req: AuthenticatedRequest,
@@ -41,4 +32,23 @@ const authenticateToken = (
     },
   );
 };
-export { type AuthenticatedRequest, authenticateToken };
+
+const requireAdmin = (
+  req: AuthenticatedRequest,
+  res: Response,
+  next: NextFunction,
+) => {
+  if (!req.user) {
+    return res.status(401).json({ error: "Authentication required." });
+  }
+
+  if (req.user.role !== "ADMIN") {
+    return res.status(403).json({
+      error: "Access denied. Platform Administrator privileges required.",
+    });
+  }
+
+  next();
+};
+
+export { authenticateToken, requireAdmin };

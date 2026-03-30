@@ -36,12 +36,16 @@ export function LoginPage() {
 
       if (!res.ok) throw new Error(data.error);
 
-      // Save the token to local storage!
+      // Save the token to local storage
       localStorage.setItem("devcentral_token", data.token);
       localStorage.setItem("devcentral_user", JSON.stringify(data.user));
 
       // Redirect to the Dashboard
-      window.location.href = "/dashboard";
+      if (data.user.role === "ADMIN") {
+        globalThis.location.href = "/admin"; // ADMIN
+      } else {
+        globalThis.location.href = "/dashboard"; // DEV
+      }
     } catch (err: any) {
       setError(err.message);
     }

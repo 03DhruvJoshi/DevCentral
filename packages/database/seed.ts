@@ -1,6 +1,7 @@
 // packages/database/prisma/seed.ts
 import { PrismaClient } from "./prisma/generated/client";
 import { PrismaPg } from "@prisma/adapter-pg";
+import bcrypt from "bcrypt";
 
 const adapter = new PrismaPg({
   connectionString: process.env.DIRECT_DATABASE_URL!,
@@ -47,6 +48,33 @@ async function main() {
       data: templateData,
     });
   }
+
+  // Create an initial admin user
+
+  const adminEmail = "admin@devcentral.com";
+
+  const existingAdmin = await prisma.user.findUnique({
+    where: { email: adminEmail },
+  });
+
+  if (!existingAdmin) {
+    const salt = await bcrypt.genSalt(10);
+    const passwordHash = await bcrypt.hash("SecureAdmin123!", salt);
+
+    await prisma.user.create({
+      data: {
+        name: "System Administrator",
+        email: adminEmail,
+        passwordHash: passwordHash,
+        role: "ADMIN", // CRITICAL: Hardcoding the admin role
+        githubUsername: "devcentral-admin",
+      },
+    });
+    console.log("✅ Super Admin account created successfully.");
+  } else {
+    console.log("⚠️ Admin account already exists. Skipping seed.");
+  }
+
   console.log("Seeding complete.");
 }
 

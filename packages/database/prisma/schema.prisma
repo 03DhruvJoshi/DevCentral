@@ -37,6 +37,7 @@ model User {
   passwordHash   String    
   githubUsername String?   
   role           String   @default("DEV") // "DEV" or "ADMIN"
+  status         String   @default("ACTIVE") // "ACTIVE", "SUSPENDED"
   dashboardPreferences Json?
   createdAt      DateTime @default(now())
 }

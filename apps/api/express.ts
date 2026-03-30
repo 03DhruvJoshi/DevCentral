@@ -7,6 +7,7 @@ import scaffolder from "./scaffolder.js";
 import devanalytics from "./devanalytics.js";
 import auth from "./auth.js";
 import dashboard from "./dashboard.js";
+import admin from "./admin.js";
 
 const app = express();
 
@@ -19,6 +20,7 @@ app.use(scaffolder);
 app.use(devanalytics);
 app.use(auth);
 app.use(dashboard);
+app.use(admin);
 
 app.listen(PORT, () => {
   console.log(`🚀 API Server running on http://localhost:${PORT}`);

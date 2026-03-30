@@ -6,10 +6,8 @@ import { fileURLToPath } from "node:url";
 import { Octokit } from "octokit";
 
 import express, { IRouter, Response } from "express";
-import {
-  authenticateToken,
-  AuthenticatedRequest,
-} from "./authenticatetoken.js";
+import { authenticateToken } from "./authenticatetoken.js";
+import { AuthenticatedRequest } from "./api_types/index.js";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 dotenv.config({ path: path.resolve(__dirname, "../../.env") });
