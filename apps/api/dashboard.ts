@@ -1,12 +1,4 @@
 import express, { IRouter, Response } from "express";
-<<<<<<< Updated upstream
-import { fileURLToPath } from "node:url";
-import { authenticateToken } from "./authenticatetoken.js";
-import { PrismaClient } from "../../packages/database/prisma/generated/client";
-import { PrismaPg } from "@prisma/adapter-pg";
-import { AuthenticatedRequest } from "./api_types/index.js";
-import cors from "cors";
-=======
 
 import { authenticateToken } from "./authenticatetoken.js";
 import { AuthenticatedRequest } from "./api_types/index.js";
@@ -17,7 +9,6 @@ import { PrismaPg } from "@prisma/adapter-pg";
 import path from "node:path";
 import dotenv from "dotenv";
 import { fileURLToPath } from "node:url";
->>>>>>> Stashed changes
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 dotenv.config({ path: path.resolve(__dirname, "../../.env") });
