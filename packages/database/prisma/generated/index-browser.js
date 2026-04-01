@@ -153,6 +153,23 @@ exports.Prisma.UserScalarFieldEnum = {
   createdAt: 'createdAt'
 };
 
+exports.Prisma.AuditLogScalarFieldEnum = {
+  id: 'id',
+  action: 'action',
+  actorEmail: 'actorEmail',
+  targetId: 'targetId',
+  details: 'details',
+  role: 'role',
+  createdAt: 'createdAt'
+};
+
+exports.Prisma.PlatformConfigScalarFieldEnum = {
+  key: 'key',
+  value: 'value',
+  description: 'description',
+  updatedAt: 'updatedAt'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -184,7 +201,9 @@ exports.Prisma.ModelName = {
   Project: 'Project',
   Template: 'Template',
   Category: 'Category',
-  User: 'User'
+  User: 'User',
+  AuditLog: 'AuditLog',
+  PlatformConfig: 'PlatformConfig'
 };
 
 /**

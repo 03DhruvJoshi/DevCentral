@@ -8,6 +8,7 @@ import { AnalyticsPage } from "./pages/analytics/AnalyticsPage.js";
 import { LoginPage } from "./pages/auth/LoginPage.js";
 import { RegisterPage } from "./pages/auth/RegisterPage.js";
 import { AdminRoute } from "./pages/admin/AdminRoute.js";
+import { GlobalBroadcast } from "./pages/admin/components/GlobalBroadcast.js";
 
 const queryClient = new QueryClient();
 
@@ -23,24 +24,27 @@ const ProtectedLayout = () => {
 
 function App() {
   return (
-    <QueryClientProvider client={queryClient}>
-      <BrowserRouter>
-        <Routes>
-          <Route path="/login" element={<LoginPage />} />
-          <Route path="/register" element={<RegisterPage />} />
+    <div className="min-h-screen bg-background">
+      <GlobalBroadcast />
+      <QueryClientProvider client={queryClient}>
+        <BrowserRouter>
+          <Routes>
+            <Route path="/login" element={<LoginPage />} />
+            <Route path="/register" element={<RegisterPage />} />
 
-          <Route element={<ProtectedLayout />}>
-            <Route path="/" element={<Navigate to="/dashboard" replace />} />
+            <Route element={<ProtectedLayout />}>
+              <Route path="/" element={<Navigate to="/dashboard" replace />} />
 
-            <Route path="/dashboard" element={<DashboardPage />} />
-            <Route path="/gitops" element={<GitOpsPage />} />
-            <Route path="/scaffold" element={<ScaffolderPage />} />
-            <Route path="/analytics" element={<AnalyticsPage />} />
-          </Route>
-          <Route path="/admin" element={<AdminRoute />} />
-        </Routes>
-      </BrowserRouter>
-    </QueryClientProvider>
+              <Route path="/dashboard" element={<DashboardPage />} />
+              <Route path="/gitops" element={<GitOpsPage />} />
+              <Route path="/scaffold" element={<ScaffolderPage />} />
+              <Route path="/analytics" element={<AnalyticsPage />} />
+            </Route>
+            <Route path="/admin" element={<AdminRoute />} />
+          </Routes>
+        </BrowserRouter>
+      </QueryClientProvider>
+    </div>
   );
 }
 

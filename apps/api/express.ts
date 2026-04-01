@@ -8,6 +8,7 @@ import devanalytics from "./devanalytics.js";
 import auth from "./auth.js";
 import dashboard from "./dashboard.js";
 import admin from "./admin.js";
+import { auditMiddleware } from "./auditMiddleware.js";
 
 const app = express();
 
@@ -15,10 +16,12 @@ const PORT = 4000;
 
 app.use(cors());
 app.use(express.json());
+app.use(auth);
+app.use(auditMiddleware);
+
 app.use(gitops);
 app.use(scaffolder);
 app.use(devanalytics);
-app.use(auth);
 app.use(dashboard);
 app.use(admin);
 

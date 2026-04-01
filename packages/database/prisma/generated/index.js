@@ -126,6 +126,23 @@ exports.Prisma.UserScalarFieldEnum = {
   createdAt: 'createdAt'
 };
 
+exports.Prisma.AuditLogScalarFieldEnum = {
+  id: 'id',
+  action: 'action',
+  actorEmail: 'actorEmail',
+  targetId: 'targetId',
+  details: 'details',
+  role: 'role',
+  createdAt: 'createdAt'
+};
+
+exports.Prisma.PlatformConfigScalarFieldEnum = {
+  key: 'key',
+  value: 'value',
+  description: 'description',
+  updatedAt: 'updatedAt'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -157,7 +174,9 @@ exports.Prisma.ModelName = {
   Project: 'Project',
   Template: 'Template',
   Category: 'Category',
-  User: 'User'
+  User: 'User',
+  AuditLog: 'AuditLog',
+  PlatformConfig: 'PlatformConfig'
 };
 /**
  * Create the Client
@@ -167,10 +186,10 @@ const config = {
   "clientVersion": "7.3.0",
   "engineVersion": "9d6ad21cbbceab97458517b147a6a09ff43aa735",
   "activeProvider": "postgresql",
-  "inlineSchema": "generator client {\n  provider = \"prisma-client-js\"\n  output   = \"./generated\"\n}\n\ndatasource db {\n  provider = \"postgresql\"\n}\n\nmodel Project {\n  name      String\n  createdAt DateTime @default(now())\n  id        Int      @id @default(autoincrement())\n}\n\nmodel Template {\n  title        String\n  description  String\n  categoryName String\n  yaml         String\n  createdAt    DateTime @default(now())\n  updatedAt    DateTime @updatedAt\n  id           Int      @id @default(autoincrement())\n  category     Category @relation(fields: [categoryName], references: [name])\n}\n\nmodel Category {\n  name      String     @unique\n  id        Int        @id @default(autoincrement())\n  templates Template[]\n}\n\nmodel User {\n  id                   String   @id @default(uuid())\n  email                String   @unique\n  name                 String\n  passwordHash         String\n  githubUsername       String?\n  role                 String   @default(\"DEV\") // \"DEV\" or \"ADMIN\"\n  status               String   @default(\"ACTIVE\") // \"ACTIVE\", \"SUSPENDED\"\n  dashboardPreferences Json?\n  createdAt            DateTime @default(now())\n}\n"
+  "inlineSchema": "generator client {\n  provider = \"prisma-client-js\"\n  output   = \"./generated\"\n}\n\ndatasource db {\n  provider = \"postgresql\"\n}\n\nmodel Project {\n  name      String\n  createdAt DateTime @default(now())\n  id        Int      @id @default(autoincrement())\n}\n\nmodel Template {\n  title        String\n  description  String\n  categoryName String\n  yaml         String\n  createdAt    DateTime @default(now())\n  updatedAt    DateTime @updatedAt\n  id           Int      @id @default(autoincrement())\n  category     Category @relation(fields: [categoryName], references: [name])\n}\n\nmodel Category {\n  name      String     @unique\n  id        Int        @id @default(autoincrement())\n  templates Template[]\n}\n\nmodel User {\n  id                   String   @id @default(uuid())\n  email                String   @unique\n  name                 String\n  passwordHash         String\n  githubUsername       String?\n  role                 String   @default(\"DEV\") // \"DEV\" or \"ADMIN\"\n  status               String   @default(\"ACTIVE\") // \"ACTIVE\", \"SUSPENDED\"\n  dashboardPreferences Json?\n  createdAt            DateTime @default(now())\n}\n\nmodel AuditLog {\n  id         Int      @id @default(autoincrement())\n  action     String\n  actorEmail String\n  targetId   String?\n  details    Json?\n  role       String?\n  createdAt  DateTime @default(now())\n}\n\nmodel PlatformConfig {\n  key         String   @id\n  value       String\n  description String?\n  updatedAt   DateTime @updatedAt\n}\n"
 }
 
-config.runtimeDataModel = JSON.parse("{\"models\":{\"Project\":{\"fields\":[{\"name\":\"name\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"Int\"}],\"dbName\":null},\"Template\":{\"fields\":[{\"name\":\"title\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"description\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"categoryName\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"yaml\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"updatedAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"category\",\"kind\":\"object\",\"type\":\"Category\",\"relationName\":\"CategoryToTemplate\"}],\"dbName\":null},\"Category\":{\"fields\":[{\"name\":\"name\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"templates\",\"kind\":\"object\",\"type\":\"Template\",\"relationName\":\"CategoryToTemplate\"}],\"dbName\":null},\"User\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"email\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"name\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"passwordHash\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"githubUsername\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"role\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"status\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"dashboardPreferences\",\"kind\":\"scalar\",\"type\":\"Json\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"}],\"dbName\":null}},\"enums\":{},\"types\":{}}")
+config.runtimeDataModel = JSON.parse("{\"models\":{\"Project\":{\"fields\":[{\"name\":\"name\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"Int\"}],\"dbName\":null},\"Template\":{\"fields\":[{\"name\":\"title\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"description\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"categoryName\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"yaml\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"updatedAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"category\",\"kind\":\"object\",\"type\":\"Category\",\"relationName\":\"CategoryToTemplate\"}],\"dbName\":null},\"Category\":{\"fields\":[{\"name\":\"name\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"templates\",\"kind\":\"object\",\"type\":\"Template\",\"relationName\":\"CategoryToTemplate\"}],\"dbName\":null},\"User\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"email\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"name\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"passwordHash\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"githubUsername\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"role\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"status\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"dashboardPreferences\",\"kind\":\"scalar\",\"type\":\"Json\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"}],\"dbName\":null},\"AuditLog\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"action\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"actorEmail\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"targetId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"details\",\"kind\":\"scalar\",\"type\":\"Json\"},{\"name\":\"role\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"}],\"dbName\":null},\"PlatformConfig\":{\"fields\":[{\"name\":\"key\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"value\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"description\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"updatedAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"}],\"dbName\":null}},\"enums\":{},\"types\":{}}")
 defineDmmfProperty(exports.Prisma, config.runtimeDataModel)
 config.compilerWasm = {
       getRuntime: async () => require('./query_compiler_fast_bg.js'),
