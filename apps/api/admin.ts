@@ -27,8 +27,12 @@ const prisma = new PrismaClient({
 
 const router: IRouter = express.Router();
 
+type UserRecord = { id: string; name: string | null; email: string; githubUsername: string | null; role: string; status: string; createdAt: Date }
+ 
+type AuditLogRecord = { id: number; createdAt: Date; actorEmail: string; action: string; targetId: string | null; role: string | null; details: any }
+
 router.use(cors());
-router.use(express.json());
+router.use(express.json()); 
 
 router.get(
   "/api/admin/users",
@@ -150,7 +154,7 @@ router.get(
       const header = "id,name,email,githubUsername,role,status,createdAt\n";
       const rows = users
         .map(
-          (u) =>
+          (u: UserRecord) =>
             `"${u.id}","${u.name ?? ""}","${u.email}","${u.githubUsername ?? ""}","${u.role}","${u.status}","${u.createdAt.toISOString()}"`,
         )
         .join("\n");
@@ -287,7 +291,7 @@ router.get(
     try {
       const configs = await prisma.platformConfig.findMany();
       // Convert array of {key, value} into a simple object: { SCAFFOLDER_ENABLED: "true", ... }
-      const featureMap = configs.reduce<Record<string, string>>((acc, curr) => {
+      const featureMap = configs.reduce<Record<string, string>>((acc: Record<string, string>, curr: { key: string; value: string }) => {
         acc[curr.key] = curr.value;
         return acc;
       }, {});
@@ -492,7 +496,7 @@ router.get(
       const header = "id,createdAt,actorEmail,action,targetId,role,details\n";
       const rows = logs
         .map(
-          (l) =>
+          (l: AuditLogRecord) =>
             `"${l.id}","${l.createdAt.toISOString()}","${l.actorEmail}","${l.action}","${l.targetId ?? ""}","${l.role ?? ""}","${String(l.details ?? "").replace(/"/g, '""')}"`,
         )
         .join("\n");
