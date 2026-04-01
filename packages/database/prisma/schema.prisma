@@ -42,3 +42,20 @@ model User {
   createdAt      DateTime @default(now())
 }
 
+model AuditLog {
+  id        Int      @id @default(autoincrement())
+  action    String
+  actorEmail String
+  targetId  String?
+  details   Json?
+  role           String?
+  createdAt DateTime @default(now())
+}
+
+model PlatformConfig {
+  key  String @id
+  value String
+  description String?
+  updatedAt DateTime @updatedAt
+}
+
