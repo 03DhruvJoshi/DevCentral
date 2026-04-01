@@ -1,20 +1,28 @@
 // apps/web/src/components/layout/Header.tsx
+import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Box, LayoutDashboard, GitBranch, BarChart } from "lucide-react";
 import { Button } from "../ui/button.js";
 
 import UserProfile from "./UserProfile.js";
-
-const NAV_ITEMS = [
-  { name: "Dashboard", path: "/dashboard", icon: LayoutDashboard },
-  { name: "GitOps", path: "/gitops", icon: GitBranch },
-  { name: "Scaffolder", path: "/scaffold", icon: Box },
-  { name: "Dev Analytics", path: "/analytics", icon: BarChart },
-  // { name: "AI Assistant", path: "/ai-assistant", icon: Sparkles },
-];
+import { API_BASE_URL } from "../../pages/admin/types.js";
 
 export function Header() {
   const location = useLocation();
+  const [features, setFeatures] = useState<{ [key: string]: string }>({});
+
+  useEffect(() => {
+    const fetchFeatures = async () => {
+      const token = localStorage.getItem("devcentral_token");
+      if (!token) return;
+
+      const res = await fetch(`${API_BASE_URL}/api/platform/features`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      if (res.ok) setFeatures(await res.json());
+    };
+    fetchFeatures();
+  }, []);
 
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur">
@@ -30,21 +38,62 @@ export function Header() {
 
         {/* Navigation Menu */}
         <nav className="flex items-center gap-2 flex-1">
-          {NAV_ITEMS.map((item) => {
-            const isActive = location.pathname === item.path;
-            return (
-              <Link key={item.path} to={item.path}>
-                <Button
-                  variant={isActive ? "secondary" : "ghost"}
-                  className={`flex items-center gap-2 ${isActive ? "font-semibold" : "text-muted-foreground"}`}
-                  size="sm"
-                >
-                  <item.icon className="h-4 w-4" />
-                  {item.name}
-                </Button>
-              </Link>
-            );
-          })}
+          {features.SCAFFOLDER_ENABLED !== "false" && (
+            <Link to="/scaffold">
+              <Button
+                variant={
+                  location.pathname === "/scaffold" ? "secondary" : "ghost"
+                }
+                className="flex items-center gap-2"
+                size="sm"
+              >
+                <Box className="h-4 w-4" />
+                Scaffolder
+              </Button>
+            </Link>
+          )}
+          {features.DASHBOARD_ENABLED !== "false" && (
+            <Link to="/dashboard">
+              <Button
+                variant={
+                  location.pathname === "/dashboard" ? "secondary" : "ghost"
+                }
+                className="flex items-center gap-2"
+                size="sm"
+              >
+                <LayoutDashboard className="h-4 w-4" />
+                Dashboard
+              </Button>
+            </Link>
+          )}
+          {features.ANALYTICS_ENABLED !== "false" && (
+            <Link to="/analytics">
+              <Button
+                variant={
+                  location.pathname === "/analytics" ? "secondary" : "ghost"
+                }
+                className="flex items-center gap-2"
+                size="sm"
+              >
+                <BarChart className="h-4 w-4" />
+                Analytics
+              </Button>
+            </Link>
+          )}
+          {features.GITOPS_ENABLED !== "false" && (
+            <Link to="/gitops">
+              <Button
+                variant={
+                  location.pathname === "/gitops" ? "secondary" : "ghost"
+                }
+                className="flex items-center gap-2"
+                size="sm"
+              >
+                <GitBranch className="h-4 w-4" />
+                GitOps
+              </Button>
+            </Link>
+          )}
         </nav>
 
         {/* User Profile */}
