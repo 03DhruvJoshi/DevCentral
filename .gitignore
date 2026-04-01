@@ -45,3 +45,4 @@ apps/web/stale
 
 .agents/*
 /generated/prisma
+packages/*/prisma/generated
