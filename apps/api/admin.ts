@@ -11,6 +11,7 @@ import { fileURLToPath } from "node:url";
 import { AuthenticatedRequest } from "./api_types/index.js";
 
 import cors from "cors";
+import { JsonValue } from "../../packages/database/prisma/generated/runtime/client";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 dotenv.config({ path: path.resolve(__dirname, "../../.env") });
@@ -44,7 +45,7 @@ type AuditLogRecord = {
   action: string;
   targetId: string | null;
   role: string | null;
-  details: string | null;
+details: JsonValue | null;
 };
 
 router.use(cors());
@@ -121,9 +122,14 @@ router.patch(
 
       const updateData = actionMap[action];
 
+      if (!updateData) {
+        return res.status(400).json({ error: "Invalid action." });
+      }
+
       const result = await prisma.user.updateMany({
-        where: { id: { in: filteredIds } },
         data: updateData,
+        where: { id: { in: filteredIds } },
+         
       });
 
       await prisma.auditLog.create({
@@ -516,7 +522,7 @@ router.get(
       const rows = logs
         .map(
           (l: AuditLogRecord) =>
-            `"${l.id}","${l.createdAt.toISOString()}","${l.actorEmail}","${l.action}","${l.targetId ?? ""}","${l.role ?? ""}","${String(l.details ?? "").replace(/"/g, '""')}"`,
+            `"${l.id}","${l.createdAt.toISOString()}","${l.actorEmail}","${l.action}","${l.targetId ?? ""}","${l.role ?? ""}","${(typeof l.details === "string" ? l.details : JSON.stringify(l.details ?? "")).replaceAll('"', '""')}"`,
         )
         .join("\n");
 
