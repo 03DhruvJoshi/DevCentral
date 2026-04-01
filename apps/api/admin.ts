@@ -27,12 +27,28 @@ const prisma = new PrismaClient({
 
 const router: IRouter = express.Router();
 
-type UserRecord = { id: string; name: string | null; email: string; githubUsername: string | null; role: string; status: string; createdAt: Date }
- 
-type AuditLogRecord = { id: number; createdAt: Date; actorEmail: string; action: string; targetId: string | null; role: string | null; details: any }
+type UserRecord = {
+  id: string;
+  name: string | null;
+  email: string;
+  githubUsername: string | null;
+  role: string;
+  status: string;
+  createdAt: Date;
+};
+
+type AuditLogRecord = {
+  id: number;
+  createdAt: Date;
+  actorEmail: string;
+  action: string;
+  targetId: string | null;
+  role: string | null;
+  details: string | null;
+};
 
 router.use(cors());
-router.use(express.json()); 
+router.use(express.json());
 
 router.get(
   "/api/admin/users",
@@ -291,10 +307,13 @@ router.get(
     try {
       const configs = await prisma.platformConfig.findMany();
       // Convert array of {key, value} into a simple object: { SCAFFOLDER_ENABLED: "true", ... }
-      const featureMap = configs.reduce<Record<string, string>>((acc: Record<string, string>, curr: { key: string; value: string }) => {
-        acc[curr.key] = curr.value;
-        return acc;
-      }, {});
+      const featureMap = configs.reduce<Record<string, string>>(
+        (acc: Record<string, string>, curr: { key: string; value: string }) => {
+          acc[curr.key] = curr.value;
+          return acc;
+        },
+        {},
+      );
       res.json(featureMap);
     } catch (error) {
       console.error("Failed to load platform features", error);
