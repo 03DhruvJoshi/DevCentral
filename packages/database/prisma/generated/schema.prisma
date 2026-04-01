@@ -1,0 +1,60 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "./generated"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model Project {
+  name      String
+  createdAt DateTime @default(now())
+  id        Int      @id @default(autoincrement())
+}
+
+model Template {
+  title        String
+  description  String
+  categoryName String
+  yaml         String
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+  id           Int      @id @default(autoincrement())
+  category     Category @relation(fields: [categoryName], references: [name])
+}
+
+model Category {
+  name      String     @unique
+  id        Int        @id @default(autoincrement())
+  templates Template[]
+}
+
+model User {
+  id                   String   @id @default(uuid())
+  email                String   @unique
+  name                 String
+  passwordHash         String
+  githubUsername       String?
+  role                 String   @default("DEV") // "DEV" or "ADMIN"
+  status               String   @default("ACTIVE") // "ACTIVE", "SUSPENDED"
+  dashboardPreferences Json?
+  createdAt            DateTime @default(now())
+}
+
+model AuditLog {
+  id         Int      @id @default(autoincrement())
+  action     String
+  actorEmail String
+  targetId   String?
+  details    Json?
+  role       String?
+  createdAt  DateTime @default(now())
+}
+
+model PlatformConfig {
+  key         String   @id
+  value       String
+  description String?
+  updatedAt   DateTime @updatedAt
+}
