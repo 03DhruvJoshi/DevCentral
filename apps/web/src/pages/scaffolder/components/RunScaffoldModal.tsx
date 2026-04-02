@@ -70,7 +70,15 @@ function RunScaffoldModal({
       });
 
       const data = await res.json();
-      if (!res.ok) throw new Error(data.error || "Failed to execute scaffold");
+      if (!res.ok) {
+        if (data.githubNotConnected) {
+          setError(
+            "Your GitHub account is not connected. Use the banner above to connect it before scaffolding.",
+          );
+          return;
+        }
+        throw new Error(data.error || "Failed to execute scaffold");
+      }
 
       setSuccessUrl(data.url);
     } catch (err: unknown) {

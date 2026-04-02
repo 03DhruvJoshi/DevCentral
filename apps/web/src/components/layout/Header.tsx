@@ -38,20 +38,6 @@ export function Header() {
 
         {/* Navigation Menu */}
         <nav className="flex items-center gap-2 flex-1">
-          {features.SCAFFOLDER_ENABLED !== "false" && (
-            <Link to="/scaffold">
-              <Button
-                variant={
-                  location.pathname === "/scaffold" ? "secondary" : "ghost"
-                }
-                className="flex items-center gap-2"
-                size="sm"
-              >
-                <Box className="h-4 w-4" />
-                Scaffolder
-              </Button>
-            </Link>
-          )}
           {features.DASHBOARD_ENABLED !== "false" && (
             <Link to="/dashboard">
               <Button
@@ -66,20 +52,21 @@ export function Header() {
               </Button>
             </Link>
           )}
-          {features.ANALYTICS_ENABLED !== "false" && (
-            <Link to="/analytics">
+          {features.SCAFFOLDER_ENABLED !== "false" && (
+            <Link to="/scaffold">
               <Button
                 variant={
-                  location.pathname === "/analytics" ? "secondary" : "ghost"
+                  location.pathname === "/scaffold" ? "secondary" : "ghost"
                 }
                 className="flex items-center gap-2"
                 size="sm"
               >
-                <BarChart className="h-4 w-4" />
-                Analytics
+                <Box className="h-4 w-4" />
+                Scaffolder
               </Button>
             </Link>
           )}
+
           {features.GITOPS_ENABLED !== "false" && (
             <Link to="/gitops">
               <Button
@@ -91,6 +78,20 @@ export function Header() {
               >
                 <GitBranch className="h-4 w-4" />
                 GitOps
+              </Button>
+            </Link>
+          )}
+          {features.ANALYTICS_ENABLED !== "false" && (
+            <Link to="/analytics">
+              <Button
+                variant={
+                  location.pathname === "/analytics" ? "secondary" : "ghost"
+                }
+                className="flex items-center gap-2"
+                size="sm"
+              >
+                <BarChart className="h-4 w-4" />
+                Analytics
               </Button>
             </Link>
           )}
