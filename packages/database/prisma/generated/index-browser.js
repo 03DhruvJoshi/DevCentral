@@ -147,9 +147,21 @@ exports.Prisma.UserScalarFieldEnum = {
   name: 'name',
   passwordHash: 'passwordHash',
   githubUsername: 'githubUsername',
+  githubAccessToken: 'githubAccessToken',
+  emailVerified: 'emailVerified',
   role: 'role',
   status: 'status',
   dashboardPreferences: 'dashboardPreferences',
+  createdAt: 'createdAt'
+};
+
+exports.Prisma.AuthTokenScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  tokenHash: 'tokenHash',
+  type: 'type',
+  expiresAt: 'expiresAt',
+  usedAt: 'usedAt',
   createdAt: 'createdAt'
 };
 
@@ -195,13 +207,17 @@ exports.Prisma.NullsOrder = {
   first: 'first',
   last: 'last'
 };
-
+exports.AuthTokenType = exports.$Enums.AuthTokenType = {
+  EMAIL_VERIFY: 'EMAIL_VERIFY',
+  PASSWORD_RESET: 'PASSWORD_RESET'
+};
 
 exports.Prisma.ModelName = {
   Project: 'Project',
   Template: 'Template',
   Category: 'Category',
   User: 'User',
+  AuthToken: 'AuthToken',
   AuditLog: 'AuditLog',
   PlatformConfig: 'PlatformConfig'
 };

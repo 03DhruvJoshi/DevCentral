@@ -1,4 +1,3 @@
-// apps/web/src/pages/RegisterPage.tsx
 import { useState } from "react";
 import { Button } from "../../components/ui/button.js";
 import { Input } from "../../components/ui/input.js";
@@ -10,8 +9,7 @@ import {
   CardDescription,
   CardFooter,
 } from "../../components/ui/card.js";
-import { Github, Loader2 } from "lucide-react";
-import type { SubmitEvent } from "react";
+import { Loader2 } from "lucide-react";
 
 const API_BASE_URL =
   (import.meta as unknown as { env?: Record<string, string> }).env
@@ -21,13 +19,10 @@ export function RegisterPage() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [githubUsername, setGithubUsername] = useState("");
-
   const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
-  const [isSuccess, setIsSuccess] = useState(false);
 
-  const handleRegister = async (e: SubmitEvent) => {
+  const handleRegister = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
     setError(null);
@@ -36,12 +31,7 @@ export function RegisterPage() {
       const res = await fetch(`${API_BASE_URL}/api/auth/register`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          name,
-          email,
-          password,
-          githubUsername,
-        }),
+        body: JSON.stringify({ name, email, password }),
       });
 
       const data = await res.json();
@@ -50,30 +40,13 @@ export function RegisterPage() {
         throw new Error(data.error || "Failed to register account");
       }
 
-      // Success! Show a message and redirect to login
-      setIsSuccess(true);
-      setTimeout(() => {
-        window.location.href = "/login";
-      }, 2000);
-    } catch (err: any) {
-      setError(err.message);
+      globalThis.location.href = `/verify-email?email=${encodeURIComponent(email)}`;
+    } catch (err: unknown) {
+      setError(err instanceof Error ? err.message : "Failed to register account");
     } finally {
       setIsLoading(false);
     }
   };
-
-  if (isSuccess) {
-    return (
-      <div className="flex items-center justify-center min-h-screen bg-muted/20">
-        <Card className="w-[400px] border-green-200 bg-green-50">
-          <CardContent className="pt-6 text-center text-green-700">
-            <h3 className="text-xl font-bold mb-2">Registration Successful!</h3>
-            <p>Redirecting you to the login page...</p>
-          </CardContent>
-        </Card>
-      </div>
-    );
-  }
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-muted/20 p-4">
@@ -93,8 +66,11 @@ export function RegisterPage() {
             )}
 
             <div className="space-y-2">
-              <label className="text-sm font-medium">Full Name</label>
+              <label htmlFor="register-name" className="text-sm font-medium">
+                Full Name
+              </label>
               <Input
+                id="register-name"
                 placeholder="Jane Doe"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
@@ -103,8 +79,11 @@ export function RegisterPage() {
             </div>
 
             <div className="space-y-2">
-              <label className="text-sm font-medium">Work Email</label>
+              <label htmlFor="register-email" className="text-sm font-medium">
+                Work Email
+              </label>
               <Input
+                id="register-email"
                 type="email"
                 placeholder="jane@company.com"
                 value={email}
@@ -114,24 +93,11 @@ export function RegisterPage() {
             </div>
 
             <div className="space-y-2">
-              <label className="text-sm font-medium flex items-center gap-2">
-                <Github className="h-4 w-4" /> GitHub Username
+              <label htmlFor="register-password" className="text-sm font-medium">
+                Password
               </label>
-
               <Input
-                placeholder="janedoe-dev"
-                value={githubUsername}
-                onChange={(e) => setGithubUsername(e.target.value)}
-                required
-              />
-              <p className="text-xs text-muted-foreground">
-                We need this to link your GitHub account.
-              </p>
-            </div>
-
-            <div className="space-y-2">
-              <label className="text-sm font-medium">Password</label>
-              <Input
+                id="register-password"
                 type="password"
                 placeholder="••••••••"
                 value={password}
@@ -143,7 +109,7 @@ export function RegisterPage() {
 
             <Button
               type="submit"
-              className="w-full mt-6  hover:bg-red-400 text-black"
+              className="w-full mt-6 hover:bg-red-400 text-black"
               disabled={isLoading}
             >
               {isLoading ? (
@@ -160,10 +126,7 @@ export function RegisterPage() {
         <CardFooter className="flex justify-center border-t p-4 mt-2">
           <p className="text-sm text-muted-foreground">
             Already have an account?{" "}
-            <a
-              href="/login"
-              className="text-primary hover:underline font-medium"
-            >
+            <a href="/login" className="text-primary hover:underline font-medium">
               Sign in here
             </a>
           </p>

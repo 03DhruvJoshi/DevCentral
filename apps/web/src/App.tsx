@@ -7,6 +7,10 @@ import { GitOpsPage } from "./pages/gitops/GitOpsPage.js";
 import { AnalyticsPage } from "./pages/analytics/AnalyticsPage.js";
 import { LoginPage } from "./pages/auth/LoginPage.js";
 import { RegisterPage } from "./pages/auth/RegisterPage.js";
+import { ForgotPasswordPage } from "./pages/auth/ForgotPasswordPage.js";
+import { ResetPasswordPage } from "./pages/auth/ResetPasswordPage.js";
+import { VerifyEmailPage } from "./pages/auth/VerifyEmailPage.js";
+import { ConnectGitHubPage } from "./pages/auth/ConnectGitHubPage.js";
 import { AdminRoute } from "./pages/admin/AdminRoute.js";
 import { GlobalBroadcast } from "./pages/admin/components/GlobalBroadcast.js";
 
@@ -31,6 +35,10 @@ function App() {
           <Routes>
             <Route path="/login" element={<LoginPage />} />
             <Route path="/register" element={<RegisterPage />} />
+            <Route path="/forgot-password" element={<ForgotPasswordPage />} />
+            <Route path="/reset-password" element={<ResetPasswordPage />} />
+            <Route path="/verify-email" element={<VerifyEmailPage />} />
+            <Route path="/connect-github" element={<ConnectGitHubPage />} />
 
             <Route element={<ProtectedLayout />}>
               <Route path="/" element={<Navigate to="/dashboard" replace />} />

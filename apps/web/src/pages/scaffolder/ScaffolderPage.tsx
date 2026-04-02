@@ -12,6 +12,7 @@ import {
   PlayCircle,
   Search,
   TerminalSquare,
+  Github,
 } from "lucide-react";
 
 import {
@@ -240,14 +241,26 @@ export function ScaffolderPage() {
 
   return (
     <div className="flex flex-col gap-6">
-      <div>
-        <h1 className="text-3xl font-bold tracking-tight">
-          Template Scaffolder
-        </h1>
-        <p className="text-muted-foreground mt-1">
-          Generate standardised project boilerplates or contribute new templates
-          to the organisation.
-        </p>
+      <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+        <div>
+          <h1 className="text-3xl font-bold tracking-tight">
+            Template Scaffolder
+          </h1>
+          <p className="text-muted-foreground mt-1">
+            Generate standardised project boilerplates or contribute new
+            templates to the organisation.
+          </p>
+        </div>
+
+        {/* Connection Badge */}
+        <Badge
+          variant="outline"
+          className="flex items-center gap-1.5 py-1.5 px-3 border-green-200 bg-green-50 text-green-700"
+        >
+          <Github className="h-4 w-4" />
+          <span className="font-medium">GitHub Connected</span>
+          <span className="h-2 w-2 rounded-full ml-1 bg-green-500 animate-pulse" />
+        </Badge>
       </div>
 
       <Tabs defaultValue="browse" className="w-full">

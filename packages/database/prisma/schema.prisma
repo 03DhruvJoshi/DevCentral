@@ -31,15 +31,37 @@ model Category {
 }
 
 model User {
-  id             String   @id @default(uuid())
-  email          String   @unique
-  name           String
-  passwordHash   String    
-  githubUsername String?   
-  role           String   @default("DEV") // "DEV" or "ADMIN"
-  status         String   @default("ACTIVE") // "ACTIVE", "SUSPENDED"
+  id                String   @id @default(uuid())
+  email             String   @unique
+  name              String
+  passwordHash      String
+  githubUsername    String?
+  githubAccessToken String?
+  emailVerified     Boolean  @default(false)
+  role              String   @default("DEV") // "DEV" or "ADMIN"
+  status            String   @default("ACTIVE") // "ACTIVE", "SUSPENDED"
   dashboardPreferences Json?
-  createdAt      DateTime @default(now())
+  createdAt         DateTime @default(now())
+  authTokens        AuthToken[]
+}
+
+enum AuthTokenType {
+  EMAIL_VERIFY
+  PASSWORD_RESET
+}
+
+model AuthToken {
+  id         Int           @id @default(autoincrement())
+  userId     String
+  tokenHash  String
+  type       AuthTokenType
+  expiresAt  DateTime
+  usedAt     DateTime?
+  createdAt  DateTime      @default(now())
+  user       User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId, type])
+  @@index([tokenHash, type])
 }
 
 model AuditLog {

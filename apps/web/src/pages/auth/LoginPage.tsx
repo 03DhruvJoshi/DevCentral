@@ -18,23 +18,29 @@ export function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const handleLogin = async (e: SubmitEvent) => {
+  const handleLogin = async (e: { preventDefault: () => void }) => {
     e.preventDefault();
+    setIsSubmitting(true);
+    setError("");
+
     try {
-      const res = await fetch(
-        // `https://devcentral-api-prod.onrender.com/api/auth/login`,
-        `${API_BASE_URL}/api/auth/login`,
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ email, password }),
-        },
-      );
+      const res = await fetch(`${API_BASE_URL}/api/auth/login`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, password }),
+      });
 
-      const data = await res.json();
+      const data = await res.json().catch(() => ({}));
 
-      if (!res.ok) throw new Error(data.error);
+      if (!res.ok) {
+        if (data.emailNotVerified && data.email) {
+          globalThis.location.href = `/verify-email?email=${encodeURIComponent(data.email)}`;
+          return;
+        }
+        throw new Error(data.error ?? "Login failed");
+      }
 
       // Save the token to local storage
       localStorage.setItem("devcentral_token", data.token);
@@ -46,8 +52,11 @@ export function LoginPage() {
       } else {
         globalThis.location.href = "/dashboard"; // DEV
       }
-    } catch (err: any) {
-      setError(err.message);
+    } catch (err: unknown) {
+      const message = err instanceof Error ? err.message : "Login failed";
+      setError(message);
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -64,8 +73,11 @@ export function LoginPage() {
           <form onSubmit={handleLogin} className="space-y-4">
             {error && <div className="text-red-500 text-sm">{error}</div>}
             <div className="space-y-2">
-              <label className="text-sm font-medium">Email</label>
+              <label htmlFor="login-email" className="text-sm font-medium">
+                Email
+              </label>
               <Input
+                id="login-email"
                 type="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
@@ -73,16 +85,29 @@ export function LoginPage() {
               />
             </div>
             <div className="space-y-2">
-              <label className="text-sm font-medium">Password</label>
+              <label htmlFor="login-password" className="text-sm font-medium">
+                Password
+              </label>
               <Input
+                id="login-password"
                 type="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
               />
             </div>
-            <Button type="submit" className="w-full">
-              Sign In
+
+            <div className="text-right">
+              <a
+                href="/forgot-password"
+                className="text-sm text-primary hover:underline"
+              >
+                Forgot password?
+              </a>
+            </div>
+
+            <Button type="submit" className="w-full" disabled={isSubmitting}>
+              {isSubmitting ? "Signing in..." : "Sign In"}
             </Button>
           </form>
         </CardContent>
