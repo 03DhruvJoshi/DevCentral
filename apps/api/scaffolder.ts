@@ -11,11 +11,7 @@ import path from "node:path";
 import dotenv from "dotenv";
 import { fileURLToPath } from "node:url";
 
-const githubToken = `${process.env.GITHUB_TOKEN}`;
-
-const octokit = new Octokit({
-  auth: githubToken,
-});
+// Octokit is created per-request using the authenticated user's GitHub token.
 
 const router: IRouter = express.Router();
 
@@ -252,13 +248,25 @@ router.post(
   async (req: AuthenticatedRequest, res: Response) => {
     try {
       const { templateId, targetRepoName, isNewRepo, description } = req.body;
-      const githubUsername = req.user?.githubUsername;
 
-      if (!githubUsername) {
-        return res
-          .status(400)
-          .json({ error: "No GitHub username linked to your account." });
+      const dbUser = await prisma.user.findUnique({
+        where: { id: req.user?.id },
+        select: { githubUsername: true, githubAccessToken: true },
+      });
+
+      if (!dbUser?.githubAccessToken) {
+        return res.status(403).json({
+          error: "Connect your GitHub account before using the Scaffolder.",
+          githubNotConnected: true,
+        });
       }
+
+      const githubUsername = dbUser.githubUsername;
+      if (!githubUsername) {
+        return res.status(400).json({ error: "No GitHub username linked to your account." });
+      }
+
+      const octokit = new Octokit({ auth: dbUser.githubAccessToken });
 
       const template = await prisma.template.findUnique({
         where: { id: templateId },

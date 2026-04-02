@@ -81,6 +81,9 @@ importers:
 
   apps/api:
     dependencies:
+      '@getbrevo/brevo':
+        specifier: ^5.0.3
+        version: 5.0.3
       '@prisma/adapter-pg':
         specifier: ^7.3.0
         version: 7.3.0
@@ -736,6 +739,10 @@ packages:
 
   '@floating-ui/utils@0.2.10':
     resolution: {integrity: sha512-aGTxbpbg8/b5JfU1HXSrbH3wXZuLPJcNEcZQFMxLs3oSzgtVu6nFPkbbGGUvBcUjKV2YyB9Wxxabo+HEH9tcRQ==}
+
+  '@getbrevo/brevo@5.0.3':
+    resolution: {integrity: sha512-AIAFXiUkk5fpl8cVttGWZfxt84PFPS7DnB0+fRqd70kFsbwPvNfdYhrnD0tXL5jLmGrSeLv2pfACkzFD7gYeeA==}
+    engines: {node: '>=18.0.0'}
 
   '@hono/node-server@1.19.9':
     resolution: {integrity: sha512-vHL6w3ecZsky+8P5MD+eFfaGTyCeOHUIFYMGpQGbrBTSmNNoxv0if69rEZ5giu36weC5saFuznL411gRX7bJDw==}
@@ -4952,6 +4959,8 @@ snapshots:
       react-dom: 19.2.3(react@19.2.3)
 
   '@floating-ui/utils@0.2.10': {}
+
+  '@getbrevo/brevo@5.0.3': {}
 
   '@hono/node-server@1.19.9(hono@4.11.4)':
     dependencies:

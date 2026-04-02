@@ -29,6 +29,16 @@
     "GITHUB_TOKEN",
     "GITHUB_USERNAME",
     "SONAR_TOKEN",
-    "JWT_SECRET"
+    "JWT_SECRET",
+    "APP_BASE_URL",
+    "SMTP_HOST",
+    "SMTP_PORT",
+    "SMTP_SECURE",
+    "SMTP_USER",
+    "SMTP_PASS",
+    "EMAIL_FROM",
+    "BREVO_API_KEY",
+    "GITHUB_CLIENT_ID",
+    "GITHUB_CLIENT_SECRET"
   ]
 }
