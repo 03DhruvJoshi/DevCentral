@@ -27,7 +27,7 @@ import { BroadcastSystem } from "./components/BroadcastSystem.js";
 import SecurityTab from "./components/SecurityMetrics.js";
 
 export function AdminPortalPage() {
-  const [activeTab, setActiveTab] = useState("directory");
+  const [activeTab, setActiveTab] = useState("security");
   const [actionAlert, setActionAlert] = useState<{
     type: "success" | "error";
     message: string;

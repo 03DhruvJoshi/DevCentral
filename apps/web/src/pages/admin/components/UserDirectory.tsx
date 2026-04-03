@@ -22,6 +22,15 @@ import {
   TableHeader,
   TableRow,
 } from "../../../components/ui/table.js";
+import {
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "../../../components/ui/dialog.js";
 import { Badge } from "../../../components/ui/badge.js";
 import { Button } from "../../../components/ui/button.js";
 import { Input } from "../../../components/ui/input.js";
@@ -400,30 +409,43 @@ export function UserDirectory({ onAlert }: Readonly<Props>) {
       </div>
 
       {/* Confirm delete dialog */}
-      {confirmDeleteId && (
-        <div className="rounded-md border border-red-200 bg-red-50 px-4 py-3 flex items-center justify-between">
-          <p className="text-sm text-red-800 font-medium">
-            Are you sure? This will permanently delete the user and all their
-            data.
-          </p>
-          <div className="flex gap-2 ml-4">
+      <Dialog
+        open={confirmDeleteId !== null}
+        onOpenChange={(open) => {
+          if (!open) setConfirmDeleteId(null);
+        }}
+      >
+        <DialogContent className="sm:max-w-sm bg-white">
+          <DialogHeader>
+            <DialogTitle>Delete User</DialogTitle>
+            <DialogDescription>
+              Are you sure you want to permanently delete this user? This action
+              cannot be undone.
+            </DialogDescription>
+          </DialogHeader>
+          <DialogFooter>
+            <DialogClose asChild>
+              <Button
+                variant="outline"
+                onClick={() => setConfirmDeleteId(null)}
+              >
+                Cancel
+              </Button>
+            </DialogClose>
             <Button
-              variant="destructive"
-              size="sm"
-              onClick={() => deleteUser(confirmDeleteId)}
+              type="submit"
+              className="bg-black hover:bg-red-700 border-white-600 hover:border-red-700 text-white"
+              onClick={() => {
+                if (confirmDeleteId) {
+                  void deleteUser(confirmDeleteId);
+                }
+              }}
             >
-              Yes, Delete
+              Delete
             </Button>
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={() => setConfirmDeleteId(null)}
-            >
-              Cancel
-            </Button>
-          </div>
-        </div>
-      )}
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
 
       {/* Confirm bulk delete dialog */}
       {confirmBulkDelete && (

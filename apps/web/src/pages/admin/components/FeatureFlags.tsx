@@ -43,7 +43,7 @@ function formatKeyName(key: string): string {
   return key
     .replaceAll("_", " ")
     .toLowerCase()
-    .replace(/\b\w/g, (c) => c.toUpperCase());
+    .replaceAll(/\b\w/g, (c) => c.toUpperCase());
 }
 
 const KEY_PATTERN = /^[A-Z][A-Z0-9_]*$/;

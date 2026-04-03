@@ -33,6 +33,7 @@ export function LoginPage() {
       });
 
       const data = await res.json().catch(() => ({}));
+      const role = data?.user?.role as string | undefined;
 
       if (!res.ok) {
         if (data.emailNotVerified && data.email) {
@@ -42,18 +43,27 @@ export function LoginPage() {
         throw new Error(data.error ?? "Login failed");
       }
 
+      if (role === "ADMIN") {
+        // For admin users, we want to bypass email verification and log them in directly
+        localStorage.setItem("devcentral_token", data.token);
+        localStorage.setItem("devcentral_user", JSON.stringify(data.user));
+
+        globalThis.location.href = "/admin";
+        return;
+      }
+
       // Save the token to local storage
       localStorage.setItem("devcentral_token", data.token);
       localStorage.setItem("devcentral_user", JSON.stringify(data.user));
 
       // Redirect to the Dashboard
-      if (data.user.role === "ADMIN") {
-        globalThis.location.href = "/admin"; // ADMIN
-      } else {
+      if (role === "DEV") {
         globalThis.location.href = "/dashboard"; // DEV
+      } else {
+        globalThis.location.href = "/admin"; // ADMIN
       }
     } catch (err: unknown) {
-      const message = err instanceof Error ? err.message : "Login failed";
+      const message = (err as Error).message;
       setError(message);
     } finally {
       setIsSubmitting(false);
