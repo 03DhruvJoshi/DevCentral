@@ -1,5 +1,6 @@
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { Analytics } from "@vercel/analytics/react";
 import { DashboardLayout } from "./components/layout/DashboardLayout.js";
 import { DashboardPage } from "./pages/dashboard/DashboardPage.js";
 import { ScaffolderPage } from "./pages/scaffolder/ScaffolderPage.js";
@@ -52,6 +53,7 @@ function App() {
           </Routes>
         </BrowserRouter>
       </QueryClientProvider>
+      <Analytics />
     </div>
   );
 }
