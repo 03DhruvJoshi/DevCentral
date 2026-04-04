@@ -465,7 +465,7 @@ router.post(
       `https://github.com/login/oauth/authorize` +
       `?client_id=${clientId}` +
       `&redirect_uri=${encodeURIComponent(callbackUrl)}` +
-      `&scope=${encodeURIComponent("repo read:org")}` +
+      `&scope=${encodeURIComponent("repo workflow read:org gist user read:org")}` +
       `&state=${state}`;
 
     res.json({ authUrl });

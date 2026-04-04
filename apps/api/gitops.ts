@@ -8,6 +8,8 @@ import { Octokit } from "octokit";
 import express, { IRouter, Response } from "express";
 import { authenticateToken } from "./authenticatetoken.js";
 import { AuthenticatedRequest } from "./api_types/index.js";
+import { RequestError } from "@octokit/request-error";
+
 import prisma from "./prisma.js";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -190,35 +192,38 @@ router.get(
   },
 );
 
-router.get(
-  "/api/github/repos/:owner/:repo/pulls",
-
-  async (req, res) => {
-    try {
-      const { owner, repo } = req.params;
-      const { data } = await octokit.rest.pulls.list({
-        owner,
-        repo,
-        state: "all",
-        per_page: 5,
-      });
-      res.json(data);
-    } catch (error) {
-      console.error("GitHub Error:", error);
-      res
-        .status(500)
-        .json({ error: "Failed to fetch pull requests from GitHub" });
-    }
-  },
-);
+router.get("/api/github/repos/:owner/:repo/pulls", async (req, res) => {
+  try {
+    const { owner, repo } = req.params;
+    const per_page = Math.min(Number(req.query.per_page) || 50, 100);
+    const page = Number(req.query.page) || 1;
+    const state = (req.query.state as "open" | "closed" | "all") || "all";
+    const { data } = await octokit.rest.pulls.list({
+      owner,
+      repo,
+      state,
+      per_page,
+      page,
+    });
+    res.json(data);
+  } catch (error) {
+    console.error("GitHub Error:", error);
+    res
+      .status(500)
+      .json({ error: "Failed to fetch pull requests from GitHub" });
+  }
+});
 
 router.get("/api/github/repos/:owner/:repo/actions", async (req, res) => {
   try {
     const { owner, repo } = req.params;
+    const per_page = Math.min(Number(req.query.per_page) || 50, 100);
+    const page = Number(req.query.page) || 1;
     const { data } = await octokit.rest.actions.listWorkflowRunsForRepo({
       owner,
       repo,
-      per_page: 5,
+      per_page,
+      page,
     });
     res.json(data);
   } catch (error) {
@@ -230,12 +235,14 @@ router.get("/api/github/repos/:owner/:repo/actions", async (req, res) => {
 router.get("/api/github/repos/:owner/:repo/releases", async (req, res) => {
   try {
     const { owner, repo } = req.params;
+    const per_page = Math.min(Number(req.query.per_page) || 50, 100);
+    const page = Number(req.query.page) || 1;
     const { data } = await octokit.rest.repos.listReleases({
       owner,
       repo,
-      per_page: 5,
+      per_page,
+      page,
     });
-
     res.json(data);
   } catch (error) {
     console.error("GitHub Error:", error);
@@ -246,13 +253,19 @@ router.get("/api/github/repos/:owner/:repo/releases", async (req, res) => {
 router.get("/api/github/repos/:owner/:repo/issues", async (req, res) => {
   try {
     const { owner, repo } = req.params;
+    const per_page = Math.min(Number(req.query.per_page) || 50, 100);
+    const page = Number(req.query.page) || 1;
+    const state = (req.query.state as "open" | "closed" | "all") || "open";
     const { data } = await octokit.rest.issues.listForRepo({
       owner,
       repo,
-      state: "all",
-      per_page: 5,
+      state,
+      per_page,
+      page,
     });
-    res.json(data);
+    // Filter out pull requests (GitHub returns PRs in issues endpoint)
+    const issuesOnly = data.filter((item) => !item.pull_request);
+    res.json(issuesOnly);
   } catch (error) {
     console.error("GitHub Error:", error);
     res.status(500).json({ error: "Failed to fetch issues from GitHub" });
@@ -262,10 +275,17 @@ router.get("/api/github/repos/:owner/:repo/issues", async (req, res) => {
 router.get("/api/github/repos/:owner/:repo/commits", async (req, res) => {
   try {
     const { owner, repo } = req.params;
+    const per_page = Math.min(Number(req.query.per_page) || 50, 100);
+    const page = Number(req.query.page) || 1;
+    const pull_request_title = req.query.pull_request_id as string | undefined;
+    const branch = req.query.branch as string | undefined;
     const { data } = await octokit.rest.repos.listCommits({
       owner,
       repo,
-      per_page: 5,
+      pull_request_title,
+      branch,
+      per_page,
+      page,
     });
     res.json(data);
   } catch (error) {
@@ -273,6 +293,560 @@ router.get("/api/github/repos/:owner/:repo/commits", async (req, res) => {
     res.status(500).json({ error: "Failed to fetch commits from GitHub" });
   }
 });
+
+// ===== PHASE 3b: DEPLOYMENT MANAGEMENT ENDPOINTS =====
+
+/** List GitHub Environments for a repository */
+router.get("/api/github/repos/:owner/:repo/environments", async (req, res) => {
+  try {
+    const { owner, repo } = req.params;
+    const { data } = await octokit.rest.repos.getAllEnvironments({
+      owner,
+      repo,
+    });
+    res.json(data.environments ?? []);
+  } catch (error) {
+    console.error("GitHub Error:", error);
+    res.status(500).json({ error: "Failed to fetch environments from GitHub" });
+  }
+});
+
+/** List GitHub Deployments for a repository */
+router.get("/api/github/repos/:owner/:repo/deployments", async (req, res) => {
+  try {
+    const { owner, repo } = req.params;
+    const per_page = Math.min(Number(req.query.per_page) || 30, 100);
+    const environment = req.query.environment as string | undefined;
+    const { data } = await octokit.rest.repos.listDeployments({
+      owner,
+      repo,
+      per_page,
+      ...(environment ? { environment } : {}),
+    });
+    res.json(data);
+  } catch (error) {
+    console.error("GitHub Error:", error);
+    res.status(500).json({ error: "Failed to fetch deployments from GitHub" });
+  }
+});
+
+/** List GitHub Actions Workflows (to enable workflow_dispatch trigger) */
+router.get("/api/github/repos/:owner/:repo/workflows", async (req, res) => {
+  try {
+    const { owner, repo } = req.params;
+    const { data } = await octokit.rest.actions.listRepoWorkflows({
+      owner,
+      repo,
+      per_page: 100,
+    });
+    res.json(data.workflows ?? []);
+  } catch (error) {
+    console.error("GitHub Error:", error);
+    res.status(500).json({ error: "Failed to fetch workflows from GitHub" });
+  }
+});
+
+/**
+ * Detect deployment service availability/usage for the repository.
+ * - GitHub Actions: true when at least one active workflow exists
+ * - Vercel: true when Vercel config exists or deployment signals contain "vercel"
+ * - Render: true when Render config exists or deployment signals contain "render"
+ */
+router.get(
+  "/api/github/repos/:owner/:repo/deployment-services",
+  async (req, res) => {
+    try {
+      const { owner, repo } = req.params;
+
+      const hasProviderNamedFile = (
+        filePath: string,
+        providerPattern: RegExp,
+      ) => {
+        const fileName = path.posix.basename(filePath);
+        return providerPattern.test(fileName);
+      };
+
+      const [workflowsRes, deploymentsRes, treeRes] = await Promise.all([
+        octokit.rest.actions.listRepoWorkflows({
+          owner,
+          repo,
+          per_page: 100,
+        }),
+        octokit.rest.repos.listDeployments({
+          owner,
+          repo,
+          per_page: 100,
+        }),
+        (async () => {
+          const { data: repoData } = await octokit.rest.repos.get({
+            owner,
+            repo,
+          });
+          return octokit.rest.git.getTree({
+            owner,
+            repo,
+            tree_sha: repoData.default_branch,
+            recursive: "1",
+          });
+        })(),
+      ]);
+
+      const filePaths = treeRes.data.tree.flatMap((entry) =>
+        entry.type === "blob" && typeof entry.path === "string"
+          ? [entry.path]
+          : [],
+      );
+
+      const hasVercelConfig = filePaths.some((filePath) =>
+        hasProviderNamedFile(filePath, /vercel/i),
+      );
+
+      const hasRenderConfig = filePaths.some((filePath) =>
+        hasProviderNamedFile(filePath, /render/i),
+      );
+
+      const hasGitHubActions = (workflowsRes.data.workflows ?? []).some(
+        (workflow) => workflow.state === "active",
+      );
+
+      const hasSignal = (
+        deployment: {
+          task?: string | null;
+          description?: string | null;
+          creator?: { login?: string | null } | null;
+        },
+        marker: string,
+      ) => {
+        const haystack =
+          `${deployment.task ?? ""} ${deployment.description ?? ""} ${deployment.creator?.login ?? ""}`.toLowerCase();
+        return haystack.includes(marker);
+      };
+
+      const hasVercelDeploymentSignal = deploymentsRes.data.some((deployment) =>
+        hasSignal(deployment, "vercel"),
+      );
+
+      const hasRenderDeploymentSignal = deploymentsRes.data.some((deployment) =>
+        hasSignal(deployment, "render"),
+      );
+
+      const vercelConnected = hasVercelConfig || hasVercelDeploymentSignal;
+      const renderConnected = hasRenderConfig || hasRenderDeploymentSignal;
+
+      res.json({
+        githubActions: {
+          used: hasGitHubActions,
+          status: hasGitHubActions ? "connected" : "available",
+        },
+        vercel: {
+          used: vercelConnected,
+          status: vercelConnected ? "connected" : "available",
+        },
+        render: {
+          used: renderConnected,
+          status: renderConnected ? "connected" : "available",
+        },
+      });
+    } catch (error) {
+      console.error("GitHub Deployment Services Error:", error);
+      res
+        .status(500)
+        .json({ error: "Failed to detect deployment services from GitHub" });
+    }
+  },
+);
+
+/** Trigger a workflow_dispatch event (requires user's GitHub token) */
+router.post(
+  "/api/github/repos/:owner/:repo/workflows/:workflow_id/dispatch",
+  authenticateToken,
+  async (req: AuthenticatedRequest, res: Response) => {
+    try {
+      const owner =
+        typeof req.params.owner === "string" ? req.params.owner : undefined;
+      const repo =
+        typeof req.params.repo === "string" ? req.params.repo : undefined;
+      const workflowId =
+        typeof req.params.workflow_id === "string"
+          ? req.params.workflow_id
+          : undefined;
+
+      if (!owner || !repo || !workflowId?.trim()) {
+        return res.status(400).json({
+          error: "owner, repo, and workflow_id are required",
+        });
+      }
+
+      const { ref = "main", inputs = {} } = req.body as {
+        ref?: string;
+        inputs?: Record<string, string>;
+      };
+
+      const user = await prisma.user.findUnique({
+        where: { id: req.user?.id },
+      });
+      if (!user?.githubAccessToken) {
+        return res.status(401).json({
+          error:
+            "GitHub not connected. Please connect your GitHub account in Settings.",
+        });
+      }
+
+      const userOctokit = new Octokit({ auth: user.githubAccessToken });
+
+      await userOctokit.rest.actions.createWorkflowDispatch({
+        owner,
+        repo,
+        workflow_id: workflowId,
+        ref,
+        inputs,
+      });
+
+      return res.json({ success: true });
+    } catch (error: unknown) {
+      let msg = "unknown";
+      let status = "?";
+
+      if (error instanceof RequestError) {
+        msg = error.message;
+        status = error.status.toString();
+      } else if (error instanceof Error) {
+        msg = error.message;
+      }
+
+      console.error("Workflow Dispatch Error:", error);
+
+      return res.status(500).json({
+        error: "Failed to trigger workflow",
+        details: { message: msg, status },
+      });
+    }
+  },
+);
+
+/**
+ * POST /api/gitops/deploy/hook
+ * Proxy a one-click deploy hook to Vercel or Render.
+ * The hook URL is treated as an opaque secret supplied by the client and
+ * validated to belong to a known provider before being called.
+ */
+router.post(
+  "/api/gitops/deploy/hook",
+  authenticateToken,
+  async (req: AuthenticatedRequest, res: Response) => {
+    try {
+      const { url } = req.body as { url?: string };
+      if (!url) {
+        return res.status(400).json({ error: "Deploy hook URL is required" });
+      }
+
+      let parsedUrl: URL;
+      try {
+        parsedUrl = new URL(url);
+      } catch {
+        return res.status(400).json({ error: "Invalid deploy hook URL" });
+      }
+
+      const allowedHosts = ["api.vercel.com", "api.render.com"];
+      if (!allowedHosts.includes(parsedUrl.hostname)) {
+        return res.status(400).json({
+          error: `Hook URL must be from a supported provider: ${allowedHosts.join(", ")}`,
+        });
+      }
+
+      const hookResponse = await fetch(url, { method: "POST" });
+      // 200 and 204 are both success codes for deploy hooks
+      if (!hookResponse.ok && hookResponse.status !== 204) {
+        return res.status(502).json({
+          error: `Deploy provider responded with HTTP ${hookResponse.status}`,
+        });
+      }
+
+      res.json({ success: true, message: "Deployment triggered successfully" });
+    } catch (error: unknown) {
+      console.error("Deploy hook error:", error);
+      res
+        .status(500)
+        .json({
+          error: "Failed to trigger deployment",
+          details: error instanceof Error ? error.message : error,
+        });
+    }
+  },
+);
+
+// ===== PHASE 3b: DEPLOYMENT INTEGRATION ENDPOINTS =====
+
+/** List branches for a repository */
+router.get("/api/github/repos/:owner/:repo/branches", async (req, res) => {
+  try {
+    const { owner, repo } = req.params;
+    const perPage = Math.min(Number(req.query.per_page) || 50, 100);
+    const { data } = await octokit.rest.repos.listBranches({
+      owner,
+      repo,
+      per_page: perPage,
+    });
+    res.json(data.map((b) => b.name));
+  } catch (error) {
+    console.error("GitHub Error:", error);
+    res.status(500).json({ error: "Failed to fetch branches from GitHub" });
+  }
+});
+
+// ── Workflow YAML templates ───────────────────────────────────────────────────
+
+const VERCEL_WORKFLOW_YAML = `name: Deploy to Vercel
+on:
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    name: Trigger Vercel deploy hook
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger deploy
+        run: |
+          HTTP_CODE=$(curl -s -o /dev/null -w "%{http_code}" \\
+            -X POST "\${{ secrets.VERCEL_DEPLOY_HOOK_URL }}")
+          echo "Response: $HTTP_CODE"
+          [ "$HTTP_CODE" -ge 200 ] && [ "$HTTP_CODE" -lt 300 ] \\
+            && echo "✅ Vercel deploy triggered" \\
+            || { echo "❌ Hook responded with HTTP $HTTP_CODE"; exit 1; }
+`;
+
+const RENDER_WORKFLOW_YAML = `name: Deploy to Render
+on:
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    name: Trigger Render deploy hook
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger deploy
+        run: |
+          HTTP_CODE=$(curl -s -o /dev/null -w "%{http_code}" \\
+            -X POST "\${{ secrets.RENDER_DEPLOY_HOOK_URL }}")
+          echo "Response: $HTTP_CODE"
+          [ "$HTTP_CODE" -ge 200 ] && [ "$HTTP_CODE" -lt 300 ] \\
+            && echo "✅ Render deploy triggered" \\
+            || { echo "❌ Hook responded with HTTP $HTTP_CODE"; exit 1; }
+`;
+
+function vercelPrBody(owner: string, repo: string): string {
+  return `## 🚀 DevCentral: Add Vercel Deployment Workflow
+
+This PR was opened automatically by **DevCentral** and adds a GitHub Actions workflow that triggers a Vercel deployment on-demand via \`workflow_dispatch\`.
+
+---
+
+### ⚠️ Before merging — add one GitHub Secret
+
+Go to **[Repository Settings → Secrets → Actions](https://github.com/${owner}/${repo}/settings/secrets/actions)** and create:
+
+| Secret name | Where to find it |
+|---|---|
+| \`VERCEL_DEPLOY_HOOK_URL\` | Vercel → your project → **Settings** → **Git** → **Deploy Hooks** → create a hook and copy the URL |
+
+---
+
+### ✅ After merging
+
+Trigger a deploy on-demand from **DevCentral → GitOps → Deployments → Vercel**.
+
+---
+*Opened by DevCentral · GitOps Deployment Setup*`;
+}
+
+function renderPrBody(owner: string, repo: string): string {
+  return `## 🚀 DevCentral: Add Render Deployment Workflow
+
+This PR was opened automatically by **DevCentral** and adds a GitHub Actions workflow that triggers a Render deployment on-demand via \`workflow_dispatch\`.
+
+---
+
+### ⚠️ Before merging — add one GitHub Secret
+
+Go to **[Repository Settings → Secrets → Actions](https://github.com/${owner}/${repo}/settings/secrets/actions)** and create:
+
+| Secret name | Where to find it |
+|---|---|
+| \`RENDER_DEPLOY_HOOK_URL\` | Render → your service → **Settings** → **Deploy Hook** → copy the URL |
+
+---
+
+### ✅ After merging
+
+Trigger a deploy on-demand from **DevCentral → GitOps → Deployments → Render**.
+
+---
+*Opened by DevCentral · GitOps Deployment Setup*`;
+}
+
+/**
+ * POST /api/gitops/setup/workflow
+ * Creates a branch + workflow YAML file + PR on the user's repository.
+ * Body: { owner, repo, service: "vercel" | "render" }
+ * Uses the authenticated user's GitHub access token.
+ */
+router.post(
+  "/api/gitops/setup/workflow",
+  authenticateToken,
+  async (req: AuthenticatedRequest, res: Response) => {
+    try {
+      const { owner, repo, service } = req.body as {
+        owner?: string;
+        repo?: string;
+        service?: "vercel" | "render";
+      };
+
+      if (!owner || !repo || !service) {
+        return res
+          .status(400)
+          .json({ error: "owner, repo, and service are required" });
+      }
+
+      const user = await prisma.user.findUnique({
+        where: { id: req.user?.id },
+      });
+      if (!user?.githubAccessToken) {
+        return res.status(401).json({
+          error:
+            "GitHub not connected. Please connect your GitHub account in Settings.",
+        });
+      }
+
+      const userOctokit = new Octokit({ auth: user.githubAccessToken });
+
+      // ── Step 1: resolve default branch + HEAD SHA ───────────────────────────
+      let defaultBranch: string;
+      let sha: string;
+      try {
+        const { data: repoData } = await userOctokit.rest.repos.get({
+          owner,
+          repo,
+        });
+        defaultBranch = repoData.default_branch;
+        const { data: refData } = await userOctokit.rest.git.getRef({
+          owner,
+          repo,
+          ref: `heads/${defaultBranch}`,
+        });
+        sha = refData.object.sha;
+      } catch (e: unknown) {
+        console.error(`[setup/workflow] step 1 (get-repo/ref) failed:`, e);
+        return res.status(500).json({
+          error: `Could not access repository or default branch (step 1). Check that your GitHub token has read access to this repository.`,
+          details:
+            e instanceof Error
+              ? e.message
+              : typeof e === "object" && e !== null
+                ? JSON.stringify(e)
+                : String(e),
+        });
+      }
+
+      // ── Step 2: create a fresh feature branch ──────────────────────────────
+      const branchName = `devcentral-add-${service}-deploy`;
+      try {
+        // Delete first so we always get a clean commit (idempotent)
+        await userOctokit.rest.git.deleteRef({
+          owner,
+          repo,
+          ref: `heads/${branchName}`,
+        });
+      } catch {
+        // Branch didn't exist yet — fine
+      }
+      try {
+        await userOctokit.rest.git.createRef({
+          owner,
+          repo,
+          ref: `refs/heads/${branchName}`,
+          sha,
+        });
+      } catch (e: unknown) {
+        console.error(`[setup/workflow] step 2 (createRef) failed:`, e);
+        return res.status(500).json({
+          error: `Could not create branch (step 2). Check that your GitHub token has write access to this repository.`,
+          details:
+            e instanceof Error
+              ? e.message
+              : typeof e === "object" && e !== null
+                ? JSON.stringify(e)
+                : String(e),
+        });
+      }
+
+      // ── Step 3: commit the workflow YAML ───────────────────────────────────
+      const workflowContent =
+        service === "vercel" ? VERCEL_WORKFLOW_YAML : RENDER_WORKFLOW_YAML;
+      const workflowPath = `.github/workflows/deploy-${service}.yml`;
+      try {
+        await userOctokit.rest.repos.createOrUpdateFileContents({
+          owner,
+          repo,
+          path: workflowPath,
+          message: `chore: add ${service === "vercel" ? "Vercel" : "Render"} deployment workflow (DevCentral)`,
+          content: Buffer.from(workflowContent).toString("base64"),
+          branch: branchName,
+        });
+      } catch (e: unknown) {
+        console.error(`[setup/workflow] step 3 (createFile) failed:`, e);
+        return res.status(500).json({
+          error: `Could not commit workflow file (step 3).`,
+          details:
+            e instanceof Error
+              ? e.message
+              : typeof e === "object" && e !== null
+                ? JSON.stringify(e)
+                : String(e),
+        });
+      }
+
+      // ── Step 4: open the pull request ─────────────────────────────────────
+      const prTitle =
+        service === "vercel"
+          ? "🚀 Add Vercel deployment workflow (DevCentral)"
+          : "🚀 Add Render deployment workflow (DevCentral)";
+      const prBody =
+        service === "vercel"
+          ? vercelPrBody(owner, repo)
+          : renderPrBody(owner, repo);
+      try {
+        const { data: pr } = await userOctokit.rest.pulls.create({
+          owner,
+          repo,
+          title: prTitle,
+          body: prBody,
+          head: branchName,
+          base: defaultBranch,
+        });
+        return res.json({ success: true, prUrl: pr.html_url });
+      } catch (e: unknown) {
+        console.error(`[setup/workflow] step 4 (create PR) failed:`, e);
+        return res.status(500).json({
+          error: `Could not create pull request (step 4).`,
+          details:
+            e instanceof Error
+              ? e.message
+              : typeof e === "object" && e !== null
+                ? JSON.stringify(e)
+                : String(e),
+        });
+      }
+    } catch (error: unknown) {
+      console.error("Unexpected error in /setup/workflow:", error);
+      res
+        .status(500)
+        .json({
+          error: "An unexpected error occurred",
+          details: error instanceof Error ? error.message : error,
+        });
+    }
+  },
+);
 
 // ===== PHASE 3a: HEALTH SCORING ENDPOINTS =====
 

@@ -84,6 +84,9 @@ importers:
       '@getbrevo/brevo':
         specifier: ^5.0.3
         version: 5.0.3
+      '@octokit/request-error':
+        specifier: ^7.1.0
+        version: 7.1.0
       '@prisma/adapter-pg':
         specifier: ^7.3.0
         version: 7.3.0
