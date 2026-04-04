@@ -7,19 +7,13 @@ jobs:
     name: Trigger Render deploy hook
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-        with:
-          fetch-depth: 0 
       - name: Trigger deploy
         run: |
-          HTTP_CODE=$(curl -s -o /dev/null -w "%{http_code}" \
-            -X POST "${{ secrets.RENDER_DEPLOY_HOOK }}")
-
-          echo "Response: $HTTP_CODE"
-
-          if [ "$HTTP_CODE" -ge 200 ] && [ "$HTTP_CODE" -lt 300 ]; then
-            echo "✅ Render deploy triggered"
+          HTTP_CODE=$(curl -s -o /dev/null -w "%{http_code}" -X POST "\${{ secrets.RENDER_DEPLOY_HOOK_URL }}")
+          echo "Deploy hook response: $HTTP_CODE"
+          if [ "\${HTTP_CODE:-0}" -ge 200 ] && [ "\${HTTP_CODE:-0}" -lt 300 ]; then
+            echo "Deploy triggered successfully"
           else
-            echo "❌ Hook responded with HTTP $HTTP_CODE"
+            echo "ERROR: Deploy hook returned HTTP $HTTP_CODE"
             exit 1
           fi
