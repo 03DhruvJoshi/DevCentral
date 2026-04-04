@@ -135,7 +135,7 @@ export default function GitOpsIssues(props: { selectedRepo: Repository }) {
                   <SelectTrigger className="w-[130px]">
                     <SelectValue placeholder="State" />
                   </SelectTrigger>
-                  <SelectContent>
+                  <SelectContent className="bg-white">
                     <SelectItem value="open">Open</SelectItem>
                     <SelectItem value="closed">Closed</SelectItem>
                     <SelectItem value="all">All</SelectItem>

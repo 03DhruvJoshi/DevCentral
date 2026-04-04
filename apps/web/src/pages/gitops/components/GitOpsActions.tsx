@@ -147,7 +147,7 @@ export default function GitOpsActions(props: { selectedRepo: Repository }) {
                   <SelectTrigger className="w-[150px]">
                     <SelectValue placeholder="Status" />
                   </SelectTrigger>
-                  <SelectContent>
+                  <SelectContent className="bg-white">
                     <SelectItem value="all">All Statuses</SelectItem>
                     <SelectItem value="success">Success</SelectItem>
                     <SelectItem value="failure">Failure</SelectItem>

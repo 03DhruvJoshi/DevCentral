@@ -149,11 +149,11 @@ function buildServices(
           : "Render creates GitHub Deployment events when it deploys your services. Connect this repository to Render to track deployments here.",
       guideTitle: "Connect Render",
       guideSteps: [
-        "Open Render → your Web Service → Settings",
-        "Scroll to Deploy Hooks and generate a Deploy Hook URL",
-        "Copy the Deploy Hook and add it to GitHub Secrets as RENDER_DEPLOY_HOOK",
-        "Create a GitHub Actions workflow (render.yml or render.yaml) that POSTs to the hook on push to main",
-        "Push to main to trigger automatic backend deployments via GitHub Actions",
+        "Go to render.com and open your Web Service dashboard",
+        "Connect your GitHub account in Render if it is not already connected",
+        "Select your repository and branch in Render service settings",
+        "Install and authorize the Render GitHub integration/app for this repository",
+        "Enable automatic deploys so Render tracks new commits and deployment activity",
       ],
     },
     {
@@ -362,7 +362,7 @@ function DeployTargetPicker({
                 <GitBranch className="h-3.5 w-3.5 mr-2 text-muted-foreground" />
                 <SelectValue placeholder="Select a branch..." />
               </SelectTrigger>
-              <SelectContent>
+              <SelectContent className="bg-white">
                 {branches.map((b) => (
                   <SelectItem key={b} value={b}>
                     {b}
@@ -393,7 +393,7 @@ function DeployTargetPicker({
               <SelectTrigger className="h-auto">
                 <SelectValue placeholder="Select a commit..." />
               </SelectTrigger>
-              <SelectContent>
+              <SelectContent className="bg-white">
                 {recentCommits.map((c) => (
                   <SelectItem key={c.sha} value={c.sha}>
                     <div className="flex flex-col gap-0.5 py-0.5">
@@ -460,6 +460,13 @@ function WorkflowSetupGuide({
           merge it, you can trigger {label} deploys from here with a single
           click — no credentials stored in DevCentral.
         </p>
+
+        <div className="flex items-start gap-2 text-xs text-amber-700 bg-amber-50 border border-amber-200 p-2.5 rounded-lg mt-4">
+          <AlertTriangle className="h-3.5 w-3.5 mt-0.5 shrink-0" />
+          Important: Create a new <strong>"Repository secret"</strong> (not an
+          "Environment secret") to ensure the workflow can access it without
+          additional configuration.
+        </div>
       </div>
 
       {/* Secrets checklist */}
@@ -920,7 +927,7 @@ export default function GitOpsDeployments(props: { selectedRepo: Repository }) {
                     <SelectTrigger>
                       <SelectValue placeholder="Select a workflow..." />
                     </SelectTrigger>
-                    <SelectContent>
+                    <SelectContent className="bg-white">
                       {workflows.map((wf) => (
                         <SelectItem key={wf.id} value={String(wf.id)}>
                           {wf.name}
@@ -1076,11 +1083,17 @@ export default function GitOpsDeployments(props: { selectedRepo: Repository }) {
                   }`}
                 >
                   {dispatchMsg.type === "success" ? (
-                    <CheckCircle2 className="h-4 w-4 mt-0.5 shrink-0" />
+                    <div className="flex items-center gap-1">
+                      <CheckCircle2 className="h-4 w-4 mt-0.5 shrink-0" />
+                      Deployment triggered successfully! Check your GitHub
+                      Actions or the target service dashboard for progress.
+                    </div>
                   ) : (
-                    <XCircle className="h-4 w-4 mt-0.5 shrink-0" />
+                    <div className="flex items-center gap-1">
+                      <XCircle className="h-4 w-4 mt-0.5 shrink-0" />
+                      Failed to trigger deployment: {dispatchMsg.text}
+                    </div>
                   )}
-                  {dispatchMsg.text}
                 </div>
               )}
 
@@ -1159,7 +1172,7 @@ export default function GitOpsDeployments(props: { selectedRepo: Repository }) {
                   <SelectTrigger className="w-[160px]">
                     <SelectValue placeholder="Environment" />
                   </SelectTrigger>
-                  <SelectContent>
+                  <SelectContent className="bg-white">
                     <SelectItem value="all">All Environments</SelectItem>
                     {uniqueEnvironments.map((e) => (
                       <SelectItem key={e} value={e}>
