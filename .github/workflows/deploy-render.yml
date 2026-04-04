@@ -4,14 +4,12 @@ on:
 
 jobs:
   deploy:
-    name: Trigger Render deploy hook
     runs-on: ubuntu-latest
-    steps:
-      - name: Trigger deploy
-        run: |
-          HTTP_CODE=$(curl -s -o /dev/null -w "%{http_code}" \
-            -X POST "${{ secrets.RENDER_DEPLOY_HOOK }}")
 
+    steps:
+      - name: Trigger Render Deploy Hook
+        run: |
+          HTTP_CODE=$(curl -s -o /dev/null -w "%{http_code}" -X POST "${{ secrets.RENDER_DEPLOY_HOOK }}")
           echo "Response: $HTTP_CODE"
 
           if [ "$HTTP_CODE" -ge 200 ] && [ "$HTTP_CODE" -lt 300 ]; then
