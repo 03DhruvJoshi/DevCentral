@@ -4,7 +4,14 @@ on:
 
 jobs:
   deploy:
+    name: Trigger Render deploy hook
     runs-on: ubuntu-latest
     steps:
-      - name: Trigger Render Deploy Hook
-        run: curl -X POST "${{ secrets.RENDER_DEPLOY_HOOK_URL }}"
+      - name: Trigger deploy
+        run: |
+          HTTP_CODE=$(curl -s -o /dev/null -w "%{http_code}" \\
+            -X POST "\${{ secrets.RENDER_DEPLOY_HOOK_URL }}")
+          echo "Response: $HTTP_CODE"
+          [ "$HTTP_CODE" -ge 200 ] && [ "$HTTP_CODE" -lt 300 ] \\
+            && echo "✅ Render deploy triggered" \\
+            || { echo "❌ Hook responded with HTTP $HTTP_CODE"; exit 1; }
