@@ -565,12 +565,10 @@ router.post(
       res.json({ success: true, message: "Deployment triggered successfully" });
     } catch (error: unknown) {
       console.error("Deploy hook error:", error);
-      res
-        .status(500)
-        .json({
-          error: "Failed to trigger deployment",
-          details: error instanceof Error ? error.message : error,
-        });
+      res.status(500).json({
+        error: "Failed to trigger deployment",
+        details: error instanceof Error ? error.message : error,
+      });
     }
   },
 );
@@ -808,8 +806,8 @@ router.post(
       // ── Step 4: open the pull request ─────────────────────────────────────
       const prTitle =
         service === "vercel"
-          ? "🚀 Add Vercel deployment workflow (DevCentral)"
-          : "🚀 Add Render deployment workflow (DevCentral)";
+          ? "feat(workflow): 🚀 Add Vercel deployment workflow (DevCentral)"
+          : "feat(workflow): 🚀 Add Render deployment workflow (DevCentral)";
       const prBody =
         service === "vercel"
           ? vercelPrBody(owner, repo)
@@ -838,12 +836,10 @@ router.post(
       }
     } catch (error: unknown) {
       console.error("Unexpected error in /setup/workflow:", error);
-      res
-        .status(500)
-        .json({
-          error: "An unexpected error occurred",
-          details: error instanceof Error ? error.message : error,
-        });
+      res.status(500).json({
+        error: "An unexpected error occurred",
+        details: error instanceof Error ? error.message : error,
+      });
     }
   },
 );
