@@ -23,10 +23,12 @@ export default function GitOpsRepos({
 }: Readonly<GitOpsReposProps>) {
   const [repos, setRepos] = useState<Repository[]>([]);
   const [isReposLoading, setIsReposLoading] = useState(true);
+  const [repoLoadError, setRepoLoadError] = useState<string | null>(null);
 
   useEffect(() => {
     async function fetchRepos() {
       try {
+        setRepoLoadError(null);
         const token = localStorage.getItem("devcentral_token");
         if (!token) {
           return;
@@ -37,7 +39,21 @@ export default function GitOpsRepos({
             Authorization: `Bearer ${token}`,
           },
         });
-        if (!res.ok) throw new Error("Failed to fetch repos");
+
+        if (!res.ok) {
+          const errorBody = (await res
+            .json()
+            .catch(() => ({ error: "Failed to fetch repos" }))) as {
+            error?: string;
+            githubMessage?: string;
+          };
+
+          const message = [errorBody.error, errorBody.githubMessage]
+            .filter(Boolean)
+            .join(" - ");
+          throw new Error(message || "Failed to fetch repos");
+        }
+
         const data = await res.json();
         setRepos(data);
 
@@ -47,6 +63,9 @@ export default function GitOpsRepos({
         }
       } catch (err) {
         console.error(err);
+        setRepoLoadError(
+          err instanceof Error ? err.message : "Failed to fetch repos",
+        );
       } finally {
         setIsReposLoading(false);
       }
@@ -105,6 +124,11 @@ export default function GitOpsRepos({
           </Button>
         )}
       </div>
+      {repoLoadError && (
+        <p className="text-xs text-red-600" role="alert">
+          {repoLoadError}
+        </p>
+      )}
     </div>
   );
 }

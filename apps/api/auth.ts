@@ -263,7 +263,23 @@ router.post("/api/auth/login", async (req, res) => {
     if (!validPassword)
       return res.status(400).json({ error: "Invalid credentials" });
 
-    if (!user.emailVerified) {
+    if (user.role === "ADMIN") {
+      // For admin users, we want to bypass email verification and log them in directly
+      user.emailVerified = true;
+      const token = signUserToken(user);
+      res.json({
+        token,
+        user: {
+          name: user.name,
+          email: user.email,
+          githubUsername: user.githubUsername,
+          role: user.role,
+        },
+      });
+      return;
+    }
+
+    if (!user.emailVerified && user.role !== "ADMIN") {
       return res.status(403).json({
         error: "Please verify your email before signing in.",
         emailNotVerified: true,
@@ -449,7 +465,7 @@ router.post(
       `https://github.com/login/oauth/authorize` +
       `?client_id=${clientId}` +
       `&redirect_uri=${encodeURIComponent(callbackUrl)}` +
-      `&scope=repo` +
+      `&scope=${encodeURIComponent("repo workflow read:org gist user read:org")}` +
       `&state=${state}`;
 
     res.json({ authUrl });
@@ -577,14 +593,25 @@ router.post(
 
     const user = await prisma.user.findUnique({
       where: { id: userId },
-      select: { id: true, email: true, name: true, githubUsername: true, role: true },
+      select: {
+        id: true,
+        email: true,
+        name: true,
+        githubUsername: true,
+        role: true,
+      },
     });
     if (!user) return res.status(404).json({ error: "User not found" });
 
     const token = signUserToken(user);
     res.json({
       token,
-      user: { name: user.name, email: user.email, githubUsername: user.githubUsername, role: user.role },
+      user: {
+        name: user.name,
+        email: user.email,
+        githubUsername: user.githubUsername,
+        role: user.role,
+      },
     });
   },
 );
