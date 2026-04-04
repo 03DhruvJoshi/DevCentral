@@ -13,6 +13,7 @@ import { VerifyEmailPage } from "./pages/auth/VerifyEmailPage.js";
 import { ConnectGitHubPage } from "./pages/auth/ConnectGitHubPage.js";
 import { AdminRoute } from "./pages/admin/AdminRoute.js";
 import { GlobalBroadcast } from "./pages/admin/components/GlobalBroadcast.js";
+import { Analytics } from "@vercel/analytics/react";
 
 const queryClient = new QueryClient();
 
@@ -52,6 +53,7 @@ function App() {
           </Routes>
         </BrowserRouter>
       </QueryClientProvider>
+      <Analytics />
     </div>
   );
 }
