@@ -1,7 +1,17 @@
-// apps/web/src/features/gitops/GitOpsPage.tsx
+// apps/web/src/pages/gitops/GitOpsPage.tsx
 
 import { useEffect, useState } from "react";
-import { GitBranch } from "lucide-react";
+import {
+  GitBranch,
+  ShieldCheck,
+  Activity,
+  GitPullRequest,
+  Workflow,
+  Tag,
+  GitCommit,
+  CircleDot,
+  Rocket,
+} from "lucide-react";
 
 import {
   Tabs,
@@ -15,6 +25,9 @@ import { useNavigate } from "react-router-dom";
 import GitOpsPRs from "./components/GitOpsPRs.js";
 import GitOpsActions from "./components/GitOpsActions.js";
 import GitOpsReleases from "./components/GitOpsReleases.js";
+import GitOpsCommits from "./components/GitOpsCommits.js";
+import GitOpsIssues from "./components/GitOpsIssues.js";
+import GitOpsDeployments from "./components/GitOpsDeployments.js";
 import RepositoryHealthCard from "./components/RepositoryHealthCard.js";
 import SecurityChecks from "./components/SecurityChecks.js";
 import CodeQualityChecks from "./components/CodeQualityChecks.js";
@@ -69,7 +82,7 @@ export function GitOpsPage() {
 
   return (
     <div className="flex flex-col gap-6">
-      {/* Page Header */}
+      {/* ── Page Header ── */}
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
         <div>
           <h1 className="text-3xl font-bold tracking-tight">GitOps & CI/CD</h1>
@@ -77,8 +90,6 @@ export function GitOpsPage() {
             Manage your repositories, deployments, and operational health.
           </p>
         </div>
-
-        {/* Connection Badge */}
         <Badge
           variant="outline"
           className="flex items-center gap-1.5 py-1.5 px-3 border-green-200 bg-green-50 text-green-700"
@@ -89,21 +100,34 @@ export function GitOpsPage() {
         </Badge>
       </div>
 
+      {/* ── Repository Selector ── */}
       <GitOpsRepos
         selectedRepo={selectedRepo}
         setSelectedRepo={setSelectedRepo}
       />
 
       {selectedRepo ? (
-        <>
-          {/* ===== HEALTH DASHBOARD SECTION ===== */}
-          <div className="space-y-4">
-            <h2 className="text-xl font-semibold">Repository Health</h2>
+        /* ── Three top-level section tabs ── */
+        <Tabs defaultValue="health" className="w-full">
+          <TabsList className="h-11 grid w-full max-w-lg grid-cols-3 mb-2">
+            <TabsTrigger value="health" className="flex items-center gap-1.5">
+              <ShieldCheck className="h-4 w-4" />
+              Repository Health
+            </TabsTrigger>
+            <TabsTrigger value="activity" className="flex items-center gap-1.5">
+              <Activity className="h-4 w-4" />
+              Activity
+            </TabsTrigger>
+            <TabsTrigger value="deployments" className="flex items-center gap-1.5">
+              <Rocket className="h-4 w-4" />
+              Deployments
+            </TabsTrigger>
+          </TabsList>
 
-            {/* Main Health Card */}
+          {/* ══════════ TAB 1 — REPOSITORY HEALTH ══════════ */}
+          <TabsContent value="health" className="mt-4 space-y-4">
             <RepositoryHealthCard selectedRepo={selectedRepo} />
 
-            {/* Health Details - 4 Grid */}
             {health && (
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <SecurityChecks health={health} />
@@ -113,44 +137,75 @@ export function GitOpsPage() {
               </div>
             )}
 
-            {/* Quick Fix Actions */}
             {health && (
               <QuickFixActions selectedRepo={selectedRepo} health={health} />
             )}
-          </div>
+          </TabsContent>
 
-          {/* ===== OPERATIONAL TABS SECTION ===== */}
-          <Tabs defaultValue="prs" className="w-full">
-            <TabsList className="grid w-auto max-w-4xl grid-cols-4">
-              <TabsTrigger value="prs">Pull Requests</TabsTrigger>
-              <TabsTrigger value="pipelines">CI/CD Pipelines</TabsTrigger>
-              <TabsTrigger value="releases">Releases</TabsTrigger>
-              <TabsTrigger value="commits">Recent Commits</TabsTrigger>
-            </TabsList>
+          {/* ══════════ TAB 2 — ACTIVITY ══════════ */}
+          <TabsContent value="activity" className="mt-4">
+            <Tabs defaultValue="prs" className="w-full">
+              <TabsList className="flex flex-wrap h-auto gap-1 bg-muted/60 p-1 rounded-lg mb-4">
+                <TabsTrigger
+                  value="prs"
+                  className="flex items-center gap-1.5 data-[state=active]:bg-background data-[state=active]:shadow-sm"
+                >
+                  <GitPullRequest className="h-3.5 w-3.5" />
+                  Pull Requests
+                </TabsTrigger>
+                <TabsTrigger
+                  value="pipelines"
+                  className="flex items-center gap-1.5 data-[state=active]:bg-background data-[state=active]:shadow-sm"
+                >
+                  <Workflow className="h-3.5 w-3.5" />
+                  CI/CD Pipelines
+                </TabsTrigger>
+                <TabsTrigger
+                  value="releases"
+                  className="flex items-center gap-1.5 data-[state=active]:bg-background data-[state=active]:shadow-sm"
+                >
+                  <Tag className="h-3.5 w-3.5" />
+                  Releases
+                </TabsTrigger>
+                <TabsTrigger
+                  value="commits"
+                  className="flex items-center gap-1.5 data-[state=active]:bg-background data-[state=active]:shadow-sm"
+                >
+                  <GitCommit className="h-3.5 w-3.5" />
+                  Recent Commits
+                </TabsTrigger>
+                <TabsTrigger
+                  value="issues"
+                  className="flex items-center gap-1.5 data-[state=active]:bg-background data-[state=active]:shadow-sm"
+                >
+                  <CircleDot className="h-3.5 w-3.5" />
+                  GitHub Issues
+                </TabsTrigger>
+              </TabsList>
 
-            {/* === TAB 1: PULL REQUESTS === */}
-            <TabsContent value="prs" className="mt-6">
-              <GitOpsPRs selectedRepo={selectedRepo} />
-            </TabsContent>
+              <TabsContent value="prs">
+                <GitOpsPRs selectedRepo={selectedRepo} />
+              </TabsContent>
+              <TabsContent value="pipelines">
+                <GitOpsActions selectedRepo={selectedRepo} />
+              </TabsContent>
+              <TabsContent value="releases">
+                <GitOpsReleases selectedRepo={selectedRepo} />
+              </TabsContent>
+              <TabsContent value="commits">
+                <GitOpsCommits selectedRepo={selectedRepo} />
+              </TabsContent>
+              <TabsContent value="issues">
+                <GitOpsIssues selectedRepo={selectedRepo} />
+              </TabsContent>
+            </Tabs>
+          </TabsContent>
 
-            {/* === TAB 2: CI/CD PIPELINES === */}
-            <TabsContent value="pipelines" className="mt-6">
-              <GitOpsActions selectedRepo={selectedRepo} />
-            </TabsContent>
-
-            {/* === TAB 3: RELEASES === */}
-            <TabsContent value="releases" className="mt-6">
-              <GitOpsReleases selectedRepo={selectedRepo} />
-            </TabsContent>
-
-            {/* === TAB 4: COMMITS === */}
-            <TabsContent value="commits" className="mt-6">
-              <div className="text-center py-12 text-muted-foreground border-2 border-dashed rounded-lg">
-                <p>Recent commits feature coming soon...</p>
-              </div>
-            </TabsContent>
-          </Tabs>
-        </>
+          {/* ══════════ TAB 3 — DEPLOYMENTS ══════════ */}
+          <TabsContent value="deployments" className="mt-4">
+            <GitOpsDeployments selectedRepo={selectedRepo} />
+          </TabsContent>
+        </Tabs>
       ) : (
         <div className="h-[400px] flex items-center justify-center border-2 border-dashed rounded-lg text-muted-foreground">
           Select a repository above to view health assessment, deployment

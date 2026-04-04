@@ -113,6 +113,94 @@ interface FixActionResult {
   };
 }
 
+interface Commit {
+  sha: string;
+  commit: {
+    message: string;
+    author: {
+      name: string;
+      email: string;
+      date: string;
+    };
+  };
+  author: {
+    login: string;
+    avatar_url: string;
+  } | null;
+  html_url: string;
+}
+
+interface Issue {
+  id: number;
+  number: number;
+  title: string;
+  state: "open" | "closed";
+  user: {
+    login: string;
+    avatar_url: string;
+  } | null;
+  labels: Array<{
+    id: number;
+    name: string;
+    color: string;
+  }>;
+  comments: number;
+  created_at: string;
+  closed_at: string | null;
+  html_url: string;
+  body: string | null;
+}
+
+interface GitHubDeployment {
+  id: number;
+  sha: string;
+  ref: string;
+  task: string;
+  environment: string;
+  description: string | null;
+  creator: {
+    login: string;
+    avatar_url: string;
+  } | null;
+  created_at: string;
+  updated_at: string;
+  statuses_url: string;
+  url: string;
+}
+
+interface GitHubEnvironment {
+  id: number;
+  name: string;
+  html_url: string;
+  created_at: string;
+  updated_at: string;
+  protection_rules?: Array<{ type: string }>;
+}
+
+interface GitHubWorkflow {
+  id: number;
+  name: string;
+  path: string;
+  state: string;
+  html_url: string;
+  badge_url: string;
+}
+
+interface DeploymentServiceAvailabilityResponse {
+  githubActions: {
+    used: boolean;
+    status: "connected" | "available";
+  };
+  vercel: {
+    used: boolean;
+    status: "connected" | "available";
+  };
+  render: {
+    used: boolean;
+    status: "connected" | "available";
+  };
+}
+
 interface RepositoryEnvironment {
   id: string;
   name: string;
@@ -154,6 +242,12 @@ export {
   type PullRequest,
   type Pipeline,
   type Release,
+  type Commit,
+  type Issue,
+  type GitHubDeployment,
+  type GitHubEnvironment,
+  type GitHubWorkflow,
+  type DeploymentServiceAvailabilityResponse,
   type HealthCheckResult,
   type HealthIssue,
   type AISuggestion,
