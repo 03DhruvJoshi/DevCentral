@@ -5,16 +5,6 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
-
     steps:
       - name: Trigger Render Deploy Hook
-        run: |
-          HTTP_CODE=$(curl -s -o /dev/null -w "%{http_code}" -X POST "${{ secrets.RENDER_DEPLOY_HOOK }}")
-          echo "Response: $HTTP_CODE"
-
-          if [ "$HTTP_CODE" -ge 200 ] && [ "$HTTP_CODE" -lt 300 ]; then
-            echo "✅ Render deploy triggered"
-          else
-            echo "❌ Hook responded with HTTP $HTTP_CODE"
-            exit 1
-          fi
+        run: curl -X POST "${{ secrets.RENDER_DEPLOY_HOOK }}"
