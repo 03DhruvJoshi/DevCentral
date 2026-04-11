@@ -304,6 +304,7 @@ router.get("/api/github/repos/:owner/:repo/environments", async (req, res) => {
       owner,
       repo,
     });
+
     res.json(data.environments ?? []);
   } catch (error) {
     console.error("GitHub Error:", error);
@@ -641,7 +642,9 @@ This PR was opened automatically by **DevCentral** and adds a GitHub Actions wor
 
 ### ⚠️ Before merging — add one GitHub Secret
 
-Go to **[Repository Settings → Secrets → Actions](https://github.com/${owner}/${repo}/settings/secrets/actions)** and create:
+Go to **[Repository Settings → Secrets and Variables → Actions → Repository Secrets ](https://github.com/${owner}/${repo}/settings/secrets/actions)** and create:
+
+⚠️ Important: Create a new "Repository secret" (not an "Environment secret") to ensure the workflow can access it without additional configuration.
 
 | Secret name | Where to find it |
 |---|---|
@@ -666,7 +669,9 @@ This PR was opened automatically by **DevCentral** and adds a GitHub Actions wor
 
 ### ⚠️ Before merging — add one GitHub Secret
 
-Go to **[Repository Settings → Secrets → Actions](https://github.com/${owner}/${repo}/settings/secrets/actions)** and create:
+Go to **[Repository Settings → Secrets and Variables → Actions → Repository Secrets](https://github.com/${owner}/${repo}/settings/secrets/actions)** and create:
+
+⚠️ Important: Create a new "Repository secret" (not an "Environment secret") to ensure the workflow can access it without additional configuration.
 
 | Secret name | Where to find it |
 |---|---|

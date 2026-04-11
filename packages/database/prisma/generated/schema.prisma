@@ -31,18 +31,33 @@ model Category {
 }
 
 model User {
-  id                   String      @id @default(uuid())
-  email                String      @unique
+  id                   String                @id @default(uuid())
+  email                String                @unique
   name                 String
   passwordHash         String
   githubUsername       String?
   githubAccessToken    String?
-  emailVerified        Boolean     @default(false)
-  role                 String      @default("DEV") // "DEV" or "ADMIN"
-  status               String      @default("ACTIVE") // "ACTIVE", "SUSPENDED"
+  emailVerified        Boolean               @default(false)
+  role                 String                @default("DEV") // "DEV" or "ADMIN"
+  status               String                @default("ACTIVE") // "ACTIVE", "SUSPENDED"
   dashboardPreferences Json?
-  createdAt            DateTime    @default(now())
+  createdAt            DateTime              @default(now())
   authTokens           AuthToken[]
+  providerIntegrations ProviderIntegration[]
+}
+
+model ProviderIntegration {
+  id          String   @id @default(cuid())
+  userId      String
+  provider    String // "vercel" | "render"
+  apiToken    String
+  teamId      String? // Vercel team/org slug (optional)
+  connectedAt DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, provider])
+  @@index([userId])
 }
 
 enum AuthTokenType {
@@ -79,4 +94,198 @@ model PlatformConfig {
   value       String
   description String?
   updatedAt   DateTime @updatedAt
+}
+
+// ===== GitOps Phase 3a: Health & Deployment Models =====
+
+model RepositoryMetadata {
+  id             String @id @default(cuid())
+  repositoryName String
+  owner          String
+
+  // Health scoring
+  healthScore       Int       @default(0) // 0-100
+  healthStatus      String    @default("unknown") // "green", "yellow", "red"
+  lastHealthCheckAt DateTime?
+
+  // Team ownership
+  teamName          String?
+  ownerEmail        String?
+  maintainers       String[] // emails as JSON array
+  onCallRotationUrl String?
+
+  // Deployment tracking
+  lastDeploymentAt          DateTime?
+  lastDeployedVersion       String?
+  lastDeployedBy            String?
+  lastDeploymentEnvironment String?
+  productionHealthy         Boolean?
+
+  // Repository metadata
+  description         String?
+  language            String?
+  testCoveragePercent Float?
+
+  healthCheckResults HealthCheckResult[]
+  quickFixActions    QuickFixAction[]
+  environments       RepositoryEnvironment[]
+  deployments        Deployment[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([repositoryName, owner])
+  @@index([healthStatus])
+  @@index([lastDeploymentAt])
+}
+
+model HealthCheckResult {
+  id                   String             @id @default(cuid())
+  repositoryName       String
+  repositoryOwner      String
+  repositoryMetadataId String
+  repositoryMetadata   RepositoryMetadata @relation(fields: [repositoryMetadataId], references: [id], onDelete: Cascade)
+
+  // Component scores (0-25 each)
+  securityScore            Int    @default(0)
+  codeQualityScore         Int    @default(0)
+  deploymentReadinessScore Int    @default(0)
+  teamOwnershipScore       Int    @default(0)
+  totalScore               Int    @default(0) // sum of above
+  overallStatus            String @default("unknown") // "green", "yellow", "red"
+
+  // Detailed issues
+  securityIssues            Json @default("[]") // [{ type, severity, description, autofixable, fixAction }]
+  codeQualityIssues         Json @default("[]")
+  deploymentReadinessIssues Json @default("[]")
+  teamOwnershipIssues       Json @default("[]")
+
+  // AI suggestions
+  aiSuggestions Json @default("[]") // [{ category, action, priority, autofixable }]
+
+  executedAt DateTime @default(now())
+  executedBy String?
+  createdAt  DateTime @default(now())
+
+  @@index([repositoryMetadataId])
+  @@index([executedAt])
+}
+
+model QuickFixAction {
+  id                   String             @id @default(cuid())
+  repositoryMetadataId String
+  repositoryMetadata   RepositoryMetadata @relation(fields: [repositoryMetadataId], references: [id], onDelete: Cascade)
+
+  actionType        String // "enable-branch-protection", "add-codeowners", "generate-docs", etc.
+  actionDescription String
+  status            String @default("pending") // "pending", "in-progress", "completed", "failed"
+
+  executedBy String? // user email
+  result     Json? // { success: bool, details: {...}, error?: string }
+
+  createdAt   DateTime  @default(now())
+  completedAt DateTime?
+
+  @@index([repositoryMetadataId])
+  @@index([status])
+}
+
+model RepositoryEnvironment {
+  id                   String             @id @default(cuid())
+  repositoryMetadataId String
+  repositoryMetadata   RepositoryMetadata @relation(fields: [repositoryMetadataId], references: [id], onDelete: Cascade)
+
+  name  String // "dev", "staging", "prod"
+  order Int    @default(1) // 1, 2, 3 for promotion order
+
+  // Deployment rules
+  requiresApproval       Boolean @default(false)
+  approvalMinCount       Int     @default(1)
+  autoApproveIfTestsPass Boolean @default(false)
+  autoRollbackOnFailure  Boolean @default(false)
+
+  // Health checks
+  healthCheckUrl      String?
+  healthCheckInterval Int? // seconds
+
+  // Configuration
+  variables   Json     @default("{}") // { VAR_NAME: value, ... }
+  secretNames String[] @default([]) // secret key names (values stored separately)
+
+  // Notifications
+  slackChannel String?
+  notifyOn     String[] @default([]) // ["deployment_start", "deployment_success", "deployment_failure"]
+
+  deployments Deployment[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([repositoryMetadataId, name])
+  @@index([repositoryMetadataId])
+}
+
+model Deployment {
+  id                   String             @id @default(cuid())
+  repositoryMetadataId String
+  repositoryMetadata   RepositoryMetadata @relation(fields: [repositoryMetadataId], references: [id], onDelete: Cascade)
+
+  environmentId String
+  environment   RepositoryEnvironment @relation(fields: [environmentId], references: [id], onDelete: Cascade)
+
+  version String // git tag, branch, or commit SHA
+  status  String @default("pending") // "pending", "in-progress", "success", "failed", "rolled-back"
+
+  // Deployment tracking
+  deployedAt DateTime
+  deployedBy String // user email
+  duration   Int? // seconds
+
+  // Health & Risk Assessment
+  riskAssessment        Json? // { riskLevel: "low"|"medium"|"high", issues: [...], warnings: [...] }
+  healthCheckPassed     Boolean?
+  healthCheckDetails    Json?
+  postDeploymentMetrics Json?
+
+  // Pre/post deployment
+  preDeploymentNotes  String?
+  postDeploymentNotes String?
+  deploymentLogs      String? // URL to logs
+  artifacts           Json? // { containers: [], packages: [], etc }
+
+  // Approval workflow
+  approvalRequired Boolean              @default(false)
+  approvals        DeploymentApproval[]
+
+  // Rollback tracking
+  rollbackOf          String? // id of deployment being rolled back
+  rollbackReason      String?
+  rollbackInitiatedAt DateTime?
+  rollbackInitiatedBy String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([repositoryMetadataId])
+  @@index([environmentId])
+  @@index([status])
+  @@index([deployedAt])
+}
+
+model DeploymentApproval {
+  id           String     @id @default(cuid())
+  deploymentId String
+  deployment   Deployment @relation(fields: [deploymentId], references: [id], onDelete: Cascade)
+
+  approverEmail String
+  status        String  @default("pending") // "pending", "approved", "rejected"
+  reason        String? // approval or rejection reason
+  comment       String?
+
+  respondedAt DateTime?
+  createdAt   DateTime  @default(now())
+
+  @@unique([deploymentId, approverEmail])
+  @@index([deploymentId])
+  @@index([status])
 }

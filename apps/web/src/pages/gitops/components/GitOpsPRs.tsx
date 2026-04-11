@@ -130,7 +130,7 @@ export default function GitOpsPRs(props: { selectedRepo: Repository }) {
                   <SelectTrigger className="w-[130px]">
                     <SelectValue placeholder="State" />
                   </SelectTrigger>
-                  <SelectContent>
+                  <SelectContent className="bg-white">
                     <SelectItem value="all">All States</SelectItem>
                     <SelectItem value="open">Open</SelectItem>
                     <SelectItem value="closed">Closed</SelectItem>

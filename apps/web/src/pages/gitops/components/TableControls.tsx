@@ -71,7 +71,7 @@ export function TableControls({
             <SelectTrigger className="w-[70px]">
               <SelectValue />
             </SelectTrigger>
-            <SelectContent>
+            <SelectContent className="bg-white">
               {[5, 10, 20, 50].map((n) => (
                 <SelectItem key={n} value={String(n)}>
                   {n}

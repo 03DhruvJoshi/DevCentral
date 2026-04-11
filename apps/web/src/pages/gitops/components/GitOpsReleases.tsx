@@ -24,7 +24,11 @@ import {
   SelectTrigger,
   SelectValue,
 } from "../../../components/ui/select.js";
-import { TableControls, TruncatedText, PaginationControls } from "./TableControls.js";
+import {
+  TableControls,
+  TruncatedText,
+  PaginationControls,
+} from "./TableControls.js";
 import { type Repository, type Release, token, API_BASE_URL } from "./types.js";
 
 export default function GitOpsReleases(props: { selectedRepo: Repository }) {
@@ -79,7 +83,10 @@ export default function GitOpsReleases(props: { selectedRepo: Repository }) {
   }, [releases, search, typeFilter]);
 
   const totalPages = Math.max(1, Math.ceil(filtered.length / rowsPerPage));
-  const paginated = filtered.slice((page - 1) * rowsPerPage, page * rowsPerPage);
+  const paginated = filtered.slice(
+    (page - 1) * rowsPerPage,
+    page * rowsPerPage,
+  );
 
   return (
     <Card>
@@ -110,12 +117,15 @@ export default function GitOpsReleases(props: { selectedRepo: Repository }) {
               extraFilters={
                 <Select
                   value={typeFilter}
-                  onValueChange={(v) => { setTypeFilter(v); setPage(1); }}
+                  onValueChange={(v) => {
+                    setTypeFilter(v);
+                    setPage(1);
+                  }}
                 >
                   <SelectTrigger className="w-[140px]">
                     <SelectValue placeholder="Type" />
                   </SelectTrigger>
-                  <SelectContent>
+                  <SelectContent className="bg-white">
                     <SelectItem value="all">All Types</SelectItem>
                     <SelectItem value="published">Published</SelectItem>
                     <SelectItem value="draft">Draft</SelectItem>
@@ -151,7 +161,9 @@ export default function GitOpsReleases(props: { selectedRepo: Repository }) {
                         #{filtered.length - ((page - 1) * rowsPerPage + index)}
                       </TableCell>
                       <TableCell className="font-medium max-w-[260px]">
-                        <TruncatedText text={release.name || release.tag_name} />
+                        <TruncatedText
+                          text={release.name || release.tag_name}
+                        />
                       </TableCell>
                       <TableCell className="font-mono text-xs">
                         {release.tag_name}
@@ -160,11 +172,17 @@ export default function GitOpsReleases(props: { selectedRepo: Repository }) {
                         {release.draft ? (
                           <Badge variant="outline">Draft</Badge>
                         ) : release.prerelease ? (
-                          <Badge variant="outline" className="border-yellow-500 text-yellow-700">
+                          <Badge
+                            variant="outline"
+                            className="border-yellow-500 text-yellow-700"
+                          >
                             Pre-release
                           </Badge>
                         ) : (
-                          <Badge variant="secondary" className="bg-green-100 text-green-800">
+                          <Badge
+                            variant="secondary"
+                            className="bg-green-100 text-green-800"
+                          >
                             Published
                           </Badge>
                         )}
@@ -178,7 +196,11 @@ export default function GitOpsReleases(props: { selectedRepo: Repository }) {
                       <TableCell className="text-right">
                         {release.html_url && (
                           <Button asChild size="sm" variant="outline">
-                            <a href={release.html_url} target="_blank" rel="noreferrer">
+                            <a
+                              href={release.html_url}
+                              target="_blank"
+                              rel="noreferrer"
+                            >
                               <ExternalLink className="h-3.5 w-3.5 mr-1" />
                               View
                             </a>
