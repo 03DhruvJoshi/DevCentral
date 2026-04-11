@@ -1,7 +1,12 @@
 import { Navigate } from "react-router-dom";
 import { AdminPortalPage } from "./AdminPortalPage.js";
+import { isUserLoggedIn } from "../../lib/auth.js";
 
 export function AdminRoute() {
+  if (!isUserLoggedIn()) {
+    return <Navigate to="/login" replace />;
+  }
+
   const userStr = localStorage.getItem("devcentral_user");
 
   if (!userStr) {

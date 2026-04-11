@@ -2,6 +2,7 @@
 
 import { Settings, User, LogOut, CircleUserRound } from "lucide-react";
 import { Button } from "../ui/button.js";
+import { clearAuthStorage } from "../../lib/auth.js";
 
 import {
   DropdownMenu,
@@ -12,8 +13,8 @@ import {
 
 function UserProfile() {
   const handleLogout = () => {
-    // Remove the authentication tokens from the browser
-    localStorage.removeItem("devcentral_token");
+    // Remove all persisted auth state from the browser.
+    clearAuthStorage();
 
     globalThis.location.href = "/login";
   };
