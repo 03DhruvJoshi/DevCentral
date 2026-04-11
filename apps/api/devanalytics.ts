@@ -85,7 +85,10 @@ router.get(
 
       // Map the array of measures into a clean key-value object
       const metricsMap = data.component.measures.reduce(
-        (acc: any, measure: any) => {
+        (
+          acc: Record<string, unknown>,
+          measure: { metric: string; value: unknown },
+        ) => {
           acc[measure.metric] = measure.value;
           return acc;
         },
@@ -606,9 +609,8 @@ router.get(
       ).filter(
         (
           pr,
-        ): pr is Awaited<
-          ReturnType<typeof octokit.rest.pulls.get>
-        >["data"] => pr !== null,
+        ): pr is Awaited<ReturnType<typeof octokit.rest.pulls.get>>["data"] =>
+          pr !== null,
       );
 
       const sizes = detailedRecentPRs.map((pr) =>
@@ -667,7 +669,10 @@ router.get(
           const mergedStats = reviewStatsByNumber.get(pr.number);
           const createdAt = new Date(pr.created_at).getTime();
           const updatedAt = new Date(pr.updated_at).getTime();
-          const ageDays = Math.max(0, Math.round((now - createdAt) / 86_400_000));
+          const ageDays = Math.max(
+            0,
+            Math.round((now - createdAt) / 86_400_000),
+          );
           const totalChanges = pr.additions + pr.deletions;
           const reviews = mergedStats?.review_count ?? 0;
           const score = riskScore({
@@ -715,7 +720,9 @@ router.get(
         })
         .sort((a, b) => {
           if (b.risk_score !== a.risk_score) return b.risk_score - a.risk_score;
-          return new Date(b.updated_at).getTime() - new Date(a.updated_at).getTime();
+          return (
+            new Date(b.updated_at).getTime() - new Date(a.updated_at).getTime()
+          );
         });
 
       const risk_prs = prRegister.slice(0, 10);
@@ -754,9 +761,9 @@ router.get(
         reviewResponseBucketsMap[bucket] =
           (reviewResponseBucketsMap[bucket] ?? 0) + 1;
       });
-      const review_response_buckets = Object.entries(reviewResponseBucketsMap).map(
-        ([label, count]) => ({ label, count }),
-      );
+      const review_response_buckets = Object.entries(
+        reviewResponseBucketsMap,
+      ).map(([label, count]) => ({ label, count }));
 
       const leadTimeBucketsMap: Record<string, number> = {
         "<1d": 0,
@@ -839,8 +846,6 @@ router.get(
         }),
       );
 
-      const reviewStatsChronological = validReviewStats.toReversed();
-
       res.json({
         timeframe_days: days,
         summary: {
@@ -855,7 +860,6 @@ router.get(
         review_time: {
           avg_first_review_h: average(reviewTimes),
           avg_merge_h: average(mergeTimes),
-          prs: reviewStatsChronological,
         },
         throughput,
         top_reviewers,
