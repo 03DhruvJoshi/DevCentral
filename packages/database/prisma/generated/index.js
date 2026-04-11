@@ -128,6 +128,16 @@ exports.Prisma.UserScalarFieldEnum = {
   createdAt: 'createdAt'
 };
 
+exports.Prisma.ProviderIntegrationScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  provider: 'provider',
+  apiToken: 'apiToken',
+  teamId: 'teamId',
+  connectedAt: 'connectedAt',
+  updatedAt: 'updatedAt'
+};
+
 exports.Prisma.AuthTokenScalarFieldEnum = {
   id: 'id',
   userId: 'userId',
@@ -155,6 +165,118 @@ exports.Prisma.PlatformConfigScalarFieldEnum = {
   updatedAt: 'updatedAt'
 };
 
+exports.Prisma.RepositoryMetadataScalarFieldEnum = {
+  id: 'id',
+  repositoryName: 'repositoryName',
+  owner: 'owner',
+  healthScore: 'healthScore',
+  healthStatus: 'healthStatus',
+  lastHealthCheckAt: 'lastHealthCheckAt',
+  teamName: 'teamName',
+  ownerEmail: 'ownerEmail',
+  maintainers: 'maintainers',
+  onCallRotationUrl: 'onCallRotationUrl',
+  lastDeploymentAt: 'lastDeploymentAt',
+  lastDeployedVersion: 'lastDeployedVersion',
+  lastDeployedBy: 'lastDeployedBy',
+  lastDeploymentEnvironment: 'lastDeploymentEnvironment',
+  productionHealthy: 'productionHealthy',
+  description: 'description',
+  language: 'language',
+  testCoveragePercent: 'testCoveragePercent',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.HealthCheckResultScalarFieldEnum = {
+  id: 'id',
+  repositoryName: 'repositoryName',
+  repositoryOwner: 'repositoryOwner',
+  repositoryMetadataId: 'repositoryMetadataId',
+  securityScore: 'securityScore',
+  codeQualityScore: 'codeQualityScore',
+  deploymentReadinessScore: 'deploymentReadinessScore',
+  teamOwnershipScore: 'teamOwnershipScore',
+  totalScore: 'totalScore',
+  overallStatus: 'overallStatus',
+  securityIssues: 'securityIssues',
+  codeQualityIssues: 'codeQualityIssues',
+  deploymentReadinessIssues: 'deploymentReadinessIssues',
+  teamOwnershipIssues: 'teamOwnershipIssues',
+  aiSuggestions: 'aiSuggestions',
+  executedAt: 'executedAt',
+  executedBy: 'executedBy',
+  createdAt: 'createdAt'
+};
+
+exports.Prisma.QuickFixActionScalarFieldEnum = {
+  id: 'id',
+  repositoryMetadataId: 'repositoryMetadataId',
+  actionType: 'actionType',
+  actionDescription: 'actionDescription',
+  status: 'status',
+  executedBy: 'executedBy',
+  result: 'result',
+  createdAt: 'createdAt',
+  completedAt: 'completedAt'
+};
+
+exports.Prisma.RepositoryEnvironmentScalarFieldEnum = {
+  id: 'id',
+  repositoryMetadataId: 'repositoryMetadataId',
+  name: 'name',
+  order: 'order',
+  requiresApproval: 'requiresApproval',
+  approvalMinCount: 'approvalMinCount',
+  autoApproveIfTestsPass: 'autoApproveIfTestsPass',
+  autoRollbackOnFailure: 'autoRollbackOnFailure',
+  healthCheckUrl: 'healthCheckUrl',
+  healthCheckInterval: 'healthCheckInterval',
+  variables: 'variables',
+  secretNames: 'secretNames',
+  slackChannel: 'slackChannel',
+  notifyOn: 'notifyOn',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.DeploymentScalarFieldEnum = {
+  id: 'id',
+  repositoryMetadataId: 'repositoryMetadataId',
+  environmentId: 'environmentId',
+  version: 'version',
+  status: 'status',
+  deployedAt: 'deployedAt',
+  deployedBy: 'deployedBy',
+  duration: 'duration',
+  riskAssessment: 'riskAssessment',
+  healthCheckPassed: 'healthCheckPassed',
+  healthCheckDetails: 'healthCheckDetails',
+  postDeploymentMetrics: 'postDeploymentMetrics',
+  preDeploymentNotes: 'preDeploymentNotes',
+  postDeploymentNotes: 'postDeploymentNotes',
+  deploymentLogs: 'deploymentLogs',
+  artifacts: 'artifacts',
+  approvalRequired: 'approvalRequired',
+  rollbackOf: 'rollbackOf',
+  rollbackReason: 'rollbackReason',
+  rollbackInitiatedAt: 'rollbackInitiatedAt',
+  rollbackInitiatedBy: 'rollbackInitiatedBy',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.DeploymentApprovalScalarFieldEnum = {
+  id: 'id',
+  deploymentId: 'deploymentId',
+  approverEmail: 'approverEmail',
+  status: 'status',
+  reason: 'reason',
+  comment: 'comment',
+  respondedAt: 'respondedAt',
+  createdAt: 'createdAt'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -162,6 +284,10 @@ exports.Prisma.SortOrder = {
 
 exports.Prisma.NullableJsonNullValueInput = {
   DbNull: Prisma.DbNull,
+  JsonNull: Prisma.JsonNull
+};
+
+exports.Prisma.JsonNullValueInput = {
   JsonNull: Prisma.JsonNull
 };
 
@@ -190,9 +316,16 @@ exports.Prisma.ModelName = {
   Template: 'Template',
   Category: 'Category',
   User: 'User',
+  ProviderIntegration: 'ProviderIntegration',
   AuthToken: 'AuthToken',
   AuditLog: 'AuditLog',
-  PlatformConfig: 'PlatformConfig'
+  PlatformConfig: 'PlatformConfig',
+  RepositoryMetadata: 'RepositoryMetadata',
+  HealthCheckResult: 'HealthCheckResult',
+  QuickFixAction: 'QuickFixAction',
+  RepositoryEnvironment: 'RepositoryEnvironment',
+  Deployment: 'Deployment',
+  DeploymentApproval: 'DeploymentApproval'
 };
 /**
  * Create the Client
@@ -202,10 +335,10 @@ const config = {
   "clientVersion": "7.3.0",
   "engineVersion": "9d6ad21cbbceab97458517b147a6a09ff43aa735",
   "activeProvider": "postgresql",
-  "inlineSchema": "generator client {\n  provider = \"prisma-client-js\"\n  output   = \"./generated\"\n}\n\ndatasource db {\n  provider = \"postgresql\"\n}\n\nmodel Project {\n  name      String\n  createdAt DateTime @default(now())\n  id        Int      @id @default(autoincrement())\n}\n\nmodel Template {\n  title        String\n  description  String\n  categoryName String\n  yaml         String\n  createdAt    DateTime @default(now())\n  updatedAt    DateTime @updatedAt\n  id           Int      @id @default(autoincrement())\n  category     Category @relation(fields: [categoryName], references: [name])\n}\n\nmodel Category {\n  name      String     @unique\n  id        Int        @id @default(autoincrement())\n  templates Template[]\n}\n\nmodel User {\n  id                   String      @id @default(uuid())\n  email                String      @unique\n  name                 String\n  passwordHash         String\n  githubUsername       String?\n  githubAccessToken    String?\n  emailVerified        Boolean     @default(false)\n  role                 String      @default(\"DEV\") // \"DEV\" or \"ADMIN\"\n  status               String      @default(\"ACTIVE\") // \"ACTIVE\", \"SUSPENDED\"\n  dashboardPreferences Json?\n  createdAt            DateTime    @default(now())\n  authTokens           AuthToken[]\n}\n\nenum AuthTokenType {\n  EMAIL_VERIFY\n  PASSWORD_RESET\n}\n\nmodel AuthToken {\n  id        Int           @id @default(autoincrement())\n  userId    String\n  tokenHash String\n  type      AuthTokenType\n  expiresAt DateTime\n  usedAt    DateTime?\n  createdAt DateTime      @default(now())\n  user      User          @relation(fields: [userId], references: [id], onDelete: Cascade)\n\n  @@index([userId, type])\n  @@index([tokenHash, type])\n}\n\nmodel AuditLog {\n  id         Int      @id @default(autoincrement())\n  action     String\n  actorEmail String\n  targetId   String?\n  details    Json?\n  role       String?\n  createdAt  DateTime @default(now())\n}\n\nmodel PlatformConfig {\n  key         String   @id\n  value       String\n  description String?\n  updatedAt   DateTime @updatedAt\n}\n"
+  "inlineSchema": "generator client {\n  provider = \"prisma-client-js\"\n  output   = \"./generated\"\n}\n\ndatasource db {\n  provider = \"postgresql\"\n}\n\nmodel Project {\n  name      String\n  createdAt DateTime @default(now())\n  id        Int      @id @default(autoincrement())\n}\n\nmodel Template {\n  title        String\n  description  String\n  categoryName String\n  yaml         String\n  createdAt    DateTime @default(now())\n  updatedAt    DateTime @updatedAt\n  id           Int      @id @default(autoincrement())\n  category     Category @relation(fields: [categoryName], references: [name])\n}\n\nmodel Category {\n  name      String     @unique\n  id        Int        @id @default(autoincrement())\n  templates Template[]\n}\n\nmodel User {\n  id                   String                @id @default(uuid())\n  email                String                @unique\n  name                 String\n  passwordHash         String\n  githubUsername       String?\n  githubAccessToken    String?\n  emailVerified        Boolean               @default(false)\n  role                 String                @default(\"DEV\") // \"DEV\" or \"ADMIN\"\n  status               String                @default(\"ACTIVE\") // \"ACTIVE\", \"SUSPENDED\"\n  dashboardPreferences Json?\n  createdAt            DateTime              @default(now())\n  authTokens           AuthToken[]\n  providerIntegrations ProviderIntegration[]\n}\n\nmodel ProviderIntegration {\n  id          String   @id @default(cuid())\n  userId      String\n  provider    String // \"vercel\" | \"render\"\n  apiToken    String\n  teamId      String? // Vercel team/org slug (optional)\n  connectedAt DateTime @default(now())\n  updatedAt   DateTime @updatedAt\n  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)\n\n  @@unique([userId, provider])\n  @@index([userId])\n}\n\nenum AuthTokenType {\n  EMAIL_VERIFY\n  PASSWORD_RESET\n}\n\nmodel AuthToken {\n  id        Int           @id @default(autoincrement())\n  userId    String\n  tokenHash String\n  type      AuthTokenType\n  expiresAt DateTime\n  usedAt    DateTime?\n  createdAt DateTime      @default(now())\n  user      User          @relation(fields: [userId], references: [id], onDelete: Cascade)\n\n  @@index([userId, type])\n  @@index([tokenHash, type])\n}\n\nmodel AuditLog {\n  id         Int      @id @default(autoincrement())\n  action     String\n  actorEmail String\n  targetId   String?\n  details    Json?\n  role       String?\n  createdAt  DateTime @default(now())\n}\n\nmodel PlatformConfig {\n  key         String   @id\n  value       String\n  description String?\n  updatedAt   DateTime @updatedAt\n}\n\n// ===== GitOps Phase 3a: Health & Deployment Models =====\n\nmodel RepositoryMetadata {\n  id             String @id @default(cuid())\n  repositoryName String\n  owner          String\n\n  // Health scoring\n  healthScore       Int       @default(0) // 0-100\n  healthStatus      String    @default(\"unknown\") // \"green\", \"yellow\", \"red\"\n  lastHealthCheckAt DateTime?\n\n  // Team ownership\n  teamName          String?\n  ownerEmail        String?\n  maintainers       String[] // emails as JSON array\n  onCallRotationUrl String?\n\n  // Deployment tracking\n  lastDeploymentAt          DateTime?\n  lastDeployedVersion       String?\n  lastDeployedBy            String?\n  lastDeploymentEnvironment String?\n  productionHealthy         Boolean?\n\n  // Repository metadata\n  description         String?\n  language            String?\n  testCoveragePercent Float?\n\n  healthCheckResults HealthCheckResult[]\n  quickFixActions    QuickFixAction[]\n  environments       RepositoryEnvironment[]\n  deployments        Deployment[]\n\n  createdAt DateTime @default(now())\n  updatedAt DateTime @updatedAt\n\n  @@unique([repositoryName, owner])\n  @@index([healthStatus])\n  @@index([lastDeploymentAt])\n}\n\nmodel HealthCheckResult {\n  id                   String             @id @default(cuid())\n  repositoryName       String\n  repositoryOwner      String\n  repositoryMetadataId String\n  repositoryMetadata   RepositoryMetadata @relation(fields: [repositoryMetadataId], references: [id], onDelete: Cascade)\n\n  // Component scores (0-25 each)\n  securityScore            Int    @default(0)\n  codeQualityScore         Int    @default(0)\n  deploymentReadinessScore Int    @default(0)\n  teamOwnershipScore       Int    @default(0)\n  totalScore               Int    @default(0) // sum of above\n  overallStatus            String @default(\"unknown\") // \"green\", \"yellow\", \"red\"\n\n  // Detailed issues\n  securityIssues            Json @default(\"[]\") // [{ type, severity, description, autofixable, fixAction }]\n  codeQualityIssues         Json @default(\"[]\")\n  deploymentReadinessIssues Json @default(\"[]\")\n  teamOwnershipIssues       Json @default(\"[]\")\n\n  // AI suggestions\n  aiSuggestions Json @default(\"[]\") // [{ category, action, priority, autofixable }]\n\n  executedAt DateTime @default(now())\n  executedBy String?\n  createdAt  DateTime @default(now())\n\n  @@index([repositoryMetadataId])\n  @@index([executedAt])\n}\n\nmodel QuickFixAction {\n  id                   String             @id @default(cuid())\n  repositoryMetadataId String\n  repositoryMetadata   RepositoryMetadata @relation(fields: [repositoryMetadataId], references: [id], onDelete: Cascade)\n\n  actionType        String // \"enable-branch-protection\", \"add-codeowners\", \"generate-docs\", etc.\n  actionDescription String\n  status            String @default(\"pending\") // \"pending\", \"in-progress\", \"completed\", \"failed\"\n\n  executedBy String? // user email\n  result     Json? // { success: bool, details: {...}, error?: string }\n\n  createdAt   DateTime  @default(now())\n  completedAt DateTime?\n\n  @@index([repositoryMetadataId])\n  @@index([status])\n}\n\nmodel RepositoryEnvironment {\n  id                   String             @id @default(cuid())\n  repositoryMetadataId String\n  repositoryMetadata   RepositoryMetadata @relation(fields: [repositoryMetadataId], references: [id], onDelete: Cascade)\n\n  name  String // \"dev\", \"staging\", \"prod\"\n  order Int    @default(1) // 1, 2, 3 for promotion order\n\n  // Deployment rules\n  requiresApproval       Boolean @default(false)\n  approvalMinCount       Int     @default(1)\n  autoApproveIfTestsPass Boolean @default(false)\n  autoRollbackOnFailure  Boolean @default(false)\n\n  // Health checks\n  healthCheckUrl      String?\n  healthCheckInterval Int? // seconds\n\n  // Configuration\n  variables   Json     @default(\"{}\") // { VAR_NAME: value, ... }\n  secretNames String[] @default([]) // secret key names (values stored separately)\n\n  // Notifications\n  slackChannel String?\n  notifyOn     String[] @default([]) // [\"deployment_start\", \"deployment_success\", \"deployment_failure\"]\n\n  deployments Deployment[]\n\n  createdAt DateTime @default(now())\n  updatedAt DateTime @updatedAt\n\n  @@unique([repositoryMetadataId, name])\n  @@index([repositoryMetadataId])\n}\n\nmodel Deployment {\n  id                   String             @id @default(cuid())\n  repositoryMetadataId String\n  repositoryMetadata   RepositoryMetadata @relation(fields: [repositoryMetadataId], references: [id], onDelete: Cascade)\n\n  environmentId String\n  environment   RepositoryEnvironment @relation(fields: [environmentId], references: [id], onDelete: Cascade)\n\n  version String // git tag, branch, or commit SHA\n  status  String @default(\"pending\") // \"pending\", \"in-progress\", \"success\", \"failed\", \"rolled-back\"\n\n  // Deployment tracking\n  deployedAt DateTime\n  deployedBy String // user email\n  duration   Int? // seconds\n\n  // Health & Risk Assessment\n  riskAssessment        Json? // { riskLevel: \"low\"|\"medium\"|\"high\", issues: [...], warnings: [...] }\n  healthCheckPassed     Boolean?\n  healthCheckDetails    Json?\n  postDeploymentMetrics Json?\n\n  // Pre/post deployment\n  preDeploymentNotes  String?\n  postDeploymentNotes String?\n  deploymentLogs      String? // URL to logs\n  artifacts           Json? // { containers: [], packages: [], etc }\n\n  // Approval workflow\n  approvalRequired Boolean              @default(false)\n  approvals        DeploymentApproval[]\n\n  // Rollback tracking\n  rollbackOf          String? // id of deployment being rolled back\n  rollbackReason      String?\n  rollbackInitiatedAt DateTime?\n  rollbackInitiatedBy String?\n\n  createdAt DateTime @default(now())\n  updatedAt DateTime @updatedAt\n\n  @@index([repositoryMetadataId])\n  @@index([environmentId])\n  @@index([status])\n  @@index([deployedAt])\n}\n\nmodel DeploymentApproval {\n  id           String     @id @default(cuid())\n  deploymentId String\n  deployment   Deployment @relation(fields: [deploymentId], references: [id], onDelete: Cascade)\n\n  approverEmail String\n  status        String  @default(\"pending\") // \"pending\", \"approved\", \"rejected\"\n  reason        String? // approval or rejection reason\n  comment       String?\n\n  respondedAt DateTime?\n  createdAt   DateTime  @default(now())\n\n  @@unique([deploymentId, approverEmail])\n  @@index([deploymentId])\n  @@index([status])\n}\n"
 }
 
-config.runtimeDataModel = JSON.parse("{\"models\":{\"Project\":{\"fields\":[{\"name\":\"name\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"Int\"}],\"dbName\":null},\"Template\":{\"fields\":[{\"name\":\"title\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"description\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"categoryName\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"yaml\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"updatedAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"category\",\"kind\":\"object\",\"type\":\"Category\",\"relationName\":\"CategoryToTemplate\"}],\"dbName\":null},\"Category\":{\"fields\":[{\"name\":\"name\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"templates\",\"kind\":\"object\",\"type\":\"Template\",\"relationName\":\"CategoryToTemplate\"}],\"dbName\":null},\"User\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"email\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"name\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"passwordHash\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"githubUsername\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"githubAccessToken\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"emailVerified\",\"kind\":\"scalar\",\"type\":\"Boolean\"},{\"name\":\"role\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"status\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"dashboardPreferences\",\"kind\":\"scalar\",\"type\":\"Json\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"authTokens\",\"kind\":\"object\",\"type\":\"AuthToken\",\"relationName\":\"AuthTokenToUser\"}],\"dbName\":null},\"AuthToken\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"userId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"tokenHash\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"type\",\"kind\":\"enum\",\"type\":\"AuthTokenType\"},{\"name\":\"expiresAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"usedAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"user\",\"kind\":\"object\",\"type\":\"User\",\"relationName\":\"AuthTokenToUser\"}],\"dbName\":null},\"AuditLog\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"action\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"actorEmail\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"targetId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"details\",\"kind\":\"scalar\",\"type\":\"Json\"},{\"name\":\"role\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"}],\"dbName\":null},\"PlatformConfig\":{\"fields\":[{\"name\":\"key\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"value\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"description\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"updatedAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"}],\"dbName\":null}},\"enums\":{},\"types\":{}}")
+config.runtimeDataModel = JSON.parse("{\"models\":{\"Project\":{\"fields\":[{\"name\":\"name\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"Int\"}],\"dbName\":null},\"Template\":{\"fields\":[{\"name\":\"title\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"description\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"categoryName\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"yaml\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"updatedAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"category\",\"kind\":\"object\",\"type\":\"Category\",\"relationName\":\"CategoryToTemplate\"}],\"dbName\":null},\"Category\":{\"fields\":[{\"name\":\"name\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"templates\",\"kind\":\"object\",\"type\":\"Template\",\"relationName\":\"CategoryToTemplate\"}],\"dbName\":null},\"User\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"email\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"name\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"passwordHash\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"githubUsername\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"githubAccessToken\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"emailVerified\",\"kind\":\"scalar\",\"type\":\"Boolean\"},{\"name\":\"role\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"status\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"dashboardPreferences\",\"kind\":\"scalar\",\"type\":\"Json\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"authTokens\",\"kind\":\"object\",\"type\":\"AuthToken\",\"relationName\":\"AuthTokenToUser\"},{\"name\":\"providerIntegrations\",\"kind\":\"object\",\"type\":\"ProviderIntegration\",\"relationName\":\"ProviderIntegrationToUser\"}],\"dbName\":null},\"ProviderIntegration\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"userId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"provider\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"apiToken\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"teamId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"connectedAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"updatedAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"user\",\"kind\":\"object\",\"type\":\"User\",\"relationName\":\"ProviderIntegrationToUser\"}],\"dbName\":null},\"AuthToken\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"userId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"tokenHash\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"type\",\"kind\":\"enum\",\"type\":\"AuthTokenType\"},{\"name\":\"expiresAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"usedAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"user\",\"kind\":\"object\",\"type\":\"User\",\"relationName\":\"AuthTokenToUser\"}],\"dbName\":null},\"AuditLog\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"action\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"actorEmail\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"targetId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"details\",\"kind\":\"scalar\",\"type\":\"Json\"},{\"name\":\"role\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"}],\"dbName\":null},\"PlatformConfig\":{\"fields\":[{\"name\":\"key\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"value\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"description\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"updatedAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"}],\"dbName\":null},\"RepositoryMetadata\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"repositoryName\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"owner\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"healthScore\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"healthStatus\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"lastHealthCheckAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"teamName\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"ownerEmail\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"maintainers\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"onCallRotationUrl\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"lastDeploymentAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"lastDeployedVersion\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"lastDeployedBy\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"lastDeploymentEnvironment\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"productionHealthy\",\"kind\":\"scalar\",\"type\":\"Boolean\"},{\"name\":\"description\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"language\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"testCoveragePercent\",\"kind\":\"scalar\",\"type\":\"Float\"},{\"name\":\"healthCheckResults\",\"kind\":\"object\",\"type\":\"HealthCheckResult\",\"relationName\":\"HealthCheckResultToRepositoryMetadata\"},{\"name\":\"quickFixActions\",\"kind\":\"object\",\"type\":\"QuickFixAction\",\"relationName\":\"QuickFixActionToRepositoryMetadata\"},{\"name\":\"environments\",\"kind\":\"object\",\"type\":\"RepositoryEnvironment\",\"relationName\":\"RepositoryEnvironmentToRepositoryMetadata\"},{\"name\":\"deployments\",\"kind\":\"object\",\"type\":\"Deployment\",\"relationName\":\"DeploymentToRepositoryMetadata\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"updatedAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"}],\"dbName\":null},\"HealthCheckResult\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"repositoryName\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"repositoryOwner\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"repositoryMetadataId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"repositoryMetadata\",\"kind\":\"object\",\"type\":\"RepositoryMetadata\",\"relationName\":\"HealthCheckResultToRepositoryMetadata\"},{\"name\":\"securityScore\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"codeQualityScore\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"deploymentReadinessScore\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"teamOwnershipScore\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"totalScore\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"overallStatus\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"securityIssues\",\"kind\":\"scalar\",\"type\":\"Json\"},{\"name\":\"codeQualityIssues\",\"kind\":\"scalar\",\"type\":\"Json\"},{\"name\":\"deploymentReadinessIssues\",\"kind\":\"scalar\",\"type\":\"Json\"},{\"name\":\"teamOwnershipIssues\",\"kind\":\"scalar\",\"type\":\"Json\"},{\"name\":\"aiSuggestions\",\"kind\":\"scalar\",\"type\":\"Json\"},{\"name\":\"executedAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"executedBy\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"}],\"dbName\":null},\"QuickFixAction\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"repositoryMetadataId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"repositoryMetadata\",\"kind\":\"object\",\"type\":\"RepositoryMetadata\",\"relationName\":\"QuickFixActionToRepositoryMetadata\"},{\"name\":\"actionType\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"actionDescription\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"status\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"executedBy\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"result\",\"kind\":\"scalar\",\"type\":\"Json\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"completedAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"}],\"dbName\":null},\"RepositoryEnvironment\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"repositoryMetadataId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"repositoryMetadata\",\"kind\":\"object\",\"type\":\"RepositoryMetadata\",\"relationName\":\"RepositoryEnvironmentToRepositoryMetadata\"},{\"name\":\"name\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"order\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"requiresApproval\",\"kind\":\"scalar\",\"type\":\"Boolean\"},{\"name\":\"approvalMinCount\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"autoApproveIfTestsPass\",\"kind\":\"scalar\",\"type\":\"Boolean\"},{\"name\":\"autoRollbackOnFailure\",\"kind\":\"scalar\",\"type\":\"Boolean\"},{\"name\":\"healthCheckUrl\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"healthCheckInterval\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"variables\",\"kind\":\"scalar\",\"type\":\"Json\"},{\"name\":\"secretNames\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"slackChannel\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"notifyOn\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"deployments\",\"kind\":\"object\",\"type\":\"Deployment\",\"relationName\":\"DeploymentToRepositoryEnvironment\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"updatedAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"}],\"dbName\":null},\"Deployment\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"repositoryMetadataId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"repositoryMetadata\",\"kind\":\"object\",\"type\":\"RepositoryMetadata\",\"relationName\":\"DeploymentToRepositoryMetadata\"},{\"name\":\"environmentId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"environment\",\"kind\":\"object\",\"type\":\"RepositoryEnvironment\",\"relationName\":\"DeploymentToRepositoryEnvironment\"},{\"name\":\"version\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"status\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"deployedAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"deployedBy\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"duration\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"riskAssessment\",\"kind\":\"scalar\",\"type\":\"Json\"},{\"name\":\"healthCheckPassed\",\"kind\":\"scalar\",\"type\":\"Boolean\"},{\"name\":\"healthCheckDetails\",\"kind\":\"scalar\",\"type\":\"Json\"},{\"name\":\"postDeploymentMetrics\",\"kind\":\"scalar\",\"type\":\"Json\"},{\"name\":\"preDeploymentNotes\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"postDeploymentNotes\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"deploymentLogs\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"artifacts\",\"kind\":\"scalar\",\"type\":\"Json\"},{\"name\":\"approvalRequired\",\"kind\":\"scalar\",\"type\":\"Boolean\"},{\"name\":\"approvals\",\"kind\":\"object\",\"type\":\"DeploymentApproval\",\"relationName\":\"DeploymentToDeploymentApproval\"},{\"name\":\"rollbackOf\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"rollbackReason\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"rollbackInitiatedAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"rollbackInitiatedBy\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"updatedAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"}],\"dbName\":null},\"DeploymentApproval\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"deploymentId\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"deployment\",\"kind\":\"object\",\"type\":\"Deployment\",\"relationName\":\"DeploymentToDeploymentApproval\"},{\"name\":\"approverEmail\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"status\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"reason\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"comment\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"respondedAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\"}],\"dbName\":null}},\"enums\":{},\"types\":{}}")
 defineDmmfProperty(exports.Prisma, config.runtimeDataModel)
 config.compilerWasm = {
       getRuntime: async () => require('./query_compiler_fast_bg.js'),

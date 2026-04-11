@@ -34,6 +34,11 @@ export type Category = $Result.DefaultSelection<Prisma.$CategoryPayload>
  */
 export type User = $Result.DefaultSelection<Prisma.$UserPayload>
 /**
+ * Model ProviderIntegration
+ * 
+ */
+export type ProviderIntegration = $Result.DefaultSelection<Prisma.$ProviderIntegrationPayload>
+/**
  * Model AuthToken
  * 
  */
@@ -48,6 +53,36 @@ export type AuditLog = $Result.DefaultSelection<Prisma.$AuditLogPayload>
  * 
  */
 export type PlatformConfig = $Result.DefaultSelection<Prisma.$PlatformConfigPayload>
+/**
+ * Model RepositoryMetadata
+ * 
+ */
+export type RepositoryMetadata = $Result.DefaultSelection<Prisma.$RepositoryMetadataPayload>
+/**
+ * Model HealthCheckResult
+ * 
+ */
+export type HealthCheckResult = $Result.DefaultSelection<Prisma.$HealthCheckResultPayload>
+/**
+ * Model QuickFixAction
+ * 
+ */
+export type QuickFixAction = $Result.DefaultSelection<Prisma.$QuickFixActionPayload>
+/**
+ * Model RepositoryEnvironment
+ * 
+ */
+export type RepositoryEnvironment = $Result.DefaultSelection<Prisma.$RepositoryEnvironmentPayload>
+/**
+ * Model Deployment
+ * 
+ */
+export type Deployment = $Result.DefaultSelection<Prisma.$DeploymentPayload>
+/**
+ * Model DeploymentApproval
+ * 
+ */
+export type DeploymentApproval = $Result.DefaultSelection<Prisma.$DeploymentApprovalPayload>
 
 /**
  * Enums
@@ -224,6 +259,16 @@ export class PrismaClient<
   get user(): Prisma.UserDelegate<ExtArgs, ClientOptions>;
 
   /**
+   * `prisma.providerIntegration`: Exposes CRUD operations for the **ProviderIntegration** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more ProviderIntegrations
+    * const providerIntegrations = await prisma.providerIntegration.findMany()
+    * ```
+    */
+  get providerIntegration(): Prisma.ProviderIntegrationDelegate<ExtArgs, ClientOptions>;
+
+  /**
    * `prisma.authToken`: Exposes CRUD operations for the **AuthToken** model.
     * Example usage:
     * ```ts
@@ -252,6 +297,66 @@ export class PrismaClient<
     * ```
     */
   get platformConfig(): Prisma.PlatformConfigDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.repositoryMetadata`: Exposes CRUD operations for the **RepositoryMetadata** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more RepositoryMetadata
+    * const repositoryMetadata = await prisma.repositoryMetadata.findMany()
+    * ```
+    */
+  get repositoryMetadata(): Prisma.RepositoryMetadataDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.healthCheckResult`: Exposes CRUD operations for the **HealthCheckResult** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more HealthCheckResults
+    * const healthCheckResults = await prisma.healthCheckResult.findMany()
+    * ```
+    */
+  get healthCheckResult(): Prisma.HealthCheckResultDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.quickFixAction`: Exposes CRUD operations for the **QuickFixAction** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more QuickFixActions
+    * const quickFixActions = await prisma.quickFixAction.findMany()
+    * ```
+    */
+  get quickFixAction(): Prisma.QuickFixActionDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.repositoryEnvironment`: Exposes CRUD operations for the **RepositoryEnvironment** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more RepositoryEnvironments
+    * const repositoryEnvironments = await prisma.repositoryEnvironment.findMany()
+    * ```
+    */
+  get repositoryEnvironment(): Prisma.RepositoryEnvironmentDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.deployment`: Exposes CRUD operations for the **Deployment** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Deployments
+    * const deployments = await prisma.deployment.findMany()
+    * ```
+    */
+  get deployment(): Prisma.DeploymentDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.deploymentApproval`: Exposes CRUD operations for the **DeploymentApproval** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more DeploymentApprovals
+    * const deploymentApprovals = await prisma.deploymentApproval.findMany()
+    * ```
+    */
+  get deploymentApproval(): Prisma.DeploymentApprovalDelegate<ExtArgs, ClientOptions>;
 }
 
 export namespace Prisma {
@@ -690,9 +795,16 @@ export namespace Prisma {
     Template: 'Template',
     Category: 'Category',
     User: 'User',
+    ProviderIntegration: 'ProviderIntegration',
     AuthToken: 'AuthToken',
     AuditLog: 'AuditLog',
-    PlatformConfig: 'PlatformConfig'
+    PlatformConfig: 'PlatformConfig',
+    RepositoryMetadata: 'RepositoryMetadata',
+    HealthCheckResult: 'HealthCheckResult',
+    QuickFixAction: 'QuickFixAction',
+    RepositoryEnvironment: 'RepositoryEnvironment',
+    Deployment: 'Deployment',
+    DeploymentApproval: 'DeploymentApproval'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -708,7 +820,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "project" | "template" | "category" | "user" | "authToken" | "auditLog" | "platformConfig"
+      modelProps: "project" | "template" | "category" | "user" | "providerIntegration" | "authToken" | "auditLog" | "platformConfig" | "repositoryMetadata" | "healthCheckResult" | "quickFixAction" | "repositoryEnvironment" | "deployment" | "deploymentApproval"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -1008,6 +1120,80 @@ export namespace Prisma {
           }
         }
       }
+      ProviderIntegration: {
+        payload: Prisma.$ProviderIntegrationPayload<ExtArgs>
+        fields: Prisma.ProviderIntegrationFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.ProviderIntegrationFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProviderIntegrationPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.ProviderIntegrationFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProviderIntegrationPayload>
+          }
+          findFirst: {
+            args: Prisma.ProviderIntegrationFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProviderIntegrationPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.ProviderIntegrationFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProviderIntegrationPayload>
+          }
+          findMany: {
+            args: Prisma.ProviderIntegrationFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProviderIntegrationPayload>[]
+          }
+          create: {
+            args: Prisma.ProviderIntegrationCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProviderIntegrationPayload>
+          }
+          createMany: {
+            args: Prisma.ProviderIntegrationCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.ProviderIntegrationCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProviderIntegrationPayload>[]
+          }
+          delete: {
+            args: Prisma.ProviderIntegrationDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProviderIntegrationPayload>
+          }
+          update: {
+            args: Prisma.ProviderIntegrationUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProviderIntegrationPayload>
+          }
+          deleteMany: {
+            args: Prisma.ProviderIntegrationDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.ProviderIntegrationUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.ProviderIntegrationUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProviderIntegrationPayload>[]
+          }
+          upsert: {
+            args: Prisma.ProviderIntegrationUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ProviderIntegrationPayload>
+          }
+          aggregate: {
+            args: Prisma.ProviderIntegrationAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateProviderIntegration>
+          }
+          groupBy: {
+            args: Prisma.ProviderIntegrationGroupByArgs<ExtArgs>
+            result: $Utils.Optional<ProviderIntegrationGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.ProviderIntegrationCountArgs<ExtArgs>
+            result: $Utils.Optional<ProviderIntegrationCountAggregateOutputType> | number
+          }
+        }
+      }
       AuthToken: {
         payload: Prisma.$AuthTokenPayload<ExtArgs>
         fields: Prisma.AuthTokenFieldRefs
@@ -1230,6 +1416,450 @@ export namespace Prisma {
           }
         }
       }
+      RepositoryMetadata: {
+        payload: Prisma.$RepositoryMetadataPayload<ExtArgs>
+        fields: Prisma.RepositoryMetadataFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.RepositoryMetadataFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$RepositoryMetadataPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.RepositoryMetadataFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$RepositoryMetadataPayload>
+          }
+          findFirst: {
+            args: Prisma.RepositoryMetadataFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$RepositoryMetadataPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.RepositoryMetadataFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$RepositoryMetadataPayload>
+          }
+          findMany: {
+            args: Prisma.RepositoryMetadataFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$RepositoryMetadataPayload>[]
+          }
+          create: {
+            args: Prisma.RepositoryMetadataCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$RepositoryMetadataPayload>
+          }
+          createMany: {
+            args: Prisma.RepositoryMetadataCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.RepositoryMetadataCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$RepositoryMetadataPayload>[]
+          }
+          delete: {
+            args: Prisma.RepositoryMetadataDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$RepositoryMetadataPayload>
+          }
+          update: {
+            args: Prisma.RepositoryMetadataUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$RepositoryMetadataPayload>
+          }
+          deleteMany: {
+            args: Prisma.RepositoryMetadataDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.RepositoryMetadataUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.RepositoryMetadataUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$RepositoryMetadataPayload>[]
+          }
+          upsert: {
+            args: Prisma.RepositoryMetadataUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$RepositoryMetadataPayload>
+          }
+          aggregate: {
+            args: Prisma.RepositoryMetadataAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateRepositoryMetadata>
+          }
+          groupBy: {
+            args: Prisma.RepositoryMetadataGroupByArgs<ExtArgs>
+            result: $Utils.Optional<RepositoryMetadataGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.RepositoryMetadataCountArgs<ExtArgs>
+            result: $Utils.Optional<RepositoryMetadataCountAggregateOutputType> | number
+          }
+        }
+      }
+      HealthCheckResult: {
+        payload: Prisma.$HealthCheckResultPayload<ExtArgs>
+        fields: Prisma.HealthCheckResultFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.HealthCheckResultFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$HealthCheckResultPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.HealthCheckResultFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$HealthCheckResultPayload>
+          }
+          findFirst: {
+            args: Prisma.HealthCheckResultFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$HealthCheckResultPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.HealthCheckResultFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$HealthCheckResultPayload>
+          }
+          findMany: {
+            args: Prisma.HealthCheckResultFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$HealthCheckResultPayload>[]
+          }
+          create: {
+            args: Prisma.HealthCheckResultCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$HealthCheckResultPayload>
+          }
+          createMany: {
+            args: Prisma.HealthCheckResultCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.HealthCheckResultCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$HealthCheckResultPayload>[]
+          }
+          delete: {
+            args: Prisma.HealthCheckResultDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$HealthCheckResultPayload>
+          }
+          update: {
+            args: Prisma.HealthCheckResultUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$HealthCheckResultPayload>
+          }
+          deleteMany: {
+            args: Prisma.HealthCheckResultDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.HealthCheckResultUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.HealthCheckResultUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$HealthCheckResultPayload>[]
+          }
+          upsert: {
+            args: Prisma.HealthCheckResultUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$HealthCheckResultPayload>
+          }
+          aggregate: {
+            args: Prisma.HealthCheckResultAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateHealthCheckResult>
+          }
+          groupBy: {
+            args: Prisma.HealthCheckResultGroupByArgs<ExtArgs>
+            result: $Utils.Optional<HealthCheckResultGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.HealthCheckResultCountArgs<ExtArgs>
+            result: $Utils.Optional<HealthCheckResultCountAggregateOutputType> | number
+          }
+        }
+      }
+      QuickFixAction: {
+        payload: Prisma.$QuickFixActionPayload<ExtArgs>
+        fields: Prisma.QuickFixActionFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.QuickFixActionFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$QuickFixActionPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.QuickFixActionFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$QuickFixActionPayload>
+          }
+          findFirst: {
+            args: Prisma.QuickFixActionFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$QuickFixActionPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.QuickFixActionFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$QuickFixActionPayload>
+          }
+          findMany: {
+            args: Prisma.QuickFixActionFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$QuickFixActionPayload>[]
+          }
+          create: {
+            args: Prisma.QuickFixActionCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$QuickFixActionPayload>
+          }
+          createMany: {
+            args: Prisma.QuickFixActionCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.QuickFixActionCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$QuickFixActionPayload>[]
+          }
+          delete: {
+            args: Prisma.QuickFixActionDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$QuickFixActionPayload>
+          }
+          update: {
+            args: Prisma.QuickFixActionUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$QuickFixActionPayload>
+          }
+          deleteMany: {
+            args: Prisma.QuickFixActionDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.QuickFixActionUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.QuickFixActionUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$QuickFixActionPayload>[]
+          }
+          upsert: {
+            args: Prisma.QuickFixActionUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$QuickFixActionPayload>
+          }
+          aggregate: {
+            args: Prisma.QuickFixActionAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateQuickFixAction>
+          }
+          groupBy: {
+            args: Prisma.QuickFixActionGroupByArgs<ExtArgs>
+            result: $Utils.Optional<QuickFixActionGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.QuickFixActionCountArgs<ExtArgs>
+            result: $Utils.Optional<QuickFixActionCountAggregateOutputType> | number
+          }
+        }
+      }
+      RepositoryEnvironment: {
+        payload: Prisma.$RepositoryEnvironmentPayload<ExtArgs>
+        fields: Prisma.RepositoryEnvironmentFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.RepositoryEnvironmentFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$RepositoryEnvironmentPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.RepositoryEnvironmentFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$RepositoryEnvironmentPayload>
+          }
+          findFirst: {
+            args: Prisma.RepositoryEnvironmentFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$RepositoryEnvironmentPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.RepositoryEnvironmentFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$RepositoryEnvironmentPayload>
+          }
+          findMany: {
+            args: Prisma.RepositoryEnvironmentFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$RepositoryEnvironmentPayload>[]
+          }
+          create: {
+            args: Prisma.RepositoryEnvironmentCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$RepositoryEnvironmentPayload>
+          }
+          createMany: {
+            args: Prisma.RepositoryEnvironmentCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.RepositoryEnvironmentCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$RepositoryEnvironmentPayload>[]
+          }
+          delete: {
+            args: Prisma.RepositoryEnvironmentDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$RepositoryEnvironmentPayload>
+          }
+          update: {
+            args: Prisma.RepositoryEnvironmentUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$RepositoryEnvironmentPayload>
+          }
+          deleteMany: {
+            args: Prisma.RepositoryEnvironmentDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.RepositoryEnvironmentUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.RepositoryEnvironmentUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$RepositoryEnvironmentPayload>[]
+          }
+          upsert: {
+            args: Prisma.RepositoryEnvironmentUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$RepositoryEnvironmentPayload>
+          }
+          aggregate: {
+            args: Prisma.RepositoryEnvironmentAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateRepositoryEnvironment>
+          }
+          groupBy: {
+            args: Prisma.RepositoryEnvironmentGroupByArgs<ExtArgs>
+            result: $Utils.Optional<RepositoryEnvironmentGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.RepositoryEnvironmentCountArgs<ExtArgs>
+            result: $Utils.Optional<RepositoryEnvironmentCountAggregateOutputType> | number
+          }
+        }
+      }
+      Deployment: {
+        payload: Prisma.$DeploymentPayload<ExtArgs>
+        fields: Prisma.DeploymentFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.DeploymentFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DeploymentPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.DeploymentFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DeploymentPayload>
+          }
+          findFirst: {
+            args: Prisma.DeploymentFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DeploymentPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.DeploymentFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DeploymentPayload>
+          }
+          findMany: {
+            args: Prisma.DeploymentFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DeploymentPayload>[]
+          }
+          create: {
+            args: Prisma.DeploymentCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DeploymentPayload>
+          }
+          createMany: {
+            args: Prisma.DeploymentCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.DeploymentCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DeploymentPayload>[]
+          }
+          delete: {
+            args: Prisma.DeploymentDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DeploymentPayload>
+          }
+          update: {
+            args: Prisma.DeploymentUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DeploymentPayload>
+          }
+          deleteMany: {
+            args: Prisma.DeploymentDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.DeploymentUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.DeploymentUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DeploymentPayload>[]
+          }
+          upsert: {
+            args: Prisma.DeploymentUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DeploymentPayload>
+          }
+          aggregate: {
+            args: Prisma.DeploymentAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateDeployment>
+          }
+          groupBy: {
+            args: Prisma.DeploymentGroupByArgs<ExtArgs>
+            result: $Utils.Optional<DeploymentGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.DeploymentCountArgs<ExtArgs>
+            result: $Utils.Optional<DeploymentCountAggregateOutputType> | number
+          }
+        }
+      }
+      DeploymentApproval: {
+        payload: Prisma.$DeploymentApprovalPayload<ExtArgs>
+        fields: Prisma.DeploymentApprovalFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.DeploymentApprovalFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DeploymentApprovalPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.DeploymentApprovalFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DeploymentApprovalPayload>
+          }
+          findFirst: {
+            args: Prisma.DeploymentApprovalFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DeploymentApprovalPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.DeploymentApprovalFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DeploymentApprovalPayload>
+          }
+          findMany: {
+            args: Prisma.DeploymentApprovalFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DeploymentApprovalPayload>[]
+          }
+          create: {
+            args: Prisma.DeploymentApprovalCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DeploymentApprovalPayload>
+          }
+          createMany: {
+            args: Prisma.DeploymentApprovalCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.DeploymentApprovalCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DeploymentApprovalPayload>[]
+          }
+          delete: {
+            args: Prisma.DeploymentApprovalDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DeploymentApprovalPayload>
+          }
+          update: {
+            args: Prisma.DeploymentApprovalUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DeploymentApprovalPayload>
+          }
+          deleteMany: {
+            args: Prisma.DeploymentApprovalDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.DeploymentApprovalUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.DeploymentApprovalUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DeploymentApprovalPayload>[]
+          }
+          upsert: {
+            args: Prisma.DeploymentApprovalUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DeploymentApprovalPayload>
+          }
+          aggregate: {
+            args: Prisma.DeploymentApprovalAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateDeploymentApproval>
+          }
+          groupBy: {
+            args: Prisma.DeploymentApprovalGroupByArgs<ExtArgs>
+            result: $Utils.Optional<DeploymentApprovalGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.DeploymentApprovalCountArgs<ExtArgs>
+            result: $Utils.Optional<DeploymentApprovalCountAggregateOutputType> | number
+          }
+        }
+      }
     }
   } & {
     other: {
@@ -1342,9 +1972,16 @@ export namespace Prisma {
     template?: TemplateOmit
     category?: CategoryOmit
     user?: UserOmit
+    providerIntegration?: ProviderIntegrationOmit
     authToken?: AuthTokenOmit
     auditLog?: AuditLogOmit
     platformConfig?: PlatformConfigOmit
+    repositoryMetadata?: RepositoryMetadataOmit
+    healthCheckResult?: HealthCheckResultOmit
+    quickFixAction?: QuickFixActionOmit
+    repositoryEnvironment?: RepositoryEnvironmentOmit
+    deployment?: DeploymentOmit
+    deploymentApproval?: DeploymentApprovalOmit
   }
 
   /* Types for Logging */
@@ -1457,10 +2094,12 @@ export namespace Prisma {
 
   export type UserCountOutputType = {
     authTokens: number
+    providerIntegrations: number
   }
 
   export type UserCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     authTokens?: boolean | UserCountOutputTypeCountAuthTokensArgs
+    providerIntegrations?: boolean | UserCountOutputTypeCountProviderIntegrationsArgs
   }
 
   // Custom InputTypes
@@ -1479,6 +2118,133 @@ export namespace Prisma {
    */
   export type UserCountOutputTypeCountAuthTokensArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: AuthTokenWhereInput
+  }
+
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountProviderIntegrationsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ProviderIntegrationWhereInput
+  }
+
+
+  /**
+   * Count Type RepositoryMetadataCountOutputType
+   */
+
+  export type RepositoryMetadataCountOutputType = {
+    healthCheckResults: number
+    quickFixActions: number
+    environments: number
+    deployments: number
+  }
+
+  export type RepositoryMetadataCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    healthCheckResults?: boolean | RepositoryMetadataCountOutputTypeCountHealthCheckResultsArgs
+    quickFixActions?: boolean | RepositoryMetadataCountOutputTypeCountQuickFixActionsArgs
+    environments?: boolean | RepositoryMetadataCountOutputTypeCountEnvironmentsArgs
+    deployments?: boolean | RepositoryMetadataCountOutputTypeCountDeploymentsArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * RepositoryMetadataCountOutputType without action
+   */
+  export type RepositoryMetadataCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the RepositoryMetadataCountOutputType
+     */
+    select?: RepositoryMetadataCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * RepositoryMetadataCountOutputType without action
+   */
+  export type RepositoryMetadataCountOutputTypeCountHealthCheckResultsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: HealthCheckResultWhereInput
+  }
+
+  /**
+   * RepositoryMetadataCountOutputType without action
+   */
+  export type RepositoryMetadataCountOutputTypeCountQuickFixActionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: QuickFixActionWhereInput
+  }
+
+  /**
+   * RepositoryMetadataCountOutputType without action
+   */
+  export type RepositoryMetadataCountOutputTypeCountEnvironmentsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: RepositoryEnvironmentWhereInput
+  }
+
+  /**
+   * RepositoryMetadataCountOutputType without action
+   */
+  export type RepositoryMetadataCountOutputTypeCountDeploymentsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: DeploymentWhereInput
+  }
+
+
+  /**
+   * Count Type RepositoryEnvironmentCountOutputType
+   */
+
+  export type RepositoryEnvironmentCountOutputType = {
+    deployments: number
+  }
+
+  export type RepositoryEnvironmentCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    deployments?: boolean | RepositoryEnvironmentCountOutputTypeCountDeploymentsArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * RepositoryEnvironmentCountOutputType without action
+   */
+  export type RepositoryEnvironmentCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the RepositoryEnvironmentCountOutputType
+     */
+    select?: RepositoryEnvironmentCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * RepositoryEnvironmentCountOutputType without action
+   */
+  export type RepositoryEnvironmentCountOutputTypeCountDeploymentsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: DeploymentWhereInput
+  }
+
+
+  /**
+   * Count Type DeploymentCountOutputType
+   */
+
+  export type DeploymentCountOutputType = {
+    approvals: number
+  }
+
+  export type DeploymentCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    approvals?: boolean | DeploymentCountOutputTypeCountApprovalsArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * DeploymentCountOutputType without action
+   */
+  export type DeploymentCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DeploymentCountOutputType
+     */
+    select?: DeploymentCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * DeploymentCountOutputType without action
+   */
+  export type DeploymentCountOutputTypeCountApprovalsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: DeploymentApprovalWhereInput
   }
 
 
@@ -4881,6 +5647,7 @@ export namespace Prisma {
     dashboardPreferences?: boolean
     createdAt?: boolean
     authTokens?: boolean | User$authTokensArgs<ExtArgs>
+    providerIntegrations?: boolean | User$providerIntegrationsArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["user"]>
 
@@ -4929,6 +5696,7 @@ export namespace Prisma {
   export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "email" | "name" | "passwordHash" | "githubUsername" | "githubAccessToken" | "emailVerified" | "role" | "status" | "dashboardPreferences" | "createdAt", ExtArgs["result"]["user"]>
   export type UserInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     authTokens?: boolean | User$authTokensArgs<ExtArgs>
+    providerIntegrations?: boolean | User$providerIntegrationsArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type UserIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
@@ -4938,6 +5706,7 @@ export namespace Prisma {
     name: "User"
     objects: {
       authTokens: Prisma.$AuthTokenPayload<ExtArgs>[]
+      providerIntegrations: Prisma.$ProviderIntegrationPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -5346,6 +6115,7 @@ export namespace Prisma {
   export interface Prisma__UserClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     authTokens<T extends User$authTokensArgs<ExtArgs> = {}>(args?: Subset<T, User$authTokensArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AuthTokenPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    providerIntegrations<T extends User$providerIntegrationsArgs<ExtArgs> = {}>(args?: Subset<T, User$providerIntegrationsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ProviderIntegrationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -5798,6 +6568,30 @@ export namespace Prisma {
   }
 
   /**
+   * User.providerIntegrations
+   */
+  export type User$providerIntegrationsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ProviderIntegration
+     */
+    select?: ProviderIntegrationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ProviderIntegration
+     */
+    omit?: ProviderIntegrationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ProviderIntegrationInclude<ExtArgs> | null
+    where?: ProviderIntegrationWhereInput
+    orderBy?: ProviderIntegrationOrderByWithRelationInput | ProviderIntegrationOrderByWithRelationInput[]
+    cursor?: ProviderIntegrationWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: ProviderIntegrationScalarFieldEnum | ProviderIntegrationScalarFieldEnum[]
+  }
+
+  /**
    * User without action
    */
   export type UserDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -5813,6 +6607,1090 @@ export namespace Prisma {
      * Choose, which related nodes to fetch as well
      */
     include?: UserInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model ProviderIntegration
+   */
+
+  export type AggregateProviderIntegration = {
+    _count: ProviderIntegrationCountAggregateOutputType | null
+    _min: ProviderIntegrationMinAggregateOutputType | null
+    _max: ProviderIntegrationMaxAggregateOutputType | null
+  }
+
+  export type ProviderIntegrationMinAggregateOutputType = {
+    id: string | null
+    userId: string | null
+    provider: string | null
+    apiToken: string | null
+    teamId: string | null
+    connectedAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type ProviderIntegrationMaxAggregateOutputType = {
+    id: string | null
+    userId: string | null
+    provider: string | null
+    apiToken: string | null
+    teamId: string | null
+    connectedAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type ProviderIntegrationCountAggregateOutputType = {
+    id: number
+    userId: number
+    provider: number
+    apiToken: number
+    teamId: number
+    connectedAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type ProviderIntegrationMinAggregateInputType = {
+    id?: true
+    userId?: true
+    provider?: true
+    apiToken?: true
+    teamId?: true
+    connectedAt?: true
+    updatedAt?: true
+  }
+
+  export type ProviderIntegrationMaxAggregateInputType = {
+    id?: true
+    userId?: true
+    provider?: true
+    apiToken?: true
+    teamId?: true
+    connectedAt?: true
+    updatedAt?: true
+  }
+
+  export type ProviderIntegrationCountAggregateInputType = {
+    id?: true
+    userId?: true
+    provider?: true
+    apiToken?: true
+    teamId?: true
+    connectedAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type ProviderIntegrationAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which ProviderIntegration to aggregate.
+     */
+    where?: ProviderIntegrationWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ProviderIntegrations to fetch.
+     */
+    orderBy?: ProviderIntegrationOrderByWithRelationInput | ProviderIntegrationOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: ProviderIntegrationWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ProviderIntegrations from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ProviderIntegrations.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned ProviderIntegrations
+    **/
+    _count?: true | ProviderIntegrationCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: ProviderIntegrationMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: ProviderIntegrationMaxAggregateInputType
+  }
+
+  export type GetProviderIntegrationAggregateType<T extends ProviderIntegrationAggregateArgs> = {
+        [P in keyof T & keyof AggregateProviderIntegration]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateProviderIntegration[P]>
+      : GetScalarType<T[P], AggregateProviderIntegration[P]>
+  }
+
+
+
+
+  export type ProviderIntegrationGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ProviderIntegrationWhereInput
+    orderBy?: ProviderIntegrationOrderByWithAggregationInput | ProviderIntegrationOrderByWithAggregationInput[]
+    by: ProviderIntegrationScalarFieldEnum[] | ProviderIntegrationScalarFieldEnum
+    having?: ProviderIntegrationScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: ProviderIntegrationCountAggregateInputType | true
+    _min?: ProviderIntegrationMinAggregateInputType
+    _max?: ProviderIntegrationMaxAggregateInputType
+  }
+
+  export type ProviderIntegrationGroupByOutputType = {
+    id: string
+    userId: string
+    provider: string
+    apiToken: string
+    teamId: string | null
+    connectedAt: Date
+    updatedAt: Date
+    _count: ProviderIntegrationCountAggregateOutputType | null
+    _min: ProviderIntegrationMinAggregateOutputType | null
+    _max: ProviderIntegrationMaxAggregateOutputType | null
+  }
+
+  type GetProviderIntegrationGroupByPayload<T extends ProviderIntegrationGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<ProviderIntegrationGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof ProviderIntegrationGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], ProviderIntegrationGroupByOutputType[P]>
+            : GetScalarType<T[P], ProviderIntegrationGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type ProviderIntegrationSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    userId?: boolean
+    provider?: boolean
+    apiToken?: boolean
+    teamId?: boolean
+    connectedAt?: boolean
+    updatedAt?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["providerIntegration"]>
+
+  export type ProviderIntegrationSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    userId?: boolean
+    provider?: boolean
+    apiToken?: boolean
+    teamId?: boolean
+    connectedAt?: boolean
+    updatedAt?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["providerIntegration"]>
+
+  export type ProviderIntegrationSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    userId?: boolean
+    provider?: boolean
+    apiToken?: boolean
+    teamId?: boolean
+    connectedAt?: boolean
+    updatedAt?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["providerIntegration"]>
+
+  export type ProviderIntegrationSelectScalar = {
+    id?: boolean
+    userId?: boolean
+    provider?: boolean
+    apiToken?: boolean
+    teamId?: boolean
+    connectedAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type ProviderIntegrationOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "provider" | "apiToken" | "teamId" | "connectedAt" | "updatedAt", ExtArgs["result"]["providerIntegration"]>
+  export type ProviderIntegrationInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+  export type ProviderIntegrationIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+  export type ProviderIntegrationIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+
+  export type $ProviderIntegrationPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "ProviderIntegration"
+    objects: {
+      user: Prisma.$UserPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      userId: string
+      provider: string
+      apiToken: string
+      teamId: string | null
+      connectedAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["providerIntegration"]>
+    composites: {}
+  }
+
+  type ProviderIntegrationGetPayload<S extends boolean | null | undefined | ProviderIntegrationDefaultArgs> = $Result.GetResult<Prisma.$ProviderIntegrationPayload, S>
+
+  type ProviderIntegrationCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<ProviderIntegrationFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: ProviderIntegrationCountAggregateInputType | true
+    }
+
+  export interface ProviderIntegrationDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['ProviderIntegration'], meta: { name: 'ProviderIntegration' } }
+    /**
+     * Find zero or one ProviderIntegration that matches the filter.
+     * @param {ProviderIntegrationFindUniqueArgs} args - Arguments to find a ProviderIntegration
+     * @example
+     * // Get one ProviderIntegration
+     * const providerIntegration = await prisma.providerIntegration.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends ProviderIntegrationFindUniqueArgs>(args: SelectSubset<T, ProviderIntegrationFindUniqueArgs<ExtArgs>>): Prisma__ProviderIntegrationClient<$Result.GetResult<Prisma.$ProviderIntegrationPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one ProviderIntegration that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {ProviderIntegrationFindUniqueOrThrowArgs} args - Arguments to find a ProviderIntegration
+     * @example
+     * // Get one ProviderIntegration
+     * const providerIntegration = await prisma.providerIntegration.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends ProviderIntegrationFindUniqueOrThrowArgs>(args: SelectSubset<T, ProviderIntegrationFindUniqueOrThrowArgs<ExtArgs>>): Prisma__ProviderIntegrationClient<$Result.GetResult<Prisma.$ProviderIntegrationPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first ProviderIntegration that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ProviderIntegrationFindFirstArgs} args - Arguments to find a ProviderIntegration
+     * @example
+     * // Get one ProviderIntegration
+     * const providerIntegration = await prisma.providerIntegration.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends ProviderIntegrationFindFirstArgs>(args?: SelectSubset<T, ProviderIntegrationFindFirstArgs<ExtArgs>>): Prisma__ProviderIntegrationClient<$Result.GetResult<Prisma.$ProviderIntegrationPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first ProviderIntegration that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ProviderIntegrationFindFirstOrThrowArgs} args - Arguments to find a ProviderIntegration
+     * @example
+     * // Get one ProviderIntegration
+     * const providerIntegration = await prisma.providerIntegration.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends ProviderIntegrationFindFirstOrThrowArgs>(args?: SelectSubset<T, ProviderIntegrationFindFirstOrThrowArgs<ExtArgs>>): Prisma__ProviderIntegrationClient<$Result.GetResult<Prisma.$ProviderIntegrationPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more ProviderIntegrations that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ProviderIntegrationFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all ProviderIntegrations
+     * const providerIntegrations = await prisma.providerIntegration.findMany()
+     * 
+     * // Get first 10 ProviderIntegrations
+     * const providerIntegrations = await prisma.providerIntegration.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const providerIntegrationWithIdOnly = await prisma.providerIntegration.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends ProviderIntegrationFindManyArgs>(args?: SelectSubset<T, ProviderIntegrationFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ProviderIntegrationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a ProviderIntegration.
+     * @param {ProviderIntegrationCreateArgs} args - Arguments to create a ProviderIntegration.
+     * @example
+     * // Create one ProviderIntegration
+     * const ProviderIntegration = await prisma.providerIntegration.create({
+     *   data: {
+     *     // ... data to create a ProviderIntegration
+     *   }
+     * })
+     * 
+     */
+    create<T extends ProviderIntegrationCreateArgs>(args: SelectSubset<T, ProviderIntegrationCreateArgs<ExtArgs>>): Prisma__ProviderIntegrationClient<$Result.GetResult<Prisma.$ProviderIntegrationPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many ProviderIntegrations.
+     * @param {ProviderIntegrationCreateManyArgs} args - Arguments to create many ProviderIntegrations.
+     * @example
+     * // Create many ProviderIntegrations
+     * const providerIntegration = await prisma.providerIntegration.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends ProviderIntegrationCreateManyArgs>(args?: SelectSubset<T, ProviderIntegrationCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many ProviderIntegrations and returns the data saved in the database.
+     * @param {ProviderIntegrationCreateManyAndReturnArgs} args - Arguments to create many ProviderIntegrations.
+     * @example
+     * // Create many ProviderIntegrations
+     * const providerIntegration = await prisma.providerIntegration.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many ProviderIntegrations and only return the `id`
+     * const providerIntegrationWithIdOnly = await prisma.providerIntegration.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends ProviderIntegrationCreateManyAndReturnArgs>(args?: SelectSubset<T, ProviderIntegrationCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ProviderIntegrationPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a ProviderIntegration.
+     * @param {ProviderIntegrationDeleteArgs} args - Arguments to delete one ProviderIntegration.
+     * @example
+     * // Delete one ProviderIntegration
+     * const ProviderIntegration = await prisma.providerIntegration.delete({
+     *   where: {
+     *     // ... filter to delete one ProviderIntegration
+     *   }
+     * })
+     * 
+     */
+    delete<T extends ProviderIntegrationDeleteArgs>(args: SelectSubset<T, ProviderIntegrationDeleteArgs<ExtArgs>>): Prisma__ProviderIntegrationClient<$Result.GetResult<Prisma.$ProviderIntegrationPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one ProviderIntegration.
+     * @param {ProviderIntegrationUpdateArgs} args - Arguments to update one ProviderIntegration.
+     * @example
+     * // Update one ProviderIntegration
+     * const providerIntegration = await prisma.providerIntegration.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends ProviderIntegrationUpdateArgs>(args: SelectSubset<T, ProviderIntegrationUpdateArgs<ExtArgs>>): Prisma__ProviderIntegrationClient<$Result.GetResult<Prisma.$ProviderIntegrationPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more ProviderIntegrations.
+     * @param {ProviderIntegrationDeleteManyArgs} args - Arguments to filter ProviderIntegrations to delete.
+     * @example
+     * // Delete a few ProviderIntegrations
+     * const { count } = await prisma.providerIntegration.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends ProviderIntegrationDeleteManyArgs>(args?: SelectSubset<T, ProviderIntegrationDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more ProviderIntegrations.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ProviderIntegrationUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many ProviderIntegrations
+     * const providerIntegration = await prisma.providerIntegration.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends ProviderIntegrationUpdateManyArgs>(args: SelectSubset<T, ProviderIntegrationUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more ProviderIntegrations and returns the data updated in the database.
+     * @param {ProviderIntegrationUpdateManyAndReturnArgs} args - Arguments to update many ProviderIntegrations.
+     * @example
+     * // Update many ProviderIntegrations
+     * const providerIntegration = await prisma.providerIntegration.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more ProviderIntegrations and only return the `id`
+     * const providerIntegrationWithIdOnly = await prisma.providerIntegration.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends ProviderIntegrationUpdateManyAndReturnArgs>(args: SelectSubset<T, ProviderIntegrationUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ProviderIntegrationPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one ProviderIntegration.
+     * @param {ProviderIntegrationUpsertArgs} args - Arguments to update or create a ProviderIntegration.
+     * @example
+     * // Update or create a ProviderIntegration
+     * const providerIntegration = await prisma.providerIntegration.upsert({
+     *   create: {
+     *     // ... data to create a ProviderIntegration
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the ProviderIntegration we want to update
+     *   }
+     * })
+     */
+    upsert<T extends ProviderIntegrationUpsertArgs>(args: SelectSubset<T, ProviderIntegrationUpsertArgs<ExtArgs>>): Prisma__ProviderIntegrationClient<$Result.GetResult<Prisma.$ProviderIntegrationPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of ProviderIntegrations.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ProviderIntegrationCountArgs} args - Arguments to filter ProviderIntegrations to count.
+     * @example
+     * // Count the number of ProviderIntegrations
+     * const count = await prisma.providerIntegration.count({
+     *   where: {
+     *     // ... the filter for the ProviderIntegrations we want to count
+     *   }
+     * })
+    **/
+    count<T extends ProviderIntegrationCountArgs>(
+      args?: Subset<T, ProviderIntegrationCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], ProviderIntegrationCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a ProviderIntegration.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ProviderIntegrationAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends ProviderIntegrationAggregateArgs>(args: Subset<T, ProviderIntegrationAggregateArgs>): Prisma.PrismaPromise<GetProviderIntegrationAggregateType<T>>
+
+    /**
+     * Group by ProviderIntegration.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ProviderIntegrationGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends ProviderIntegrationGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: ProviderIntegrationGroupByArgs['orderBy'] }
+        : { orderBy?: ProviderIntegrationGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, ProviderIntegrationGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetProviderIntegrationGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the ProviderIntegration model
+   */
+  readonly fields: ProviderIntegrationFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for ProviderIntegration.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__ProviderIntegrationClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the ProviderIntegration model
+   */
+  interface ProviderIntegrationFieldRefs {
+    readonly id: FieldRef<"ProviderIntegration", 'String'>
+    readonly userId: FieldRef<"ProviderIntegration", 'String'>
+    readonly provider: FieldRef<"ProviderIntegration", 'String'>
+    readonly apiToken: FieldRef<"ProviderIntegration", 'String'>
+    readonly teamId: FieldRef<"ProviderIntegration", 'String'>
+    readonly connectedAt: FieldRef<"ProviderIntegration", 'DateTime'>
+    readonly updatedAt: FieldRef<"ProviderIntegration", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * ProviderIntegration findUnique
+   */
+  export type ProviderIntegrationFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ProviderIntegration
+     */
+    select?: ProviderIntegrationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ProviderIntegration
+     */
+    omit?: ProviderIntegrationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ProviderIntegrationInclude<ExtArgs> | null
+    /**
+     * Filter, which ProviderIntegration to fetch.
+     */
+    where: ProviderIntegrationWhereUniqueInput
+  }
+
+  /**
+   * ProviderIntegration findUniqueOrThrow
+   */
+  export type ProviderIntegrationFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ProviderIntegration
+     */
+    select?: ProviderIntegrationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ProviderIntegration
+     */
+    omit?: ProviderIntegrationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ProviderIntegrationInclude<ExtArgs> | null
+    /**
+     * Filter, which ProviderIntegration to fetch.
+     */
+    where: ProviderIntegrationWhereUniqueInput
+  }
+
+  /**
+   * ProviderIntegration findFirst
+   */
+  export type ProviderIntegrationFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ProviderIntegration
+     */
+    select?: ProviderIntegrationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ProviderIntegration
+     */
+    omit?: ProviderIntegrationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ProviderIntegrationInclude<ExtArgs> | null
+    /**
+     * Filter, which ProviderIntegration to fetch.
+     */
+    where?: ProviderIntegrationWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ProviderIntegrations to fetch.
+     */
+    orderBy?: ProviderIntegrationOrderByWithRelationInput | ProviderIntegrationOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for ProviderIntegrations.
+     */
+    cursor?: ProviderIntegrationWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ProviderIntegrations from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ProviderIntegrations.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of ProviderIntegrations.
+     */
+    distinct?: ProviderIntegrationScalarFieldEnum | ProviderIntegrationScalarFieldEnum[]
+  }
+
+  /**
+   * ProviderIntegration findFirstOrThrow
+   */
+  export type ProviderIntegrationFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ProviderIntegration
+     */
+    select?: ProviderIntegrationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ProviderIntegration
+     */
+    omit?: ProviderIntegrationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ProviderIntegrationInclude<ExtArgs> | null
+    /**
+     * Filter, which ProviderIntegration to fetch.
+     */
+    where?: ProviderIntegrationWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ProviderIntegrations to fetch.
+     */
+    orderBy?: ProviderIntegrationOrderByWithRelationInput | ProviderIntegrationOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for ProviderIntegrations.
+     */
+    cursor?: ProviderIntegrationWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ProviderIntegrations from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ProviderIntegrations.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of ProviderIntegrations.
+     */
+    distinct?: ProviderIntegrationScalarFieldEnum | ProviderIntegrationScalarFieldEnum[]
+  }
+
+  /**
+   * ProviderIntegration findMany
+   */
+  export type ProviderIntegrationFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ProviderIntegration
+     */
+    select?: ProviderIntegrationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ProviderIntegration
+     */
+    omit?: ProviderIntegrationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ProviderIntegrationInclude<ExtArgs> | null
+    /**
+     * Filter, which ProviderIntegrations to fetch.
+     */
+    where?: ProviderIntegrationWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ProviderIntegrations to fetch.
+     */
+    orderBy?: ProviderIntegrationOrderByWithRelationInput | ProviderIntegrationOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing ProviderIntegrations.
+     */
+    cursor?: ProviderIntegrationWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ProviderIntegrations from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ProviderIntegrations.
+     */
+    skip?: number
+    distinct?: ProviderIntegrationScalarFieldEnum | ProviderIntegrationScalarFieldEnum[]
+  }
+
+  /**
+   * ProviderIntegration create
+   */
+  export type ProviderIntegrationCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ProviderIntegration
+     */
+    select?: ProviderIntegrationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ProviderIntegration
+     */
+    omit?: ProviderIntegrationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ProviderIntegrationInclude<ExtArgs> | null
+    /**
+     * The data needed to create a ProviderIntegration.
+     */
+    data: XOR<ProviderIntegrationCreateInput, ProviderIntegrationUncheckedCreateInput>
+  }
+
+  /**
+   * ProviderIntegration createMany
+   */
+  export type ProviderIntegrationCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many ProviderIntegrations.
+     */
+    data: ProviderIntegrationCreateManyInput | ProviderIntegrationCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * ProviderIntegration createManyAndReturn
+   */
+  export type ProviderIntegrationCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ProviderIntegration
+     */
+    select?: ProviderIntegrationSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the ProviderIntegration
+     */
+    omit?: ProviderIntegrationOmit<ExtArgs> | null
+    /**
+     * The data used to create many ProviderIntegrations.
+     */
+    data: ProviderIntegrationCreateManyInput | ProviderIntegrationCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ProviderIntegrationIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * ProviderIntegration update
+   */
+  export type ProviderIntegrationUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ProviderIntegration
+     */
+    select?: ProviderIntegrationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ProviderIntegration
+     */
+    omit?: ProviderIntegrationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ProviderIntegrationInclude<ExtArgs> | null
+    /**
+     * The data needed to update a ProviderIntegration.
+     */
+    data: XOR<ProviderIntegrationUpdateInput, ProviderIntegrationUncheckedUpdateInput>
+    /**
+     * Choose, which ProviderIntegration to update.
+     */
+    where: ProviderIntegrationWhereUniqueInput
+  }
+
+  /**
+   * ProviderIntegration updateMany
+   */
+  export type ProviderIntegrationUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update ProviderIntegrations.
+     */
+    data: XOR<ProviderIntegrationUpdateManyMutationInput, ProviderIntegrationUncheckedUpdateManyInput>
+    /**
+     * Filter which ProviderIntegrations to update
+     */
+    where?: ProviderIntegrationWhereInput
+    /**
+     * Limit how many ProviderIntegrations to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * ProviderIntegration updateManyAndReturn
+   */
+  export type ProviderIntegrationUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ProviderIntegration
+     */
+    select?: ProviderIntegrationSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the ProviderIntegration
+     */
+    omit?: ProviderIntegrationOmit<ExtArgs> | null
+    /**
+     * The data used to update ProviderIntegrations.
+     */
+    data: XOR<ProviderIntegrationUpdateManyMutationInput, ProviderIntegrationUncheckedUpdateManyInput>
+    /**
+     * Filter which ProviderIntegrations to update
+     */
+    where?: ProviderIntegrationWhereInput
+    /**
+     * Limit how many ProviderIntegrations to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ProviderIntegrationIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * ProviderIntegration upsert
+   */
+  export type ProviderIntegrationUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ProviderIntegration
+     */
+    select?: ProviderIntegrationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ProviderIntegration
+     */
+    omit?: ProviderIntegrationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ProviderIntegrationInclude<ExtArgs> | null
+    /**
+     * The filter to search for the ProviderIntegration to update in case it exists.
+     */
+    where: ProviderIntegrationWhereUniqueInput
+    /**
+     * In case the ProviderIntegration found by the `where` argument doesn't exist, create a new ProviderIntegration with this data.
+     */
+    create: XOR<ProviderIntegrationCreateInput, ProviderIntegrationUncheckedCreateInput>
+    /**
+     * In case the ProviderIntegration was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<ProviderIntegrationUpdateInput, ProviderIntegrationUncheckedUpdateInput>
+  }
+
+  /**
+   * ProviderIntegration delete
+   */
+  export type ProviderIntegrationDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ProviderIntegration
+     */
+    select?: ProviderIntegrationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ProviderIntegration
+     */
+    omit?: ProviderIntegrationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ProviderIntegrationInclude<ExtArgs> | null
+    /**
+     * Filter which ProviderIntegration to delete.
+     */
+    where: ProviderIntegrationWhereUniqueInput
+  }
+
+  /**
+   * ProviderIntegration deleteMany
+   */
+  export type ProviderIntegrationDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which ProviderIntegrations to delete
+     */
+    where?: ProviderIntegrationWhereInput
+    /**
+     * Limit how many ProviderIntegrations to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * ProviderIntegration without action
+   */
+  export type ProviderIntegrationDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ProviderIntegration
+     */
+    select?: ProviderIntegrationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ProviderIntegration
+     */
+    omit?: ProviderIntegrationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ProviderIntegrationInclude<ExtArgs> | null
   }
 
 
@@ -8968,6 +10846,7458 @@ export namespace Prisma {
 
 
   /**
+   * Model RepositoryMetadata
+   */
+
+  export type AggregateRepositoryMetadata = {
+    _count: RepositoryMetadataCountAggregateOutputType | null
+    _avg: RepositoryMetadataAvgAggregateOutputType | null
+    _sum: RepositoryMetadataSumAggregateOutputType | null
+    _min: RepositoryMetadataMinAggregateOutputType | null
+    _max: RepositoryMetadataMaxAggregateOutputType | null
+  }
+
+  export type RepositoryMetadataAvgAggregateOutputType = {
+    healthScore: number | null
+    testCoveragePercent: number | null
+  }
+
+  export type RepositoryMetadataSumAggregateOutputType = {
+    healthScore: number | null
+    testCoveragePercent: number | null
+  }
+
+  export type RepositoryMetadataMinAggregateOutputType = {
+    id: string | null
+    repositoryName: string | null
+    owner: string | null
+    healthScore: number | null
+    healthStatus: string | null
+    lastHealthCheckAt: Date | null
+    teamName: string | null
+    ownerEmail: string | null
+    onCallRotationUrl: string | null
+    lastDeploymentAt: Date | null
+    lastDeployedVersion: string | null
+    lastDeployedBy: string | null
+    lastDeploymentEnvironment: string | null
+    productionHealthy: boolean | null
+    description: string | null
+    language: string | null
+    testCoveragePercent: number | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type RepositoryMetadataMaxAggregateOutputType = {
+    id: string | null
+    repositoryName: string | null
+    owner: string | null
+    healthScore: number | null
+    healthStatus: string | null
+    lastHealthCheckAt: Date | null
+    teamName: string | null
+    ownerEmail: string | null
+    onCallRotationUrl: string | null
+    lastDeploymentAt: Date | null
+    lastDeployedVersion: string | null
+    lastDeployedBy: string | null
+    lastDeploymentEnvironment: string | null
+    productionHealthy: boolean | null
+    description: string | null
+    language: string | null
+    testCoveragePercent: number | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type RepositoryMetadataCountAggregateOutputType = {
+    id: number
+    repositoryName: number
+    owner: number
+    healthScore: number
+    healthStatus: number
+    lastHealthCheckAt: number
+    teamName: number
+    ownerEmail: number
+    maintainers: number
+    onCallRotationUrl: number
+    lastDeploymentAt: number
+    lastDeployedVersion: number
+    lastDeployedBy: number
+    lastDeploymentEnvironment: number
+    productionHealthy: number
+    description: number
+    language: number
+    testCoveragePercent: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type RepositoryMetadataAvgAggregateInputType = {
+    healthScore?: true
+    testCoveragePercent?: true
+  }
+
+  export type RepositoryMetadataSumAggregateInputType = {
+    healthScore?: true
+    testCoveragePercent?: true
+  }
+
+  export type RepositoryMetadataMinAggregateInputType = {
+    id?: true
+    repositoryName?: true
+    owner?: true
+    healthScore?: true
+    healthStatus?: true
+    lastHealthCheckAt?: true
+    teamName?: true
+    ownerEmail?: true
+    onCallRotationUrl?: true
+    lastDeploymentAt?: true
+    lastDeployedVersion?: true
+    lastDeployedBy?: true
+    lastDeploymentEnvironment?: true
+    productionHealthy?: true
+    description?: true
+    language?: true
+    testCoveragePercent?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type RepositoryMetadataMaxAggregateInputType = {
+    id?: true
+    repositoryName?: true
+    owner?: true
+    healthScore?: true
+    healthStatus?: true
+    lastHealthCheckAt?: true
+    teamName?: true
+    ownerEmail?: true
+    onCallRotationUrl?: true
+    lastDeploymentAt?: true
+    lastDeployedVersion?: true
+    lastDeployedBy?: true
+    lastDeploymentEnvironment?: true
+    productionHealthy?: true
+    description?: true
+    language?: true
+    testCoveragePercent?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type RepositoryMetadataCountAggregateInputType = {
+    id?: true
+    repositoryName?: true
+    owner?: true
+    healthScore?: true
+    healthStatus?: true
+    lastHealthCheckAt?: true
+    teamName?: true
+    ownerEmail?: true
+    maintainers?: true
+    onCallRotationUrl?: true
+    lastDeploymentAt?: true
+    lastDeployedVersion?: true
+    lastDeployedBy?: true
+    lastDeploymentEnvironment?: true
+    productionHealthy?: true
+    description?: true
+    language?: true
+    testCoveragePercent?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type RepositoryMetadataAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which RepositoryMetadata to aggregate.
+     */
+    where?: RepositoryMetadataWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of RepositoryMetadata to fetch.
+     */
+    orderBy?: RepositoryMetadataOrderByWithRelationInput | RepositoryMetadataOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: RepositoryMetadataWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` RepositoryMetadata from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` RepositoryMetadata.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned RepositoryMetadata
+    **/
+    _count?: true | RepositoryMetadataCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: RepositoryMetadataAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: RepositoryMetadataSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: RepositoryMetadataMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: RepositoryMetadataMaxAggregateInputType
+  }
+
+  export type GetRepositoryMetadataAggregateType<T extends RepositoryMetadataAggregateArgs> = {
+        [P in keyof T & keyof AggregateRepositoryMetadata]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateRepositoryMetadata[P]>
+      : GetScalarType<T[P], AggregateRepositoryMetadata[P]>
+  }
+
+
+
+
+  export type RepositoryMetadataGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: RepositoryMetadataWhereInput
+    orderBy?: RepositoryMetadataOrderByWithAggregationInput | RepositoryMetadataOrderByWithAggregationInput[]
+    by: RepositoryMetadataScalarFieldEnum[] | RepositoryMetadataScalarFieldEnum
+    having?: RepositoryMetadataScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: RepositoryMetadataCountAggregateInputType | true
+    _avg?: RepositoryMetadataAvgAggregateInputType
+    _sum?: RepositoryMetadataSumAggregateInputType
+    _min?: RepositoryMetadataMinAggregateInputType
+    _max?: RepositoryMetadataMaxAggregateInputType
+  }
+
+  export type RepositoryMetadataGroupByOutputType = {
+    id: string
+    repositoryName: string
+    owner: string
+    healthScore: number
+    healthStatus: string
+    lastHealthCheckAt: Date | null
+    teamName: string | null
+    ownerEmail: string | null
+    maintainers: string[]
+    onCallRotationUrl: string | null
+    lastDeploymentAt: Date | null
+    lastDeployedVersion: string | null
+    lastDeployedBy: string | null
+    lastDeploymentEnvironment: string | null
+    productionHealthy: boolean | null
+    description: string | null
+    language: string | null
+    testCoveragePercent: number | null
+    createdAt: Date
+    updatedAt: Date
+    _count: RepositoryMetadataCountAggregateOutputType | null
+    _avg: RepositoryMetadataAvgAggregateOutputType | null
+    _sum: RepositoryMetadataSumAggregateOutputType | null
+    _min: RepositoryMetadataMinAggregateOutputType | null
+    _max: RepositoryMetadataMaxAggregateOutputType | null
+  }
+
+  type GetRepositoryMetadataGroupByPayload<T extends RepositoryMetadataGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<RepositoryMetadataGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof RepositoryMetadataGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], RepositoryMetadataGroupByOutputType[P]>
+            : GetScalarType<T[P], RepositoryMetadataGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type RepositoryMetadataSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    repositoryName?: boolean
+    owner?: boolean
+    healthScore?: boolean
+    healthStatus?: boolean
+    lastHealthCheckAt?: boolean
+    teamName?: boolean
+    ownerEmail?: boolean
+    maintainers?: boolean
+    onCallRotationUrl?: boolean
+    lastDeploymentAt?: boolean
+    lastDeployedVersion?: boolean
+    lastDeployedBy?: boolean
+    lastDeploymentEnvironment?: boolean
+    productionHealthy?: boolean
+    description?: boolean
+    language?: boolean
+    testCoveragePercent?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    healthCheckResults?: boolean | RepositoryMetadata$healthCheckResultsArgs<ExtArgs>
+    quickFixActions?: boolean | RepositoryMetadata$quickFixActionsArgs<ExtArgs>
+    environments?: boolean | RepositoryMetadata$environmentsArgs<ExtArgs>
+    deployments?: boolean | RepositoryMetadata$deploymentsArgs<ExtArgs>
+    _count?: boolean | RepositoryMetadataCountOutputTypeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["repositoryMetadata"]>
+
+  export type RepositoryMetadataSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    repositoryName?: boolean
+    owner?: boolean
+    healthScore?: boolean
+    healthStatus?: boolean
+    lastHealthCheckAt?: boolean
+    teamName?: boolean
+    ownerEmail?: boolean
+    maintainers?: boolean
+    onCallRotationUrl?: boolean
+    lastDeploymentAt?: boolean
+    lastDeployedVersion?: boolean
+    lastDeployedBy?: boolean
+    lastDeploymentEnvironment?: boolean
+    productionHealthy?: boolean
+    description?: boolean
+    language?: boolean
+    testCoveragePercent?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }, ExtArgs["result"]["repositoryMetadata"]>
+
+  export type RepositoryMetadataSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    repositoryName?: boolean
+    owner?: boolean
+    healthScore?: boolean
+    healthStatus?: boolean
+    lastHealthCheckAt?: boolean
+    teamName?: boolean
+    ownerEmail?: boolean
+    maintainers?: boolean
+    onCallRotationUrl?: boolean
+    lastDeploymentAt?: boolean
+    lastDeployedVersion?: boolean
+    lastDeployedBy?: boolean
+    lastDeploymentEnvironment?: boolean
+    productionHealthy?: boolean
+    description?: boolean
+    language?: boolean
+    testCoveragePercent?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }, ExtArgs["result"]["repositoryMetadata"]>
+
+  export type RepositoryMetadataSelectScalar = {
+    id?: boolean
+    repositoryName?: boolean
+    owner?: boolean
+    healthScore?: boolean
+    healthStatus?: boolean
+    lastHealthCheckAt?: boolean
+    teamName?: boolean
+    ownerEmail?: boolean
+    maintainers?: boolean
+    onCallRotationUrl?: boolean
+    lastDeploymentAt?: boolean
+    lastDeployedVersion?: boolean
+    lastDeployedBy?: boolean
+    lastDeploymentEnvironment?: boolean
+    productionHealthy?: boolean
+    description?: boolean
+    language?: boolean
+    testCoveragePercent?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type RepositoryMetadataOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "repositoryName" | "owner" | "healthScore" | "healthStatus" | "lastHealthCheckAt" | "teamName" | "ownerEmail" | "maintainers" | "onCallRotationUrl" | "lastDeploymentAt" | "lastDeployedVersion" | "lastDeployedBy" | "lastDeploymentEnvironment" | "productionHealthy" | "description" | "language" | "testCoveragePercent" | "createdAt" | "updatedAt", ExtArgs["result"]["repositoryMetadata"]>
+  export type RepositoryMetadataInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    healthCheckResults?: boolean | RepositoryMetadata$healthCheckResultsArgs<ExtArgs>
+    quickFixActions?: boolean | RepositoryMetadata$quickFixActionsArgs<ExtArgs>
+    environments?: boolean | RepositoryMetadata$environmentsArgs<ExtArgs>
+    deployments?: boolean | RepositoryMetadata$deploymentsArgs<ExtArgs>
+    _count?: boolean | RepositoryMetadataCountOutputTypeDefaultArgs<ExtArgs>
+  }
+  export type RepositoryMetadataIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+  export type RepositoryMetadataIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+
+  export type $RepositoryMetadataPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "RepositoryMetadata"
+    objects: {
+      healthCheckResults: Prisma.$HealthCheckResultPayload<ExtArgs>[]
+      quickFixActions: Prisma.$QuickFixActionPayload<ExtArgs>[]
+      environments: Prisma.$RepositoryEnvironmentPayload<ExtArgs>[]
+      deployments: Prisma.$DeploymentPayload<ExtArgs>[]
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      repositoryName: string
+      owner: string
+      healthScore: number
+      healthStatus: string
+      lastHealthCheckAt: Date | null
+      teamName: string | null
+      ownerEmail: string | null
+      maintainers: string[]
+      onCallRotationUrl: string | null
+      lastDeploymentAt: Date | null
+      lastDeployedVersion: string | null
+      lastDeployedBy: string | null
+      lastDeploymentEnvironment: string | null
+      productionHealthy: boolean | null
+      description: string | null
+      language: string | null
+      testCoveragePercent: number | null
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["repositoryMetadata"]>
+    composites: {}
+  }
+
+  type RepositoryMetadataGetPayload<S extends boolean | null | undefined | RepositoryMetadataDefaultArgs> = $Result.GetResult<Prisma.$RepositoryMetadataPayload, S>
+
+  type RepositoryMetadataCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<RepositoryMetadataFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: RepositoryMetadataCountAggregateInputType | true
+    }
+
+  export interface RepositoryMetadataDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['RepositoryMetadata'], meta: { name: 'RepositoryMetadata' } }
+    /**
+     * Find zero or one RepositoryMetadata that matches the filter.
+     * @param {RepositoryMetadataFindUniqueArgs} args - Arguments to find a RepositoryMetadata
+     * @example
+     * // Get one RepositoryMetadata
+     * const repositoryMetadata = await prisma.repositoryMetadata.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends RepositoryMetadataFindUniqueArgs>(args: SelectSubset<T, RepositoryMetadataFindUniqueArgs<ExtArgs>>): Prisma__RepositoryMetadataClient<$Result.GetResult<Prisma.$RepositoryMetadataPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one RepositoryMetadata that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {RepositoryMetadataFindUniqueOrThrowArgs} args - Arguments to find a RepositoryMetadata
+     * @example
+     * // Get one RepositoryMetadata
+     * const repositoryMetadata = await prisma.repositoryMetadata.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends RepositoryMetadataFindUniqueOrThrowArgs>(args: SelectSubset<T, RepositoryMetadataFindUniqueOrThrowArgs<ExtArgs>>): Prisma__RepositoryMetadataClient<$Result.GetResult<Prisma.$RepositoryMetadataPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first RepositoryMetadata that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {RepositoryMetadataFindFirstArgs} args - Arguments to find a RepositoryMetadata
+     * @example
+     * // Get one RepositoryMetadata
+     * const repositoryMetadata = await prisma.repositoryMetadata.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends RepositoryMetadataFindFirstArgs>(args?: SelectSubset<T, RepositoryMetadataFindFirstArgs<ExtArgs>>): Prisma__RepositoryMetadataClient<$Result.GetResult<Prisma.$RepositoryMetadataPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first RepositoryMetadata that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {RepositoryMetadataFindFirstOrThrowArgs} args - Arguments to find a RepositoryMetadata
+     * @example
+     * // Get one RepositoryMetadata
+     * const repositoryMetadata = await prisma.repositoryMetadata.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends RepositoryMetadataFindFirstOrThrowArgs>(args?: SelectSubset<T, RepositoryMetadataFindFirstOrThrowArgs<ExtArgs>>): Prisma__RepositoryMetadataClient<$Result.GetResult<Prisma.$RepositoryMetadataPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more RepositoryMetadata that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {RepositoryMetadataFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all RepositoryMetadata
+     * const repositoryMetadata = await prisma.repositoryMetadata.findMany()
+     * 
+     * // Get first 10 RepositoryMetadata
+     * const repositoryMetadata = await prisma.repositoryMetadata.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const repositoryMetadataWithIdOnly = await prisma.repositoryMetadata.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends RepositoryMetadataFindManyArgs>(args?: SelectSubset<T, RepositoryMetadataFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$RepositoryMetadataPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a RepositoryMetadata.
+     * @param {RepositoryMetadataCreateArgs} args - Arguments to create a RepositoryMetadata.
+     * @example
+     * // Create one RepositoryMetadata
+     * const RepositoryMetadata = await prisma.repositoryMetadata.create({
+     *   data: {
+     *     // ... data to create a RepositoryMetadata
+     *   }
+     * })
+     * 
+     */
+    create<T extends RepositoryMetadataCreateArgs>(args: SelectSubset<T, RepositoryMetadataCreateArgs<ExtArgs>>): Prisma__RepositoryMetadataClient<$Result.GetResult<Prisma.$RepositoryMetadataPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many RepositoryMetadata.
+     * @param {RepositoryMetadataCreateManyArgs} args - Arguments to create many RepositoryMetadata.
+     * @example
+     * // Create many RepositoryMetadata
+     * const repositoryMetadata = await prisma.repositoryMetadata.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends RepositoryMetadataCreateManyArgs>(args?: SelectSubset<T, RepositoryMetadataCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many RepositoryMetadata and returns the data saved in the database.
+     * @param {RepositoryMetadataCreateManyAndReturnArgs} args - Arguments to create many RepositoryMetadata.
+     * @example
+     * // Create many RepositoryMetadata
+     * const repositoryMetadata = await prisma.repositoryMetadata.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many RepositoryMetadata and only return the `id`
+     * const repositoryMetadataWithIdOnly = await prisma.repositoryMetadata.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends RepositoryMetadataCreateManyAndReturnArgs>(args?: SelectSubset<T, RepositoryMetadataCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$RepositoryMetadataPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a RepositoryMetadata.
+     * @param {RepositoryMetadataDeleteArgs} args - Arguments to delete one RepositoryMetadata.
+     * @example
+     * // Delete one RepositoryMetadata
+     * const RepositoryMetadata = await prisma.repositoryMetadata.delete({
+     *   where: {
+     *     // ... filter to delete one RepositoryMetadata
+     *   }
+     * })
+     * 
+     */
+    delete<T extends RepositoryMetadataDeleteArgs>(args: SelectSubset<T, RepositoryMetadataDeleteArgs<ExtArgs>>): Prisma__RepositoryMetadataClient<$Result.GetResult<Prisma.$RepositoryMetadataPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one RepositoryMetadata.
+     * @param {RepositoryMetadataUpdateArgs} args - Arguments to update one RepositoryMetadata.
+     * @example
+     * // Update one RepositoryMetadata
+     * const repositoryMetadata = await prisma.repositoryMetadata.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends RepositoryMetadataUpdateArgs>(args: SelectSubset<T, RepositoryMetadataUpdateArgs<ExtArgs>>): Prisma__RepositoryMetadataClient<$Result.GetResult<Prisma.$RepositoryMetadataPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more RepositoryMetadata.
+     * @param {RepositoryMetadataDeleteManyArgs} args - Arguments to filter RepositoryMetadata to delete.
+     * @example
+     * // Delete a few RepositoryMetadata
+     * const { count } = await prisma.repositoryMetadata.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends RepositoryMetadataDeleteManyArgs>(args?: SelectSubset<T, RepositoryMetadataDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more RepositoryMetadata.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {RepositoryMetadataUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many RepositoryMetadata
+     * const repositoryMetadata = await prisma.repositoryMetadata.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends RepositoryMetadataUpdateManyArgs>(args: SelectSubset<T, RepositoryMetadataUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more RepositoryMetadata and returns the data updated in the database.
+     * @param {RepositoryMetadataUpdateManyAndReturnArgs} args - Arguments to update many RepositoryMetadata.
+     * @example
+     * // Update many RepositoryMetadata
+     * const repositoryMetadata = await prisma.repositoryMetadata.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more RepositoryMetadata and only return the `id`
+     * const repositoryMetadataWithIdOnly = await prisma.repositoryMetadata.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends RepositoryMetadataUpdateManyAndReturnArgs>(args: SelectSubset<T, RepositoryMetadataUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$RepositoryMetadataPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one RepositoryMetadata.
+     * @param {RepositoryMetadataUpsertArgs} args - Arguments to update or create a RepositoryMetadata.
+     * @example
+     * // Update or create a RepositoryMetadata
+     * const repositoryMetadata = await prisma.repositoryMetadata.upsert({
+     *   create: {
+     *     // ... data to create a RepositoryMetadata
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the RepositoryMetadata we want to update
+     *   }
+     * })
+     */
+    upsert<T extends RepositoryMetadataUpsertArgs>(args: SelectSubset<T, RepositoryMetadataUpsertArgs<ExtArgs>>): Prisma__RepositoryMetadataClient<$Result.GetResult<Prisma.$RepositoryMetadataPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of RepositoryMetadata.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {RepositoryMetadataCountArgs} args - Arguments to filter RepositoryMetadata to count.
+     * @example
+     * // Count the number of RepositoryMetadata
+     * const count = await prisma.repositoryMetadata.count({
+     *   where: {
+     *     // ... the filter for the RepositoryMetadata we want to count
+     *   }
+     * })
+    **/
+    count<T extends RepositoryMetadataCountArgs>(
+      args?: Subset<T, RepositoryMetadataCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], RepositoryMetadataCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a RepositoryMetadata.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {RepositoryMetadataAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends RepositoryMetadataAggregateArgs>(args: Subset<T, RepositoryMetadataAggregateArgs>): Prisma.PrismaPromise<GetRepositoryMetadataAggregateType<T>>
+
+    /**
+     * Group by RepositoryMetadata.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {RepositoryMetadataGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends RepositoryMetadataGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: RepositoryMetadataGroupByArgs['orderBy'] }
+        : { orderBy?: RepositoryMetadataGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, RepositoryMetadataGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetRepositoryMetadataGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the RepositoryMetadata model
+   */
+  readonly fields: RepositoryMetadataFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for RepositoryMetadata.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__RepositoryMetadataClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    healthCheckResults<T extends RepositoryMetadata$healthCheckResultsArgs<ExtArgs> = {}>(args?: Subset<T, RepositoryMetadata$healthCheckResultsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$HealthCheckResultPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    quickFixActions<T extends RepositoryMetadata$quickFixActionsArgs<ExtArgs> = {}>(args?: Subset<T, RepositoryMetadata$quickFixActionsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$QuickFixActionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    environments<T extends RepositoryMetadata$environmentsArgs<ExtArgs> = {}>(args?: Subset<T, RepositoryMetadata$environmentsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$RepositoryEnvironmentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    deployments<T extends RepositoryMetadata$deploymentsArgs<ExtArgs> = {}>(args?: Subset<T, RepositoryMetadata$deploymentsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DeploymentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the RepositoryMetadata model
+   */
+  interface RepositoryMetadataFieldRefs {
+    readonly id: FieldRef<"RepositoryMetadata", 'String'>
+    readonly repositoryName: FieldRef<"RepositoryMetadata", 'String'>
+    readonly owner: FieldRef<"RepositoryMetadata", 'String'>
+    readonly healthScore: FieldRef<"RepositoryMetadata", 'Int'>
+    readonly healthStatus: FieldRef<"RepositoryMetadata", 'String'>
+    readonly lastHealthCheckAt: FieldRef<"RepositoryMetadata", 'DateTime'>
+    readonly teamName: FieldRef<"RepositoryMetadata", 'String'>
+    readonly ownerEmail: FieldRef<"RepositoryMetadata", 'String'>
+    readonly maintainers: FieldRef<"RepositoryMetadata", 'String[]'>
+    readonly onCallRotationUrl: FieldRef<"RepositoryMetadata", 'String'>
+    readonly lastDeploymentAt: FieldRef<"RepositoryMetadata", 'DateTime'>
+    readonly lastDeployedVersion: FieldRef<"RepositoryMetadata", 'String'>
+    readonly lastDeployedBy: FieldRef<"RepositoryMetadata", 'String'>
+    readonly lastDeploymentEnvironment: FieldRef<"RepositoryMetadata", 'String'>
+    readonly productionHealthy: FieldRef<"RepositoryMetadata", 'Boolean'>
+    readonly description: FieldRef<"RepositoryMetadata", 'String'>
+    readonly language: FieldRef<"RepositoryMetadata", 'String'>
+    readonly testCoveragePercent: FieldRef<"RepositoryMetadata", 'Float'>
+    readonly createdAt: FieldRef<"RepositoryMetadata", 'DateTime'>
+    readonly updatedAt: FieldRef<"RepositoryMetadata", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * RepositoryMetadata findUnique
+   */
+  export type RepositoryMetadataFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the RepositoryMetadata
+     */
+    select?: RepositoryMetadataSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the RepositoryMetadata
+     */
+    omit?: RepositoryMetadataOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: RepositoryMetadataInclude<ExtArgs> | null
+    /**
+     * Filter, which RepositoryMetadata to fetch.
+     */
+    where: RepositoryMetadataWhereUniqueInput
+  }
+
+  /**
+   * RepositoryMetadata findUniqueOrThrow
+   */
+  export type RepositoryMetadataFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the RepositoryMetadata
+     */
+    select?: RepositoryMetadataSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the RepositoryMetadata
+     */
+    omit?: RepositoryMetadataOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: RepositoryMetadataInclude<ExtArgs> | null
+    /**
+     * Filter, which RepositoryMetadata to fetch.
+     */
+    where: RepositoryMetadataWhereUniqueInput
+  }
+
+  /**
+   * RepositoryMetadata findFirst
+   */
+  export type RepositoryMetadataFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the RepositoryMetadata
+     */
+    select?: RepositoryMetadataSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the RepositoryMetadata
+     */
+    omit?: RepositoryMetadataOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: RepositoryMetadataInclude<ExtArgs> | null
+    /**
+     * Filter, which RepositoryMetadata to fetch.
+     */
+    where?: RepositoryMetadataWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of RepositoryMetadata to fetch.
+     */
+    orderBy?: RepositoryMetadataOrderByWithRelationInput | RepositoryMetadataOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for RepositoryMetadata.
+     */
+    cursor?: RepositoryMetadataWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` RepositoryMetadata from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` RepositoryMetadata.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of RepositoryMetadata.
+     */
+    distinct?: RepositoryMetadataScalarFieldEnum | RepositoryMetadataScalarFieldEnum[]
+  }
+
+  /**
+   * RepositoryMetadata findFirstOrThrow
+   */
+  export type RepositoryMetadataFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the RepositoryMetadata
+     */
+    select?: RepositoryMetadataSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the RepositoryMetadata
+     */
+    omit?: RepositoryMetadataOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: RepositoryMetadataInclude<ExtArgs> | null
+    /**
+     * Filter, which RepositoryMetadata to fetch.
+     */
+    where?: RepositoryMetadataWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of RepositoryMetadata to fetch.
+     */
+    orderBy?: RepositoryMetadataOrderByWithRelationInput | RepositoryMetadataOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for RepositoryMetadata.
+     */
+    cursor?: RepositoryMetadataWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` RepositoryMetadata from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` RepositoryMetadata.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of RepositoryMetadata.
+     */
+    distinct?: RepositoryMetadataScalarFieldEnum | RepositoryMetadataScalarFieldEnum[]
+  }
+
+  /**
+   * RepositoryMetadata findMany
+   */
+  export type RepositoryMetadataFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the RepositoryMetadata
+     */
+    select?: RepositoryMetadataSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the RepositoryMetadata
+     */
+    omit?: RepositoryMetadataOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: RepositoryMetadataInclude<ExtArgs> | null
+    /**
+     * Filter, which RepositoryMetadata to fetch.
+     */
+    where?: RepositoryMetadataWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of RepositoryMetadata to fetch.
+     */
+    orderBy?: RepositoryMetadataOrderByWithRelationInput | RepositoryMetadataOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing RepositoryMetadata.
+     */
+    cursor?: RepositoryMetadataWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` RepositoryMetadata from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` RepositoryMetadata.
+     */
+    skip?: number
+    distinct?: RepositoryMetadataScalarFieldEnum | RepositoryMetadataScalarFieldEnum[]
+  }
+
+  /**
+   * RepositoryMetadata create
+   */
+  export type RepositoryMetadataCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the RepositoryMetadata
+     */
+    select?: RepositoryMetadataSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the RepositoryMetadata
+     */
+    omit?: RepositoryMetadataOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: RepositoryMetadataInclude<ExtArgs> | null
+    /**
+     * The data needed to create a RepositoryMetadata.
+     */
+    data: XOR<RepositoryMetadataCreateInput, RepositoryMetadataUncheckedCreateInput>
+  }
+
+  /**
+   * RepositoryMetadata createMany
+   */
+  export type RepositoryMetadataCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many RepositoryMetadata.
+     */
+    data: RepositoryMetadataCreateManyInput | RepositoryMetadataCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * RepositoryMetadata createManyAndReturn
+   */
+  export type RepositoryMetadataCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the RepositoryMetadata
+     */
+    select?: RepositoryMetadataSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the RepositoryMetadata
+     */
+    omit?: RepositoryMetadataOmit<ExtArgs> | null
+    /**
+     * The data used to create many RepositoryMetadata.
+     */
+    data: RepositoryMetadataCreateManyInput | RepositoryMetadataCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * RepositoryMetadata update
+   */
+  export type RepositoryMetadataUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the RepositoryMetadata
+     */
+    select?: RepositoryMetadataSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the RepositoryMetadata
+     */
+    omit?: RepositoryMetadataOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: RepositoryMetadataInclude<ExtArgs> | null
+    /**
+     * The data needed to update a RepositoryMetadata.
+     */
+    data: XOR<RepositoryMetadataUpdateInput, RepositoryMetadataUncheckedUpdateInput>
+    /**
+     * Choose, which RepositoryMetadata to update.
+     */
+    where: RepositoryMetadataWhereUniqueInput
+  }
+
+  /**
+   * RepositoryMetadata updateMany
+   */
+  export type RepositoryMetadataUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update RepositoryMetadata.
+     */
+    data: XOR<RepositoryMetadataUpdateManyMutationInput, RepositoryMetadataUncheckedUpdateManyInput>
+    /**
+     * Filter which RepositoryMetadata to update
+     */
+    where?: RepositoryMetadataWhereInput
+    /**
+     * Limit how many RepositoryMetadata to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * RepositoryMetadata updateManyAndReturn
+   */
+  export type RepositoryMetadataUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the RepositoryMetadata
+     */
+    select?: RepositoryMetadataSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the RepositoryMetadata
+     */
+    omit?: RepositoryMetadataOmit<ExtArgs> | null
+    /**
+     * The data used to update RepositoryMetadata.
+     */
+    data: XOR<RepositoryMetadataUpdateManyMutationInput, RepositoryMetadataUncheckedUpdateManyInput>
+    /**
+     * Filter which RepositoryMetadata to update
+     */
+    where?: RepositoryMetadataWhereInput
+    /**
+     * Limit how many RepositoryMetadata to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * RepositoryMetadata upsert
+   */
+  export type RepositoryMetadataUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the RepositoryMetadata
+     */
+    select?: RepositoryMetadataSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the RepositoryMetadata
+     */
+    omit?: RepositoryMetadataOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: RepositoryMetadataInclude<ExtArgs> | null
+    /**
+     * The filter to search for the RepositoryMetadata to update in case it exists.
+     */
+    where: RepositoryMetadataWhereUniqueInput
+    /**
+     * In case the RepositoryMetadata found by the `where` argument doesn't exist, create a new RepositoryMetadata with this data.
+     */
+    create: XOR<RepositoryMetadataCreateInput, RepositoryMetadataUncheckedCreateInput>
+    /**
+     * In case the RepositoryMetadata was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<RepositoryMetadataUpdateInput, RepositoryMetadataUncheckedUpdateInput>
+  }
+
+  /**
+   * RepositoryMetadata delete
+   */
+  export type RepositoryMetadataDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the RepositoryMetadata
+     */
+    select?: RepositoryMetadataSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the RepositoryMetadata
+     */
+    omit?: RepositoryMetadataOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: RepositoryMetadataInclude<ExtArgs> | null
+    /**
+     * Filter which RepositoryMetadata to delete.
+     */
+    where: RepositoryMetadataWhereUniqueInput
+  }
+
+  /**
+   * RepositoryMetadata deleteMany
+   */
+  export type RepositoryMetadataDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which RepositoryMetadata to delete
+     */
+    where?: RepositoryMetadataWhereInput
+    /**
+     * Limit how many RepositoryMetadata to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * RepositoryMetadata.healthCheckResults
+   */
+  export type RepositoryMetadata$healthCheckResultsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the HealthCheckResult
+     */
+    select?: HealthCheckResultSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the HealthCheckResult
+     */
+    omit?: HealthCheckResultOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: HealthCheckResultInclude<ExtArgs> | null
+    where?: HealthCheckResultWhereInput
+    orderBy?: HealthCheckResultOrderByWithRelationInput | HealthCheckResultOrderByWithRelationInput[]
+    cursor?: HealthCheckResultWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: HealthCheckResultScalarFieldEnum | HealthCheckResultScalarFieldEnum[]
+  }
+
+  /**
+   * RepositoryMetadata.quickFixActions
+   */
+  export type RepositoryMetadata$quickFixActionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the QuickFixAction
+     */
+    select?: QuickFixActionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the QuickFixAction
+     */
+    omit?: QuickFixActionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: QuickFixActionInclude<ExtArgs> | null
+    where?: QuickFixActionWhereInput
+    orderBy?: QuickFixActionOrderByWithRelationInput | QuickFixActionOrderByWithRelationInput[]
+    cursor?: QuickFixActionWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: QuickFixActionScalarFieldEnum | QuickFixActionScalarFieldEnum[]
+  }
+
+  /**
+   * RepositoryMetadata.environments
+   */
+  export type RepositoryMetadata$environmentsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the RepositoryEnvironment
+     */
+    select?: RepositoryEnvironmentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the RepositoryEnvironment
+     */
+    omit?: RepositoryEnvironmentOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: RepositoryEnvironmentInclude<ExtArgs> | null
+    where?: RepositoryEnvironmentWhereInput
+    orderBy?: RepositoryEnvironmentOrderByWithRelationInput | RepositoryEnvironmentOrderByWithRelationInput[]
+    cursor?: RepositoryEnvironmentWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: RepositoryEnvironmentScalarFieldEnum | RepositoryEnvironmentScalarFieldEnum[]
+  }
+
+  /**
+   * RepositoryMetadata.deployments
+   */
+  export type RepositoryMetadata$deploymentsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Deployment
+     */
+    select?: DeploymentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Deployment
+     */
+    omit?: DeploymentOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DeploymentInclude<ExtArgs> | null
+    where?: DeploymentWhereInput
+    orderBy?: DeploymentOrderByWithRelationInput | DeploymentOrderByWithRelationInput[]
+    cursor?: DeploymentWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: DeploymentScalarFieldEnum | DeploymentScalarFieldEnum[]
+  }
+
+  /**
+   * RepositoryMetadata without action
+   */
+  export type RepositoryMetadataDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the RepositoryMetadata
+     */
+    select?: RepositoryMetadataSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the RepositoryMetadata
+     */
+    omit?: RepositoryMetadataOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: RepositoryMetadataInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model HealthCheckResult
+   */
+
+  export type AggregateHealthCheckResult = {
+    _count: HealthCheckResultCountAggregateOutputType | null
+    _avg: HealthCheckResultAvgAggregateOutputType | null
+    _sum: HealthCheckResultSumAggregateOutputType | null
+    _min: HealthCheckResultMinAggregateOutputType | null
+    _max: HealthCheckResultMaxAggregateOutputType | null
+  }
+
+  export type HealthCheckResultAvgAggregateOutputType = {
+    securityScore: number | null
+    codeQualityScore: number | null
+    deploymentReadinessScore: number | null
+    teamOwnershipScore: number | null
+    totalScore: number | null
+  }
+
+  export type HealthCheckResultSumAggregateOutputType = {
+    securityScore: number | null
+    codeQualityScore: number | null
+    deploymentReadinessScore: number | null
+    teamOwnershipScore: number | null
+    totalScore: number | null
+  }
+
+  export type HealthCheckResultMinAggregateOutputType = {
+    id: string | null
+    repositoryName: string | null
+    repositoryOwner: string | null
+    repositoryMetadataId: string | null
+    securityScore: number | null
+    codeQualityScore: number | null
+    deploymentReadinessScore: number | null
+    teamOwnershipScore: number | null
+    totalScore: number | null
+    overallStatus: string | null
+    executedAt: Date | null
+    executedBy: string | null
+    createdAt: Date | null
+  }
+
+  export type HealthCheckResultMaxAggregateOutputType = {
+    id: string | null
+    repositoryName: string | null
+    repositoryOwner: string | null
+    repositoryMetadataId: string | null
+    securityScore: number | null
+    codeQualityScore: number | null
+    deploymentReadinessScore: number | null
+    teamOwnershipScore: number | null
+    totalScore: number | null
+    overallStatus: string | null
+    executedAt: Date | null
+    executedBy: string | null
+    createdAt: Date | null
+  }
+
+  export type HealthCheckResultCountAggregateOutputType = {
+    id: number
+    repositoryName: number
+    repositoryOwner: number
+    repositoryMetadataId: number
+    securityScore: number
+    codeQualityScore: number
+    deploymentReadinessScore: number
+    teamOwnershipScore: number
+    totalScore: number
+    overallStatus: number
+    securityIssues: number
+    codeQualityIssues: number
+    deploymentReadinessIssues: number
+    teamOwnershipIssues: number
+    aiSuggestions: number
+    executedAt: number
+    executedBy: number
+    createdAt: number
+    _all: number
+  }
+
+
+  export type HealthCheckResultAvgAggregateInputType = {
+    securityScore?: true
+    codeQualityScore?: true
+    deploymentReadinessScore?: true
+    teamOwnershipScore?: true
+    totalScore?: true
+  }
+
+  export type HealthCheckResultSumAggregateInputType = {
+    securityScore?: true
+    codeQualityScore?: true
+    deploymentReadinessScore?: true
+    teamOwnershipScore?: true
+    totalScore?: true
+  }
+
+  export type HealthCheckResultMinAggregateInputType = {
+    id?: true
+    repositoryName?: true
+    repositoryOwner?: true
+    repositoryMetadataId?: true
+    securityScore?: true
+    codeQualityScore?: true
+    deploymentReadinessScore?: true
+    teamOwnershipScore?: true
+    totalScore?: true
+    overallStatus?: true
+    executedAt?: true
+    executedBy?: true
+    createdAt?: true
+  }
+
+  export type HealthCheckResultMaxAggregateInputType = {
+    id?: true
+    repositoryName?: true
+    repositoryOwner?: true
+    repositoryMetadataId?: true
+    securityScore?: true
+    codeQualityScore?: true
+    deploymentReadinessScore?: true
+    teamOwnershipScore?: true
+    totalScore?: true
+    overallStatus?: true
+    executedAt?: true
+    executedBy?: true
+    createdAt?: true
+  }
+
+  export type HealthCheckResultCountAggregateInputType = {
+    id?: true
+    repositoryName?: true
+    repositoryOwner?: true
+    repositoryMetadataId?: true
+    securityScore?: true
+    codeQualityScore?: true
+    deploymentReadinessScore?: true
+    teamOwnershipScore?: true
+    totalScore?: true
+    overallStatus?: true
+    securityIssues?: true
+    codeQualityIssues?: true
+    deploymentReadinessIssues?: true
+    teamOwnershipIssues?: true
+    aiSuggestions?: true
+    executedAt?: true
+    executedBy?: true
+    createdAt?: true
+    _all?: true
+  }
+
+  export type HealthCheckResultAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which HealthCheckResult to aggregate.
+     */
+    where?: HealthCheckResultWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of HealthCheckResults to fetch.
+     */
+    orderBy?: HealthCheckResultOrderByWithRelationInput | HealthCheckResultOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: HealthCheckResultWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` HealthCheckResults from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` HealthCheckResults.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned HealthCheckResults
+    **/
+    _count?: true | HealthCheckResultCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: HealthCheckResultAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: HealthCheckResultSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: HealthCheckResultMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: HealthCheckResultMaxAggregateInputType
+  }
+
+  export type GetHealthCheckResultAggregateType<T extends HealthCheckResultAggregateArgs> = {
+        [P in keyof T & keyof AggregateHealthCheckResult]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateHealthCheckResult[P]>
+      : GetScalarType<T[P], AggregateHealthCheckResult[P]>
+  }
+
+
+
+
+  export type HealthCheckResultGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: HealthCheckResultWhereInput
+    orderBy?: HealthCheckResultOrderByWithAggregationInput | HealthCheckResultOrderByWithAggregationInput[]
+    by: HealthCheckResultScalarFieldEnum[] | HealthCheckResultScalarFieldEnum
+    having?: HealthCheckResultScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: HealthCheckResultCountAggregateInputType | true
+    _avg?: HealthCheckResultAvgAggregateInputType
+    _sum?: HealthCheckResultSumAggregateInputType
+    _min?: HealthCheckResultMinAggregateInputType
+    _max?: HealthCheckResultMaxAggregateInputType
+  }
+
+  export type HealthCheckResultGroupByOutputType = {
+    id: string
+    repositoryName: string
+    repositoryOwner: string
+    repositoryMetadataId: string
+    securityScore: number
+    codeQualityScore: number
+    deploymentReadinessScore: number
+    teamOwnershipScore: number
+    totalScore: number
+    overallStatus: string
+    securityIssues: JsonValue
+    codeQualityIssues: JsonValue
+    deploymentReadinessIssues: JsonValue
+    teamOwnershipIssues: JsonValue
+    aiSuggestions: JsonValue
+    executedAt: Date
+    executedBy: string | null
+    createdAt: Date
+    _count: HealthCheckResultCountAggregateOutputType | null
+    _avg: HealthCheckResultAvgAggregateOutputType | null
+    _sum: HealthCheckResultSumAggregateOutputType | null
+    _min: HealthCheckResultMinAggregateOutputType | null
+    _max: HealthCheckResultMaxAggregateOutputType | null
+  }
+
+  type GetHealthCheckResultGroupByPayload<T extends HealthCheckResultGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<HealthCheckResultGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof HealthCheckResultGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], HealthCheckResultGroupByOutputType[P]>
+            : GetScalarType<T[P], HealthCheckResultGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type HealthCheckResultSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    repositoryName?: boolean
+    repositoryOwner?: boolean
+    repositoryMetadataId?: boolean
+    securityScore?: boolean
+    codeQualityScore?: boolean
+    deploymentReadinessScore?: boolean
+    teamOwnershipScore?: boolean
+    totalScore?: boolean
+    overallStatus?: boolean
+    securityIssues?: boolean
+    codeQualityIssues?: boolean
+    deploymentReadinessIssues?: boolean
+    teamOwnershipIssues?: boolean
+    aiSuggestions?: boolean
+    executedAt?: boolean
+    executedBy?: boolean
+    createdAt?: boolean
+    repositoryMetadata?: boolean | RepositoryMetadataDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["healthCheckResult"]>
+
+  export type HealthCheckResultSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    repositoryName?: boolean
+    repositoryOwner?: boolean
+    repositoryMetadataId?: boolean
+    securityScore?: boolean
+    codeQualityScore?: boolean
+    deploymentReadinessScore?: boolean
+    teamOwnershipScore?: boolean
+    totalScore?: boolean
+    overallStatus?: boolean
+    securityIssues?: boolean
+    codeQualityIssues?: boolean
+    deploymentReadinessIssues?: boolean
+    teamOwnershipIssues?: boolean
+    aiSuggestions?: boolean
+    executedAt?: boolean
+    executedBy?: boolean
+    createdAt?: boolean
+    repositoryMetadata?: boolean | RepositoryMetadataDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["healthCheckResult"]>
+
+  export type HealthCheckResultSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    repositoryName?: boolean
+    repositoryOwner?: boolean
+    repositoryMetadataId?: boolean
+    securityScore?: boolean
+    codeQualityScore?: boolean
+    deploymentReadinessScore?: boolean
+    teamOwnershipScore?: boolean
+    totalScore?: boolean
+    overallStatus?: boolean
+    securityIssues?: boolean
+    codeQualityIssues?: boolean
+    deploymentReadinessIssues?: boolean
+    teamOwnershipIssues?: boolean
+    aiSuggestions?: boolean
+    executedAt?: boolean
+    executedBy?: boolean
+    createdAt?: boolean
+    repositoryMetadata?: boolean | RepositoryMetadataDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["healthCheckResult"]>
+
+  export type HealthCheckResultSelectScalar = {
+    id?: boolean
+    repositoryName?: boolean
+    repositoryOwner?: boolean
+    repositoryMetadataId?: boolean
+    securityScore?: boolean
+    codeQualityScore?: boolean
+    deploymentReadinessScore?: boolean
+    teamOwnershipScore?: boolean
+    totalScore?: boolean
+    overallStatus?: boolean
+    securityIssues?: boolean
+    codeQualityIssues?: boolean
+    deploymentReadinessIssues?: boolean
+    teamOwnershipIssues?: boolean
+    aiSuggestions?: boolean
+    executedAt?: boolean
+    executedBy?: boolean
+    createdAt?: boolean
+  }
+
+  export type HealthCheckResultOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "repositoryName" | "repositoryOwner" | "repositoryMetadataId" | "securityScore" | "codeQualityScore" | "deploymentReadinessScore" | "teamOwnershipScore" | "totalScore" | "overallStatus" | "securityIssues" | "codeQualityIssues" | "deploymentReadinessIssues" | "teamOwnershipIssues" | "aiSuggestions" | "executedAt" | "executedBy" | "createdAt", ExtArgs["result"]["healthCheckResult"]>
+  export type HealthCheckResultInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    repositoryMetadata?: boolean | RepositoryMetadataDefaultArgs<ExtArgs>
+  }
+  export type HealthCheckResultIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    repositoryMetadata?: boolean | RepositoryMetadataDefaultArgs<ExtArgs>
+  }
+  export type HealthCheckResultIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    repositoryMetadata?: boolean | RepositoryMetadataDefaultArgs<ExtArgs>
+  }
+
+  export type $HealthCheckResultPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "HealthCheckResult"
+    objects: {
+      repositoryMetadata: Prisma.$RepositoryMetadataPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      repositoryName: string
+      repositoryOwner: string
+      repositoryMetadataId: string
+      securityScore: number
+      codeQualityScore: number
+      deploymentReadinessScore: number
+      teamOwnershipScore: number
+      totalScore: number
+      overallStatus: string
+      securityIssues: Prisma.JsonValue
+      codeQualityIssues: Prisma.JsonValue
+      deploymentReadinessIssues: Prisma.JsonValue
+      teamOwnershipIssues: Prisma.JsonValue
+      aiSuggestions: Prisma.JsonValue
+      executedAt: Date
+      executedBy: string | null
+      createdAt: Date
+    }, ExtArgs["result"]["healthCheckResult"]>
+    composites: {}
+  }
+
+  type HealthCheckResultGetPayload<S extends boolean | null | undefined | HealthCheckResultDefaultArgs> = $Result.GetResult<Prisma.$HealthCheckResultPayload, S>
+
+  type HealthCheckResultCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<HealthCheckResultFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: HealthCheckResultCountAggregateInputType | true
+    }
+
+  export interface HealthCheckResultDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['HealthCheckResult'], meta: { name: 'HealthCheckResult' } }
+    /**
+     * Find zero or one HealthCheckResult that matches the filter.
+     * @param {HealthCheckResultFindUniqueArgs} args - Arguments to find a HealthCheckResult
+     * @example
+     * // Get one HealthCheckResult
+     * const healthCheckResult = await prisma.healthCheckResult.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends HealthCheckResultFindUniqueArgs>(args: SelectSubset<T, HealthCheckResultFindUniqueArgs<ExtArgs>>): Prisma__HealthCheckResultClient<$Result.GetResult<Prisma.$HealthCheckResultPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one HealthCheckResult that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {HealthCheckResultFindUniqueOrThrowArgs} args - Arguments to find a HealthCheckResult
+     * @example
+     * // Get one HealthCheckResult
+     * const healthCheckResult = await prisma.healthCheckResult.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends HealthCheckResultFindUniqueOrThrowArgs>(args: SelectSubset<T, HealthCheckResultFindUniqueOrThrowArgs<ExtArgs>>): Prisma__HealthCheckResultClient<$Result.GetResult<Prisma.$HealthCheckResultPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first HealthCheckResult that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {HealthCheckResultFindFirstArgs} args - Arguments to find a HealthCheckResult
+     * @example
+     * // Get one HealthCheckResult
+     * const healthCheckResult = await prisma.healthCheckResult.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends HealthCheckResultFindFirstArgs>(args?: SelectSubset<T, HealthCheckResultFindFirstArgs<ExtArgs>>): Prisma__HealthCheckResultClient<$Result.GetResult<Prisma.$HealthCheckResultPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first HealthCheckResult that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {HealthCheckResultFindFirstOrThrowArgs} args - Arguments to find a HealthCheckResult
+     * @example
+     * // Get one HealthCheckResult
+     * const healthCheckResult = await prisma.healthCheckResult.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends HealthCheckResultFindFirstOrThrowArgs>(args?: SelectSubset<T, HealthCheckResultFindFirstOrThrowArgs<ExtArgs>>): Prisma__HealthCheckResultClient<$Result.GetResult<Prisma.$HealthCheckResultPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more HealthCheckResults that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {HealthCheckResultFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all HealthCheckResults
+     * const healthCheckResults = await prisma.healthCheckResult.findMany()
+     * 
+     * // Get first 10 HealthCheckResults
+     * const healthCheckResults = await prisma.healthCheckResult.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const healthCheckResultWithIdOnly = await prisma.healthCheckResult.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends HealthCheckResultFindManyArgs>(args?: SelectSubset<T, HealthCheckResultFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$HealthCheckResultPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a HealthCheckResult.
+     * @param {HealthCheckResultCreateArgs} args - Arguments to create a HealthCheckResult.
+     * @example
+     * // Create one HealthCheckResult
+     * const HealthCheckResult = await prisma.healthCheckResult.create({
+     *   data: {
+     *     // ... data to create a HealthCheckResult
+     *   }
+     * })
+     * 
+     */
+    create<T extends HealthCheckResultCreateArgs>(args: SelectSubset<T, HealthCheckResultCreateArgs<ExtArgs>>): Prisma__HealthCheckResultClient<$Result.GetResult<Prisma.$HealthCheckResultPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many HealthCheckResults.
+     * @param {HealthCheckResultCreateManyArgs} args - Arguments to create many HealthCheckResults.
+     * @example
+     * // Create many HealthCheckResults
+     * const healthCheckResult = await prisma.healthCheckResult.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends HealthCheckResultCreateManyArgs>(args?: SelectSubset<T, HealthCheckResultCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many HealthCheckResults and returns the data saved in the database.
+     * @param {HealthCheckResultCreateManyAndReturnArgs} args - Arguments to create many HealthCheckResults.
+     * @example
+     * // Create many HealthCheckResults
+     * const healthCheckResult = await prisma.healthCheckResult.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many HealthCheckResults and only return the `id`
+     * const healthCheckResultWithIdOnly = await prisma.healthCheckResult.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends HealthCheckResultCreateManyAndReturnArgs>(args?: SelectSubset<T, HealthCheckResultCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$HealthCheckResultPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a HealthCheckResult.
+     * @param {HealthCheckResultDeleteArgs} args - Arguments to delete one HealthCheckResult.
+     * @example
+     * // Delete one HealthCheckResult
+     * const HealthCheckResult = await prisma.healthCheckResult.delete({
+     *   where: {
+     *     // ... filter to delete one HealthCheckResult
+     *   }
+     * })
+     * 
+     */
+    delete<T extends HealthCheckResultDeleteArgs>(args: SelectSubset<T, HealthCheckResultDeleteArgs<ExtArgs>>): Prisma__HealthCheckResultClient<$Result.GetResult<Prisma.$HealthCheckResultPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one HealthCheckResult.
+     * @param {HealthCheckResultUpdateArgs} args - Arguments to update one HealthCheckResult.
+     * @example
+     * // Update one HealthCheckResult
+     * const healthCheckResult = await prisma.healthCheckResult.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends HealthCheckResultUpdateArgs>(args: SelectSubset<T, HealthCheckResultUpdateArgs<ExtArgs>>): Prisma__HealthCheckResultClient<$Result.GetResult<Prisma.$HealthCheckResultPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more HealthCheckResults.
+     * @param {HealthCheckResultDeleteManyArgs} args - Arguments to filter HealthCheckResults to delete.
+     * @example
+     * // Delete a few HealthCheckResults
+     * const { count } = await prisma.healthCheckResult.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends HealthCheckResultDeleteManyArgs>(args?: SelectSubset<T, HealthCheckResultDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more HealthCheckResults.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {HealthCheckResultUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many HealthCheckResults
+     * const healthCheckResult = await prisma.healthCheckResult.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends HealthCheckResultUpdateManyArgs>(args: SelectSubset<T, HealthCheckResultUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more HealthCheckResults and returns the data updated in the database.
+     * @param {HealthCheckResultUpdateManyAndReturnArgs} args - Arguments to update many HealthCheckResults.
+     * @example
+     * // Update many HealthCheckResults
+     * const healthCheckResult = await prisma.healthCheckResult.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more HealthCheckResults and only return the `id`
+     * const healthCheckResultWithIdOnly = await prisma.healthCheckResult.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends HealthCheckResultUpdateManyAndReturnArgs>(args: SelectSubset<T, HealthCheckResultUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$HealthCheckResultPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one HealthCheckResult.
+     * @param {HealthCheckResultUpsertArgs} args - Arguments to update or create a HealthCheckResult.
+     * @example
+     * // Update or create a HealthCheckResult
+     * const healthCheckResult = await prisma.healthCheckResult.upsert({
+     *   create: {
+     *     // ... data to create a HealthCheckResult
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the HealthCheckResult we want to update
+     *   }
+     * })
+     */
+    upsert<T extends HealthCheckResultUpsertArgs>(args: SelectSubset<T, HealthCheckResultUpsertArgs<ExtArgs>>): Prisma__HealthCheckResultClient<$Result.GetResult<Prisma.$HealthCheckResultPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of HealthCheckResults.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {HealthCheckResultCountArgs} args - Arguments to filter HealthCheckResults to count.
+     * @example
+     * // Count the number of HealthCheckResults
+     * const count = await prisma.healthCheckResult.count({
+     *   where: {
+     *     // ... the filter for the HealthCheckResults we want to count
+     *   }
+     * })
+    **/
+    count<T extends HealthCheckResultCountArgs>(
+      args?: Subset<T, HealthCheckResultCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], HealthCheckResultCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a HealthCheckResult.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {HealthCheckResultAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends HealthCheckResultAggregateArgs>(args: Subset<T, HealthCheckResultAggregateArgs>): Prisma.PrismaPromise<GetHealthCheckResultAggregateType<T>>
+
+    /**
+     * Group by HealthCheckResult.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {HealthCheckResultGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends HealthCheckResultGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: HealthCheckResultGroupByArgs['orderBy'] }
+        : { orderBy?: HealthCheckResultGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, HealthCheckResultGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetHealthCheckResultGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the HealthCheckResult model
+   */
+  readonly fields: HealthCheckResultFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for HealthCheckResult.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__HealthCheckResultClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    repositoryMetadata<T extends RepositoryMetadataDefaultArgs<ExtArgs> = {}>(args?: Subset<T, RepositoryMetadataDefaultArgs<ExtArgs>>): Prisma__RepositoryMetadataClient<$Result.GetResult<Prisma.$RepositoryMetadataPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the HealthCheckResult model
+   */
+  interface HealthCheckResultFieldRefs {
+    readonly id: FieldRef<"HealthCheckResult", 'String'>
+    readonly repositoryName: FieldRef<"HealthCheckResult", 'String'>
+    readonly repositoryOwner: FieldRef<"HealthCheckResult", 'String'>
+    readonly repositoryMetadataId: FieldRef<"HealthCheckResult", 'String'>
+    readonly securityScore: FieldRef<"HealthCheckResult", 'Int'>
+    readonly codeQualityScore: FieldRef<"HealthCheckResult", 'Int'>
+    readonly deploymentReadinessScore: FieldRef<"HealthCheckResult", 'Int'>
+    readonly teamOwnershipScore: FieldRef<"HealthCheckResult", 'Int'>
+    readonly totalScore: FieldRef<"HealthCheckResult", 'Int'>
+    readonly overallStatus: FieldRef<"HealthCheckResult", 'String'>
+    readonly securityIssues: FieldRef<"HealthCheckResult", 'Json'>
+    readonly codeQualityIssues: FieldRef<"HealthCheckResult", 'Json'>
+    readonly deploymentReadinessIssues: FieldRef<"HealthCheckResult", 'Json'>
+    readonly teamOwnershipIssues: FieldRef<"HealthCheckResult", 'Json'>
+    readonly aiSuggestions: FieldRef<"HealthCheckResult", 'Json'>
+    readonly executedAt: FieldRef<"HealthCheckResult", 'DateTime'>
+    readonly executedBy: FieldRef<"HealthCheckResult", 'String'>
+    readonly createdAt: FieldRef<"HealthCheckResult", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * HealthCheckResult findUnique
+   */
+  export type HealthCheckResultFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the HealthCheckResult
+     */
+    select?: HealthCheckResultSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the HealthCheckResult
+     */
+    omit?: HealthCheckResultOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: HealthCheckResultInclude<ExtArgs> | null
+    /**
+     * Filter, which HealthCheckResult to fetch.
+     */
+    where: HealthCheckResultWhereUniqueInput
+  }
+
+  /**
+   * HealthCheckResult findUniqueOrThrow
+   */
+  export type HealthCheckResultFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the HealthCheckResult
+     */
+    select?: HealthCheckResultSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the HealthCheckResult
+     */
+    omit?: HealthCheckResultOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: HealthCheckResultInclude<ExtArgs> | null
+    /**
+     * Filter, which HealthCheckResult to fetch.
+     */
+    where: HealthCheckResultWhereUniqueInput
+  }
+
+  /**
+   * HealthCheckResult findFirst
+   */
+  export type HealthCheckResultFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the HealthCheckResult
+     */
+    select?: HealthCheckResultSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the HealthCheckResult
+     */
+    omit?: HealthCheckResultOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: HealthCheckResultInclude<ExtArgs> | null
+    /**
+     * Filter, which HealthCheckResult to fetch.
+     */
+    where?: HealthCheckResultWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of HealthCheckResults to fetch.
+     */
+    orderBy?: HealthCheckResultOrderByWithRelationInput | HealthCheckResultOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for HealthCheckResults.
+     */
+    cursor?: HealthCheckResultWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` HealthCheckResults from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` HealthCheckResults.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of HealthCheckResults.
+     */
+    distinct?: HealthCheckResultScalarFieldEnum | HealthCheckResultScalarFieldEnum[]
+  }
+
+  /**
+   * HealthCheckResult findFirstOrThrow
+   */
+  export type HealthCheckResultFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the HealthCheckResult
+     */
+    select?: HealthCheckResultSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the HealthCheckResult
+     */
+    omit?: HealthCheckResultOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: HealthCheckResultInclude<ExtArgs> | null
+    /**
+     * Filter, which HealthCheckResult to fetch.
+     */
+    where?: HealthCheckResultWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of HealthCheckResults to fetch.
+     */
+    orderBy?: HealthCheckResultOrderByWithRelationInput | HealthCheckResultOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for HealthCheckResults.
+     */
+    cursor?: HealthCheckResultWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` HealthCheckResults from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` HealthCheckResults.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of HealthCheckResults.
+     */
+    distinct?: HealthCheckResultScalarFieldEnum | HealthCheckResultScalarFieldEnum[]
+  }
+
+  /**
+   * HealthCheckResult findMany
+   */
+  export type HealthCheckResultFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the HealthCheckResult
+     */
+    select?: HealthCheckResultSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the HealthCheckResult
+     */
+    omit?: HealthCheckResultOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: HealthCheckResultInclude<ExtArgs> | null
+    /**
+     * Filter, which HealthCheckResults to fetch.
+     */
+    where?: HealthCheckResultWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of HealthCheckResults to fetch.
+     */
+    orderBy?: HealthCheckResultOrderByWithRelationInput | HealthCheckResultOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing HealthCheckResults.
+     */
+    cursor?: HealthCheckResultWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` HealthCheckResults from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` HealthCheckResults.
+     */
+    skip?: number
+    distinct?: HealthCheckResultScalarFieldEnum | HealthCheckResultScalarFieldEnum[]
+  }
+
+  /**
+   * HealthCheckResult create
+   */
+  export type HealthCheckResultCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the HealthCheckResult
+     */
+    select?: HealthCheckResultSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the HealthCheckResult
+     */
+    omit?: HealthCheckResultOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: HealthCheckResultInclude<ExtArgs> | null
+    /**
+     * The data needed to create a HealthCheckResult.
+     */
+    data: XOR<HealthCheckResultCreateInput, HealthCheckResultUncheckedCreateInput>
+  }
+
+  /**
+   * HealthCheckResult createMany
+   */
+  export type HealthCheckResultCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many HealthCheckResults.
+     */
+    data: HealthCheckResultCreateManyInput | HealthCheckResultCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * HealthCheckResult createManyAndReturn
+   */
+  export type HealthCheckResultCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the HealthCheckResult
+     */
+    select?: HealthCheckResultSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the HealthCheckResult
+     */
+    omit?: HealthCheckResultOmit<ExtArgs> | null
+    /**
+     * The data used to create many HealthCheckResults.
+     */
+    data: HealthCheckResultCreateManyInput | HealthCheckResultCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: HealthCheckResultIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * HealthCheckResult update
+   */
+  export type HealthCheckResultUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the HealthCheckResult
+     */
+    select?: HealthCheckResultSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the HealthCheckResult
+     */
+    omit?: HealthCheckResultOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: HealthCheckResultInclude<ExtArgs> | null
+    /**
+     * The data needed to update a HealthCheckResult.
+     */
+    data: XOR<HealthCheckResultUpdateInput, HealthCheckResultUncheckedUpdateInput>
+    /**
+     * Choose, which HealthCheckResult to update.
+     */
+    where: HealthCheckResultWhereUniqueInput
+  }
+
+  /**
+   * HealthCheckResult updateMany
+   */
+  export type HealthCheckResultUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update HealthCheckResults.
+     */
+    data: XOR<HealthCheckResultUpdateManyMutationInput, HealthCheckResultUncheckedUpdateManyInput>
+    /**
+     * Filter which HealthCheckResults to update
+     */
+    where?: HealthCheckResultWhereInput
+    /**
+     * Limit how many HealthCheckResults to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * HealthCheckResult updateManyAndReturn
+   */
+  export type HealthCheckResultUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the HealthCheckResult
+     */
+    select?: HealthCheckResultSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the HealthCheckResult
+     */
+    omit?: HealthCheckResultOmit<ExtArgs> | null
+    /**
+     * The data used to update HealthCheckResults.
+     */
+    data: XOR<HealthCheckResultUpdateManyMutationInput, HealthCheckResultUncheckedUpdateManyInput>
+    /**
+     * Filter which HealthCheckResults to update
+     */
+    where?: HealthCheckResultWhereInput
+    /**
+     * Limit how many HealthCheckResults to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: HealthCheckResultIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * HealthCheckResult upsert
+   */
+  export type HealthCheckResultUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the HealthCheckResult
+     */
+    select?: HealthCheckResultSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the HealthCheckResult
+     */
+    omit?: HealthCheckResultOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: HealthCheckResultInclude<ExtArgs> | null
+    /**
+     * The filter to search for the HealthCheckResult to update in case it exists.
+     */
+    where: HealthCheckResultWhereUniqueInput
+    /**
+     * In case the HealthCheckResult found by the `where` argument doesn't exist, create a new HealthCheckResult with this data.
+     */
+    create: XOR<HealthCheckResultCreateInput, HealthCheckResultUncheckedCreateInput>
+    /**
+     * In case the HealthCheckResult was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<HealthCheckResultUpdateInput, HealthCheckResultUncheckedUpdateInput>
+  }
+
+  /**
+   * HealthCheckResult delete
+   */
+  export type HealthCheckResultDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the HealthCheckResult
+     */
+    select?: HealthCheckResultSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the HealthCheckResult
+     */
+    omit?: HealthCheckResultOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: HealthCheckResultInclude<ExtArgs> | null
+    /**
+     * Filter which HealthCheckResult to delete.
+     */
+    where: HealthCheckResultWhereUniqueInput
+  }
+
+  /**
+   * HealthCheckResult deleteMany
+   */
+  export type HealthCheckResultDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which HealthCheckResults to delete
+     */
+    where?: HealthCheckResultWhereInput
+    /**
+     * Limit how many HealthCheckResults to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * HealthCheckResult without action
+   */
+  export type HealthCheckResultDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the HealthCheckResult
+     */
+    select?: HealthCheckResultSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the HealthCheckResult
+     */
+    omit?: HealthCheckResultOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: HealthCheckResultInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model QuickFixAction
+   */
+
+  export type AggregateQuickFixAction = {
+    _count: QuickFixActionCountAggregateOutputType | null
+    _min: QuickFixActionMinAggregateOutputType | null
+    _max: QuickFixActionMaxAggregateOutputType | null
+  }
+
+  export type QuickFixActionMinAggregateOutputType = {
+    id: string | null
+    repositoryMetadataId: string | null
+    actionType: string | null
+    actionDescription: string | null
+    status: string | null
+    executedBy: string | null
+    createdAt: Date | null
+    completedAt: Date | null
+  }
+
+  export type QuickFixActionMaxAggregateOutputType = {
+    id: string | null
+    repositoryMetadataId: string | null
+    actionType: string | null
+    actionDescription: string | null
+    status: string | null
+    executedBy: string | null
+    createdAt: Date | null
+    completedAt: Date | null
+  }
+
+  export type QuickFixActionCountAggregateOutputType = {
+    id: number
+    repositoryMetadataId: number
+    actionType: number
+    actionDescription: number
+    status: number
+    executedBy: number
+    result: number
+    createdAt: number
+    completedAt: number
+    _all: number
+  }
+
+
+  export type QuickFixActionMinAggregateInputType = {
+    id?: true
+    repositoryMetadataId?: true
+    actionType?: true
+    actionDescription?: true
+    status?: true
+    executedBy?: true
+    createdAt?: true
+    completedAt?: true
+  }
+
+  export type QuickFixActionMaxAggregateInputType = {
+    id?: true
+    repositoryMetadataId?: true
+    actionType?: true
+    actionDescription?: true
+    status?: true
+    executedBy?: true
+    createdAt?: true
+    completedAt?: true
+  }
+
+  export type QuickFixActionCountAggregateInputType = {
+    id?: true
+    repositoryMetadataId?: true
+    actionType?: true
+    actionDescription?: true
+    status?: true
+    executedBy?: true
+    result?: true
+    createdAt?: true
+    completedAt?: true
+    _all?: true
+  }
+
+  export type QuickFixActionAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which QuickFixAction to aggregate.
+     */
+    where?: QuickFixActionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of QuickFixActions to fetch.
+     */
+    orderBy?: QuickFixActionOrderByWithRelationInput | QuickFixActionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: QuickFixActionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` QuickFixActions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` QuickFixActions.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned QuickFixActions
+    **/
+    _count?: true | QuickFixActionCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: QuickFixActionMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: QuickFixActionMaxAggregateInputType
+  }
+
+  export type GetQuickFixActionAggregateType<T extends QuickFixActionAggregateArgs> = {
+        [P in keyof T & keyof AggregateQuickFixAction]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateQuickFixAction[P]>
+      : GetScalarType<T[P], AggregateQuickFixAction[P]>
+  }
+
+
+
+
+  export type QuickFixActionGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: QuickFixActionWhereInput
+    orderBy?: QuickFixActionOrderByWithAggregationInput | QuickFixActionOrderByWithAggregationInput[]
+    by: QuickFixActionScalarFieldEnum[] | QuickFixActionScalarFieldEnum
+    having?: QuickFixActionScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: QuickFixActionCountAggregateInputType | true
+    _min?: QuickFixActionMinAggregateInputType
+    _max?: QuickFixActionMaxAggregateInputType
+  }
+
+  export type QuickFixActionGroupByOutputType = {
+    id: string
+    repositoryMetadataId: string
+    actionType: string
+    actionDescription: string
+    status: string
+    executedBy: string | null
+    result: JsonValue | null
+    createdAt: Date
+    completedAt: Date | null
+    _count: QuickFixActionCountAggregateOutputType | null
+    _min: QuickFixActionMinAggregateOutputType | null
+    _max: QuickFixActionMaxAggregateOutputType | null
+  }
+
+  type GetQuickFixActionGroupByPayload<T extends QuickFixActionGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<QuickFixActionGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof QuickFixActionGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], QuickFixActionGroupByOutputType[P]>
+            : GetScalarType<T[P], QuickFixActionGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type QuickFixActionSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    repositoryMetadataId?: boolean
+    actionType?: boolean
+    actionDescription?: boolean
+    status?: boolean
+    executedBy?: boolean
+    result?: boolean
+    createdAt?: boolean
+    completedAt?: boolean
+    repositoryMetadata?: boolean | RepositoryMetadataDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["quickFixAction"]>
+
+  export type QuickFixActionSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    repositoryMetadataId?: boolean
+    actionType?: boolean
+    actionDescription?: boolean
+    status?: boolean
+    executedBy?: boolean
+    result?: boolean
+    createdAt?: boolean
+    completedAt?: boolean
+    repositoryMetadata?: boolean | RepositoryMetadataDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["quickFixAction"]>
+
+  export type QuickFixActionSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    repositoryMetadataId?: boolean
+    actionType?: boolean
+    actionDescription?: boolean
+    status?: boolean
+    executedBy?: boolean
+    result?: boolean
+    createdAt?: boolean
+    completedAt?: boolean
+    repositoryMetadata?: boolean | RepositoryMetadataDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["quickFixAction"]>
+
+  export type QuickFixActionSelectScalar = {
+    id?: boolean
+    repositoryMetadataId?: boolean
+    actionType?: boolean
+    actionDescription?: boolean
+    status?: boolean
+    executedBy?: boolean
+    result?: boolean
+    createdAt?: boolean
+    completedAt?: boolean
+  }
+
+  export type QuickFixActionOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "repositoryMetadataId" | "actionType" | "actionDescription" | "status" | "executedBy" | "result" | "createdAt" | "completedAt", ExtArgs["result"]["quickFixAction"]>
+  export type QuickFixActionInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    repositoryMetadata?: boolean | RepositoryMetadataDefaultArgs<ExtArgs>
+  }
+  export type QuickFixActionIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    repositoryMetadata?: boolean | RepositoryMetadataDefaultArgs<ExtArgs>
+  }
+  export type QuickFixActionIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    repositoryMetadata?: boolean | RepositoryMetadataDefaultArgs<ExtArgs>
+  }
+
+  export type $QuickFixActionPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "QuickFixAction"
+    objects: {
+      repositoryMetadata: Prisma.$RepositoryMetadataPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      repositoryMetadataId: string
+      actionType: string
+      actionDescription: string
+      status: string
+      executedBy: string | null
+      result: Prisma.JsonValue | null
+      createdAt: Date
+      completedAt: Date | null
+    }, ExtArgs["result"]["quickFixAction"]>
+    composites: {}
+  }
+
+  type QuickFixActionGetPayload<S extends boolean | null | undefined | QuickFixActionDefaultArgs> = $Result.GetResult<Prisma.$QuickFixActionPayload, S>
+
+  type QuickFixActionCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<QuickFixActionFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: QuickFixActionCountAggregateInputType | true
+    }
+
+  export interface QuickFixActionDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['QuickFixAction'], meta: { name: 'QuickFixAction' } }
+    /**
+     * Find zero or one QuickFixAction that matches the filter.
+     * @param {QuickFixActionFindUniqueArgs} args - Arguments to find a QuickFixAction
+     * @example
+     * // Get one QuickFixAction
+     * const quickFixAction = await prisma.quickFixAction.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends QuickFixActionFindUniqueArgs>(args: SelectSubset<T, QuickFixActionFindUniqueArgs<ExtArgs>>): Prisma__QuickFixActionClient<$Result.GetResult<Prisma.$QuickFixActionPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one QuickFixAction that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {QuickFixActionFindUniqueOrThrowArgs} args - Arguments to find a QuickFixAction
+     * @example
+     * // Get one QuickFixAction
+     * const quickFixAction = await prisma.quickFixAction.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends QuickFixActionFindUniqueOrThrowArgs>(args: SelectSubset<T, QuickFixActionFindUniqueOrThrowArgs<ExtArgs>>): Prisma__QuickFixActionClient<$Result.GetResult<Prisma.$QuickFixActionPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first QuickFixAction that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {QuickFixActionFindFirstArgs} args - Arguments to find a QuickFixAction
+     * @example
+     * // Get one QuickFixAction
+     * const quickFixAction = await prisma.quickFixAction.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends QuickFixActionFindFirstArgs>(args?: SelectSubset<T, QuickFixActionFindFirstArgs<ExtArgs>>): Prisma__QuickFixActionClient<$Result.GetResult<Prisma.$QuickFixActionPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first QuickFixAction that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {QuickFixActionFindFirstOrThrowArgs} args - Arguments to find a QuickFixAction
+     * @example
+     * // Get one QuickFixAction
+     * const quickFixAction = await prisma.quickFixAction.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends QuickFixActionFindFirstOrThrowArgs>(args?: SelectSubset<T, QuickFixActionFindFirstOrThrowArgs<ExtArgs>>): Prisma__QuickFixActionClient<$Result.GetResult<Prisma.$QuickFixActionPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more QuickFixActions that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {QuickFixActionFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all QuickFixActions
+     * const quickFixActions = await prisma.quickFixAction.findMany()
+     * 
+     * // Get first 10 QuickFixActions
+     * const quickFixActions = await prisma.quickFixAction.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const quickFixActionWithIdOnly = await prisma.quickFixAction.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends QuickFixActionFindManyArgs>(args?: SelectSubset<T, QuickFixActionFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$QuickFixActionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a QuickFixAction.
+     * @param {QuickFixActionCreateArgs} args - Arguments to create a QuickFixAction.
+     * @example
+     * // Create one QuickFixAction
+     * const QuickFixAction = await prisma.quickFixAction.create({
+     *   data: {
+     *     // ... data to create a QuickFixAction
+     *   }
+     * })
+     * 
+     */
+    create<T extends QuickFixActionCreateArgs>(args: SelectSubset<T, QuickFixActionCreateArgs<ExtArgs>>): Prisma__QuickFixActionClient<$Result.GetResult<Prisma.$QuickFixActionPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many QuickFixActions.
+     * @param {QuickFixActionCreateManyArgs} args - Arguments to create many QuickFixActions.
+     * @example
+     * // Create many QuickFixActions
+     * const quickFixAction = await prisma.quickFixAction.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends QuickFixActionCreateManyArgs>(args?: SelectSubset<T, QuickFixActionCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many QuickFixActions and returns the data saved in the database.
+     * @param {QuickFixActionCreateManyAndReturnArgs} args - Arguments to create many QuickFixActions.
+     * @example
+     * // Create many QuickFixActions
+     * const quickFixAction = await prisma.quickFixAction.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many QuickFixActions and only return the `id`
+     * const quickFixActionWithIdOnly = await prisma.quickFixAction.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends QuickFixActionCreateManyAndReturnArgs>(args?: SelectSubset<T, QuickFixActionCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$QuickFixActionPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a QuickFixAction.
+     * @param {QuickFixActionDeleteArgs} args - Arguments to delete one QuickFixAction.
+     * @example
+     * // Delete one QuickFixAction
+     * const QuickFixAction = await prisma.quickFixAction.delete({
+     *   where: {
+     *     // ... filter to delete one QuickFixAction
+     *   }
+     * })
+     * 
+     */
+    delete<T extends QuickFixActionDeleteArgs>(args: SelectSubset<T, QuickFixActionDeleteArgs<ExtArgs>>): Prisma__QuickFixActionClient<$Result.GetResult<Prisma.$QuickFixActionPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one QuickFixAction.
+     * @param {QuickFixActionUpdateArgs} args - Arguments to update one QuickFixAction.
+     * @example
+     * // Update one QuickFixAction
+     * const quickFixAction = await prisma.quickFixAction.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends QuickFixActionUpdateArgs>(args: SelectSubset<T, QuickFixActionUpdateArgs<ExtArgs>>): Prisma__QuickFixActionClient<$Result.GetResult<Prisma.$QuickFixActionPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more QuickFixActions.
+     * @param {QuickFixActionDeleteManyArgs} args - Arguments to filter QuickFixActions to delete.
+     * @example
+     * // Delete a few QuickFixActions
+     * const { count } = await prisma.quickFixAction.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends QuickFixActionDeleteManyArgs>(args?: SelectSubset<T, QuickFixActionDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more QuickFixActions.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {QuickFixActionUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many QuickFixActions
+     * const quickFixAction = await prisma.quickFixAction.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends QuickFixActionUpdateManyArgs>(args: SelectSubset<T, QuickFixActionUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more QuickFixActions and returns the data updated in the database.
+     * @param {QuickFixActionUpdateManyAndReturnArgs} args - Arguments to update many QuickFixActions.
+     * @example
+     * // Update many QuickFixActions
+     * const quickFixAction = await prisma.quickFixAction.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more QuickFixActions and only return the `id`
+     * const quickFixActionWithIdOnly = await prisma.quickFixAction.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends QuickFixActionUpdateManyAndReturnArgs>(args: SelectSubset<T, QuickFixActionUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$QuickFixActionPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one QuickFixAction.
+     * @param {QuickFixActionUpsertArgs} args - Arguments to update or create a QuickFixAction.
+     * @example
+     * // Update or create a QuickFixAction
+     * const quickFixAction = await prisma.quickFixAction.upsert({
+     *   create: {
+     *     // ... data to create a QuickFixAction
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the QuickFixAction we want to update
+     *   }
+     * })
+     */
+    upsert<T extends QuickFixActionUpsertArgs>(args: SelectSubset<T, QuickFixActionUpsertArgs<ExtArgs>>): Prisma__QuickFixActionClient<$Result.GetResult<Prisma.$QuickFixActionPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of QuickFixActions.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {QuickFixActionCountArgs} args - Arguments to filter QuickFixActions to count.
+     * @example
+     * // Count the number of QuickFixActions
+     * const count = await prisma.quickFixAction.count({
+     *   where: {
+     *     // ... the filter for the QuickFixActions we want to count
+     *   }
+     * })
+    **/
+    count<T extends QuickFixActionCountArgs>(
+      args?: Subset<T, QuickFixActionCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], QuickFixActionCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a QuickFixAction.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {QuickFixActionAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends QuickFixActionAggregateArgs>(args: Subset<T, QuickFixActionAggregateArgs>): Prisma.PrismaPromise<GetQuickFixActionAggregateType<T>>
+
+    /**
+     * Group by QuickFixAction.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {QuickFixActionGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends QuickFixActionGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: QuickFixActionGroupByArgs['orderBy'] }
+        : { orderBy?: QuickFixActionGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, QuickFixActionGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetQuickFixActionGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the QuickFixAction model
+   */
+  readonly fields: QuickFixActionFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for QuickFixAction.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__QuickFixActionClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    repositoryMetadata<T extends RepositoryMetadataDefaultArgs<ExtArgs> = {}>(args?: Subset<T, RepositoryMetadataDefaultArgs<ExtArgs>>): Prisma__RepositoryMetadataClient<$Result.GetResult<Prisma.$RepositoryMetadataPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the QuickFixAction model
+   */
+  interface QuickFixActionFieldRefs {
+    readonly id: FieldRef<"QuickFixAction", 'String'>
+    readonly repositoryMetadataId: FieldRef<"QuickFixAction", 'String'>
+    readonly actionType: FieldRef<"QuickFixAction", 'String'>
+    readonly actionDescription: FieldRef<"QuickFixAction", 'String'>
+    readonly status: FieldRef<"QuickFixAction", 'String'>
+    readonly executedBy: FieldRef<"QuickFixAction", 'String'>
+    readonly result: FieldRef<"QuickFixAction", 'Json'>
+    readonly createdAt: FieldRef<"QuickFixAction", 'DateTime'>
+    readonly completedAt: FieldRef<"QuickFixAction", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * QuickFixAction findUnique
+   */
+  export type QuickFixActionFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the QuickFixAction
+     */
+    select?: QuickFixActionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the QuickFixAction
+     */
+    omit?: QuickFixActionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: QuickFixActionInclude<ExtArgs> | null
+    /**
+     * Filter, which QuickFixAction to fetch.
+     */
+    where: QuickFixActionWhereUniqueInput
+  }
+
+  /**
+   * QuickFixAction findUniqueOrThrow
+   */
+  export type QuickFixActionFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the QuickFixAction
+     */
+    select?: QuickFixActionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the QuickFixAction
+     */
+    omit?: QuickFixActionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: QuickFixActionInclude<ExtArgs> | null
+    /**
+     * Filter, which QuickFixAction to fetch.
+     */
+    where: QuickFixActionWhereUniqueInput
+  }
+
+  /**
+   * QuickFixAction findFirst
+   */
+  export type QuickFixActionFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the QuickFixAction
+     */
+    select?: QuickFixActionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the QuickFixAction
+     */
+    omit?: QuickFixActionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: QuickFixActionInclude<ExtArgs> | null
+    /**
+     * Filter, which QuickFixAction to fetch.
+     */
+    where?: QuickFixActionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of QuickFixActions to fetch.
+     */
+    orderBy?: QuickFixActionOrderByWithRelationInput | QuickFixActionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for QuickFixActions.
+     */
+    cursor?: QuickFixActionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` QuickFixActions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` QuickFixActions.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of QuickFixActions.
+     */
+    distinct?: QuickFixActionScalarFieldEnum | QuickFixActionScalarFieldEnum[]
+  }
+
+  /**
+   * QuickFixAction findFirstOrThrow
+   */
+  export type QuickFixActionFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the QuickFixAction
+     */
+    select?: QuickFixActionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the QuickFixAction
+     */
+    omit?: QuickFixActionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: QuickFixActionInclude<ExtArgs> | null
+    /**
+     * Filter, which QuickFixAction to fetch.
+     */
+    where?: QuickFixActionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of QuickFixActions to fetch.
+     */
+    orderBy?: QuickFixActionOrderByWithRelationInput | QuickFixActionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for QuickFixActions.
+     */
+    cursor?: QuickFixActionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` QuickFixActions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` QuickFixActions.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of QuickFixActions.
+     */
+    distinct?: QuickFixActionScalarFieldEnum | QuickFixActionScalarFieldEnum[]
+  }
+
+  /**
+   * QuickFixAction findMany
+   */
+  export type QuickFixActionFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the QuickFixAction
+     */
+    select?: QuickFixActionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the QuickFixAction
+     */
+    omit?: QuickFixActionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: QuickFixActionInclude<ExtArgs> | null
+    /**
+     * Filter, which QuickFixActions to fetch.
+     */
+    where?: QuickFixActionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of QuickFixActions to fetch.
+     */
+    orderBy?: QuickFixActionOrderByWithRelationInput | QuickFixActionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing QuickFixActions.
+     */
+    cursor?: QuickFixActionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` QuickFixActions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` QuickFixActions.
+     */
+    skip?: number
+    distinct?: QuickFixActionScalarFieldEnum | QuickFixActionScalarFieldEnum[]
+  }
+
+  /**
+   * QuickFixAction create
+   */
+  export type QuickFixActionCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the QuickFixAction
+     */
+    select?: QuickFixActionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the QuickFixAction
+     */
+    omit?: QuickFixActionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: QuickFixActionInclude<ExtArgs> | null
+    /**
+     * The data needed to create a QuickFixAction.
+     */
+    data: XOR<QuickFixActionCreateInput, QuickFixActionUncheckedCreateInput>
+  }
+
+  /**
+   * QuickFixAction createMany
+   */
+  export type QuickFixActionCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many QuickFixActions.
+     */
+    data: QuickFixActionCreateManyInput | QuickFixActionCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * QuickFixAction createManyAndReturn
+   */
+  export type QuickFixActionCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the QuickFixAction
+     */
+    select?: QuickFixActionSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the QuickFixAction
+     */
+    omit?: QuickFixActionOmit<ExtArgs> | null
+    /**
+     * The data used to create many QuickFixActions.
+     */
+    data: QuickFixActionCreateManyInput | QuickFixActionCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: QuickFixActionIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * QuickFixAction update
+   */
+  export type QuickFixActionUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the QuickFixAction
+     */
+    select?: QuickFixActionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the QuickFixAction
+     */
+    omit?: QuickFixActionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: QuickFixActionInclude<ExtArgs> | null
+    /**
+     * The data needed to update a QuickFixAction.
+     */
+    data: XOR<QuickFixActionUpdateInput, QuickFixActionUncheckedUpdateInput>
+    /**
+     * Choose, which QuickFixAction to update.
+     */
+    where: QuickFixActionWhereUniqueInput
+  }
+
+  /**
+   * QuickFixAction updateMany
+   */
+  export type QuickFixActionUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update QuickFixActions.
+     */
+    data: XOR<QuickFixActionUpdateManyMutationInput, QuickFixActionUncheckedUpdateManyInput>
+    /**
+     * Filter which QuickFixActions to update
+     */
+    where?: QuickFixActionWhereInput
+    /**
+     * Limit how many QuickFixActions to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * QuickFixAction updateManyAndReturn
+   */
+  export type QuickFixActionUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the QuickFixAction
+     */
+    select?: QuickFixActionSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the QuickFixAction
+     */
+    omit?: QuickFixActionOmit<ExtArgs> | null
+    /**
+     * The data used to update QuickFixActions.
+     */
+    data: XOR<QuickFixActionUpdateManyMutationInput, QuickFixActionUncheckedUpdateManyInput>
+    /**
+     * Filter which QuickFixActions to update
+     */
+    where?: QuickFixActionWhereInput
+    /**
+     * Limit how many QuickFixActions to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: QuickFixActionIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * QuickFixAction upsert
+   */
+  export type QuickFixActionUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the QuickFixAction
+     */
+    select?: QuickFixActionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the QuickFixAction
+     */
+    omit?: QuickFixActionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: QuickFixActionInclude<ExtArgs> | null
+    /**
+     * The filter to search for the QuickFixAction to update in case it exists.
+     */
+    where: QuickFixActionWhereUniqueInput
+    /**
+     * In case the QuickFixAction found by the `where` argument doesn't exist, create a new QuickFixAction with this data.
+     */
+    create: XOR<QuickFixActionCreateInput, QuickFixActionUncheckedCreateInput>
+    /**
+     * In case the QuickFixAction was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<QuickFixActionUpdateInput, QuickFixActionUncheckedUpdateInput>
+  }
+
+  /**
+   * QuickFixAction delete
+   */
+  export type QuickFixActionDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the QuickFixAction
+     */
+    select?: QuickFixActionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the QuickFixAction
+     */
+    omit?: QuickFixActionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: QuickFixActionInclude<ExtArgs> | null
+    /**
+     * Filter which QuickFixAction to delete.
+     */
+    where: QuickFixActionWhereUniqueInput
+  }
+
+  /**
+   * QuickFixAction deleteMany
+   */
+  export type QuickFixActionDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which QuickFixActions to delete
+     */
+    where?: QuickFixActionWhereInput
+    /**
+     * Limit how many QuickFixActions to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * QuickFixAction without action
+   */
+  export type QuickFixActionDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the QuickFixAction
+     */
+    select?: QuickFixActionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the QuickFixAction
+     */
+    omit?: QuickFixActionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: QuickFixActionInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model RepositoryEnvironment
+   */
+
+  export type AggregateRepositoryEnvironment = {
+    _count: RepositoryEnvironmentCountAggregateOutputType | null
+    _avg: RepositoryEnvironmentAvgAggregateOutputType | null
+    _sum: RepositoryEnvironmentSumAggregateOutputType | null
+    _min: RepositoryEnvironmentMinAggregateOutputType | null
+    _max: RepositoryEnvironmentMaxAggregateOutputType | null
+  }
+
+  export type RepositoryEnvironmentAvgAggregateOutputType = {
+    order: number | null
+    approvalMinCount: number | null
+    healthCheckInterval: number | null
+  }
+
+  export type RepositoryEnvironmentSumAggregateOutputType = {
+    order: number | null
+    approvalMinCount: number | null
+    healthCheckInterval: number | null
+  }
+
+  export type RepositoryEnvironmentMinAggregateOutputType = {
+    id: string | null
+    repositoryMetadataId: string | null
+    name: string | null
+    order: number | null
+    requiresApproval: boolean | null
+    approvalMinCount: number | null
+    autoApproveIfTestsPass: boolean | null
+    autoRollbackOnFailure: boolean | null
+    healthCheckUrl: string | null
+    healthCheckInterval: number | null
+    slackChannel: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type RepositoryEnvironmentMaxAggregateOutputType = {
+    id: string | null
+    repositoryMetadataId: string | null
+    name: string | null
+    order: number | null
+    requiresApproval: boolean | null
+    approvalMinCount: number | null
+    autoApproveIfTestsPass: boolean | null
+    autoRollbackOnFailure: boolean | null
+    healthCheckUrl: string | null
+    healthCheckInterval: number | null
+    slackChannel: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type RepositoryEnvironmentCountAggregateOutputType = {
+    id: number
+    repositoryMetadataId: number
+    name: number
+    order: number
+    requiresApproval: number
+    approvalMinCount: number
+    autoApproveIfTestsPass: number
+    autoRollbackOnFailure: number
+    healthCheckUrl: number
+    healthCheckInterval: number
+    variables: number
+    secretNames: number
+    slackChannel: number
+    notifyOn: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type RepositoryEnvironmentAvgAggregateInputType = {
+    order?: true
+    approvalMinCount?: true
+    healthCheckInterval?: true
+  }
+
+  export type RepositoryEnvironmentSumAggregateInputType = {
+    order?: true
+    approvalMinCount?: true
+    healthCheckInterval?: true
+  }
+
+  export type RepositoryEnvironmentMinAggregateInputType = {
+    id?: true
+    repositoryMetadataId?: true
+    name?: true
+    order?: true
+    requiresApproval?: true
+    approvalMinCount?: true
+    autoApproveIfTestsPass?: true
+    autoRollbackOnFailure?: true
+    healthCheckUrl?: true
+    healthCheckInterval?: true
+    slackChannel?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type RepositoryEnvironmentMaxAggregateInputType = {
+    id?: true
+    repositoryMetadataId?: true
+    name?: true
+    order?: true
+    requiresApproval?: true
+    approvalMinCount?: true
+    autoApproveIfTestsPass?: true
+    autoRollbackOnFailure?: true
+    healthCheckUrl?: true
+    healthCheckInterval?: true
+    slackChannel?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type RepositoryEnvironmentCountAggregateInputType = {
+    id?: true
+    repositoryMetadataId?: true
+    name?: true
+    order?: true
+    requiresApproval?: true
+    approvalMinCount?: true
+    autoApproveIfTestsPass?: true
+    autoRollbackOnFailure?: true
+    healthCheckUrl?: true
+    healthCheckInterval?: true
+    variables?: true
+    secretNames?: true
+    slackChannel?: true
+    notifyOn?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type RepositoryEnvironmentAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which RepositoryEnvironment to aggregate.
+     */
+    where?: RepositoryEnvironmentWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of RepositoryEnvironments to fetch.
+     */
+    orderBy?: RepositoryEnvironmentOrderByWithRelationInput | RepositoryEnvironmentOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: RepositoryEnvironmentWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` RepositoryEnvironments from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` RepositoryEnvironments.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned RepositoryEnvironments
+    **/
+    _count?: true | RepositoryEnvironmentCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: RepositoryEnvironmentAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: RepositoryEnvironmentSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: RepositoryEnvironmentMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: RepositoryEnvironmentMaxAggregateInputType
+  }
+
+  export type GetRepositoryEnvironmentAggregateType<T extends RepositoryEnvironmentAggregateArgs> = {
+        [P in keyof T & keyof AggregateRepositoryEnvironment]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateRepositoryEnvironment[P]>
+      : GetScalarType<T[P], AggregateRepositoryEnvironment[P]>
+  }
+
+
+
+
+  export type RepositoryEnvironmentGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: RepositoryEnvironmentWhereInput
+    orderBy?: RepositoryEnvironmentOrderByWithAggregationInput | RepositoryEnvironmentOrderByWithAggregationInput[]
+    by: RepositoryEnvironmentScalarFieldEnum[] | RepositoryEnvironmentScalarFieldEnum
+    having?: RepositoryEnvironmentScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: RepositoryEnvironmentCountAggregateInputType | true
+    _avg?: RepositoryEnvironmentAvgAggregateInputType
+    _sum?: RepositoryEnvironmentSumAggregateInputType
+    _min?: RepositoryEnvironmentMinAggregateInputType
+    _max?: RepositoryEnvironmentMaxAggregateInputType
+  }
+
+  export type RepositoryEnvironmentGroupByOutputType = {
+    id: string
+    repositoryMetadataId: string
+    name: string
+    order: number
+    requiresApproval: boolean
+    approvalMinCount: number
+    autoApproveIfTestsPass: boolean
+    autoRollbackOnFailure: boolean
+    healthCheckUrl: string | null
+    healthCheckInterval: number | null
+    variables: JsonValue
+    secretNames: string[]
+    slackChannel: string | null
+    notifyOn: string[]
+    createdAt: Date
+    updatedAt: Date
+    _count: RepositoryEnvironmentCountAggregateOutputType | null
+    _avg: RepositoryEnvironmentAvgAggregateOutputType | null
+    _sum: RepositoryEnvironmentSumAggregateOutputType | null
+    _min: RepositoryEnvironmentMinAggregateOutputType | null
+    _max: RepositoryEnvironmentMaxAggregateOutputType | null
+  }
+
+  type GetRepositoryEnvironmentGroupByPayload<T extends RepositoryEnvironmentGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<RepositoryEnvironmentGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof RepositoryEnvironmentGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], RepositoryEnvironmentGroupByOutputType[P]>
+            : GetScalarType<T[P], RepositoryEnvironmentGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type RepositoryEnvironmentSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    repositoryMetadataId?: boolean
+    name?: boolean
+    order?: boolean
+    requiresApproval?: boolean
+    approvalMinCount?: boolean
+    autoApproveIfTestsPass?: boolean
+    autoRollbackOnFailure?: boolean
+    healthCheckUrl?: boolean
+    healthCheckInterval?: boolean
+    variables?: boolean
+    secretNames?: boolean
+    slackChannel?: boolean
+    notifyOn?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    repositoryMetadata?: boolean | RepositoryMetadataDefaultArgs<ExtArgs>
+    deployments?: boolean | RepositoryEnvironment$deploymentsArgs<ExtArgs>
+    _count?: boolean | RepositoryEnvironmentCountOutputTypeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["repositoryEnvironment"]>
+
+  export type RepositoryEnvironmentSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    repositoryMetadataId?: boolean
+    name?: boolean
+    order?: boolean
+    requiresApproval?: boolean
+    approvalMinCount?: boolean
+    autoApproveIfTestsPass?: boolean
+    autoRollbackOnFailure?: boolean
+    healthCheckUrl?: boolean
+    healthCheckInterval?: boolean
+    variables?: boolean
+    secretNames?: boolean
+    slackChannel?: boolean
+    notifyOn?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    repositoryMetadata?: boolean | RepositoryMetadataDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["repositoryEnvironment"]>
+
+  export type RepositoryEnvironmentSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    repositoryMetadataId?: boolean
+    name?: boolean
+    order?: boolean
+    requiresApproval?: boolean
+    approvalMinCount?: boolean
+    autoApproveIfTestsPass?: boolean
+    autoRollbackOnFailure?: boolean
+    healthCheckUrl?: boolean
+    healthCheckInterval?: boolean
+    variables?: boolean
+    secretNames?: boolean
+    slackChannel?: boolean
+    notifyOn?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    repositoryMetadata?: boolean | RepositoryMetadataDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["repositoryEnvironment"]>
+
+  export type RepositoryEnvironmentSelectScalar = {
+    id?: boolean
+    repositoryMetadataId?: boolean
+    name?: boolean
+    order?: boolean
+    requiresApproval?: boolean
+    approvalMinCount?: boolean
+    autoApproveIfTestsPass?: boolean
+    autoRollbackOnFailure?: boolean
+    healthCheckUrl?: boolean
+    healthCheckInterval?: boolean
+    variables?: boolean
+    secretNames?: boolean
+    slackChannel?: boolean
+    notifyOn?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type RepositoryEnvironmentOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "repositoryMetadataId" | "name" | "order" | "requiresApproval" | "approvalMinCount" | "autoApproveIfTestsPass" | "autoRollbackOnFailure" | "healthCheckUrl" | "healthCheckInterval" | "variables" | "secretNames" | "slackChannel" | "notifyOn" | "createdAt" | "updatedAt", ExtArgs["result"]["repositoryEnvironment"]>
+  export type RepositoryEnvironmentInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    repositoryMetadata?: boolean | RepositoryMetadataDefaultArgs<ExtArgs>
+    deployments?: boolean | RepositoryEnvironment$deploymentsArgs<ExtArgs>
+    _count?: boolean | RepositoryEnvironmentCountOutputTypeDefaultArgs<ExtArgs>
+  }
+  export type RepositoryEnvironmentIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    repositoryMetadata?: boolean | RepositoryMetadataDefaultArgs<ExtArgs>
+  }
+  export type RepositoryEnvironmentIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    repositoryMetadata?: boolean | RepositoryMetadataDefaultArgs<ExtArgs>
+  }
+
+  export type $RepositoryEnvironmentPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "RepositoryEnvironment"
+    objects: {
+      repositoryMetadata: Prisma.$RepositoryMetadataPayload<ExtArgs>
+      deployments: Prisma.$DeploymentPayload<ExtArgs>[]
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      repositoryMetadataId: string
+      name: string
+      order: number
+      requiresApproval: boolean
+      approvalMinCount: number
+      autoApproveIfTestsPass: boolean
+      autoRollbackOnFailure: boolean
+      healthCheckUrl: string | null
+      healthCheckInterval: number | null
+      variables: Prisma.JsonValue
+      secretNames: string[]
+      slackChannel: string | null
+      notifyOn: string[]
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["repositoryEnvironment"]>
+    composites: {}
+  }
+
+  type RepositoryEnvironmentGetPayload<S extends boolean | null | undefined | RepositoryEnvironmentDefaultArgs> = $Result.GetResult<Prisma.$RepositoryEnvironmentPayload, S>
+
+  type RepositoryEnvironmentCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<RepositoryEnvironmentFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: RepositoryEnvironmentCountAggregateInputType | true
+    }
+
+  export interface RepositoryEnvironmentDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['RepositoryEnvironment'], meta: { name: 'RepositoryEnvironment' } }
+    /**
+     * Find zero or one RepositoryEnvironment that matches the filter.
+     * @param {RepositoryEnvironmentFindUniqueArgs} args - Arguments to find a RepositoryEnvironment
+     * @example
+     * // Get one RepositoryEnvironment
+     * const repositoryEnvironment = await prisma.repositoryEnvironment.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends RepositoryEnvironmentFindUniqueArgs>(args: SelectSubset<T, RepositoryEnvironmentFindUniqueArgs<ExtArgs>>): Prisma__RepositoryEnvironmentClient<$Result.GetResult<Prisma.$RepositoryEnvironmentPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one RepositoryEnvironment that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {RepositoryEnvironmentFindUniqueOrThrowArgs} args - Arguments to find a RepositoryEnvironment
+     * @example
+     * // Get one RepositoryEnvironment
+     * const repositoryEnvironment = await prisma.repositoryEnvironment.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends RepositoryEnvironmentFindUniqueOrThrowArgs>(args: SelectSubset<T, RepositoryEnvironmentFindUniqueOrThrowArgs<ExtArgs>>): Prisma__RepositoryEnvironmentClient<$Result.GetResult<Prisma.$RepositoryEnvironmentPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first RepositoryEnvironment that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {RepositoryEnvironmentFindFirstArgs} args - Arguments to find a RepositoryEnvironment
+     * @example
+     * // Get one RepositoryEnvironment
+     * const repositoryEnvironment = await prisma.repositoryEnvironment.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends RepositoryEnvironmentFindFirstArgs>(args?: SelectSubset<T, RepositoryEnvironmentFindFirstArgs<ExtArgs>>): Prisma__RepositoryEnvironmentClient<$Result.GetResult<Prisma.$RepositoryEnvironmentPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first RepositoryEnvironment that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {RepositoryEnvironmentFindFirstOrThrowArgs} args - Arguments to find a RepositoryEnvironment
+     * @example
+     * // Get one RepositoryEnvironment
+     * const repositoryEnvironment = await prisma.repositoryEnvironment.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends RepositoryEnvironmentFindFirstOrThrowArgs>(args?: SelectSubset<T, RepositoryEnvironmentFindFirstOrThrowArgs<ExtArgs>>): Prisma__RepositoryEnvironmentClient<$Result.GetResult<Prisma.$RepositoryEnvironmentPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more RepositoryEnvironments that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {RepositoryEnvironmentFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all RepositoryEnvironments
+     * const repositoryEnvironments = await prisma.repositoryEnvironment.findMany()
+     * 
+     * // Get first 10 RepositoryEnvironments
+     * const repositoryEnvironments = await prisma.repositoryEnvironment.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const repositoryEnvironmentWithIdOnly = await prisma.repositoryEnvironment.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends RepositoryEnvironmentFindManyArgs>(args?: SelectSubset<T, RepositoryEnvironmentFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$RepositoryEnvironmentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a RepositoryEnvironment.
+     * @param {RepositoryEnvironmentCreateArgs} args - Arguments to create a RepositoryEnvironment.
+     * @example
+     * // Create one RepositoryEnvironment
+     * const RepositoryEnvironment = await prisma.repositoryEnvironment.create({
+     *   data: {
+     *     // ... data to create a RepositoryEnvironment
+     *   }
+     * })
+     * 
+     */
+    create<T extends RepositoryEnvironmentCreateArgs>(args: SelectSubset<T, RepositoryEnvironmentCreateArgs<ExtArgs>>): Prisma__RepositoryEnvironmentClient<$Result.GetResult<Prisma.$RepositoryEnvironmentPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many RepositoryEnvironments.
+     * @param {RepositoryEnvironmentCreateManyArgs} args - Arguments to create many RepositoryEnvironments.
+     * @example
+     * // Create many RepositoryEnvironments
+     * const repositoryEnvironment = await prisma.repositoryEnvironment.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends RepositoryEnvironmentCreateManyArgs>(args?: SelectSubset<T, RepositoryEnvironmentCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many RepositoryEnvironments and returns the data saved in the database.
+     * @param {RepositoryEnvironmentCreateManyAndReturnArgs} args - Arguments to create many RepositoryEnvironments.
+     * @example
+     * // Create many RepositoryEnvironments
+     * const repositoryEnvironment = await prisma.repositoryEnvironment.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many RepositoryEnvironments and only return the `id`
+     * const repositoryEnvironmentWithIdOnly = await prisma.repositoryEnvironment.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends RepositoryEnvironmentCreateManyAndReturnArgs>(args?: SelectSubset<T, RepositoryEnvironmentCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$RepositoryEnvironmentPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a RepositoryEnvironment.
+     * @param {RepositoryEnvironmentDeleteArgs} args - Arguments to delete one RepositoryEnvironment.
+     * @example
+     * // Delete one RepositoryEnvironment
+     * const RepositoryEnvironment = await prisma.repositoryEnvironment.delete({
+     *   where: {
+     *     // ... filter to delete one RepositoryEnvironment
+     *   }
+     * })
+     * 
+     */
+    delete<T extends RepositoryEnvironmentDeleteArgs>(args: SelectSubset<T, RepositoryEnvironmentDeleteArgs<ExtArgs>>): Prisma__RepositoryEnvironmentClient<$Result.GetResult<Prisma.$RepositoryEnvironmentPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one RepositoryEnvironment.
+     * @param {RepositoryEnvironmentUpdateArgs} args - Arguments to update one RepositoryEnvironment.
+     * @example
+     * // Update one RepositoryEnvironment
+     * const repositoryEnvironment = await prisma.repositoryEnvironment.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends RepositoryEnvironmentUpdateArgs>(args: SelectSubset<T, RepositoryEnvironmentUpdateArgs<ExtArgs>>): Prisma__RepositoryEnvironmentClient<$Result.GetResult<Prisma.$RepositoryEnvironmentPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more RepositoryEnvironments.
+     * @param {RepositoryEnvironmentDeleteManyArgs} args - Arguments to filter RepositoryEnvironments to delete.
+     * @example
+     * // Delete a few RepositoryEnvironments
+     * const { count } = await prisma.repositoryEnvironment.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends RepositoryEnvironmentDeleteManyArgs>(args?: SelectSubset<T, RepositoryEnvironmentDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more RepositoryEnvironments.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {RepositoryEnvironmentUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many RepositoryEnvironments
+     * const repositoryEnvironment = await prisma.repositoryEnvironment.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends RepositoryEnvironmentUpdateManyArgs>(args: SelectSubset<T, RepositoryEnvironmentUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more RepositoryEnvironments and returns the data updated in the database.
+     * @param {RepositoryEnvironmentUpdateManyAndReturnArgs} args - Arguments to update many RepositoryEnvironments.
+     * @example
+     * // Update many RepositoryEnvironments
+     * const repositoryEnvironment = await prisma.repositoryEnvironment.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more RepositoryEnvironments and only return the `id`
+     * const repositoryEnvironmentWithIdOnly = await prisma.repositoryEnvironment.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends RepositoryEnvironmentUpdateManyAndReturnArgs>(args: SelectSubset<T, RepositoryEnvironmentUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$RepositoryEnvironmentPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one RepositoryEnvironment.
+     * @param {RepositoryEnvironmentUpsertArgs} args - Arguments to update or create a RepositoryEnvironment.
+     * @example
+     * // Update or create a RepositoryEnvironment
+     * const repositoryEnvironment = await prisma.repositoryEnvironment.upsert({
+     *   create: {
+     *     // ... data to create a RepositoryEnvironment
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the RepositoryEnvironment we want to update
+     *   }
+     * })
+     */
+    upsert<T extends RepositoryEnvironmentUpsertArgs>(args: SelectSubset<T, RepositoryEnvironmentUpsertArgs<ExtArgs>>): Prisma__RepositoryEnvironmentClient<$Result.GetResult<Prisma.$RepositoryEnvironmentPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of RepositoryEnvironments.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {RepositoryEnvironmentCountArgs} args - Arguments to filter RepositoryEnvironments to count.
+     * @example
+     * // Count the number of RepositoryEnvironments
+     * const count = await prisma.repositoryEnvironment.count({
+     *   where: {
+     *     // ... the filter for the RepositoryEnvironments we want to count
+     *   }
+     * })
+    **/
+    count<T extends RepositoryEnvironmentCountArgs>(
+      args?: Subset<T, RepositoryEnvironmentCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], RepositoryEnvironmentCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a RepositoryEnvironment.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {RepositoryEnvironmentAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends RepositoryEnvironmentAggregateArgs>(args: Subset<T, RepositoryEnvironmentAggregateArgs>): Prisma.PrismaPromise<GetRepositoryEnvironmentAggregateType<T>>
+
+    /**
+     * Group by RepositoryEnvironment.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {RepositoryEnvironmentGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends RepositoryEnvironmentGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: RepositoryEnvironmentGroupByArgs['orderBy'] }
+        : { orderBy?: RepositoryEnvironmentGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, RepositoryEnvironmentGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetRepositoryEnvironmentGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the RepositoryEnvironment model
+   */
+  readonly fields: RepositoryEnvironmentFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for RepositoryEnvironment.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__RepositoryEnvironmentClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    repositoryMetadata<T extends RepositoryMetadataDefaultArgs<ExtArgs> = {}>(args?: Subset<T, RepositoryMetadataDefaultArgs<ExtArgs>>): Prisma__RepositoryMetadataClient<$Result.GetResult<Prisma.$RepositoryMetadataPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    deployments<T extends RepositoryEnvironment$deploymentsArgs<ExtArgs> = {}>(args?: Subset<T, RepositoryEnvironment$deploymentsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DeploymentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the RepositoryEnvironment model
+   */
+  interface RepositoryEnvironmentFieldRefs {
+    readonly id: FieldRef<"RepositoryEnvironment", 'String'>
+    readonly repositoryMetadataId: FieldRef<"RepositoryEnvironment", 'String'>
+    readonly name: FieldRef<"RepositoryEnvironment", 'String'>
+    readonly order: FieldRef<"RepositoryEnvironment", 'Int'>
+    readonly requiresApproval: FieldRef<"RepositoryEnvironment", 'Boolean'>
+    readonly approvalMinCount: FieldRef<"RepositoryEnvironment", 'Int'>
+    readonly autoApproveIfTestsPass: FieldRef<"RepositoryEnvironment", 'Boolean'>
+    readonly autoRollbackOnFailure: FieldRef<"RepositoryEnvironment", 'Boolean'>
+    readonly healthCheckUrl: FieldRef<"RepositoryEnvironment", 'String'>
+    readonly healthCheckInterval: FieldRef<"RepositoryEnvironment", 'Int'>
+    readonly variables: FieldRef<"RepositoryEnvironment", 'Json'>
+    readonly secretNames: FieldRef<"RepositoryEnvironment", 'String[]'>
+    readonly slackChannel: FieldRef<"RepositoryEnvironment", 'String'>
+    readonly notifyOn: FieldRef<"RepositoryEnvironment", 'String[]'>
+    readonly createdAt: FieldRef<"RepositoryEnvironment", 'DateTime'>
+    readonly updatedAt: FieldRef<"RepositoryEnvironment", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * RepositoryEnvironment findUnique
+   */
+  export type RepositoryEnvironmentFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the RepositoryEnvironment
+     */
+    select?: RepositoryEnvironmentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the RepositoryEnvironment
+     */
+    omit?: RepositoryEnvironmentOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: RepositoryEnvironmentInclude<ExtArgs> | null
+    /**
+     * Filter, which RepositoryEnvironment to fetch.
+     */
+    where: RepositoryEnvironmentWhereUniqueInput
+  }
+
+  /**
+   * RepositoryEnvironment findUniqueOrThrow
+   */
+  export type RepositoryEnvironmentFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the RepositoryEnvironment
+     */
+    select?: RepositoryEnvironmentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the RepositoryEnvironment
+     */
+    omit?: RepositoryEnvironmentOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: RepositoryEnvironmentInclude<ExtArgs> | null
+    /**
+     * Filter, which RepositoryEnvironment to fetch.
+     */
+    where: RepositoryEnvironmentWhereUniqueInput
+  }
+
+  /**
+   * RepositoryEnvironment findFirst
+   */
+  export type RepositoryEnvironmentFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the RepositoryEnvironment
+     */
+    select?: RepositoryEnvironmentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the RepositoryEnvironment
+     */
+    omit?: RepositoryEnvironmentOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: RepositoryEnvironmentInclude<ExtArgs> | null
+    /**
+     * Filter, which RepositoryEnvironment to fetch.
+     */
+    where?: RepositoryEnvironmentWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of RepositoryEnvironments to fetch.
+     */
+    orderBy?: RepositoryEnvironmentOrderByWithRelationInput | RepositoryEnvironmentOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for RepositoryEnvironments.
+     */
+    cursor?: RepositoryEnvironmentWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` RepositoryEnvironments from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` RepositoryEnvironments.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of RepositoryEnvironments.
+     */
+    distinct?: RepositoryEnvironmentScalarFieldEnum | RepositoryEnvironmentScalarFieldEnum[]
+  }
+
+  /**
+   * RepositoryEnvironment findFirstOrThrow
+   */
+  export type RepositoryEnvironmentFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the RepositoryEnvironment
+     */
+    select?: RepositoryEnvironmentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the RepositoryEnvironment
+     */
+    omit?: RepositoryEnvironmentOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: RepositoryEnvironmentInclude<ExtArgs> | null
+    /**
+     * Filter, which RepositoryEnvironment to fetch.
+     */
+    where?: RepositoryEnvironmentWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of RepositoryEnvironments to fetch.
+     */
+    orderBy?: RepositoryEnvironmentOrderByWithRelationInput | RepositoryEnvironmentOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for RepositoryEnvironments.
+     */
+    cursor?: RepositoryEnvironmentWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` RepositoryEnvironments from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` RepositoryEnvironments.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of RepositoryEnvironments.
+     */
+    distinct?: RepositoryEnvironmentScalarFieldEnum | RepositoryEnvironmentScalarFieldEnum[]
+  }
+
+  /**
+   * RepositoryEnvironment findMany
+   */
+  export type RepositoryEnvironmentFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the RepositoryEnvironment
+     */
+    select?: RepositoryEnvironmentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the RepositoryEnvironment
+     */
+    omit?: RepositoryEnvironmentOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: RepositoryEnvironmentInclude<ExtArgs> | null
+    /**
+     * Filter, which RepositoryEnvironments to fetch.
+     */
+    where?: RepositoryEnvironmentWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of RepositoryEnvironments to fetch.
+     */
+    orderBy?: RepositoryEnvironmentOrderByWithRelationInput | RepositoryEnvironmentOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing RepositoryEnvironments.
+     */
+    cursor?: RepositoryEnvironmentWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` RepositoryEnvironments from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` RepositoryEnvironments.
+     */
+    skip?: number
+    distinct?: RepositoryEnvironmentScalarFieldEnum | RepositoryEnvironmentScalarFieldEnum[]
+  }
+
+  /**
+   * RepositoryEnvironment create
+   */
+  export type RepositoryEnvironmentCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the RepositoryEnvironment
+     */
+    select?: RepositoryEnvironmentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the RepositoryEnvironment
+     */
+    omit?: RepositoryEnvironmentOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: RepositoryEnvironmentInclude<ExtArgs> | null
+    /**
+     * The data needed to create a RepositoryEnvironment.
+     */
+    data: XOR<RepositoryEnvironmentCreateInput, RepositoryEnvironmentUncheckedCreateInput>
+  }
+
+  /**
+   * RepositoryEnvironment createMany
+   */
+  export type RepositoryEnvironmentCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many RepositoryEnvironments.
+     */
+    data: RepositoryEnvironmentCreateManyInput | RepositoryEnvironmentCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * RepositoryEnvironment createManyAndReturn
+   */
+  export type RepositoryEnvironmentCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the RepositoryEnvironment
+     */
+    select?: RepositoryEnvironmentSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the RepositoryEnvironment
+     */
+    omit?: RepositoryEnvironmentOmit<ExtArgs> | null
+    /**
+     * The data used to create many RepositoryEnvironments.
+     */
+    data: RepositoryEnvironmentCreateManyInput | RepositoryEnvironmentCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: RepositoryEnvironmentIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * RepositoryEnvironment update
+   */
+  export type RepositoryEnvironmentUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the RepositoryEnvironment
+     */
+    select?: RepositoryEnvironmentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the RepositoryEnvironment
+     */
+    omit?: RepositoryEnvironmentOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: RepositoryEnvironmentInclude<ExtArgs> | null
+    /**
+     * The data needed to update a RepositoryEnvironment.
+     */
+    data: XOR<RepositoryEnvironmentUpdateInput, RepositoryEnvironmentUncheckedUpdateInput>
+    /**
+     * Choose, which RepositoryEnvironment to update.
+     */
+    where: RepositoryEnvironmentWhereUniqueInput
+  }
+
+  /**
+   * RepositoryEnvironment updateMany
+   */
+  export type RepositoryEnvironmentUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update RepositoryEnvironments.
+     */
+    data: XOR<RepositoryEnvironmentUpdateManyMutationInput, RepositoryEnvironmentUncheckedUpdateManyInput>
+    /**
+     * Filter which RepositoryEnvironments to update
+     */
+    where?: RepositoryEnvironmentWhereInput
+    /**
+     * Limit how many RepositoryEnvironments to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * RepositoryEnvironment updateManyAndReturn
+   */
+  export type RepositoryEnvironmentUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the RepositoryEnvironment
+     */
+    select?: RepositoryEnvironmentSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the RepositoryEnvironment
+     */
+    omit?: RepositoryEnvironmentOmit<ExtArgs> | null
+    /**
+     * The data used to update RepositoryEnvironments.
+     */
+    data: XOR<RepositoryEnvironmentUpdateManyMutationInput, RepositoryEnvironmentUncheckedUpdateManyInput>
+    /**
+     * Filter which RepositoryEnvironments to update
+     */
+    where?: RepositoryEnvironmentWhereInput
+    /**
+     * Limit how many RepositoryEnvironments to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: RepositoryEnvironmentIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * RepositoryEnvironment upsert
+   */
+  export type RepositoryEnvironmentUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the RepositoryEnvironment
+     */
+    select?: RepositoryEnvironmentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the RepositoryEnvironment
+     */
+    omit?: RepositoryEnvironmentOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: RepositoryEnvironmentInclude<ExtArgs> | null
+    /**
+     * The filter to search for the RepositoryEnvironment to update in case it exists.
+     */
+    where: RepositoryEnvironmentWhereUniqueInput
+    /**
+     * In case the RepositoryEnvironment found by the `where` argument doesn't exist, create a new RepositoryEnvironment with this data.
+     */
+    create: XOR<RepositoryEnvironmentCreateInput, RepositoryEnvironmentUncheckedCreateInput>
+    /**
+     * In case the RepositoryEnvironment was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<RepositoryEnvironmentUpdateInput, RepositoryEnvironmentUncheckedUpdateInput>
+  }
+
+  /**
+   * RepositoryEnvironment delete
+   */
+  export type RepositoryEnvironmentDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the RepositoryEnvironment
+     */
+    select?: RepositoryEnvironmentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the RepositoryEnvironment
+     */
+    omit?: RepositoryEnvironmentOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: RepositoryEnvironmentInclude<ExtArgs> | null
+    /**
+     * Filter which RepositoryEnvironment to delete.
+     */
+    where: RepositoryEnvironmentWhereUniqueInput
+  }
+
+  /**
+   * RepositoryEnvironment deleteMany
+   */
+  export type RepositoryEnvironmentDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which RepositoryEnvironments to delete
+     */
+    where?: RepositoryEnvironmentWhereInput
+    /**
+     * Limit how many RepositoryEnvironments to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * RepositoryEnvironment.deployments
+   */
+  export type RepositoryEnvironment$deploymentsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Deployment
+     */
+    select?: DeploymentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Deployment
+     */
+    omit?: DeploymentOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DeploymentInclude<ExtArgs> | null
+    where?: DeploymentWhereInput
+    orderBy?: DeploymentOrderByWithRelationInput | DeploymentOrderByWithRelationInput[]
+    cursor?: DeploymentWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: DeploymentScalarFieldEnum | DeploymentScalarFieldEnum[]
+  }
+
+  /**
+   * RepositoryEnvironment without action
+   */
+  export type RepositoryEnvironmentDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the RepositoryEnvironment
+     */
+    select?: RepositoryEnvironmentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the RepositoryEnvironment
+     */
+    omit?: RepositoryEnvironmentOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: RepositoryEnvironmentInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model Deployment
+   */
+
+  export type AggregateDeployment = {
+    _count: DeploymentCountAggregateOutputType | null
+    _avg: DeploymentAvgAggregateOutputType | null
+    _sum: DeploymentSumAggregateOutputType | null
+    _min: DeploymentMinAggregateOutputType | null
+    _max: DeploymentMaxAggregateOutputType | null
+  }
+
+  export type DeploymentAvgAggregateOutputType = {
+    duration: number | null
+  }
+
+  export type DeploymentSumAggregateOutputType = {
+    duration: number | null
+  }
+
+  export type DeploymentMinAggregateOutputType = {
+    id: string | null
+    repositoryMetadataId: string | null
+    environmentId: string | null
+    version: string | null
+    status: string | null
+    deployedAt: Date | null
+    deployedBy: string | null
+    duration: number | null
+    healthCheckPassed: boolean | null
+    preDeploymentNotes: string | null
+    postDeploymentNotes: string | null
+    deploymentLogs: string | null
+    approvalRequired: boolean | null
+    rollbackOf: string | null
+    rollbackReason: string | null
+    rollbackInitiatedAt: Date | null
+    rollbackInitiatedBy: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type DeploymentMaxAggregateOutputType = {
+    id: string | null
+    repositoryMetadataId: string | null
+    environmentId: string | null
+    version: string | null
+    status: string | null
+    deployedAt: Date | null
+    deployedBy: string | null
+    duration: number | null
+    healthCheckPassed: boolean | null
+    preDeploymentNotes: string | null
+    postDeploymentNotes: string | null
+    deploymentLogs: string | null
+    approvalRequired: boolean | null
+    rollbackOf: string | null
+    rollbackReason: string | null
+    rollbackInitiatedAt: Date | null
+    rollbackInitiatedBy: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type DeploymentCountAggregateOutputType = {
+    id: number
+    repositoryMetadataId: number
+    environmentId: number
+    version: number
+    status: number
+    deployedAt: number
+    deployedBy: number
+    duration: number
+    riskAssessment: number
+    healthCheckPassed: number
+    healthCheckDetails: number
+    postDeploymentMetrics: number
+    preDeploymentNotes: number
+    postDeploymentNotes: number
+    deploymentLogs: number
+    artifacts: number
+    approvalRequired: number
+    rollbackOf: number
+    rollbackReason: number
+    rollbackInitiatedAt: number
+    rollbackInitiatedBy: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type DeploymentAvgAggregateInputType = {
+    duration?: true
+  }
+
+  export type DeploymentSumAggregateInputType = {
+    duration?: true
+  }
+
+  export type DeploymentMinAggregateInputType = {
+    id?: true
+    repositoryMetadataId?: true
+    environmentId?: true
+    version?: true
+    status?: true
+    deployedAt?: true
+    deployedBy?: true
+    duration?: true
+    healthCheckPassed?: true
+    preDeploymentNotes?: true
+    postDeploymentNotes?: true
+    deploymentLogs?: true
+    approvalRequired?: true
+    rollbackOf?: true
+    rollbackReason?: true
+    rollbackInitiatedAt?: true
+    rollbackInitiatedBy?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type DeploymentMaxAggregateInputType = {
+    id?: true
+    repositoryMetadataId?: true
+    environmentId?: true
+    version?: true
+    status?: true
+    deployedAt?: true
+    deployedBy?: true
+    duration?: true
+    healthCheckPassed?: true
+    preDeploymentNotes?: true
+    postDeploymentNotes?: true
+    deploymentLogs?: true
+    approvalRequired?: true
+    rollbackOf?: true
+    rollbackReason?: true
+    rollbackInitiatedAt?: true
+    rollbackInitiatedBy?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type DeploymentCountAggregateInputType = {
+    id?: true
+    repositoryMetadataId?: true
+    environmentId?: true
+    version?: true
+    status?: true
+    deployedAt?: true
+    deployedBy?: true
+    duration?: true
+    riskAssessment?: true
+    healthCheckPassed?: true
+    healthCheckDetails?: true
+    postDeploymentMetrics?: true
+    preDeploymentNotes?: true
+    postDeploymentNotes?: true
+    deploymentLogs?: true
+    artifacts?: true
+    approvalRequired?: true
+    rollbackOf?: true
+    rollbackReason?: true
+    rollbackInitiatedAt?: true
+    rollbackInitiatedBy?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type DeploymentAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Deployment to aggregate.
+     */
+    where?: DeploymentWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Deployments to fetch.
+     */
+    orderBy?: DeploymentOrderByWithRelationInput | DeploymentOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: DeploymentWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Deployments from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Deployments.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Deployments
+    **/
+    _count?: true | DeploymentCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: DeploymentAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: DeploymentSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: DeploymentMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: DeploymentMaxAggregateInputType
+  }
+
+  export type GetDeploymentAggregateType<T extends DeploymentAggregateArgs> = {
+        [P in keyof T & keyof AggregateDeployment]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateDeployment[P]>
+      : GetScalarType<T[P], AggregateDeployment[P]>
+  }
+
+
+
+
+  export type DeploymentGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: DeploymentWhereInput
+    orderBy?: DeploymentOrderByWithAggregationInput | DeploymentOrderByWithAggregationInput[]
+    by: DeploymentScalarFieldEnum[] | DeploymentScalarFieldEnum
+    having?: DeploymentScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: DeploymentCountAggregateInputType | true
+    _avg?: DeploymentAvgAggregateInputType
+    _sum?: DeploymentSumAggregateInputType
+    _min?: DeploymentMinAggregateInputType
+    _max?: DeploymentMaxAggregateInputType
+  }
+
+  export type DeploymentGroupByOutputType = {
+    id: string
+    repositoryMetadataId: string
+    environmentId: string
+    version: string
+    status: string
+    deployedAt: Date
+    deployedBy: string
+    duration: number | null
+    riskAssessment: JsonValue | null
+    healthCheckPassed: boolean | null
+    healthCheckDetails: JsonValue | null
+    postDeploymentMetrics: JsonValue | null
+    preDeploymentNotes: string | null
+    postDeploymentNotes: string | null
+    deploymentLogs: string | null
+    artifacts: JsonValue | null
+    approvalRequired: boolean
+    rollbackOf: string | null
+    rollbackReason: string | null
+    rollbackInitiatedAt: Date | null
+    rollbackInitiatedBy: string | null
+    createdAt: Date
+    updatedAt: Date
+    _count: DeploymentCountAggregateOutputType | null
+    _avg: DeploymentAvgAggregateOutputType | null
+    _sum: DeploymentSumAggregateOutputType | null
+    _min: DeploymentMinAggregateOutputType | null
+    _max: DeploymentMaxAggregateOutputType | null
+  }
+
+  type GetDeploymentGroupByPayload<T extends DeploymentGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<DeploymentGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof DeploymentGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], DeploymentGroupByOutputType[P]>
+            : GetScalarType<T[P], DeploymentGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type DeploymentSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    repositoryMetadataId?: boolean
+    environmentId?: boolean
+    version?: boolean
+    status?: boolean
+    deployedAt?: boolean
+    deployedBy?: boolean
+    duration?: boolean
+    riskAssessment?: boolean
+    healthCheckPassed?: boolean
+    healthCheckDetails?: boolean
+    postDeploymentMetrics?: boolean
+    preDeploymentNotes?: boolean
+    postDeploymentNotes?: boolean
+    deploymentLogs?: boolean
+    artifacts?: boolean
+    approvalRequired?: boolean
+    rollbackOf?: boolean
+    rollbackReason?: boolean
+    rollbackInitiatedAt?: boolean
+    rollbackInitiatedBy?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    repositoryMetadata?: boolean | RepositoryMetadataDefaultArgs<ExtArgs>
+    environment?: boolean | RepositoryEnvironmentDefaultArgs<ExtArgs>
+    approvals?: boolean | Deployment$approvalsArgs<ExtArgs>
+    _count?: boolean | DeploymentCountOutputTypeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["deployment"]>
+
+  export type DeploymentSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    repositoryMetadataId?: boolean
+    environmentId?: boolean
+    version?: boolean
+    status?: boolean
+    deployedAt?: boolean
+    deployedBy?: boolean
+    duration?: boolean
+    riskAssessment?: boolean
+    healthCheckPassed?: boolean
+    healthCheckDetails?: boolean
+    postDeploymentMetrics?: boolean
+    preDeploymentNotes?: boolean
+    postDeploymentNotes?: boolean
+    deploymentLogs?: boolean
+    artifacts?: boolean
+    approvalRequired?: boolean
+    rollbackOf?: boolean
+    rollbackReason?: boolean
+    rollbackInitiatedAt?: boolean
+    rollbackInitiatedBy?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    repositoryMetadata?: boolean | RepositoryMetadataDefaultArgs<ExtArgs>
+    environment?: boolean | RepositoryEnvironmentDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["deployment"]>
+
+  export type DeploymentSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    repositoryMetadataId?: boolean
+    environmentId?: boolean
+    version?: boolean
+    status?: boolean
+    deployedAt?: boolean
+    deployedBy?: boolean
+    duration?: boolean
+    riskAssessment?: boolean
+    healthCheckPassed?: boolean
+    healthCheckDetails?: boolean
+    postDeploymentMetrics?: boolean
+    preDeploymentNotes?: boolean
+    postDeploymentNotes?: boolean
+    deploymentLogs?: boolean
+    artifacts?: boolean
+    approvalRequired?: boolean
+    rollbackOf?: boolean
+    rollbackReason?: boolean
+    rollbackInitiatedAt?: boolean
+    rollbackInitiatedBy?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    repositoryMetadata?: boolean | RepositoryMetadataDefaultArgs<ExtArgs>
+    environment?: boolean | RepositoryEnvironmentDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["deployment"]>
+
+  export type DeploymentSelectScalar = {
+    id?: boolean
+    repositoryMetadataId?: boolean
+    environmentId?: boolean
+    version?: boolean
+    status?: boolean
+    deployedAt?: boolean
+    deployedBy?: boolean
+    duration?: boolean
+    riskAssessment?: boolean
+    healthCheckPassed?: boolean
+    healthCheckDetails?: boolean
+    postDeploymentMetrics?: boolean
+    preDeploymentNotes?: boolean
+    postDeploymentNotes?: boolean
+    deploymentLogs?: boolean
+    artifacts?: boolean
+    approvalRequired?: boolean
+    rollbackOf?: boolean
+    rollbackReason?: boolean
+    rollbackInitiatedAt?: boolean
+    rollbackInitiatedBy?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type DeploymentOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "repositoryMetadataId" | "environmentId" | "version" | "status" | "deployedAt" | "deployedBy" | "duration" | "riskAssessment" | "healthCheckPassed" | "healthCheckDetails" | "postDeploymentMetrics" | "preDeploymentNotes" | "postDeploymentNotes" | "deploymentLogs" | "artifacts" | "approvalRequired" | "rollbackOf" | "rollbackReason" | "rollbackInitiatedAt" | "rollbackInitiatedBy" | "createdAt" | "updatedAt", ExtArgs["result"]["deployment"]>
+  export type DeploymentInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    repositoryMetadata?: boolean | RepositoryMetadataDefaultArgs<ExtArgs>
+    environment?: boolean | RepositoryEnvironmentDefaultArgs<ExtArgs>
+    approvals?: boolean | Deployment$approvalsArgs<ExtArgs>
+    _count?: boolean | DeploymentCountOutputTypeDefaultArgs<ExtArgs>
+  }
+  export type DeploymentIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    repositoryMetadata?: boolean | RepositoryMetadataDefaultArgs<ExtArgs>
+    environment?: boolean | RepositoryEnvironmentDefaultArgs<ExtArgs>
+  }
+  export type DeploymentIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    repositoryMetadata?: boolean | RepositoryMetadataDefaultArgs<ExtArgs>
+    environment?: boolean | RepositoryEnvironmentDefaultArgs<ExtArgs>
+  }
+
+  export type $DeploymentPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "Deployment"
+    objects: {
+      repositoryMetadata: Prisma.$RepositoryMetadataPayload<ExtArgs>
+      environment: Prisma.$RepositoryEnvironmentPayload<ExtArgs>
+      approvals: Prisma.$DeploymentApprovalPayload<ExtArgs>[]
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      repositoryMetadataId: string
+      environmentId: string
+      version: string
+      status: string
+      deployedAt: Date
+      deployedBy: string
+      duration: number | null
+      riskAssessment: Prisma.JsonValue | null
+      healthCheckPassed: boolean | null
+      healthCheckDetails: Prisma.JsonValue | null
+      postDeploymentMetrics: Prisma.JsonValue | null
+      preDeploymentNotes: string | null
+      postDeploymentNotes: string | null
+      deploymentLogs: string | null
+      artifacts: Prisma.JsonValue | null
+      approvalRequired: boolean
+      rollbackOf: string | null
+      rollbackReason: string | null
+      rollbackInitiatedAt: Date | null
+      rollbackInitiatedBy: string | null
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["deployment"]>
+    composites: {}
+  }
+
+  type DeploymentGetPayload<S extends boolean | null | undefined | DeploymentDefaultArgs> = $Result.GetResult<Prisma.$DeploymentPayload, S>
+
+  type DeploymentCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<DeploymentFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: DeploymentCountAggregateInputType | true
+    }
+
+  export interface DeploymentDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Deployment'], meta: { name: 'Deployment' } }
+    /**
+     * Find zero or one Deployment that matches the filter.
+     * @param {DeploymentFindUniqueArgs} args - Arguments to find a Deployment
+     * @example
+     * // Get one Deployment
+     * const deployment = await prisma.deployment.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends DeploymentFindUniqueArgs>(args: SelectSubset<T, DeploymentFindUniqueArgs<ExtArgs>>): Prisma__DeploymentClient<$Result.GetResult<Prisma.$DeploymentPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one Deployment that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {DeploymentFindUniqueOrThrowArgs} args - Arguments to find a Deployment
+     * @example
+     * // Get one Deployment
+     * const deployment = await prisma.deployment.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends DeploymentFindUniqueOrThrowArgs>(args: SelectSubset<T, DeploymentFindUniqueOrThrowArgs<ExtArgs>>): Prisma__DeploymentClient<$Result.GetResult<Prisma.$DeploymentPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Deployment that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DeploymentFindFirstArgs} args - Arguments to find a Deployment
+     * @example
+     * // Get one Deployment
+     * const deployment = await prisma.deployment.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends DeploymentFindFirstArgs>(args?: SelectSubset<T, DeploymentFindFirstArgs<ExtArgs>>): Prisma__DeploymentClient<$Result.GetResult<Prisma.$DeploymentPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Deployment that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DeploymentFindFirstOrThrowArgs} args - Arguments to find a Deployment
+     * @example
+     * // Get one Deployment
+     * const deployment = await prisma.deployment.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends DeploymentFindFirstOrThrowArgs>(args?: SelectSubset<T, DeploymentFindFirstOrThrowArgs<ExtArgs>>): Prisma__DeploymentClient<$Result.GetResult<Prisma.$DeploymentPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more Deployments that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DeploymentFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Deployments
+     * const deployments = await prisma.deployment.findMany()
+     * 
+     * // Get first 10 Deployments
+     * const deployments = await prisma.deployment.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const deploymentWithIdOnly = await prisma.deployment.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends DeploymentFindManyArgs>(args?: SelectSubset<T, DeploymentFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DeploymentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a Deployment.
+     * @param {DeploymentCreateArgs} args - Arguments to create a Deployment.
+     * @example
+     * // Create one Deployment
+     * const Deployment = await prisma.deployment.create({
+     *   data: {
+     *     // ... data to create a Deployment
+     *   }
+     * })
+     * 
+     */
+    create<T extends DeploymentCreateArgs>(args: SelectSubset<T, DeploymentCreateArgs<ExtArgs>>): Prisma__DeploymentClient<$Result.GetResult<Prisma.$DeploymentPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many Deployments.
+     * @param {DeploymentCreateManyArgs} args - Arguments to create many Deployments.
+     * @example
+     * // Create many Deployments
+     * const deployment = await prisma.deployment.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends DeploymentCreateManyArgs>(args?: SelectSubset<T, DeploymentCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many Deployments and returns the data saved in the database.
+     * @param {DeploymentCreateManyAndReturnArgs} args - Arguments to create many Deployments.
+     * @example
+     * // Create many Deployments
+     * const deployment = await prisma.deployment.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many Deployments and only return the `id`
+     * const deploymentWithIdOnly = await prisma.deployment.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends DeploymentCreateManyAndReturnArgs>(args?: SelectSubset<T, DeploymentCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DeploymentPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a Deployment.
+     * @param {DeploymentDeleteArgs} args - Arguments to delete one Deployment.
+     * @example
+     * // Delete one Deployment
+     * const Deployment = await prisma.deployment.delete({
+     *   where: {
+     *     // ... filter to delete one Deployment
+     *   }
+     * })
+     * 
+     */
+    delete<T extends DeploymentDeleteArgs>(args: SelectSubset<T, DeploymentDeleteArgs<ExtArgs>>): Prisma__DeploymentClient<$Result.GetResult<Prisma.$DeploymentPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one Deployment.
+     * @param {DeploymentUpdateArgs} args - Arguments to update one Deployment.
+     * @example
+     * // Update one Deployment
+     * const deployment = await prisma.deployment.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends DeploymentUpdateArgs>(args: SelectSubset<T, DeploymentUpdateArgs<ExtArgs>>): Prisma__DeploymentClient<$Result.GetResult<Prisma.$DeploymentPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more Deployments.
+     * @param {DeploymentDeleteManyArgs} args - Arguments to filter Deployments to delete.
+     * @example
+     * // Delete a few Deployments
+     * const { count } = await prisma.deployment.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends DeploymentDeleteManyArgs>(args?: SelectSubset<T, DeploymentDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Deployments.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DeploymentUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Deployments
+     * const deployment = await prisma.deployment.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends DeploymentUpdateManyArgs>(args: SelectSubset<T, DeploymentUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Deployments and returns the data updated in the database.
+     * @param {DeploymentUpdateManyAndReturnArgs} args - Arguments to update many Deployments.
+     * @example
+     * // Update many Deployments
+     * const deployment = await prisma.deployment.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more Deployments and only return the `id`
+     * const deploymentWithIdOnly = await prisma.deployment.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends DeploymentUpdateManyAndReturnArgs>(args: SelectSubset<T, DeploymentUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DeploymentPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one Deployment.
+     * @param {DeploymentUpsertArgs} args - Arguments to update or create a Deployment.
+     * @example
+     * // Update or create a Deployment
+     * const deployment = await prisma.deployment.upsert({
+     *   create: {
+     *     // ... data to create a Deployment
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Deployment we want to update
+     *   }
+     * })
+     */
+    upsert<T extends DeploymentUpsertArgs>(args: SelectSubset<T, DeploymentUpsertArgs<ExtArgs>>): Prisma__DeploymentClient<$Result.GetResult<Prisma.$DeploymentPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of Deployments.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DeploymentCountArgs} args - Arguments to filter Deployments to count.
+     * @example
+     * // Count the number of Deployments
+     * const count = await prisma.deployment.count({
+     *   where: {
+     *     // ... the filter for the Deployments we want to count
+     *   }
+     * })
+    **/
+    count<T extends DeploymentCountArgs>(
+      args?: Subset<T, DeploymentCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], DeploymentCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Deployment.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DeploymentAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends DeploymentAggregateArgs>(args: Subset<T, DeploymentAggregateArgs>): Prisma.PrismaPromise<GetDeploymentAggregateType<T>>
+
+    /**
+     * Group by Deployment.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DeploymentGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends DeploymentGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: DeploymentGroupByArgs['orderBy'] }
+        : { orderBy?: DeploymentGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, DeploymentGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetDeploymentGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the Deployment model
+   */
+  readonly fields: DeploymentFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for Deployment.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__DeploymentClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    repositoryMetadata<T extends RepositoryMetadataDefaultArgs<ExtArgs> = {}>(args?: Subset<T, RepositoryMetadataDefaultArgs<ExtArgs>>): Prisma__RepositoryMetadataClient<$Result.GetResult<Prisma.$RepositoryMetadataPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    environment<T extends RepositoryEnvironmentDefaultArgs<ExtArgs> = {}>(args?: Subset<T, RepositoryEnvironmentDefaultArgs<ExtArgs>>): Prisma__RepositoryEnvironmentClient<$Result.GetResult<Prisma.$RepositoryEnvironmentPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    approvals<T extends Deployment$approvalsArgs<ExtArgs> = {}>(args?: Subset<T, Deployment$approvalsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DeploymentApprovalPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the Deployment model
+   */
+  interface DeploymentFieldRefs {
+    readonly id: FieldRef<"Deployment", 'String'>
+    readonly repositoryMetadataId: FieldRef<"Deployment", 'String'>
+    readonly environmentId: FieldRef<"Deployment", 'String'>
+    readonly version: FieldRef<"Deployment", 'String'>
+    readonly status: FieldRef<"Deployment", 'String'>
+    readonly deployedAt: FieldRef<"Deployment", 'DateTime'>
+    readonly deployedBy: FieldRef<"Deployment", 'String'>
+    readonly duration: FieldRef<"Deployment", 'Int'>
+    readonly riskAssessment: FieldRef<"Deployment", 'Json'>
+    readonly healthCheckPassed: FieldRef<"Deployment", 'Boolean'>
+    readonly healthCheckDetails: FieldRef<"Deployment", 'Json'>
+    readonly postDeploymentMetrics: FieldRef<"Deployment", 'Json'>
+    readonly preDeploymentNotes: FieldRef<"Deployment", 'String'>
+    readonly postDeploymentNotes: FieldRef<"Deployment", 'String'>
+    readonly deploymentLogs: FieldRef<"Deployment", 'String'>
+    readonly artifacts: FieldRef<"Deployment", 'Json'>
+    readonly approvalRequired: FieldRef<"Deployment", 'Boolean'>
+    readonly rollbackOf: FieldRef<"Deployment", 'String'>
+    readonly rollbackReason: FieldRef<"Deployment", 'String'>
+    readonly rollbackInitiatedAt: FieldRef<"Deployment", 'DateTime'>
+    readonly rollbackInitiatedBy: FieldRef<"Deployment", 'String'>
+    readonly createdAt: FieldRef<"Deployment", 'DateTime'>
+    readonly updatedAt: FieldRef<"Deployment", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * Deployment findUnique
+   */
+  export type DeploymentFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Deployment
+     */
+    select?: DeploymentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Deployment
+     */
+    omit?: DeploymentOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DeploymentInclude<ExtArgs> | null
+    /**
+     * Filter, which Deployment to fetch.
+     */
+    where: DeploymentWhereUniqueInput
+  }
+
+  /**
+   * Deployment findUniqueOrThrow
+   */
+  export type DeploymentFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Deployment
+     */
+    select?: DeploymentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Deployment
+     */
+    omit?: DeploymentOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DeploymentInclude<ExtArgs> | null
+    /**
+     * Filter, which Deployment to fetch.
+     */
+    where: DeploymentWhereUniqueInput
+  }
+
+  /**
+   * Deployment findFirst
+   */
+  export type DeploymentFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Deployment
+     */
+    select?: DeploymentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Deployment
+     */
+    omit?: DeploymentOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DeploymentInclude<ExtArgs> | null
+    /**
+     * Filter, which Deployment to fetch.
+     */
+    where?: DeploymentWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Deployments to fetch.
+     */
+    orderBy?: DeploymentOrderByWithRelationInput | DeploymentOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Deployments.
+     */
+    cursor?: DeploymentWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Deployments from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Deployments.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Deployments.
+     */
+    distinct?: DeploymentScalarFieldEnum | DeploymentScalarFieldEnum[]
+  }
+
+  /**
+   * Deployment findFirstOrThrow
+   */
+  export type DeploymentFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Deployment
+     */
+    select?: DeploymentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Deployment
+     */
+    omit?: DeploymentOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DeploymentInclude<ExtArgs> | null
+    /**
+     * Filter, which Deployment to fetch.
+     */
+    where?: DeploymentWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Deployments to fetch.
+     */
+    orderBy?: DeploymentOrderByWithRelationInput | DeploymentOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Deployments.
+     */
+    cursor?: DeploymentWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Deployments from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Deployments.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Deployments.
+     */
+    distinct?: DeploymentScalarFieldEnum | DeploymentScalarFieldEnum[]
+  }
+
+  /**
+   * Deployment findMany
+   */
+  export type DeploymentFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Deployment
+     */
+    select?: DeploymentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Deployment
+     */
+    omit?: DeploymentOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DeploymentInclude<ExtArgs> | null
+    /**
+     * Filter, which Deployments to fetch.
+     */
+    where?: DeploymentWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Deployments to fetch.
+     */
+    orderBy?: DeploymentOrderByWithRelationInput | DeploymentOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Deployments.
+     */
+    cursor?: DeploymentWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Deployments from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Deployments.
+     */
+    skip?: number
+    distinct?: DeploymentScalarFieldEnum | DeploymentScalarFieldEnum[]
+  }
+
+  /**
+   * Deployment create
+   */
+  export type DeploymentCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Deployment
+     */
+    select?: DeploymentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Deployment
+     */
+    omit?: DeploymentOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DeploymentInclude<ExtArgs> | null
+    /**
+     * The data needed to create a Deployment.
+     */
+    data: XOR<DeploymentCreateInput, DeploymentUncheckedCreateInput>
+  }
+
+  /**
+   * Deployment createMany
+   */
+  export type DeploymentCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many Deployments.
+     */
+    data: DeploymentCreateManyInput | DeploymentCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * Deployment createManyAndReturn
+   */
+  export type DeploymentCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Deployment
+     */
+    select?: DeploymentSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Deployment
+     */
+    omit?: DeploymentOmit<ExtArgs> | null
+    /**
+     * The data used to create many Deployments.
+     */
+    data: DeploymentCreateManyInput | DeploymentCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DeploymentIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * Deployment update
+   */
+  export type DeploymentUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Deployment
+     */
+    select?: DeploymentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Deployment
+     */
+    omit?: DeploymentOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DeploymentInclude<ExtArgs> | null
+    /**
+     * The data needed to update a Deployment.
+     */
+    data: XOR<DeploymentUpdateInput, DeploymentUncheckedUpdateInput>
+    /**
+     * Choose, which Deployment to update.
+     */
+    where: DeploymentWhereUniqueInput
+  }
+
+  /**
+   * Deployment updateMany
+   */
+  export type DeploymentUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update Deployments.
+     */
+    data: XOR<DeploymentUpdateManyMutationInput, DeploymentUncheckedUpdateManyInput>
+    /**
+     * Filter which Deployments to update
+     */
+    where?: DeploymentWhereInput
+    /**
+     * Limit how many Deployments to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * Deployment updateManyAndReturn
+   */
+  export type DeploymentUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Deployment
+     */
+    select?: DeploymentSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Deployment
+     */
+    omit?: DeploymentOmit<ExtArgs> | null
+    /**
+     * The data used to update Deployments.
+     */
+    data: XOR<DeploymentUpdateManyMutationInput, DeploymentUncheckedUpdateManyInput>
+    /**
+     * Filter which Deployments to update
+     */
+    where?: DeploymentWhereInput
+    /**
+     * Limit how many Deployments to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DeploymentIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * Deployment upsert
+   */
+  export type DeploymentUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Deployment
+     */
+    select?: DeploymentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Deployment
+     */
+    omit?: DeploymentOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DeploymentInclude<ExtArgs> | null
+    /**
+     * The filter to search for the Deployment to update in case it exists.
+     */
+    where: DeploymentWhereUniqueInput
+    /**
+     * In case the Deployment found by the `where` argument doesn't exist, create a new Deployment with this data.
+     */
+    create: XOR<DeploymentCreateInput, DeploymentUncheckedCreateInput>
+    /**
+     * In case the Deployment was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<DeploymentUpdateInput, DeploymentUncheckedUpdateInput>
+  }
+
+  /**
+   * Deployment delete
+   */
+  export type DeploymentDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Deployment
+     */
+    select?: DeploymentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Deployment
+     */
+    omit?: DeploymentOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DeploymentInclude<ExtArgs> | null
+    /**
+     * Filter which Deployment to delete.
+     */
+    where: DeploymentWhereUniqueInput
+  }
+
+  /**
+   * Deployment deleteMany
+   */
+  export type DeploymentDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Deployments to delete
+     */
+    where?: DeploymentWhereInput
+    /**
+     * Limit how many Deployments to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * Deployment.approvals
+   */
+  export type Deployment$approvalsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DeploymentApproval
+     */
+    select?: DeploymentApprovalSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DeploymentApproval
+     */
+    omit?: DeploymentApprovalOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DeploymentApprovalInclude<ExtArgs> | null
+    where?: DeploymentApprovalWhereInput
+    orderBy?: DeploymentApprovalOrderByWithRelationInput | DeploymentApprovalOrderByWithRelationInput[]
+    cursor?: DeploymentApprovalWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: DeploymentApprovalScalarFieldEnum | DeploymentApprovalScalarFieldEnum[]
+  }
+
+  /**
+   * Deployment without action
+   */
+  export type DeploymentDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Deployment
+     */
+    select?: DeploymentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Deployment
+     */
+    omit?: DeploymentOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DeploymentInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model DeploymentApproval
+   */
+
+  export type AggregateDeploymentApproval = {
+    _count: DeploymentApprovalCountAggregateOutputType | null
+    _min: DeploymentApprovalMinAggregateOutputType | null
+    _max: DeploymentApprovalMaxAggregateOutputType | null
+  }
+
+  export type DeploymentApprovalMinAggregateOutputType = {
+    id: string | null
+    deploymentId: string | null
+    approverEmail: string | null
+    status: string | null
+    reason: string | null
+    comment: string | null
+    respondedAt: Date | null
+    createdAt: Date | null
+  }
+
+  export type DeploymentApprovalMaxAggregateOutputType = {
+    id: string | null
+    deploymentId: string | null
+    approverEmail: string | null
+    status: string | null
+    reason: string | null
+    comment: string | null
+    respondedAt: Date | null
+    createdAt: Date | null
+  }
+
+  export type DeploymentApprovalCountAggregateOutputType = {
+    id: number
+    deploymentId: number
+    approverEmail: number
+    status: number
+    reason: number
+    comment: number
+    respondedAt: number
+    createdAt: number
+    _all: number
+  }
+
+
+  export type DeploymentApprovalMinAggregateInputType = {
+    id?: true
+    deploymentId?: true
+    approverEmail?: true
+    status?: true
+    reason?: true
+    comment?: true
+    respondedAt?: true
+    createdAt?: true
+  }
+
+  export type DeploymentApprovalMaxAggregateInputType = {
+    id?: true
+    deploymentId?: true
+    approverEmail?: true
+    status?: true
+    reason?: true
+    comment?: true
+    respondedAt?: true
+    createdAt?: true
+  }
+
+  export type DeploymentApprovalCountAggregateInputType = {
+    id?: true
+    deploymentId?: true
+    approverEmail?: true
+    status?: true
+    reason?: true
+    comment?: true
+    respondedAt?: true
+    createdAt?: true
+    _all?: true
+  }
+
+  export type DeploymentApprovalAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which DeploymentApproval to aggregate.
+     */
+    where?: DeploymentApprovalWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of DeploymentApprovals to fetch.
+     */
+    orderBy?: DeploymentApprovalOrderByWithRelationInput | DeploymentApprovalOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: DeploymentApprovalWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` DeploymentApprovals from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` DeploymentApprovals.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned DeploymentApprovals
+    **/
+    _count?: true | DeploymentApprovalCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: DeploymentApprovalMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: DeploymentApprovalMaxAggregateInputType
+  }
+
+  export type GetDeploymentApprovalAggregateType<T extends DeploymentApprovalAggregateArgs> = {
+        [P in keyof T & keyof AggregateDeploymentApproval]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateDeploymentApproval[P]>
+      : GetScalarType<T[P], AggregateDeploymentApproval[P]>
+  }
+
+
+
+
+  export type DeploymentApprovalGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: DeploymentApprovalWhereInput
+    orderBy?: DeploymentApprovalOrderByWithAggregationInput | DeploymentApprovalOrderByWithAggregationInput[]
+    by: DeploymentApprovalScalarFieldEnum[] | DeploymentApprovalScalarFieldEnum
+    having?: DeploymentApprovalScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: DeploymentApprovalCountAggregateInputType | true
+    _min?: DeploymentApprovalMinAggregateInputType
+    _max?: DeploymentApprovalMaxAggregateInputType
+  }
+
+  export type DeploymentApprovalGroupByOutputType = {
+    id: string
+    deploymentId: string
+    approverEmail: string
+    status: string
+    reason: string | null
+    comment: string | null
+    respondedAt: Date | null
+    createdAt: Date
+    _count: DeploymentApprovalCountAggregateOutputType | null
+    _min: DeploymentApprovalMinAggregateOutputType | null
+    _max: DeploymentApprovalMaxAggregateOutputType | null
+  }
+
+  type GetDeploymentApprovalGroupByPayload<T extends DeploymentApprovalGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<DeploymentApprovalGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof DeploymentApprovalGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], DeploymentApprovalGroupByOutputType[P]>
+            : GetScalarType<T[P], DeploymentApprovalGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type DeploymentApprovalSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    deploymentId?: boolean
+    approverEmail?: boolean
+    status?: boolean
+    reason?: boolean
+    comment?: boolean
+    respondedAt?: boolean
+    createdAt?: boolean
+    deployment?: boolean | DeploymentDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["deploymentApproval"]>
+
+  export type DeploymentApprovalSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    deploymentId?: boolean
+    approverEmail?: boolean
+    status?: boolean
+    reason?: boolean
+    comment?: boolean
+    respondedAt?: boolean
+    createdAt?: boolean
+    deployment?: boolean | DeploymentDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["deploymentApproval"]>
+
+  export type DeploymentApprovalSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    deploymentId?: boolean
+    approverEmail?: boolean
+    status?: boolean
+    reason?: boolean
+    comment?: boolean
+    respondedAt?: boolean
+    createdAt?: boolean
+    deployment?: boolean | DeploymentDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["deploymentApproval"]>
+
+  export type DeploymentApprovalSelectScalar = {
+    id?: boolean
+    deploymentId?: boolean
+    approverEmail?: boolean
+    status?: boolean
+    reason?: boolean
+    comment?: boolean
+    respondedAt?: boolean
+    createdAt?: boolean
+  }
+
+  export type DeploymentApprovalOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "deploymentId" | "approverEmail" | "status" | "reason" | "comment" | "respondedAt" | "createdAt", ExtArgs["result"]["deploymentApproval"]>
+  export type DeploymentApprovalInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    deployment?: boolean | DeploymentDefaultArgs<ExtArgs>
+  }
+  export type DeploymentApprovalIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    deployment?: boolean | DeploymentDefaultArgs<ExtArgs>
+  }
+  export type DeploymentApprovalIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    deployment?: boolean | DeploymentDefaultArgs<ExtArgs>
+  }
+
+  export type $DeploymentApprovalPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "DeploymentApproval"
+    objects: {
+      deployment: Prisma.$DeploymentPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      deploymentId: string
+      approverEmail: string
+      status: string
+      reason: string | null
+      comment: string | null
+      respondedAt: Date | null
+      createdAt: Date
+    }, ExtArgs["result"]["deploymentApproval"]>
+    composites: {}
+  }
+
+  type DeploymentApprovalGetPayload<S extends boolean | null | undefined | DeploymentApprovalDefaultArgs> = $Result.GetResult<Prisma.$DeploymentApprovalPayload, S>
+
+  type DeploymentApprovalCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<DeploymentApprovalFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: DeploymentApprovalCountAggregateInputType | true
+    }
+
+  export interface DeploymentApprovalDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['DeploymentApproval'], meta: { name: 'DeploymentApproval' } }
+    /**
+     * Find zero or one DeploymentApproval that matches the filter.
+     * @param {DeploymentApprovalFindUniqueArgs} args - Arguments to find a DeploymentApproval
+     * @example
+     * // Get one DeploymentApproval
+     * const deploymentApproval = await prisma.deploymentApproval.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends DeploymentApprovalFindUniqueArgs>(args: SelectSubset<T, DeploymentApprovalFindUniqueArgs<ExtArgs>>): Prisma__DeploymentApprovalClient<$Result.GetResult<Prisma.$DeploymentApprovalPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one DeploymentApproval that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {DeploymentApprovalFindUniqueOrThrowArgs} args - Arguments to find a DeploymentApproval
+     * @example
+     * // Get one DeploymentApproval
+     * const deploymentApproval = await prisma.deploymentApproval.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends DeploymentApprovalFindUniqueOrThrowArgs>(args: SelectSubset<T, DeploymentApprovalFindUniqueOrThrowArgs<ExtArgs>>): Prisma__DeploymentApprovalClient<$Result.GetResult<Prisma.$DeploymentApprovalPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first DeploymentApproval that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DeploymentApprovalFindFirstArgs} args - Arguments to find a DeploymentApproval
+     * @example
+     * // Get one DeploymentApproval
+     * const deploymentApproval = await prisma.deploymentApproval.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends DeploymentApprovalFindFirstArgs>(args?: SelectSubset<T, DeploymentApprovalFindFirstArgs<ExtArgs>>): Prisma__DeploymentApprovalClient<$Result.GetResult<Prisma.$DeploymentApprovalPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first DeploymentApproval that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DeploymentApprovalFindFirstOrThrowArgs} args - Arguments to find a DeploymentApproval
+     * @example
+     * // Get one DeploymentApproval
+     * const deploymentApproval = await prisma.deploymentApproval.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends DeploymentApprovalFindFirstOrThrowArgs>(args?: SelectSubset<T, DeploymentApprovalFindFirstOrThrowArgs<ExtArgs>>): Prisma__DeploymentApprovalClient<$Result.GetResult<Prisma.$DeploymentApprovalPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more DeploymentApprovals that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DeploymentApprovalFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all DeploymentApprovals
+     * const deploymentApprovals = await prisma.deploymentApproval.findMany()
+     * 
+     * // Get first 10 DeploymentApprovals
+     * const deploymentApprovals = await prisma.deploymentApproval.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const deploymentApprovalWithIdOnly = await prisma.deploymentApproval.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends DeploymentApprovalFindManyArgs>(args?: SelectSubset<T, DeploymentApprovalFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DeploymentApprovalPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a DeploymentApproval.
+     * @param {DeploymentApprovalCreateArgs} args - Arguments to create a DeploymentApproval.
+     * @example
+     * // Create one DeploymentApproval
+     * const DeploymentApproval = await prisma.deploymentApproval.create({
+     *   data: {
+     *     // ... data to create a DeploymentApproval
+     *   }
+     * })
+     * 
+     */
+    create<T extends DeploymentApprovalCreateArgs>(args: SelectSubset<T, DeploymentApprovalCreateArgs<ExtArgs>>): Prisma__DeploymentApprovalClient<$Result.GetResult<Prisma.$DeploymentApprovalPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many DeploymentApprovals.
+     * @param {DeploymentApprovalCreateManyArgs} args - Arguments to create many DeploymentApprovals.
+     * @example
+     * // Create many DeploymentApprovals
+     * const deploymentApproval = await prisma.deploymentApproval.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends DeploymentApprovalCreateManyArgs>(args?: SelectSubset<T, DeploymentApprovalCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many DeploymentApprovals and returns the data saved in the database.
+     * @param {DeploymentApprovalCreateManyAndReturnArgs} args - Arguments to create many DeploymentApprovals.
+     * @example
+     * // Create many DeploymentApprovals
+     * const deploymentApproval = await prisma.deploymentApproval.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many DeploymentApprovals and only return the `id`
+     * const deploymentApprovalWithIdOnly = await prisma.deploymentApproval.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends DeploymentApprovalCreateManyAndReturnArgs>(args?: SelectSubset<T, DeploymentApprovalCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DeploymentApprovalPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a DeploymentApproval.
+     * @param {DeploymentApprovalDeleteArgs} args - Arguments to delete one DeploymentApproval.
+     * @example
+     * // Delete one DeploymentApproval
+     * const DeploymentApproval = await prisma.deploymentApproval.delete({
+     *   where: {
+     *     // ... filter to delete one DeploymentApproval
+     *   }
+     * })
+     * 
+     */
+    delete<T extends DeploymentApprovalDeleteArgs>(args: SelectSubset<T, DeploymentApprovalDeleteArgs<ExtArgs>>): Prisma__DeploymentApprovalClient<$Result.GetResult<Prisma.$DeploymentApprovalPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one DeploymentApproval.
+     * @param {DeploymentApprovalUpdateArgs} args - Arguments to update one DeploymentApproval.
+     * @example
+     * // Update one DeploymentApproval
+     * const deploymentApproval = await prisma.deploymentApproval.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends DeploymentApprovalUpdateArgs>(args: SelectSubset<T, DeploymentApprovalUpdateArgs<ExtArgs>>): Prisma__DeploymentApprovalClient<$Result.GetResult<Prisma.$DeploymentApprovalPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more DeploymentApprovals.
+     * @param {DeploymentApprovalDeleteManyArgs} args - Arguments to filter DeploymentApprovals to delete.
+     * @example
+     * // Delete a few DeploymentApprovals
+     * const { count } = await prisma.deploymentApproval.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends DeploymentApprovalDeleteManyArgs>(args?: SelectSubset<T, DeploymentApprovalDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more DeploymentApprovals.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DeploymentApprovalUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many DeploymentApprovals
+     * const deploymentApproval = await prisma.deploymentApproval.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends DeploymentApprovalUpdateManyArgs>(args: SelectSubset<T, DeploymentApprovalUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more DeploymentApprovals and returns the data updated in the database.
+     * @param {DeploymentApprovalUpdateManyAndReturnArgs} args - Arguments to update many DeploymentApprovals.
+     * @example
+     * // Update many DeploymentApprovals
+     * const deploymentApproval = await prisma.deploymentApproval.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more DeploymentApprovals and only return the `id`
+     * const deploymentApprovalWithIdOnly = await prisma.deploymentApproval.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends DeploymentApprovalUpdateManyAndReturnArgs>(args: SelectSubset<T, DeploymentApprovalUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DeploymentApprovalPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one DeploymentApproval.
+     * @param {DeploymentApprovalUpsertArgs} args - Arguments to update or create a DeploymentApproval.
+     * @example
+     * // Update or create a DeploymentApproval
+     * const deploymentApproval = await prisma.deploymentApproval.upsert({
+     *   create: {
+     *     // ... data to create a DeploymentApproval
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the DeploymentApproval we want to update
+     *   }
+     * })
+     */
+    upsert<T extends DeploymentApprovalUpsertArgs>(args: SelectSubset<T, DeploymentApprovalUpsertArgs<ExtArgs>>): Prisma__DeploymentApprovalClient<$Result.GetResult<Prisma.$DeploymentApprovalPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of DeploymentApprovals.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DeploymentApprovalCountArgs} args - Arguments to filter DeploymentApprovals to count.
+     * @example
+     * // Count the number of DeploymentApprovals
+     * const count = await prisma.deploymentApproval.count({
+     *   where: {
+     *     // ... the filter for the DeploymentApprovals we want to count
+     *   }
+     * })
+    **/
+    count<T extends DeploymentApprovalCountArgs>(
+      args?: Subset<T, DeploymentApprovalCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], DeploymentApprovalCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a DeploymentApproval.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DeploymentApprovalAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends DeploymentApprovalAggregateArgs>(args: Subset<T, DeploymentApprovalAggregateArgs>): Prisma.PrismaPromise<GetDeploymentApprovalAggregateType<T>>
+
+    /**
+     * Group by DeploymentApproval.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DeploymentApprovalGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends DeploymentApprovalGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: DeploymentApprovalGroupByArgs['orderBy'] }
+        : { orderBy?: DeploymentApprovalGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, DeploymentApprovalGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetDeploymentApprovalGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the DeploymentApproval model
+   */
+  readonly fields: DeploymentApprovalFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for DeploymentApproval.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__DeploymentApprovalClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    deployment<T extends DeploymentDefaultArgs<ExtArgs> = {}>(args?: Subset<T, DeploymentDefaultArgs<ExtArgs>>): Prisma__DeploymentClient<$Result.GetResult<Prisma.$DeploymentPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the DeploymentApproval model
+   */
+  interface DeploymentApprovalFieldRefs {
+    readonly id: FieldRef<"DeploymentApproval", 'String'>
+    readonly deploymentId: FieldRef<"DeploymentApproval", 'String'>
+    readonly approverEmail: FieldRef<"DeploymentApproval", 'String'>
+    readonly status: FieldRef<"DeploymentApproval", 'String'>
+    readonly reason: FieldRef<"DeploymentApproval", 'String'>
+    readonly comment: FieldRef<"DeploymentApproval", 'String'>
+    readonly respondedAt: FieldRef<"DeploymentApproval", 'DateTime'>
+    readonly createdAt: FieldRef<"DeploymentApproval", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * DeploymentApproval findUnique
+   */
+  export type DeploymentApprovalFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DeploymentApproval
+     */
+    select?: DeploymentApprovalSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DeploymentApproval
+     */
+    omit?: DeploymentApprovalOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DeploymentApprovalInclude<ExtArgs> | null
+    /**
+     * Filter, which DeploymentApproval to fetch.
+     */
+    where: DeploymentApprovalWhereUniqueInput
+  }
+
+  /**
+   * DeploymentApproval findUniqueOrThrow
+   */
+  export type DeploymentApprovalFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DeploymentApproval
+     */
+    select?: DeploymentApprovalSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DeploymentApproval
+     */
+    omit?: DeploymentApprovalOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DeploymentApprovalInclude<ExtArgs> | null
+    /**
+     * Filter, which DeploymentApproval to fetch.
+     */
+    where: DeploymentApprovalWhereUniqueInput
+  }
+
+  /**
+   * DeploymentApproval findFirst
+   */
+  export type DeploymentApprovalFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DeploymentApproval
+     */
+    select?: DeploymentApprovalSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DeploymentApproval
+     */
+    omit?: DeploymentApprovalOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DeploymentApprovalInclude<ExtArgs> | null
+    /**
+     * Filter, which DeploymentApproval to fetch.
+     */
+    where?: DeploymentApprovalWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of DeploymentApprovals to fetch.
+     */
+    orderBy?: DeploymentApprovalOrderByWithRelationInput | DeploymentApprovalOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for DeploymentApprovals.
+     */
+    cursor?: DeploymentApprovalWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` DeploymentApprovals from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` DeploymentApprovals.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of DeploymentApprovals.
+     */
+    distinct?: DeploymentApprovalScalarFieldEnum | DeploymentApprovalScalarFieldEnum[]
+  }
+
+  /**
+   * DeploymentApproval findFirstOrThrow
+   */
+  export type DeploymentApprovalFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DeploymentApproval
+     */
+    select?: DeploymentApprovalSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DeploymentApproval
+     */
+    omit?: DeploymentApprovalOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DeploymentApprovalInclude<ExtArgs> | null
+    /**
+     * Filter, which DeploymentApproval to fetch.
+     */
+    where?: DeploymentApprovalWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of DeploymentApprovals to fetch.
+     */
+    orderBy?: DeploymentApprovalOrderByWithRelationInput | DeploymentApprovalOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for DeploymentApprovals.
+     */
+    cursor?: DeploymentApprovalWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` DeploymentApprovals from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` DeploymentApprovals.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of DeploymentApprovals.
+     */
+    distinct?: DeploymentApprovalScalarFieldEnum | DeploymentApprovalScalarFieldEnum[]
+  }
+
+  /**
+   * DeploymentApproval findMany
+   */
+  export type DeploymentApprovalFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DeploymentApproval
+     */
+    select?: DeploymentApprovalSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DeploymentApproval
+     */
+    omit?: DeploymentApprovalOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DeploymentApprovalInclude<ExtArgs> | null
+    /**
+     * Filter, which DeploymentApprovals to fetch.
+     */
+    where?: DeploymentApprovalWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of DeploymentApprovals to fetch.
+     */
+    orderBy?: DeploymentApprovalOrderByWithRelationInput | DeploymentApprovalOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing DeploymentApprovals.
+     */
+    cursor?: DeploymentApprovalWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` DeploymentApprovals from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` DeploymentApprovals.
+     */
+    skip?: number
+    distinct?: DeploymentApprovalScalarFieldEnum | DeploymentApprovalScalarFieldEnum[]
+  }
+
+  /**
+   * DeploymentApproval create
+   */
+  export type DeploymentApprovalCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DeploymentApproval
+     */
+    select?: DeploymentApprovalSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DeploymentApproval
+     */
+    omit?: DeploymentApprovalOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DeploymentApprovalInclude<ExtArgs> | null
+    /**
+     * The data needed to create a DeploymentApproval.
+     */
+    data: XOR<DeploymentApprovalCreateInput, DeploymentApprovalUncheckedCreateInput>
+  }
+
+  /**
+   * DeploymentApproval createMany
+   */
+  export type DeploymentApprovalCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many DeploymentApprovals.
+     */
+    data: DeploymentApprovalCreateManyInput | DeploymentApprovalCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * DeploymentApproval createManyAndReturn
+   */
+  export type DeploymentApprovalCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DeploymentApproval
+     */
+    select?: DeploymentApprovalSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the DeploymentApproval
+     */
+    omit?: DeploymentApprovalOmit<ExtArgs> | null
+    /**
+     * The data used to create many DeploymentApprovals.
+     */
+    data: DeploymentApprovalCreateManyInput | DeploymentApprovalCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DeploymentApprovalIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * DeploymentApproval update
+   */
+  export type DeploymentApprovalUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DeploymentApproval
+     */
+    select?: DeploymentApprovalSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DeploymentApproval
+     */
+    omit?: DeploymentApprovalOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DeploymentApprovalInclude<ExtArgs> | null
+    /**
+     * The data needed to update a DeploymentApproval.
+     */
+    data: XOR<DeploymentApprovalUpdateInput, DeploymentApprovalUncheckedUpdateInput>
+    /**
+     * Choose, which DeploymentApproval to update.
+     */
+    where: DeploymentApprovalWhereUniqueInput
+  }
+
+  /**
+   * DeploymentApproval updateMany
+   */
+  export type DeploymentApprovalUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update DeploymentApprovals.
+     */
+    data: XOR<DeploymentApprovalUpdateManyMutationInput, DeploymentApprovalUncheckedUpdateManyInput>
+    /**
+     * Filter which DeploymentApprovals to update
+     */
+    where?: DeploymentApprovalWhereInput
+    /**
+     * Limit how many DeploymentApprovals to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * DeploymentApproval updateManyAndReturn
+   */
+  export type DeploymentApprovalUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DeploymentApproval
+     */
+    select?: DeploymentApprovalSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the DeploymentApproval
+     */
+    omit?: DeploymentApprovalOmit<ExtArgs> | null
+    /**
+     * The data used to update DeploymentApprovals.
+     */
+    data: XOR<DeploymentApprovalUpdateManyMutationInput, DeploymentApprovalUncheckedUpdateManyInput>
+    /**
+     * Filter which DeploymentApprovals to update
+     */
+    where?: DeploymentApprovalWhereInput
+    /**
+     * Limit how many DeploymentApprovals to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DeploymentApprovalIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * DeploymentApproval upsert
+   */
+  export type DeploymentApprovalUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DeploymentApproval
+     */
+    select?: DeploymentApprovalSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DeploymentApproval
+     */
+    omit?: DeploymentApprovalOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DeploymentApprovalInclude<ExtArgs> | null
+    /**
+     * The filter to search for the DeploymentApproval to update in case it exists.
+     */
+    where: DeploymentApprovalWhereUniqueInput
+    /**
+     * In case the DeploymentApproval found by the `where` argument doesn't exist, create a new DeploymentApproval with this data.
+     */
+    create: XOR<DeploymentApprovalCreateInput, DeploymentApprovalUncheckedCreateInput>
+    /**
+     * In case the DeploymentApproval was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<DeploymentApprovalUpdateInput, DeploymentApprovalUncheckedUpdateInput>
+  }
+
+  /**
+   * DeploymentApproval delete
+   */
+  export type DeploymentApprovalDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DeploymentApproval
+     */
+    select?: DeploymentApprovalSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DeploymentApproval
+     */
+    omit?: DeploymentApprovalOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DeploymentApprovalInclude<ExtArgs> | null
+    /**
+     * Filter which DeploymentApproval to delete.
+     */
+    where: DeploymentApprovalWhereUniqueInput
+  }
+
+  /**
+   * DeploymentApproval deleteMany
+   */
+  export type DeploymentApprovalDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which DeploymentApprovals to delete
+     */
+    where?: DeploymentApprovalWhereInput
+    /**
+     * Limit how many DeploymentApprovals to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * DeploymentApproval without action
+   */
+  export type DeploymentApprovalDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DeploymentApproval
+     */
+    select?: DeploymentApprovalSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DeploymentApproval
+     */
+    omit?: DeploymentApprovalOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: DeploymentApprovalInclude<ExtArgs> | null
+  }
+
+
+  /**
    * Enums
    */
 
@@ -9028,6 +18358,19 @@ export namespace Prisma {
   export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
 
 
+  export const ProviderIntegrationScalarFieldEnum: {
+    id: 'id',
+    userId: 'userId',
+    provider: 'provider',
+    apiToken: 'apiToken',
+    teamId: 'teamId',
+    connectedAt: 'connectedAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type ProviderIntegrationScalarFieldEnum = (typeof ProviderIntegrationScalarFieldEnum)[keyof typeof ProviderIntegrationScalarFieldEnum]
+
+
   export const AuthTokenScalarFieldEnum: {
     id: 'id',
     userId: 'userId',
@@ -9064,6 +18407,136 @@ export namespace Prisma {
   export type PlatformConfigScalarFieldEnum = (typeof PlatformConfigScalarFieldEnum)[keyof typeof PlatformConfigScalarFieldEnum]
 
 
+  export const RepositoryMetadataScalarFieldEnum: {
+    id: 'id',
+    repositoryName: 'repositoryName',
+    owner: 'owner',
+    healthScore: 'healthScore',
+    healthStatus: 'healthStatus',
+    lastHealthCheckAt: 'lastHealthCheckAt',
+    teamName: 'teamName',
+    ownerEmail: 'ownerEmail',
+    maintainers: 'maintainers',
+    onCallRotationUrl: 'onCallRotationUrl',
+    lastDeploymentAt: 'lastDeploymentAt',
+    lastDeployedVersion: 'lastDeployedVersion',
+    lastDeployedBy: 'lastDeployedBy',
+    lastDeploymentEnvironment: 'lastDeploymentEnvironment',
+    productionHealthy: 'productionHealthy',
+    description: 'description',
+    language: 'language',
+    testCoveragePercent: 'testCoveragePercent',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type RepositoryMetadataScalarFieldEnum = (typeof RepositoryMetadataScalarFieldEnum)[keyof typeof RepositoryMetadataScalarFieldEnum]
+
+
+  export const HealthCheckResultScalarFieldEnum: {
+    id: 'id',
+    repositoryName: 'repositoryName',
+    repositoryOwner: 'repositoryOwner',
+    repositoryMetadataId: 'repositoryMetadataId',
+    securityScore: 'securityScore',
+    codeQualityScore: 'codeQualityScore',
+    deploymentReadinessScore: 'deploymentReadinessScore',
+    teamOwnershipScore: 'teamOwnershipScore',
+    totalScore: 'totalScore',
+    overallStatus: 'overallStatus',
+    securityIssues: 'securityIssues',
+    codeQualityIssues: 'codeQualityIssues',
+    deploymentReadinessIssues: 'deploymentReadinessIssues',
+    teamOwnershipIssues: 'teamOwnershipIssues',
+    aiSuggestions: 'aiSuggestions',
+    executedAt: 'executedAt',
+    executedBy: 'executedBy',
+    createdAt: 'createdAt'
+  };
+
+  export type HealthCheckResultScalarFieldEnum = (typeof HealthCheckResultScalarFieldEnum)[keyof typeof HealthCheckResultScalarFieldEnum]
+
+
+  export const QuickFixActionScalarFieldEnum: {
+    id: 'id',
+    repositoryMetadataId: 'repositoryMetadataId',
+    actionType: 'actionType',
+    actionDescription: 'actionDescription',
+    status: 'status',
+    executedBy: 'executedBy',
+    result: 'result',
+    createdAt: 'createdAt',
+    completedAt: 'completedAt'
+  };
+
+  export type QuickFixActionScalarFieldEnum = (typeof QuickFixActionScalarFieldEnum)[keyof typeof QuickFixActionScalarFieldEnum]
+
+
+  export const RepositoryEnvironmentScalarFieldEnum: {
+    id: 'id',
+    repositoryMetadataId: 'repositoryMetadataId',
+    name: 'name',
+    order: 'order',
+    requiresApproval: 'requiresApproval',
+    approvalMinCount: 'approvalMinCount',
+    autoApproveIfTestsPass: 'autoApproveIfTestsPass',
+    autoRollbackOnFailure: 'autoRollbackOnFailure',
+    healthCheckUrl: 'healthCheckUrl',
+    healthCheckInterval: 'healthCheckInterval',
+    variables: 'variables',
+    secretNames: 'secretNames',
+    slackChannel: 'slackChannel',
+    notifyOn: 'notifyOn',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type RepositoryEnvironmentScalarFieldEnum = (typeof RepositoryEnvironmentScalarFieldEnum)[keyof typeof RepositoryEnvironmentScalarFieldEnum]
+
+
+  export const DeploymentScalarFieldEnum: {
+    id: 'id',
+    repositoryMetadataId: 'repositoryMetadataId',
+    environmentId: 'environmentId',
+    version: 'version',
+    status: 'status',
+    deployedAt: 'deployedAt',
+    deployedBy: 'deployedBy',
+    duration: 'duration',
+    riskAssessment: 'riskAssessment',
+    healthCheckPassed: 'healthCheckPassed',
+    healthCheckDetails: 'healthCheckDetails',
+    postDeploymentMetrics: 'postDeploymentMetrics',
+    preDeploymentNotes: 'preDeploymentNotes',
+    postDeploymentNotes: 'postDeploymentNotes',
+    deploymentLogs: 'deploymentLogs',
+    artifacts: 'artifacts',
+    approvalRequired: 'approvalRequired',
+    rollbackOf: 'rollbackOf',
+    rollbackReason: 'rollbackReason',
+    rollbackInitiatedAt: 'rollbackInitiatedAt',
+    rollbackInitiatedBy: 'rollbackInitiatedBy',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type DeploymentScalarFieldEnum = (typeof DeploymentScalarFieldEnum)[keyof typeof DeploymentScalarFieldEnum]
+
+
+  export const DeploymentApprovalScalarFieldEnum: {
+    id: 'id',
+    deploymentId: 'deploymentId',
+    approverEmail: 'approverEmail',
+    status: 'status',
+    reason: 'reason',
+    comment: 'comment',
+    respondedAt: 'respondedAt',
+    createdAt: 'createdAt'
+  };
+
+  export type DeploymentApprovalScalarFieldEnum = (typeof DeploymentApprovalScalarFieldEnum)[keyof typeof DeploymentApprovalScalarFieldEnum]
+
+
   export const SortOrder: {
     asc: 'asc',
     desc: 'desc'
@@ -9078,6 +18551,13 @@ export namespace Prisma {
   };
 
   export type NullableJsonNullValueInput = (typeof NullableJsonNullValueInput)[keyof typeof NullableJsonNullValueInput]
+
+
+  export const JsonNullValueInput: {
+    JsonNull: typeof JsonNull
+  };
+
+  export type JsonNullValueInput = (typeof JsonNullValueInput)[keyof typeof JsonNullValueInput]
 
 
   export const QueryMode: {
@@ -9373,6 +18853,7 @@ export namespace Prisma {
     dashboardPreferences?: JsonNullableFilter<"User">
     createdAt?: DateTimeFilter<"User"> | Date | string
     authTokens?: AuthTokenListRelationFilter
+    providerIntegrations?: ProviderIntegrationListRelationFilter
   }
 
   export type UserOrderByWithRelationInput = {
@@ -9388,6 +18869,7 @@ export namespace Prisma {
     dashboardPreferences?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     authTokens?: AuthTokenOrderByRelationAggregateInput
+    providerIntegrations?: ProviderIntegrationOrderByRelationAggregateInput
   }
 
   export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -9406,6 +18888,7 @@ export namespace Prisma {
     dashboardPreferences?: JsonNullableFilter<"User">
     createdAt?: DateTimeFilter<"User"> | Date | string
     authTokens?: AuthTokenListRelationFilter
+    providerIntegrations?: ProviderIntegrationListRelationFilter
   }, "id" | "email">
 
   export type UserOrderByWithAggregationInput = {
@@ -9440,6 +18923,72 @@ export namespace Prisma {
     status?: StringWithAggregatesFilter<"User"> | string
     dashboardPreferences?: JsonNullableWithAggregatesFilter<"User">
     createdAt?: DateTimeWithAggregatesFilter<"User"> | Date | string
+  }
+
+  export type ProviderIntegrationWhereInput = {
+    AND?: ProviderIntegrationWhereInput | ProviderIntegrationWhereInput[]
+    OR?: ProviderIntegrationWhereInput[]
+    NOT?: ProviderIntegrationWhereInput | ProviderIntegrationWhereInput[]
+    id?: StringFilter<"ProviderIntegration"> | string
+    userId?: StringFilter<"ProviderIntegration"> | string
+    provider?: StringFilter<"ProviderIntegration"> | string
+    apiToken?: StringFilter<"ProviderIntegration"> | string
+    teamId?: StringNullableFilter<"ProviderIntegration"> | string | null
+    connectedAt?: DateTimeFilter<"ProviderIntegration"> | Date | string
+    updatedAt?: DateTimeFilter<"ProviderIntegration"> | Date | string
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+  }
+
+  export type ProviderIntegrationOrderByWithRelationInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    provider?: SortOrder
+    apiToken?: SortOrder
+    teamId?: SortOrderInput | SortOrder
+    connectedAt?: SortOrder
+    updatedAt?: SortOrder
+    user?: UserOrderByWithRelationInput
+  }
+
+  export type ProviderIntegrationWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    userId_provider?: ProviderIntegrationUserIdProviderCompoundUniqueInput
+    AND?: ProviderIntegrationWhereInput | ProviderIntegrationWhereInput[]
+    OR?: ProviderIntegrationWhereInput[]
+    NOT?: ProviderIntegrationWhereInput | ProviderIntegrationWhereInput[]
+    userId?: StringFilter<"ProviderIntegration"> | string
+    provider?: StringFilter<"ProviderIntegration"> | string
+    apiToken?: StringFilter<"ProviderIntegration"> | string
+    teamId?: StringNullableFilter<"ProviderIntegration"> | string | null
+    connectedAt?: DateTimeFilter<"ProviderIntegration"> | Date | string
+    updatedAt?: DateTimeFilter<"ProviderIntegration"> | Date | string
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+  }, "id" | "userId_provider">
+
+  export type ProviderIntegrationOrderByWithAggregationInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    provider?: SortOrder
+    apiToken?: SortOrder
+    teamId?: SortOrderInput | SortOrder
+    connectedAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: ProviderIntegrationCountOrderByAggregateInput
+    _max?: ProviderIntegrationMaxOrderByAggregateInput
+    _min?: ProviderIntegrationMinOrderByAggregateInput
+  }
+
+  export type ProviderIntegrationScalarWhereWithAggregatesInput = {
+    AND?: ProviderIntegrationScalarWhereWithAggregatesInput | ProviderIntegrationScalarWhereWithAggregatesInput[]
+    OR?: ProviderIntegrationScalarWhereWithAggregatesInput[]
+    NOT?: ProviderIntegrationScalarWhereWithAggregatesInput | ProviderIntegrationScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"ProviderIntegration"> | string
+    userId?: StringWithAggregatesFilter<"ProviderIntegration"> | string
+    provider?: StringWithAggregatesFilter<"ProviderIntegration"> | string
+    apiToken?: StringWithAggregatesFilter<"ProviderIntegration"> | string
+    teamId?: StringNullableWithAggregatesFilter<"ProviderIntegration"> | string | null
+    connectedAt?: DateTimeWithAggregatesFilter<"ProviderIntegration"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"ProviderIntegration"> | Date | string
   }
 
   export type AuthTokenWhereInput = {
@@ -9620,6 +19169,685 @@ export namespace Prisma {
     updatedAt?: DateTimeWithAggregatesFilter<"PlatformConfig"> | Date | string
   }
 
+  export type RepositoryMetadataWhereInput = {
+    AND?: RepositoryMetadataWhereInput | RepositoryMetadataWhereInput[]
+    OR?: RepositoryMetadataWhereInput[]
+    NOT?: RepositoryMetadataWhereInput | RepositoryMetadataWhereInput[]
+    id?: StringFilter<"RepositoryMetadata"> | string
+    repositoryName?: StringFilter<"RepositoryMetadata"> | string
+    owner?: StringFilter<"RepositoryMetadata"> | string
+    healthScore?: IntFilter<"RepositoryMetadata"> | number
+    healthStatus?: StringFilter<"RepositoryMetadata"> | string
+    lastHealthCheckAt?: DateTimeNullableFilter<"RepositoryMetadata"> | Date | string | null
+    teamName?: StringNullableFilter<"RepositoryMetadata"> | string | null
+    ownerEmail?: StringNullableFilter<"RepositoryMetadata"> | string | null
+    maintainers?: StringNullableListFilter<"RepositoryMetadata">
+    onCallRotationUrl?: StringNullableFilter<"RepositoryMetadata"> | string | null
+    lastDeploymentAt?: DateTimeNullableFilter<"RepositoryMetadata"> | Date | string | null
+    lastDeployedVersion?: StringNullableFilter<"RepositoryMetadata"> | string | null
+    lastDeployedBy?: StringNullableFilter<"RepositoryMetadata"> | string | null
+    lastDeploymentEnvironment?: StringNullableFilter<"RepositoryMetadata"> | string | null
+    productionHealthy?: BoolNullableFilter<"RepositoryMetadata"> | boolean | null
+    description?: StringNullableFilter<"RepositoryMetadata"> | string | null
+    language?: StringNullableFilter<"RepositoryMetadata"> | string | null
+    testCoveragePercent?: FloatNullableFilter<"RepositoryMetadata"> | number | null
+    createdAt?: DateTimeFilter<"RepositoryMetadata"> | Date | string
+    updatedAt?: DateTimeFilter<"RepositoryMetadata"> | Date | string
+    healthCheckResults?: HealthCheckResultListRelationFilter
+    quickFixActions?: QuickFixActionListRelationFilter
+    environments?: RepositoryEnvironmentListRelationFilter
+    deployments?: DeploymentListRelationFilter
+  }
+
+  export type RepositoryMetadataOrderByWithRelationInput = {
+    id?: SortOrder
+    repositoryName?: SortOrder
+    owner?: SortOrder
+    healthScore?: SortOrder
+    healthStatus?: SortOrder
+    lastHealthCheckAt?: SortOrderInput | SortOrder
+    teamName?: SortOrderInput | SortOrder
+    ownerEmail?: SortOrderInput | SortOrder
+    maintainers?: SortOrder
+    onCallRotationUrl?: SortOrderInput | SortOrder
+    lastDeploymentAt?: SortOrderInput | SortOrder
+    lastDeployedVersion?: SortOrderInput | SortOrder
+    lastDeployedBy?: SortOrderInput | SortOrder
+    lastDeploymentEnvironment?: SortOrderInput | SortOrder
+    productionHealthy?: SortOrderInput | SortOrder
+    description?: SortOrderInput | SortOrder
+    language?: SortOrderInput | SortOrder
+    testCoveragePercent?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    healthCheckResults?: HealthCheckResultOrderByRelationAggregateInput
+    quickFixActions?: QuickFixActionOrderByRelationAggregateInput
+    environments?: RepositoryEnvironmentOrderByRelationAggregateInput
+    deployments?: DeploymentOrderByRelationAggregateInput
+  }
+
+  export type RepositoryMetadataWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    repositoryName_owner?: RepositoryMetadataRepositoryNameOwnerCompoundUniqueInput
+    AND?: RepositoryMetadataWhereInput | RepositoryMetadataWhereInput[]
+    OR?: RepositoryMetadataWhereInput[]
+    NOT?: RepositoryMetadataWhereInput | RepositoryMetadataWhereInput[]
+    repositoryName?: StringFilter<"RepositoryMetadata"> | string
+    owner?: StringFilter<"RepositoryMetadata"> | string
+    healthScore?: IntFilter<"RepositoryMetadata"> | number
+    healthStatus?: StringFilter<"RepositoryMetadata"> | string
+    lastHealthCheckAt?: DateTimeNullableFilter<"RepositoryMetadata"> | Date | string | null
+    teamName?: StringNullableFilter<"RepositoryMetadata"> | string | null
+    ownerEmail?: StringNullableFilter<"RepositoryMetadata"> | string | null
+    maintainers?: StringNullableListFilter<"RepositoryMetadata">
+    onCallRotationUrl?: StringNullableFilter<"RepositoryMetadata"> | string | null
+    lastDeploymentAt?: DateTimeNullableFilter<"RepositoryMetadata"> | Date | string | null
+    lastDeployedVersion?: StringNullableFilter<"RepositoryMetadata"> | string | null
+    lastDeployedBy?: StringNullableFilter<"RepositoryMetadata"> | string | null
+    lastDeploymentEnvironment?: StringNullableFilter<"RepositoryMetadata"> | string | null
+    productionHealthy?: BoolNullableFilter<"RepositoryMetadata"> | boolean | null
+    description?: StringNullableFilter<"RepositoryMetadata"> | string | null
+    language?: StringNullableFilter<"RepositoryMetadata"> | string | null
+    testCoveragePercent?: FloatNullableFilter<"RepositoryMetadata"> | number | null
+    createdAt?: DateTimeFilter<"RepositoryMetadata"> | Date | string
+    updatedAt?: DateTimeFilter<"RepositoryMetadata"> | Date | string
+    healthCheckResults?: HealthCheckResultListRelationFilter
+    quickFixActions?: QuickFixActionListRelationFilter
+    environments?: RepositoryEnvironmentListRelationFilter
+    deployments?: DeploymentListRelationFilter
+  }, "id" | "repositoryName_owner">
+
+  export type RepositoryMetadataOrderByWithAggregationInput = {
+    id?: SortOrder
+    repositoryName?: SortOrder
+    owner?: SortOrder
+    healthScore?: SortOrder
+    healthStatus?: SortOrder
+    lastHealthCheckAt?: SortOrderInput | SortOrder
+    teamName?: SortOrderInput | SortOrder
+    ownerEmail?: SortOrderInput | SortOrder
+    maintainers?: SortOrder
+    onCallRotationUrl?: SortOrderInput | SortOrder
+    lastDeploymentAt?: SortOrderInput | SortOrder
+    lastDeployedVersion?: SortOrderInput | SortOrder
+    lastDeployedBy?: SortOrderInput | SortOrder
+    lastDeploymentEnvironment?: SortOrderInput | SortOrder
+    productionHealthy?: SortOrderInput | SortOrder
+    description?: SortOrderInput | SortOrder
+    language?: SortOrderInput | SortOrder
+    testCoveragePercent?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: RepositoryMetadataCountOrderByAggregateInput
+    _avg?: RepositoryMetadataAvgOrderByAggregateInput
+    _max?: RepositoryMetadataMaxOrderByAggregateInput
+    _min?: RepositoryMetadataMinOrderByAggregateInput
+    _sum?: RepositoryMetadataSumOrderByAggregateInput
+  }
+
+  export type RepositoryMetadataScalarWhereWithAggregatesInput = {
+    AND?: RepositoryMetadataScalarWhereWithAggregatesInput | RepositoryMetadataScalarWhereWithAggregatesInput[]
+    OR?: RepositoryMetadataScalarWhereWithAggregatesInput[]
+    NOT?: RepositoryMetadataScalarWhereWithAggregatesInput | RepositoryMetadataScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"RepositoryMetadata"> | string
+    repositoryName?: StringWithAggregatesFilter<"RepositoryMetadata"> | string
+    owner?: StringWithAggregatesFilter<"RepositoryMetadata"> | string
+    healthScore?: IntWithAggregatesFilter<"RepositoryMetadata"> | number
+    healthStatus?: StringWithAggregatesFilter<"RepositoryMetadata"> | string
+    lastHealthCheckAt?: DateTimeNullableWithAggregatesFilter<"RepositoryMetadata"> | Date | string | null
+    teamName?: StringNullableWithAggregatesFilter<"RepositoryMetadata"> | string | null
+    ownerEmail?: StringNullableWithAggregatesFilter<"RepositoryMetadata"> | string | null
+    maintainers?: StringNullableListFilter<"RepositoryMetadata">
+    onCallRotationUrl?: StringNullableWithAggregatesFilter<"RepositoryMetadata"> | string | null
+    lastDeploymentAt?: DateTimeNullableWithAggregatesFilter<"RepositoryMetadata"> | Date | string | null
+    lastDeployedVersion?: StringNullableWithAggregatesFilter<"RepositoryMetadata"> | string | null
+    lastDeployedBy?: StringNullableWithAggregatesFilter<"RepositoryMetadata"> | string | null
+    lastDeploymentEnvironment?: StringNullableWithAggregatesFilter<"RepositoryMetadata"> | string | null
+    productionHealthy?: BoolNullableWithAggregatesFilter<"RepositoryMetadata"> | boolean | null
+    description?: StringNullableWithAggregatesFilter<"RepositoryMetadata"> | string | null
+    language?: StringNullableWithAggregatesFilter<"RepositoryMetadata"> | string | null
+    testCoveragePercent?: FloatNullableWithAggregatesFilter<"RepositoryMetadata"> | number | null
+    createdAt?: DateTimeWithAggregatesFilter<"RepositoryMetadata"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"RepositoryMetadata"> | Date | string
+  }
+
+  export type HealthCheckResultWhereInput = {
+    AND?: HealthCheckResultWhereInput | HealthCheckResultWhereInput[]
+    OR?: HealthCheckResultWhereInput[]
+    NOT?: HealthCheckResultWhereInput | HealthCheckResultWhereInput[]
+    id?: StringFilter<"HealthCheckResult"> | string
+    repositoryName?: StringFilter<"HealthCheckResult"> | string
+    repositoryOwner?: StringFilter<"HealthCheckResult"> | string
+    repositoryMetadataId?: StringFilter<"HealthCheckResult"> | string
+    securityScore?: IntFilter<"HealthCheckResult"> | number
+    codeQualityScore?: IntFilter<"HealthCheckResult"> | number
+    deploymentReadinessScore?: IntFilter<"HealthCheckResult"> | number
+    teamOwnershipScore?: IntFilter<"HealthCheckResult"> | number
+    totalScore?: IntFilter<"HealthCheckResult"> | number
+    overallStatus?: StringFilter<"HealthCheckResult"> | string
+    securityIssues?: JsonFilter<"HealthCheckResult">
+    codeQualityIssues?: JsonFilter<"HealthCheckResult">
+    deploymentReadinessIssues?: JsonFilter<"HealthCheckResult">
+    teamOwnershipIssues?: JsonFilter<"HealthCheckResult">
+    aiSuggestions?: JsonFilter<"HealthCheckResult">
+    executedAt?: DateTimeFilter<"HealthCheckResult"> | Date | string
+    executedBy?: StringNullableFilter<"HealthCheckResult"> | string | null
+    createdAt?: DateTimeFilter<"HealthCheckResult"> | Date | string
+    repositoryMetadata?: XOR<RepositoryMetadataScalarRelationFilter, RepositoryMetadataWhereInput>
+  }
+
+  export type HealthCheckResultOrderByWithRelationInput = {
+    id?: SortOrder
+    repositoryName?: SortOrder
+    repositoryOwner?: SortOrder
+    repositoryMetadataId?: SortOrder
+    securityScore?: SortOrder
+    codeQualityScore?: SortOrder
+    deploymentReadinessScore?: SortOrder
+    teamOwnershipScore?: SortOrder
+    totalScore?: SortOrder
+    overallStatus?: SortOrder
+    securityIssues?: SortOrder
+    codeQualityIssues?: SortOrder
+    deploymentReadinessIssues?: SortOrder
+    teamOwnershipIssues?: SortOrder
+    aiSuggestions?: SortOrder
+    executedAt?: SortOrder
+    executedBy?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    repositoryMetadata?: RepositoryMetadataOrderByWithRelationInput
+  }
+
+  export type HealthCheckResultWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: HealthCheckResultWhereInput | HealthCheckResultWhereInput[]
+    OR?: HealthCheckResultWhereInput[]
+    NOT?: HealthCheckResultWhereInput | HealthCheckResultWhereInput[]
+    repositoryName?: StringFilter<"HealthCheckResult"> | string
+    repositoryOwner?: StringFilter<"HealthCheckResult"> | string
+    repositoryMetadataId?: StringFilter<"HealthCheckResult"> | string
+    securityScore?: IntFilter<"HealthCheckResult"> | number
+    codeQualityScore?: IntFilter<"HealthCheckResult"> | number
+    deploymentReadinessScore?: IntFilter<"HealthCheckResult"> | number
+    teamOwnershipScore?: IntFilter<"HealthCheckResult"> | number
+    totalScore?: IntFilter<"HealthCheckResult"> | number
+    overallStatus?: StringFilter<"HealthCheckResult"> | string
+    securityIssues?: JsonFilter<"HealthCheckResult">
+    codeQualityIssues?: JsonFilter<"HealthCheckResult">
+    deploymentReadinessIssues?: JsonFilter<"HealthCheckResult">
+    teamOwnershipIssues?: JsonFilter<"HealthCheckResult">
+    aiSuggestions?: JsonFilter<"HealthCheckResult">
+    executedAt?: DateTimeFilter<"HealthCheckResult"> | Date | string
+    executedBy?: StringNullableFilter<"HealthCheckResult"> | string | null
+    createdAt?: DateTimeFilter<"HealthCheckResult"> | Date | string
+    repositoryMetadata?: XOR<RepositoryMetadataScalarRelationFilter, RepositoryMetadataWhereInput>
+  }, "id">
+
+  export type HealthCheckResultOrderByWithAggregationInput = {
+    id?: SortOrder
+    repositoryName?: SortOrder
+    repositoryOwner?: SortOrder
+    repositoryMetadataId?: SortOrder
+    securityScore?: SortOrder
+    codeQualityScore?: SortOrder
+    deploymentReadinessScore?: SortOrder
+    teamOwnershipScore?: SortOrder
+    totalScore?: SortOrder
+    overallStatus?: SortOrder
+    securityIssues?: SortOrder
+    codeQualityIssues?: SortOrder
+    deploymentReadinessIssues?: SortOrder
+    teamOwnershipIssues?: SortOrder
+    aiSuggestions?: SortOrder
+    executedAt?: SortOrder
+    executedBy?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    _count?: HealthCheckResultCountOrderByAggregateInput
+    _avg?: HealthCheckResultAvgOrderByAggregateInput
+    _max?: HealthCheckResultMaxOrderByAggregateInput
+    _min?: HealthCheckResultMinOrderByAggregateInput
+    _sum?: HealthCheckResultSumOrderByAggregateInput
+  }
+
+  export type HealthCheckResultScalarWhereWithAggregatesInput = {
+    AND?: HealthCheckResultScalarWhereWithAggregatesInput | HealthCheckResultScalarWhereWithAggregatesInput[]
+    OR?: HealthCheckResultScalarWhereWithAggregatesInput[]
+    NOT?: HealthCheckResultScalarWhereWithAggregatesInput | HealthCheckResultScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"HealthCheckResult"> | string
+    repositoryName?: StringWithAggregatesFilter<"HealthCheckResult"> | string
+    repositoryOwner?: StringWithAggregatesFilter<"HealthCheckResult"> | string
+    repositoryMetadataId?: StringWithAggregatesFilter<"HealthCheckResult"> | string
+    securityScore?: IntWithAggregatesFilter<"HealthCheckResult"> | number
+    codeQualityScore?: IntWithAggregatesFilter<"HealthCheckResult"> | number
+    deploymentReadinessScore?: IntWithAggregatesFilter<"HealthCheckResult"> | number
+    teamOwnershipScore?: IntWithAggregatesFilter<"HealthCheckResult"> | number
+    totalScore?: IntWithAggregatesFilter<"HealthCheckResult"> | number
+    overallStatus?: StringWithAggregatesFilter<"HealthCheckResult"> | string
+    securityIssues?: JsonWithAggregatesFilter<"HealthCheckResult">
+    codeQualityIssues?: JsonWithAggregatesFilter<"HealthCheckResult">
+    deploymentReadinessIssues?: JsonWithAggregatesFilter<"HealthCheckResult">
+    teamOwnershipIssues?: JsonWithAggregatesFilter<"HealthCheckResult">
+    aiSuggestions?: JsonWithAggregatesFilter<"HealthCheckResult">
+    executedAt?: DateTimeWithAggregatesFilter<"HealthCheckResult"> | Date | string
+    executedBy?: StringNullableWithAggregatesFilter<"HealthCheckResult"> | string | null
+    createdAt?: DateTimeWithAggregatesFilter<"HealthCheckResult"> | Date | string
+  }
+
+  export type QuickFixActionWhereInput = {
+    AND?: QuickFixActionWhereInput | QuickFixActionWhereInput[]
+    OR?: QuickFixActionWhereInput[]
+    NOT?: QuickFixActionWhereInput | QuickFixActionWhereInput[]
+    id?: StringFilter<"QuickFixAction"> | string
+    repositoryMetadataId?: StringFilter<"QuickFixAction"> | string
+    actionType?: StringFilter<"QuickFixAction"> | string
+    actionDescription?: StringFilter<"QuickFixAction"> | string
+    status?: StringFilter<"QuickFixAction"> | string
+    executedBy?: StringNullableFilter<"QuickFixAction"> | string | null
+    result?: JsonNullableFilter<"QuickFixAction">
+    createdAt?: DateTimeFilter<"QuickFixAction"> | Date | string
+    completedAt?: DateTimeNullableFilter<"QuickFixAction"> | Date | string | null
+    repositoryMetadata?: XOR<RepositoryMetadataScalarRelationFilter, RepositoryMetadataWhereInput>
+  }
+
+  export type QuickFixActionOrderByWithRelationInput = {
+    id?: SortOrder
+    repositoryMetadataId?: SortOrder
+    actionType?: SortOrder
+    actionDescription?: SortOrder
+    status?: SortOrder
+    executedBy?: SortOrderInput | SortOrder
+    result?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    completedAt?: SortOrderInput | SortOrder
+    repositoryMetadata?: RepositoryMetadataOrderByWithRelationInput
+  }
+
+  export type QuickFixActionWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: QuickFixActionWhereInput | QuickFixActionWhereInput[]
+    OR?: QuickFixActionWhereInput[]
+    NOT?: QuickFixActionWhereInput | QuickFixActionWhereInput[]
+    repositoryMetadataId?: StringFilter<"QuickFixAction"> | string
+    actionType?: StringFilter<"QuickFixAction"> | string
+    actionDescription?: StringFilter<"QuickFixAction"> | string
+    status?: StringFilter<"QuickFixAction"> | string
+    executedBy?: StringNullableFilter<"QuickFixAction"> | string | null
+    result?: JsonNullableFilter<"QuickFixAction">
+    createdAt?: DateTimeFilter<"QuickFixAction"> | Date | string
+    completedAt?: DateTimeNullableFilter<"QuickFixAction"> | Date | string | null
+    repositoryMetadata?: XOR<RepositoryMetadataScalarRelationFilter, RepositoryMetadataWhereInput>
+  }, "id">
+
+  export type QuickFixActionOrderByWithAggregationInput = {
+    id?: SortOrder
+    repositoryMetadataId?: SortOrder
+    actionType?: SortOrder
+    actionDescription?: SortOrder
+    status?: SortOrder
+    executedBy?: SortOrderInput | SortOrder
+    result?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    completedAt?: SortOrderInput | SortOrder
+    _count?: QuickFixActionCountOrderByAggregateInput
+    _max?: QuickFixActionMaxOrderByAggregateInput
+    _min?: QuickFixActionMinOrderByAggregateInput
+  }
+
+  export type QuickFixActionScalarWhereWithAggregatesInput = {
+    AND?: QuickFixActionScalarWhereWithAggregatesInput | QuickFixActionScalarWhereWithAggregatesInput[]
+    OR?: QuickFixActionScalarWhereWithAggregatesInput[]
+    NOT?: QuickFixActionScalarWhereWithAggregatesInput | QuickFixActionScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"QuickFixAction"> | string
+    repositoryMetadataId?: StringWithAggregatesFilter<"QuickFixAction"> | string
+    actionType?: StringWithAggregatesFilter<"QuickFixAction"> | string
+    actionDescription?: StringWithAggregatesFilter<"QuickFixAction"> | string
+    status?: StringWithAggregatesFilter<"QuickFixAction"> | string
+    executedBy?: StringNullableWithAggregatesFilter<"QuickFixAction"> | string | null
+    result?: JsonNullableWithAggregatesFilter<"QuickFixAction">
+    createdAt?: DateTimeWithAggregatesFilter<"QuickFixAction"> | Date | string
+    completedAt?: DateTimeNullableWithAggregatesFilter<"QuickFixAction"> | Date | string | null
+  }
+
+  export type RepositoryEnvironmentWhereInput = {
+    AND?: RepositoryEnvironmentWhereInput | RepositoryEnvironmentWhereInput[]
+    OR?: RepositoryEnvironmentWhereInput[]
+    NOT?: RepositoryEnvironmentWhereInput | RepositoryEnvironmentWhereInput[]
+    id?: StringFilter<"RepositoryEnvironment"> | string
+    repositoryMetadataId?: StringFilter<"RepositoryEnvironment"> | string
+    name?: StringFilter<"RepositoryEnvironment"> | string
+    order?: IntFilter<"RepositoryEnvironment"> | number
+    requiresApproval?: BoolFilter<"RepositoryEnvironment"> | boolean
+    approvalMinCount?: IntFilter<"RepositoryEnvironment"> | number
+    autoApproveIfTestsPass?: BoolFilter<"RepositoryEnvironment"> | boolean
+    autoRollbackOnFailure?: BoolFilter<"RepositoryEnvironment"> | boolean
+    healthCheckUrl?: StringNullableFilter<"RepositoryEnvironment"> | string | null
+    healthCheckInterval?: IntNullableFilter<"RepositoryEnvironment"> | number | null
+    variables?: JsonFilter<"RepositoryEnvironment">
+    secretNames?: StringNullableListFilter<"RepositoryEnvironment">
+    slackChannel?: StringNullableFilter<"RepositoryEnvironment"> | string | null
+    notifyOn?: StringNullableListFilter<"RepositoryEnvironment">
+    createdAt?: DateTimeFilter<"RepositoryEnvironment"> | Date | string
+    updatedAt?: DateTimeFilter<"RepositoryEnvironment"> | Date | string
+    repositoryMetadata?: XOR<RepositoryMetadataScalarRelationFilter, RepositoryMetadataWhereInput>
+    deployments?: DeploymentListRelationFilter
+  }
+
+  export type RepositoryEnvironmentOrderByWithRelationInput = {
+    id?: SortOrder
+    repositoryMetadataId?: SortOrder
+    name?: SortOrder
+    order?: SortOrder
+    requiresApproval?: SortOrder
+    approvalMinCount?: SortOrder
+    autoApproveIfTestsPass?: SortOrder
+    autoRollbackOnFailure?: SortOrder
+    healthCheckUrl?: SortOrderInput | SortOrder
+    healthCheckInterval?: SortOrderInput | SortOrder
+    variables?: SortOrder
+    secretNames?: SortOrder
+    slackChannel?: SortOrderInput | SortOrder
+    notifyOn?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    repositoryMetadata?: RepositoryMetadataOrderByWithRelationInput
+    deployments?: DeploymentOrderByRelationAggregateInput
+  }
+
+  export type RepositoryEnvironmentWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    repositoryMetadataId_name?: RepositoryEnvironmentRepositoryMetadataIdNameCompoundUniqueInput
+    AND?: RepositoryEnvironmentWhereInput | RepositoryEnvironmentWhereInput[]
+    OR?: RepositoryEnvironmentWhereInput[]
+    NOT?: RepositoryEnvironmentWhereInput | RepositoryEnvironmentWhereInput[]
+    repositoryMetadataId?: StringFilter<"RepositoryEnvironment"> | string
+    name?: StringFilter<"RepositoryEnvironment"> | string
+    order?: IntFilter<"RepositoryEnvironment"> | number
+    requiresApproval?: BoolFilter<"RepositoryEnvironment"> | boolean
+    approvalMinCount?: IntFilter<"RepositoryEnvironment"> | number
+    autoApproveIfTestsPass?: BoolFilter<"RepositoryEnvironment"> | boolean
+    autoRollbackOnFailure?: BoolFilter<"RepositoryEnvironment"> | boolean
+    healthCheckUrl?: StringNullableFilter<"RepositoryEnvironment"> | string | null
+    healthCheckInterval?: IntNullableFilter<"RepositoryEnvironment"> | number | null
+    variables?: JsonFilter<"RepositoryEnvironment">
+    secretNames?: StringNullableListFilter<"RepositoryEnvironment">
+    slackChannel?: StringNullableFilter<"RepositoryEnvironment"> | string | null
+    notifyOn?: StringNullableListFilter<"RepositoryEnvironment">
+    createdAt?: DateTimeFilter<"RepositoryEnvironment"> | Date | string
+    updatedAt?: DateTimeFilter<"RepositoryEnvironment"> | Date | string
+    repositoryMetadata?: XOR<RepositoryMetadataScalarRelationFilter, RepositoryMetadataWhereInput>
+    deployments?: DeploymentListRelationFilter
+  }, "id" | "repositoryMetadataId_name">
+
+  export type RepositoryEnvironmentOrderByWithAggregationInput = {
+    id?: SortOrder
+    repositoryMetadataId?: SortOrder
+    name?: SortOrder
+    order?: SortOrder
+    requiresApproval?: SortOrder
+    approvalMinCount?: SortOrder
+    autoApproveIfTestsPass?: SortOrder
+    autoRollbackOnFailure?: SortOrder
+    healthCheckUrl?: SortOrderInput | SortOrder
+    healthCheckInterval?: SortOrderInput | SortOrder
+    variables?: SortOrder
+    secretNames?: SortOrder
+    slackChannel?: SortOrderInput | SortOrder
+    notifyOn?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: RepositoryEnvironmentCountOrderByAggregateInput
+    _avg?: RepositoryEnvironmentAvgOrderByAggregateInput
+    _max?: RepositoryEnvironmentMaxOrderByAggregateInput
+    _min?: RepositoryEnvironmentMinOrderByAggregateInput
+    _sum?: RepositoryEnvironmentSumOrderByAggregateInput
+  }
+
+  export type RepositoryEnvironmentScalarWhereWithAggregatesInput = {
+    AND?: RepositoryEnvironmentScalarWhereWithAggregatesInput | RepositoryEnvironmentScalarWhereWithAggregatesInput[]
+    OR?: RepositoryEnvironmentScalarWhereWithAggregatesInput[]
+    NOT?: RepositoryEnvironmentScalarWhereWithAggregatesInput | RepositoryEnvironmentScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"RepositoryEnvironment"> | string
+    repositoryMetadataId?: StringWithAggregatesFilter<"RepositoryEnvironment"> | string
+    name?: StringWithAggregatesFilter<"RepositoryEnvironment"> | string
+    order?: IntWithAggregatesFilter<"RepositoryEnvironment"> | number
+    requiresApproval?: BoolWithAggregatesFilter<"RepositoryEnvironment"> | boolean
+    approvalMinCount?: IntWithAggregatesFilter<"RepositoryEnvironment"> | number
+    autoApproveIfTestsPass?: BoolWithAggregatesFilter<"RepositoryEnvironment"> | boolean
+    autoRollbackOnFailure?: BoolWithAggregatesFilter<"RepositoryEnvironment"> | boolean
+    healthCheckUrl?: StringNullableWithAggregatesFilter<"RepositoryEnvironment"> | string | null
+    healthCheckInterval?: IntNullableWithAggregatesFilter<"RepositoryEnvironment"> | number | null
+    variables?: JsonWithAggregatesFilter<"RepositoryEnvironment">
+    secretNames?: StringNullableListFilter<"RepositoryEnvironment">
+    slackChannel?: StringNullableWithAggregatesFilter<"RepositoryEnvironment"> | string | null
+    notifyOn?: StringNullableListFilter<"RepositoryEnvironment">
+    createdAt?: DateTimeWithAggregatesFilter<"RepositoryEnvironment"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"RepositoryEnvironment"> | Date | string
+  }
+
+  export type DeploymentWhereInput = {
+    AND?: DeploymentWhereInput | DeploymentWhereInput[]
+    OR?: DeploymentWhereInput[]
+    NOT?: DeploymentWhereInput | DeploymentWhereInput[]
+    id?: StringFilter<"Deployment"> | string
+    repositoryMetadataId?: StringFilter<"Deployment"> | string
+    environmentId?: StringFilter<"Deployment"> | string
+    version?: StringFilter<"Deployment"> | string
+    status?: StringFilter<"Deployment"> | string
+    deployedAt?: DateTimeFilter<"Deployment"> | Date | string
+    deployedBy?: StringFilter<"Deployment"> | string
+    duration?: IntNullableFilter<"Deployment"> | number | null
+    riskAssessment?: JsonNullableFilter<"Deployment">
+    healthCheckPassed?: BoolNullableFilter<"Deployment"> | boolean | null
+    healthCheckDetails?: JsonNullableFilter<"Deployment">
+    postDeploymentMetrics?: JsonNullableFilter<"Deployment">
+    preDeploymentNotes?: StringNullableFilter<"Deployment"> | string | null
+    postDeploymentNotes?: StringNullableFilter<"Deployment"> | string | null
+    deploymentLogs?: StringNullableFilter<"Deployment"> | string | null
+    artifacts?: JsonNullableFilter<"Deployment">
+    approvalRequired?: BoolFilter<"Deployment"> | boolean
+    rollbackOf?: StringNullableFilter<"Deployment"> | string | null
+    rollbackReason?: StringNullableFilter<"Deployment"> | string | null
+    rollbackInitiatedAt?: DateTimeNullableFilter<"Deployment"> | Date | string | null
+    rollbackInitiatedBy?: StringNullableFilter<"Deployment"> | string | null
+    createdAt?: DateTimeFilter<"Deployment"> | Date | string
+    updatedAt?: DateTimeFilter<"Deployment"> | Date | string
+    repositoryMetadata?: XOR<RepositoryMetadataScalarRelationFilter, RepositoryMetadataWhereInput>
+    environment?: XOR<RepositoryEnvironmentScalarRelationFilter, RepositoryEnvironmentWhereInput>
+    approvals?: DeploymentApprovalListRelationFilter
+  }
+
+  export type DeploymentOrderByWithRelationInput = {
+    id?: SortOrder
+    repositoryMetadataId?: SortOrder
+    environmentId?: SortOrder
+    version?: SortOrder
+    status?: SortOrder
+    deployedAt?: SortOrder
+    deployedBy?: SortOrder
+    duration?: SortOrderInput | SortOrder
+    riskAssessment?: SortOrderInput | SortOrder
+    healthCheckPassed?: SortOrderInput | SortOrder
+    healthCheckDetails?: SortOrderInput | SortOrder
+    postDeploymentMetrics?: SortOrderInput | SortOrder
+    preDeploymentNotes?: SortOrderInput | SortOrder
+    postDeploymentNotes?: SortOrderInput | SortOrder
+    deploymentLogs?: SortOrderInput | SortOrder
+    artifacts?: SortOrderInput | SortOrder
+    approvalRequired?: SortOrder
+    rollbackOf?: SortOrderInput | SortOrder
+    rollbackReason?: SortOrderInput | SortOrder
+    rollbackInitiatedAt?: SortOrderInput | SortOrder
+    rollbackInitiatedBy?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    repositoryMetadata?: RepositoryMetadataOrderByWithRelationInput
+    environment?: RepositoryEnvironmentOrderByWithRelationInput
+    approvals?: DeploymentApprovalOrderByRelationAggregateInput
+  }
+
+  export type DeploymentWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: DeploymentWhereInput | DeploymentWhereInput[]
+    OR?: DeploymentWhereInput[]
+    NOT?: DeploymentWhereInput | DeploymentWhereInput[]
+    repositoryMetadataId?: StringFilter<"Deployment"> | string
+    environmentId?: StringFilter<"Deployment"> | string
+    version?: StringFilter<"Deployment"> | string
+    status?: StringFilter<"Deployment"> | string
+    deployedAt?: DateTimeFilter<"Deployment"> | Date | string
+    deployedBy?: StringFilter<"Deployment"> | string
+    duration?: IntNullableFilter<"Deployment"> | number | null
+    riskAssessment?: JsonNullableFilter<"Deployment">
+    healthCheckPassed?: BoolNullableFilter<"Deployment"> | boolean | null
+    healthCheckDetails?: JsonNullableFilter<"Deployment">
+    postDeploymentMetrics?: JsonNullableFilter<"Deployment">
+    preDeploymentNotes?: StringNullableFilter<"Deployment"> | string | null
+    postDeploymentNotes?: StringNullableFilter<"Deployment"> | string | null
+    deploymentLogs?: StringNullableFilter<"Deployment"> | string | null
+    artifacts?: JsonNullableFilter<"Deployment">
+    approvalRequired?: BoolFilter<"Deployment"> | boolean
+    rollbackOf?: StringNullableFilter<"Deployment"> | string | null
+    rollbackReason?: StringNullableFilter<"Deployment"> | string | null
+    rollbackInitiatedAt?: DateTimeNullableFilter<"Deployment"> | Date | string | null
+    rollbackInitiatedBy?: StringNullableFilter<"Deployment"> | string | null
+    createdAt?: DateTimeFilter<"Deployment"> | Date | string
+    updatedAt?: DateTimeFilter<"Deployment"> | Date | string
+    repositoryMetadata?: XOR<RepositoryMetadataScalarRelationFilter, RepositoryMetadataWhereInput>
+    environment?: XOR<RepositoryEnvironmentScalarRelationFilter, RepositoryEnvironmentWhereInput>
+    approvals?: DeploymentApprovalListRelationFilter
+  }, "id">
+
+  export type DeploymentOrderByWithAggregationInput = {
+    id?: SortOrder
+    repositoryMetadataId?: SortOrder
+    environmentId?: SortOrder
+    version?: SortOrder
+    status?: SortOrder
+    deployedAt?: SortOrder
+    deployedBy?: SortOrder
+    duration?: SortOrderInput | SortOrder
+    riskAssessment?: SortOrderInput | SortOrder
+    healthCheckPassed?: SortOrderInput | SortOrder
+    healthCheckDetails?: SortOrderInput | SortOrder
+    postDeploymentMetrics?: SortOrderInput | SortOrder
+    preDeploymentNotes?: SortOrderInput | SortOrder
+    postDeploymentNotes?: SortOrderInput | SortOrder
+    deploymentLogs?: SortOrderInput | SortOrder
+    artifacts?: SortOrderInput | SortOrder
+    approvalRequired?: SortOrder
+    rollbackOf?: SortOrderInput | SortOrder
+    rollbackReason?: SortOrderInput | SortOrder
+    rollbackInitiatedAt?: SortOrderInput | SortOrder
+    rollbackInitiatedBy?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: DeploymentCountOrderByAggregateInput
+    _avg?: DeploymentAvgOrderByAggregateInput
+    _max?: DeploymentMaxOrderByAggregateInput
+    _min?: DeploymentMinOrderByAggregateInput
+    _sum?: DeploymentSumOrderByAggregateInput
+  }
+
+  export type DeploymentScalarWhereWithAggregatesInput = {
+    AND?: DeploymentScalarWhereWithAggregatesInput | DeploymentScalarWhereWithAggregatesInput[]
+    OR?: DeploymentScalarWhereWithAggregatesInput[]
+    NOT?: DeploymentScalarWhereWithAggregatesInput | DeploymentScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"Deployment"> | string
+    repositoryMetadataId?: StringWithAggregatesFilter<"Deployment"> | string
+    environmentId?: StringWithAggregatesFilter<"Deployment"> | string
+    version?: StringWithAggregatesFilter<"Deployment"> | string
+    status?: StringWithAggregatesFilter<"Deployment"> | string
+    deployedAt?: DateTimeWithAggregatesFilter<"Deployment"> | Date | string
+    deployedBy?: StringWithAggregatesFilter<"Deployment"> | string
+    duration?: IntNullableWithAggregatesFilter<"Deployment"> | number | null
+    riskAssessment?: JsonNullableWithAggregatesFilter<"Deployment">
+    healthCheckPassed?: BoolNullableWithAggregatesFilter<"Deployment"> | boolean | null
+    healthCheckDetails?: JsonNullableWithAggregatesFilter<"Deployment">
+    postDeploymentMetrics?: JsonNullableWithAggregatesFilter<"Deployment">
+    preDeploymentNotes?: StringNullableWithAggregatesFilter<"Deployment"> | string | null
+    postDeploymentNotes?: StringNullableWithAggregatesFilter<"Deployment"> | string | null
+    deploymentLogs?: StringNullableWithAggregatesFilter<"Deployment"> | string | null
+    artifacts?: JsonNullableWithAggregatesFilter<"Deployment">
+    approvalRequired?: BoolWithAggregatesFilter<"Deployment"> | boolean
+    rollbackOf?: StringNullableWithAggregatesFilter<"Deployment"> | string | null
+    rollbackReason?: StringNullableWithAggregatesFilter<"Deployment"> | string | null
+    rollbackInitiatedAt?: DateTimeNullableWithAggregatesFilter<"Deployment"> | Date | string | null
+    rollbackInitiatedBy?: StringNullableWithAggregatesFilter<"Deployment"> | string | null
+    createdAt?: DateTimeWithAggregatesFilter<"Deployment"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"Deployment"> | Date | string
+  }
+
+  export type DeploymentApprovalWhereInput = {
+    AND?: DeploymentApprovalWhereInput | DeploymentApprovalWhereInput[]
+    OR?: DeploymentApprovalWhereInput[]
+    NOT?: DeploymentApprovalWhereInput | DeploymentApprovalWhereInput[]
+    id?: StringFilter<"DeploymentApproval"> | string
+    deploymentId?: StringFilter<"DeploymentApproval"> | string
+    approverEmail?: StringFilter<"DeploymentApproval"> | string
+    status?: StringFilter<"DeploymentApproval"> | string
+    reason?: StringNullableFilter<"DeploymentApproval"> | string | null
+    comment?: StringNullableFilter<"DeploymentApproval"> | string | null
+    respondedAt?: DateTimeNullableFilter<"DeploymentApproval"> | Date | string | null
+    createdAt?: DateTimeFilter<"DeploymentApproval"> | Date | string
+    deployment?: XOR<DeploymentScalarRelationFilter, DeploymentWhereInput>
+  }
+
+  export type DeploymentApprovalOrderByWithRelationInput = {
+    id?: SortOrder
+    deploymentId?: SortOrder
+    approverEmail?: SortOrder
+    status?: SortOrder
+    reason?: SortOrderInput | SortOrder
+    comment?: SortOrderInput | SortOrder
+    respondedAt?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    deployment?: DeploymentOrderByWithRelationInput
+  }
+
+  export type DeploymentApprovalWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    deploymentId_approverEmail?: DeploymentApprovalDeploymentIdApproverEmailCompoundUniqueInput
+    AND?: DeploymentApprovalWhereInput | DeploymentApprovalWhereInput[]
+    OR?: DeploymentApprovalWhereInput[]
+    NOT?: DeploymentApprovalWhereInput | DeploymentApprovalWhereInput[]
+    deploymentId?: StringFilter<"DeploymentApproval"> | string
+    approverEmail?: StringFilter<"DeploymentApproval"> | string
+    status?: StringFilter<"DeploymentApproval"> | string
+    reason?: StringNullableFilter<"DeploymentApproval"> | string | null
+    comment?: StringNullableFilter<"DeploymentApproval"> | string | null
+    respondedAt?: DateTimeNullableFilter<"DeploymentApproval"> | Date | string | null
+    createdAt?: DateTimeFilter<"DeploymentApproval"> | Date | string
+    deployment?: XOR<DeploymentScalarRelationFilter, DeploymentWhereInput>
+  }, "id" | "deploymentId_approverEmail">
+
+  export type DeploymentApprovalOrderByWithAggregationInput = {
+    id?: SortOrder
+    deploymentId?: SortOrder
+    approverEmail?: SortOrder
+    status?: SortOrder
+    reason?: SortOrderInput | SortOrder
+    comment?: SortOrderInput | SortOrder
+    respondedAt?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    _count?: DeploymentApprovalCountOrderByAggregateInput
+    _max?: DeploymentApprovalMaxOrderByAggregateInput
+    _min?: DeploymentApprovalMinOrderByAggregateInput
+  }
+
+  export type DeploymentApprovalScalarWhereWithAggregatesInput = {
+    AND?: DeploymentApprovalScalarWhereWithAggregatesInput | DeploymentApprovalScalarWhereWithAggregatesInput[]
+    OR?: DeploymentApprovalScalarWhereWithAggregatesInput[]
+    NOT?: DeploymentApprovalScalarWhereWithAggregatesInput | DeploymentApprovalScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"DeploymentApproval"> | string
+    deploymentId?: StringWithAggregatesFilter<"DeploymentApproval"> | string
+    approverEmail?: StringWithAggregatesFilter<"DeploymentApproval"> | string
+    status?: StringWithAggregatesFilter<"DeploymentApproval"> | string
+    reason?: StringNullableWithAggregatesFilter<"DeploymentApproval"> | string | null
+    comment?: StringNullableWithAggregatesFilter<"DeploymentApproval"> | string | null
+    respondedAt?: DateTimeNullableWithAggregatesFilter<"DeploymentApproval"> | Date | string | null
+    createdAt?: DateTimeWithAggregatesFilter<"DeploymentApproval"> | Date | string
+  }
+
   export type ProjectCreateInput = {
     name: string
     createdAt?: Date | string
@@ -9774,6 +20002,7 @@ export namespace Prisma {
     dashboardPreferences?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
     authTokens?: AuthTokenCreateNestedManyWithoutUserInput
+    providerIntegrations?: ProviderIntegrationCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateInput = {
@@ -9789,6 +20018,7 @@ export namespace Prisma {
     dashboardPreferences?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
     authTokens?: AuthTokenUncheckedCreateNestedManyWithoutUserInput
+    providerIntegrations?: ProviderIntegrationUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserUpdateInput = {
@@ -9804,6 +20034,7 @@ export namespace Prisma {
     dashboardPreferences?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     authTokens?: AuthTokenUpdateManyWithoutUserNestedInput
+    providerIntegrations?: ProviderIntegrationUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateInput = {
@@ -9819,6 +20050,7 @@ export namespace Prisma {
     dashboardPreferences?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     authTokens?: AuthTokenUncheckedUpdateManyWithoutUserNestedInput
+    providerIntegrations?: ProviderIntegrationUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateManyInput = {
@@ -9861,6 +20093,75 @@ export namespace Prisma {
     status?: StringFieldUpdateOperationsInput | string
     dashboardPreferences?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ProviderIntegrationCreateInput = {
+    id?: string
+    provider: string
+    apiToken: string
+    teamId?: string | null
+    connectedAt?: Date | string
+    updatedAt?: Date | string
+    user: UserCreateNestedOneWithoutProviderIntegrationsInput
+  }
+
+  export type ProviderIntegrationUncheckedCreateInput = {
+    id?: string
+    userId: string
+    provider: string
+    apiToken: string
+    teamId?: string | null
+    connectedAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type ProviderIntegrationUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    provider?: StringFieldUpdateOperationsInput | string
+    apiToken?: StringFieldUpdateOperationsInput | string
+    teamId?: NullableStringFieldUpdateOperationsInput | string | null
+    connectedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    user?: UserUpdateOneRequiredWithoutProviderIntegrationsNestedInput
+  }
+
+  export type ProviderIntegrationUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    provider?: StringFieldUpdateOperationsInput | string
+    apiToken?: StringFieldUpdateOperationsInput | string
+    teamId?: NullableStringFieldUpdateOperationsInput | string | null
+    connectedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ProviderIntegrationCreateManyInput = {
+    id?: string
+    userId: string
+    provider: string
+    apiToken: string
+    teamId?: string | null
+    connectedAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type ProviderIntegrationUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    provider?: StringFieldUpdateOperationsInput | string
+    apiToken?: StringFieldUpdateOperationsInput | string
+    teamId?: NullableStringFieldUpdateOperationsInput | string | null
+    connectedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ProviderIntegrationUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    provider?: StringFieldUpdateOperationsInput | string
+    apiToken?: StringFieldUpdateOperationsInput | string
+    teamId?: NullableStringFieldUpdateOperationsInput | string | null
+    connectedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type AuthTokenCreateInput = {
@@ -10043,6 +20344,808 @@ export namespace Prisma {
     value?: StringFieldUpdateOperationsInput | string
     description?: NullableStringFieldUpdateOperationsInput | string | null
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type RepositoryMetadataCreateInput = {
+    id?: string
+    repositoryName: string
+    owner: string
+    healthScore?: number
+    healthStatus?: string
+    lastHealthCheckAt?: Date | string | null
+    teamName?: string | null
+    ownerEmail?: string | null
+    maintainers?: RepositoryMetadataCreatemaintainersInput | string[]
+    onCallRotationUrl?: string | null
+    lastDeploymentAt?: Date | string | null
+    lastDeployedVersion?: string | null
+    lastDeployedBy?: string | null
+    lastDeploymentEnvironment?: string | null
+    productionHealthy?: boolean | null
+    description?: string | null
+    language?: string | null
+    testCoveragePercent?: number | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    healthCheckResults?: HealthCheckResultCreateNestedManyWithoutRepositoryMetadataInput
+    quickFixActions?: QuickFixActionCreateNestedManyWithoutRepositoryMetadataInput
+    environments?: RepositoryEnvironmentCreateNestedManyWithoutRepositoryMetadataInput
+    deployments?: DeploymentCreateNestedManyWithoutRepositoryMetadataInput
+  }
+
+  export type RepositoryMetadataUncheckedCreateInput = {
+    id?: string
+    repositoryName: string
+    owner: string
+    healthScore?: number
+    healthStatus?: string
+    lastHealthCheckAt?: Date | string | null
+    teamName?: string | null
+    ownerEmail?: string | null
+    maintainers?: RepositoryMetadataCreatemaintainersInput | string[]
+    onCallRotationUrl?: string | null
+    lastDeploymentAt?: Date | string | null
+    lastDeployedVersion?: string | null
+    lastDeployedBy?: string | null
+    lastDeploymentEnvironment?: string | null
+    productionHealthy?: boolean | null
+    description?: string | null
+    language?: string | null
+    testCoveragePercent?: number | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    healthCheckResults?: HealthCheckResultUncheckedCreateNestedManyWithoutRepositoryMetadataInput
+    quickFixActions?: QuickFixActionUncheckedCreateNestedManyWithoutRepositoryMetadataInput
+    environments?: RepositoryEnvironmentUncheckedCreateNestedManyWithoutRepositoryMetadataInput
+    deployments?: DeploymentUncheckedCreateNestedManyWithoutRepositoryMetadataInput
+  }
+
+  export type RepositoryMetadataUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    repositoryName?: StringFieldUpdateOperationsInput | string
+    owner?: StringFieldUpdateOperationsInput | string
+    healthScore?: IntFieldUpdateOperationsInput | number
+    healthStatus?: StringFieldUpdateOperationsInput | string
+    lastHealthCheckAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    teamName?: NullableStringFieldUpdateOperationsInput | string | null
+    ownerEmail?: NullableStringFieldUpdateOperationsInput | string | null
+    maintainers?: RepositoryMetadataUpdatemaintainersInput | string[]
+    onCallRotationUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    lastDeploymentAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    lastDeployedVersion?: NullableStringFieldUpdateOperationsInput | string | null
+    lastDeployedBy?: NullableStringFieldUpdateOperationsInput | string | null
+    lastDeploymentEnvironment?: NullableStringFieldUpdateOperationsInput | string | null
+    productionHealthy?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    language?: NullableStringFieldUpdateOperationsInput | string | null
+    testCoveragePercent?: NullableFloatFieldUpdateOperationsInput | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    healthCheckResults?: HealthCheckResultUpdateManyWithoutRepositoryMetadataNestedInput
+    quickFixActions?: QuickFixActionUpdateManyWithoutRepositoryMetadataNestedInput
+    environments?: RepositoryEnvironmentUpdateManyWithoutRepositoryMetadataNestedInput
+    deployments?: DeploymentUpdateManyWithoutRepositoryMetadataNestedInput
+  }
+
+  export type RepositoryMetadataUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    repositoryName?: StringFieldUpdateOperationsInput | string
+    owner?: StringFieldUpdateOperationsInput | string
+    healthScore?: IntFieldUpdateOperationsInput | number
+    healthStatus?: StringFieldUpdateOperationsInput | string
+    lastHealthCheckAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    teamName?: NullableStringFieldUpdateOperationsInput | string | null
+    ownerEmail?: NullableStringFieldUpdateOperationsInput | string | null
+    maintainers?: RepositoryMetadataUpdatemaintainersInput | string[]
+    onCallRotationUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    lastDeploymentAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    lastDeployedVersion?: NullableStringFieldUpdateOperationsInput | string | null
+    lastDeployedBy?: NullableStringFieldUpdateOperationsInput | string | null
+    lastDeploymentEnvironment?: NullableStringFieldUpdateOperationsInput | string | null
+    productionHealthy?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    language?: NullableStringFieldUpdateOperationsInput | string | null
+    testCoveragePercent?: NullableFloatFieldUpdateOperationsInput | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    healthCheckResults?: HealthCheckResultUncheckedUpdateManyWithoutRepositoryMetadataNestedInput
+    quickFixActions?: QuickFixActionUncheckedUpdateManyWithoutRepositoryMetadataNestedInput
+    environments?: RepositoryEnvironmentUncheckedUpdateManyWithoutRepositoryMetadataNestedInput
+    deployments?: DeploymentUncheckedUpdateManyWithoutRepositoryMetadataNestedInput
+  }
+
+  export type RepositoryMetadataCreateManyInput = {
+    id?: string
+    repositoryName: string
+    owner: string
+    healthScore?: number
+    healthStatus?: string
+    lastHealthCheckAt?: Date | string | null
+    teamName?: string | null
+    ownerEmail?: string | null
+    maintainers?: RepositoryMetadataCreatemaintainersInput | string[]
+    onCallRotationUrl?: string | null
+    lastDeploymentAt?: Date | string | null
+    lastDeployedVersion?: string | null
+    lastDeployedBy?: string | null
+    lastDeploymentEnvironment?: string | null
+    productionHealthy?: boolean | null
+    description?: string | null
+    language?: string | null
+    testCoveragePercent?: number | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type RepositoryMetadataUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    repositoryName?: StringFieldUpdateOperationsInput | string
+    owner?: StringFieldUpdateOperationsInput | string
+    healthScore?: IntFieldUpdateOperationsInput | number
+    healthStatus?: StringFieldUpdateOperationsInput | string
+    lastHealthCheckAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    teamName?: NullableStringFieldUpdateOperationsInput | string | null
+    ownerEmail?: NullableStringFieldUpdateOperationsInput | string | null
+    maintainers?: RepositoryMetadataUpdatemaintainersInput | string[]
+    onCallRotationUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    lastDeploymentAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    lastDeployedVersion?: NullableStringFieldUpdateOperationsInput | string | null
+    lastDeployedBy?: NullableStringFieldUpdateOperationsInput | string | null
+    lastDeploymentEnvironment?: NullableStringFieldUpdateOperationsInput | string | null
+    productionHealthy?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    language?: NullableStringFieldUpdateOperationsInput | string | null
+    testCoveragePercent?: NullableFloatFieldUpdateOperationsInput | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type RepositoryMetadataUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    repositoryName?: StringFieldUpdateOperationsInput | string
+    owner?: StringFieldUpdateOperationsInput | string
+    healthScore?: IntFieldUpdateOperationsInput | number
+    healthStatus?: StringFieldUpdateOperationsInput | string
+    lastHealthCheckAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    teamName?: NullableStringFieldUpdateOperationsInput | string | null
+    ownerEmail?: NullableStringFieldUpdateOperationsInput | string | null
+    maintainers?: RepositoryMetadataUpdatemaintainersInput | string[]
+    onCallRotationUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    lastDeploymentAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    lastDeployedVersion?: NullableStringFieldUpdateOperationsInput | string | null
+    lastDeployedBy?: NullableStringFieldUpdateOperationsInput | string | null
+    lastDeploymentEnvironment?: NullableStringFieldUpdateOperationsInput | string | null
+    productionHealthy?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    language?: NullableStringFieldUpdateOperationsInput | string | null
+    testCoveragePercent?: NullableFloatFieldUpdateOperationsInput | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type HealthCheckResultCreateInput = {
+    id?: string
+    repositoryName: string
+    repositoryOwner: string
+    securityScore?: number
+    codeQualityScore?: number
+    deploymentReadinessScore?: number
+    teamOwnershipScore?: number
+    totalScore?: number
+    overallStatus?: string
+    securityIssues?: JsonNullValueInput | InputJsonValue
+    codeQualityIssues?: JsonNullValueInput | InputJsonValue
+    deploymentReadinessIssues?: JsonNullValueInput | InputJsonValue
+    teamOwnershipIssues?: JsonNullValueInput | InputJsonValue
+    aiSuggestions?: JsonNullValueInput | InputJsonValue
+    executedAt?: Date | string
+    executedBy?: string | null
+    createdAt?: Date | string
+    repositoryMetadata: RepositoryMetadataCreateNestedOneWithoutHealthCheckResultsInput
+  }
+
+  export type HealthCheckResultUncheckedCreateInput = {
+    id?: string
+    repositoryName: string
+    repositoryOwner: string
+    repositoryMetadataId: string
+    securityScore?: number
+    codeQualityScore?: number
+    deploymentReadinessScore?: number
+    teamOwnershipScore?: number
+    totalScore?: number
+    overallStatus?: string
+    securityIssues?: JsonNullValueInput | InputJsonValue
+    codeQualityIssues?: JsonNullValueInput | InputJsonValue
+    deploymentReadinessIssues?: JsonNullValueInput | InputJsonValue
+    teamOwnershipIssues?: JsonNullValueInput | InputJsonValue
+    aiSuggestions?: JsonNullValueInput | InputJsonValue
+    executedAt?: Date | string
+    executedBy?: string | null
+    createdAt?: Date | string
+  }
+
+  export type HealthCheckResultUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    repositoryName?: StringFieldUpdateOperationsInput | string
+    repositoryOwner?: StringFieldUpdateOperationsInput | string
+    securityScore?: IntFieldUpdateOperationsInput | number
+    codeQualityScore?: IntFieldUpdateOperationsInput | number
+    deploymentReadinessScore?: IntFieldUpdateOperationsInput | number
+    teamOwnershipScore?: IntFieldUpdateOperationsInput | number
+    totalScore?: IntFieldUpdateOperationsInput | number
+    overallStatus?: StringFieldUpdateOperationsInput | string
+    securityIssues?: JsonNullValueInput | InputJsonValue
+    codeQualityIssues?: JsonNullValueInput | InputJsonValue
+    deploymentReadinessIssues?: JsonNullValueInput | InputJsonValue
+    teamOwnershipIssues?: JsonNullValueInput | InputJsonValue
+    aiSuggestions?: JsonNullValueInput | InputJsonValue
+    executedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    executedBy?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    repositoryMetadata?: RepositoryMetadataUpdateOneRequiredWithoutHealthCheckResultsNestedInput
+  }
+
+  export type HealthCheckResultUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    repositoryName?: StringFieldUpdateOperationsInput | string
+    repositoryOwner?: StringFieldUpdateOperationsInput | string
+    repositoryMetadataId?: StringFieldUpdateOperationsInput | string
+    securityScore?: IntFieldUpdateOperationsInput | number
+    codeQualityScore?: IntFieldUpdateOperationsInput | number
+    deploymentReadinessScore?: IntFieldUpdateOperationsInput | number
+    teamOwnershipScore?: IntFieldUpdateOperationsInput | number
+    totalScore?: IntFieldUpdateOperationsInput | number
+    overallStatus?: StringFieldUpdateOperationsInput | string
+    securityIssues?: JsonNullValueInput | InputJsonValue
+    codeQualityIssues?: JsonNullValueInput | InputJsonValue
+    deploymentReadinessIssues?: JsonNullValueInput | InputJsonValue
+    teamOwnershipIssues?: JsonNullValueInput | InputJsonValue
+    aiSuggestions?: JsonNullValueInput | InputJsonValue
+    executedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    executedBy?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type HealthCheckResultCreateManyInput = {
+    id?: string
+    repositoryName: string
+    repositoryOwner: string
+    repositoryMetadataId: string
+    securityScore?: number
+    codeQualityScore?: number
+    deploymentReadinessScore?: number
+    teamOwnershipScore?: number
+    totalScore?: number
+    overallStatus?: string
+    securityIssues?: JsonNullValueInput | InputJsonValue
+    codeQualityIssues?: JsonNullValueInput | InputJsonValue
+    deploymentReadinessIssues?: JsonNullValueInput | InputJsonValue
+    teamOwnershipIssues?: JsonNullValueInput | InputJsonValue
+    aiSuggestions?: JsonNullValueInput | InputJsonValue
+    executedAt?: Date | string
+    executedBy?: string | null
+    createdAt?: Date | string
+  }
+
+  export type HealthCheckResultUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    repositoryName?: StringFieldUpdateOperationsInput | string
+    repositoryOwner?: StringFieldUpdateOperationsInput | string
+    securityScore?: IntFieldUpdateOperationsInput | number
+    codeQualityScore?: IntFieldUpdateOperationsInput | number
+    deploymentReadinessScore?: IntFieldUpdateOperationsInput | number
+    teamOwnershipScore?: IntFieldUpdateOperationsInput | number
+    totalScore?: IntFieldUpdateOperationsInput | number
+    overallStatus?: StringFieldUpdateOperationsInput | string
+    securityIssues?: JsonNullValueInput | InputJsonValue
+    codeQualityIssues?: JsonNullValueInput | InputJsonValue
+    deploymentReadinessIssues?: JsonNullValueInput | InputJsonValue
+    teamOwnershipIssues?: JsonNullValueInput | InputJsonValue
+    aiSuggestions?: JsonNullValueInput | InputJsonValue
+    executedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    executedBy?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type HealthCheckResultUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    repositoryName?: StringFieldUpdateOperationsInput | string
+    repositoryOwner?: StringFieldUpdateOperationsInput | string
+    repositoryMetadataId?: StringFieldUpdateOperationsInput | string
+    securityScore?: IntFieldUpdateOperationsInput | number
+    codeQualityScore?: IntFieldUpdateOperationsInput | number
+    deploymentReadinessScore?: IntFieldUpdateOperationsInput | number
+    teamOwnershipScore?: IntFieldUpdateOperationsInput | number
+    totalScore?: IntFieldUpdateOperationsInput | number
+    overallStatus?: StringFieldUpdateOperationsInput | string
+    securityIssues?: JsonNullValueInput | InputJsonValue
+    codeQualityIssues?: JsonNullValueInput | InputJsonValue
+    deploymentReadinessIssues?: JsonNullValueInput | InputJsonValue
+    teamOwnershipIssues?: JsonNullValueInput | InputJsonValue
+    aiSuggestions?: JsonNullValueInput | InputJsonValue
+    executedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    executedBy?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type QuickFixActionCreateInput = {
+    id?: string
+    actionType: string
+    actionDescription: string
+    status?: string
+    executedBy?: string | null
+    result?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    completedAt?: Date | string | null
+    repositoryMetadata: RepositoryMetadataCreateNestedOneWithoutQuickFixActionsInput
+  }
+
+  export type QuickFixActionUncheckedCreateInput = {
+    id?: string
+    repositoryMetadataId: string
+    actionType: string
+    actionDescription: string
+    status?: string
+    executedBy?: string | null
+    result?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    completedAt?: Date | string | null
+  }
+
+  export type QuickFixActionUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    actionType?: StringFieldUpdateOperationsInput | string
+    actionDescription?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    executedBy?: NullableStringFieldUpdateOperationsInput | string | null
+    result?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    completedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    repositoryMetadata?: RepositoryMetadataUpdateOneRequiredWithoutQuickFixActionsNestedInput
+  }
+
+  export type QuickFixActionUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    repositoryMetadataId?: StringFieldUpdateOperationsInput | string
+    actionType?: StringFieldUpdateOperationsInput | string
+    actionDescription?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    executedBy?: NullableStringFieldUpdateOperationsInput | string | null
+    result?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    completedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  }
+
+  export type QuickFixActionCreateManyInput = {
+    id?: string
+    repositoryMetadataId: string
+    actionType: string
+    actionDescription: string
+    status?: string
+    executedBy?: string | null
+    result?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    completedAt?: Date | string | null
+  }
+
+  export type QuickFixActionUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    actionType?: StringFieldUpdateOperationsInput | string
+    actionDescription?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    executedBy?: NullableStringFieldUpdateOperationsInput | string | null
+    result?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    completedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  }
+
+  export type QuickFixActionUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    repositoryMetadataId?: StringFieldUpdateOperationsInput | string
+    actionType?: StringFieldUpdateOperationsInput | string
+    actionDescription?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    executedBy?: NullableStringFieldUpdateOperationsInput | string | null
+    result?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    completedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  }
+
+  export type RepositoryEnvironmentCreateInput = {
+    id?: string
+    name: string
+    order?: number
+    requiresApproval?: boolean
+    approvalMinCount?: number
+    autoApproveIfTestsPass?: boolean
+    autoRollbackOnFailure?: boolean
+    healthCheckUrl?: string | null
+    healthCheckInterval?: number | null
+    variables?: JsonNullValueInput | InputJsonValue
+    secretNames?: RepositoryEnvironmentCreatesecretNamesInput | string[]
+    slackChannel?: string | null
+    notifyOn?: RepositoryEnvironmentCreatenotifyOnInput | string[]
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    repositoryMetadata: RepositoryMetadataCreateNestedOneWithoutEnvironmentsInput
+    deployments?: DeploymentCreateNestedManyWithoutEnvironmentInput
+  }
+
+  export type RepositoryEnvironmentUncheckedCreateInput = {
+    id?: string
+    repositoryMetadataId: string
+    name: string
+    order?: number
+    requiresApproval?: boolean
+    approvalMinCount?: number
+    autoApproveIfTestsPass?: boolean
+    autoRollbackOnFailure?: boolean
+    healthCheckUrl?: string | null
+    healthCheckInterval?: number | null
+    variables?: JsonNullValueInput | InputJsonValue
+    secretNames?: RepositoryEnvironmentCreatesecretNamesInput | string[]
+    slackChannel?: string | null
+    notifyOn?: RepositoryEnvironmentCreatenotifyOnInput | string[]
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    deployments?: DeploymentUncheckedCreateNestedManyWithoutEnvironmentInput
+  }
+
+  export type RepositoryEnvironmentUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    order?: IntFieldUpdateOperationsInput | number
+    requiresApproval?: BoolFieldUpdateOperationsInput | boolean
+    approvalMinCount?: IntFieldUpdateOperationsInput | number
+    autoApproveIfTestsPass?: BoolFieldUpdateOperationsInput | boolean
+    autoRollbackOnFailure?: BoolFieldUpdateOperationsInput | boolean
+    healthCheckUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    healthCheckInterval?: NullableIntFieldUpdateOperationsInput | number | null
+    variables?: JsonNullValueInput | InputJsonValue
+    secretNames?: RepositoryEnvironmentUpdatesecretNamesInput | string[]
+    slackChannel?: NullableStringFieldUpdateOperationsInput | string | null
+    notifyOn?: RepositoryEnvironmentUpdatenotifyOnInput | string[]
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    repositoryMetadata?: RepositoryMetadataUpdateOneRequiredWithoutEnvironmentsNestedInput
+    deployments?: DeploymentUpdateManyWithoutEnvironmentNestedInput
+  }
+
+  export type RepositoryEnvironmentUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    repositoryMetadataId?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    order?: IntFieldUpdateOperationsInput | number
+    requiresApproval?: BoolFieldUpdateOperationsInput | boolean
+    approvalMinCount?: IntFieldUpdateOperationsInput | number
+    autoApproveIfTestsPass?: BoolFieldUpdateOperationsInput | boolean
+    autoRollbackOnFailure?: BoolFieldUpdateOperationsInput | boolean
+    healthCheckUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    healthCheckInterval?: NullableIntFieldUpdateOperationsInput | number | null
+    variables?: JsonNullValueInput | InputJsonValue
+    secretNames?: RepositoryEnvironmentUpdatesecretNamesInput | string[]
+    slackChannel?: NullableStringFieldUpdateOperationsInput | string | null
+    notifyOn?: RepositoryEnvironmentUpdatenotifyOnInput | string[]
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    deployments?: DeploymentUncheckedUpdateManyWithoutEnvironmentNestedInput
+  }
+
+  export type RepositoryEnvironmentCreateManyInput = {
+    id?: string
+    repositoryMetadataId: string
+    name: string
+    order?: number
+    requiresApproval?: boolean
+    approvalMinCount?: number
+    autoApproveIfTestsPass?: boolean
+    autoRollbackOnFailure?: boolean
+    healthCheckUrl?: string | null
+    healthCheckInterval?: number | null
+    variables?: JsonNullValueInput | InputJsonValue
+    secretNames?: RepositoryEnvironmentCreatesecretNamesInput | string[]
+    slackChannel?: string | null
+    notifyOn?: RepositoryEnvironmentCreatenotifyOnInput | string[]
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type RepositoryEnvironmentUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    order?: IntFieldUpdateOperationsInput | number
+    requiresApproval?: BoolFieldUpdateOperationsInput | boolean
+    approvalMinCount?: IntFieldUpdateOperationsInput | number
+    autoApproveIfTestsPass?: BoolFieldUpdateOperationsInput | boolean
+    autoRollbackOnFailure?: BoolFieldUpdateOperationsInput | boolean
+    healthCheckUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    healthCheckInterval?: NullableIntFieldUpdateOperationsInput | number | null
+    variables?: JsonNullValueInput | InputJsonValue
+    secretNames?: RepositoryEnvironmentUpdatesecretNamesInput | string[]
+    slackChannel?: NullableStringFieldUpdateOperationsInput | string | null
+    notifyOn?: RepositoryEnvironmentUpdatenotifyOnInput | string[]
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type RepositoryEnvironmentUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    repositoryMetadataId?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    order?: IntFieldUpdateOperationsInput | number
+    requiresApproval?: BoolFieldUpdateOperationsInput | boolean
+    approvalMinCount?: IntFieldUpdateOperationsInput | number
+    autoApproveIfTestsPass?: BoolFieldUpdateOperationsInput | boolean
+    autoRollbackOnFailure?: BoolFieldUpdateOperationsInput | boolean
+    healthCheckUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    healthCheckInterval?: NullableIntFieldUpdateOperationsInput | number | null
+    variables?: JsonNullValueInput | InputJsonValue
+    secretNames?: RepositoryEnvironmentUpdatesecretNamesInput | string[]
+    slackChannel?: NullableStringFieldUpdateOperationsInput | string | null
+    notifyOn?: RepositoryEnvironmentUpdatenotifyOnInput | string[]
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type DeploymentCreateInput = {
+    id?: string
+    version: string
+    status?: string
+    deployedAt: Date | string
+    deployedBy: string
+    duration?: number | null
+    riskAssessment?: NullableJsonNullValueInput | InputJsonValue
+    healthCheckPassed?: boolean | null
+    healthCheckDetails?: NullableJsonNullValueInput | InputJsonValue
+    postDeploymentMetrics?: NullableJsonNullValueInput | InputJsonValue
+    preDeploymentNotes?: string | null
+    postDeploymentNotes?: string | null
+    deploymentLogs?: string | null
+    artifacts?: NullableJsonNullValueInput | InputJsonValue
+    approvalRequired?: boolean
+    rollbackOf?: string | null
+    rollbackReason?: string | null
+    rollbackInitiatedAt?: Date | string | null
+    rollbackInitiatedBy?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    repositoryMetadata: RepositoryMetadataCreateNestedOneWithoutDeploymentsInput
+    environment: RepositoryEnvironmentCreateNestedOneWithoutDeploymentsInput
+    approvals?: DeploymentApprovalCreateNestedManyWithoutDeploymentInput
+  }
+
+  export type DeploymentUncheckedCreateInput = {
+    id?: string
+    repositoryMetadataId: string
+    environmentId: string
+    version: string
+    status?: string
+    deployedAt: Date | string
+    deployedBy: string
+    duration?: number | null
+    riskAssessment?: NullableJsonNullValueInput | InputJsonValue
+    healthCheckPassed?: boolean | null
+    healthCheckDetails?: NullableJsonNullValueInput | InputJsonValue
+    postDeploymentMetrics?: NullableJsonNullValueInput | InputJsonValue
+    preDeploymentNotes?: string | null
+    postDeploymentNotes?: string | null
+    deploymentLogs?: string | null
+    artifacts?: NullableJsonNullValueInput | InputJsonValue
+    approvalRequired?: boolean
+    rollbackOf?: string | null
+    rollbackReason?: string | null
+    rollbackInitiatedAt?: Date | string | null
+    rollbackInitiatedBy?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    approvals?: DeploymentApprovalUncheckedCreateNestedManyWithoutDeploymentInput
+  }
+
+  export type DeploymentUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    version?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    deployedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    deployedBy?: StringFieldUpdateOperationsInput | string
+    duration?: NullableIntFieldUpdateOperationsInput | number | null
+    riskAssessment?: NullableJsonNullValueInput | InputJsonValue
+    healthCheckPassed?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    healthCheckDetails?: NullableJsonNullValueInput | InputJsonValue
+    postDeploymentMetrics?: NullableJsonNullValueInput | InputJsonValue
+    preDeploymentNotes?: NullableStringFieldUpdateOperationsInput | string | null
+    postDeploymentNotes?: NullableStringFieldUpdateOperationsInput | string | null
+    deploymentLogs?: NullableStringFieldUpdateOperationsInput | string | null
+    artifacts?: NullableJsonNullValueInput | InputJsonValue
+    approvalRequired?: BoolFieldUpdateOperationsInput | boolean
+    rollbackOf?: NullableStringFieldUpdateOperationsInput | string | null
+    rollbackReason?: NullableStringFieldUpdateOperationsInput | string | null
+    rollbackInitiatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    rollbackInitiatedBy?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    repositoryMetadata?: RepositoryMetadataUpdateOneRequiredWithoutDeploymentsNestedInput
+    environment?: RepositoryEnvironmentUpdateOneRequiredWithoutDeploymentsNestedInput
+    approvals?: DeploymentApprovalUpdateManyWithoutDeploymentNestedInput
+  }
+
+  export type DeploymentUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    repositoryMetadataId?: StringFieldUpdateOperationsInput | string
+    environmentId?: StringFieldUpdateOperationsInput | string
+    version?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    deployedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    deployedBy?: StringFieldUpdateOperationsInput | string
+    duration?: NullableIntFieldUpdateOperationsInput | number | null
+    riskAssessment?: NullableJsonNullValueInput | InputJsonValue
+    healthCheckPassed?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    healthCheckDetails?: NullableJsonNullValueInput | InputJsonValue
+    postDeploymentMetrics?: NullableJsonNullValueInput | InputJsonValue
+    preDeploymentNotes?: NullableStringFieldUpdateOperationsInput | string | null
+    postDeploymentNotes?: NullableStringFieldUpdateOperationsInput | string | null
+    deploymentLogs?: NullableStringFieldUpdateOperationsInput | string | null
+    artifacts?: NullableJsonNullValueInput | InputJsonValue
+    approvalRequired?: BoolFieldUpdateOperationsInput | boolean
+    rollbackOf?: NullableStringFieldUpdateOperationsInput | string | null
+    rollbackReason?: NullableStringFieldUpdateOperationsInput | string | null
+    rollbackInitiatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    rollbackInitiatedBy?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    approvals?: DeploymentApprovalUncheckedUpdateManyWithoutDeploymentNestedInput
+  }
+
+  export type DeploymentCreateManyInput = {
+    id?: string
+    repositoryMetadataId: string
+    environmentId: string
+    version: string
+    status?: string
+    deployedAt: Date | string
+    deployedBy: string
+    duration?: number | null
+    riskAssessment?: NullableJsonNullValueInput | InputJsonValue
+    healthCheckPassed?: boolean | null
+    healthCheckDetails?: NullableJsonNullValueInput | InputJsonValue
+    postDeploymentMetrics?: NullableJsonNullValueInput | InputJsonValue
+    preDeploymentNotes?: string | null
+    postDeploymentNotes?: string | null
+    deploymentLogs?: string | null
+    artifacts?: NullableJsonNullValueInput | InputJsonValue
+    approvalRequired?: boolean
+    rollbackOf?: string | null
+    rollbackReason?: string | null
+    rollbackInitiatedAt?: Date | string | null
+    rollbackInitiatedBy?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type DeploymentUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    version?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    deployedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    deployedBy?: StringFieldUpdateOperationsInput | string
+    duration?: NullableIntFieldUpdateOperationsInput | number | null
+    riskAssessment?: NullableJsonNullValueInput | InputJsonValue
+    healthCheckPassed?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    healthCheckDetails?: NullableJsonNullValueInput | InputJsonValue
+    postDeploymentMetrics?: NullableJsonNullValueInput | InputJsonValue
+    preDeploymentNotes?: NullableStringFieldUpdateOperationsInput | string | null
+    postDeploymentNotes?: NullableStringFieldUpdateOperationsInput | string | null
+    deploymentLogs?: NullableStringFieldUpdateOperationsInput | string | null
+    artifacts?: NullableJsonNullValueInput | InputJsonValue
+    approvalRequired?: BoolFieldUpdateOperationsInput | boolean
+    rollbackOf?: NullableStringFieldUpdateOperationsInput | string | null
+    rollbackReason?: NullableStringFieldUpdateOperationsInput | string | null
+    rollbackInitiatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    rollbackInitiatedBy?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type DeploymentUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    repositoryMetadataId?: StringFieldUpdateOperationsInput | string
+    environmentId?: StringFieldUpdateOperationsInput | string
+    version?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    deployedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    deployedBy?: StringFieldUpdateOperationsInput | string
+    duration?: NullableIntFieldUpdateOperationsInput | number | null
+    riskAssessment?: NullableJsonNullValueInput | InputJsonValue
+    healthCheckPassed?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    healthCheckDetails?: NullableJsonNullValueInput | InputJsonValue
+    postDeploymentMetrics?: NullableJsonNullValueInput | InputJsonValue
+    preDeploymentNotes?: NullableStringFieldUpdateOperationsInput | string | null
+    postDeploymentNotes?: NullableStringFieldUpdateOperationsInput | string | null
+    deploymentLogs?: NullableStringFieldUpdateOperationsInput | string | null
+    artifacts?: NullableJsonNullValueInput | InputJsonValue
+    approvalRequired?: BoolFieldUpdateOperationsInput | boolean
+    rollbackOf?: NullableStringFieldUpdateOperationsInput | string | null
+    rollbackReason?: NullableStringFieldUpdateOperationsInput | string | null
+    rollbackInitiatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    rollbackInitiatedBy?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type DeploymentApprovalCreateInput = {
+    id?: string
+    approverEmail: string
+    status?: string
+    reason?: string | null
+    comment?: string | null
+    respondedAt?: Date | string | null
+    createdAt?: Date | string
+    deployment: DeploymentCreateNestedOneWithoutApprovalsInput
+  }
+
+  export type DeploymentApprovalUncheckedCreateInput = {
+    id?: string
+    deploymentId: string
+    approverEmail: string
+    status?: string
+    reason?: string | null
+    comment?: string | null
+    respondedAt?: Date | string | null
+    createdAt?: Date | string
+  }
+
+  export type DeploymentApprovalUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    approverEmail?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    reason?: NullableStringFieldUpdateOperationsInput | string | null
+    comment?: NullableStringFieldUpdateOperationsInput | string | null
+    respondedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    deployment?: DeploymentUpdateOneRequiredWithoutApprovalsNestedInput
+  }
+
+  export type DeploymentApprovalUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    deploymentId?: StringFieldUpdateOperationsInput | string
+    approverEmail?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    reason?: NullableStringFieldUpdateOperationsInput | string | null
+    comment?: NullableStringFieldUpdateOperationsInput | string | null
+    respondedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type DeploymentApprovalCreateManyInput = {
+    id?: string
+    deploymentId: string
+    approverEmail: string
+    status?: string
+    reason?: string | null
+    comment?: string | null
+    respondedAt?: Date | string | null
+    createdAt?: Date | string
+  }
+
+  export type DeploymentApprovalUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    approverEmail?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    reason?: NullableStringFieldUpdateOperationsInput | string | null
+    comment?: NullableStringFieldUpdateOperationsInput | string | null
+    respondedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type DeploymentApprovalUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    deploymentId?: StringFieldUpdateOperationsInput | string
+    approverEmail?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    reason?: NullableStringFieldUpdateOperationsInput | string | null
+    comment?: NullableStringFieldUpdateOperationsInput | string | null
+    respondedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type StringFilter<$PrismaModel = never> = {
@@ -10281,12 +21384,22 @@ export namespace Prisma {
     none?: AuthTokenWhereInput
   }
 
+  export type ProviderIntegrationListRelationFilter = {
+    every?: ProviderIntegrationWhereInput
+    some?: ProviderIntegrationWhereInput
+    none?: ProviderIntegrationWhereInput
+  }
+
   export type SortOrderInput = {
     sort: SortOrder
     nulls?: NullsOrder
   }
 
   export type AuthTokenOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type ProviderIntegrationOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -10382,6 +21495,46 @@ export namespace Prisma {
     _max?: NestedJsonNullableFilter<$PrismaModel>
   }
 
+  export type UserScalarRelationFilter = {
+    is?: UserWhereInput
+    isNot?: UserWhereInput
+  }
+
+  export type ProviderIntegrationUserIdProviderCompoundUniqueInput = {
+    userId: string
+    provider: string
+  }
+
+  export type ProviderIntegrationCountOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    provider?: SortOrder
+    apiToken?: SortOrder
+    teamId?: SortOrder
+    connectedAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type ProviderIntegrationMaxOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    provider?: SortOrder
+    apiToken?: SortOrder
+    teamId?: SortOrder
+    connectedAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type ProviderIntegrationMinOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    provider?: SortOrder
+    apiToken?: SortOrder
+    teamId?: SortOrder
+    connectedAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
   export type EnumAuthTokenTypeFilter<$PrismaModel = never> = {
     equals?: $Enums.AuthTokenType | EnumAuthTokenTypeFieldRefInput<$PrismaModel>
     in?: $Enums.AuthTokenType[] | ListEnumAuthTokenTypeFieldRefInput<$PrismaModel>
@@ -10398,11 +21551,6 @@ export namespace Prisma {
     gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     not?: NestedDateTimeNullableFilter<$PrismaModel> | Date | string | null
-  }
-
-  export type UserScalarRelationFilter = {
-    is?: UserWhereInput
-    isNot?: UserWhereInput
   }
 
   export type AuthTokenCountOrderByAggregateInput = {
@@ -10524,6 +21672,564 @@ export namespace Prisma {
     updatedAt?: SortOrder
   }
 
+  export type StringNullableListFilter<$PrismaModel = never> = {
+    equals?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    has?: string | StringFieldRefInput<$PrismaModel> | null
+    hasEvery?: string[] | ListStringFieldRefInput<$PrismaModel>
+    hasSome?: string[] | ListStringFieldRefInput<$PrismaModel>
+    isEmpty?: boolean
+  }
+
+  export type BoolNullableFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel> | null
+    not?: NestedBoolNullableFilter<$PrismaModel> | boolean | null
+  }
+
+  export type FloatNullableFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel> | null
+    in?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
+    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatNullableFilter<$PrismaModel> | number | null
+  }
+
+  export type HealthCheckResultListRelationFilter = {
+    every?: HealthCheckResultWhereInput
+    some?: HealthCheckResultWhereInput
+    none?: HealthCheckResultWhereInput
+  }
+
+  export type QuickFixActionListRelationFilter = {
+    every?: QuickFixActionWhereInput
+    some?: QuickFixActionWhereInput
+    none?: QuickFixActionWhereInput
+  }
+
+  export type RepositoryEnvironmentListRelationFilter = {
+    every?: RepositoryEnvironmentWhereInput
+    some?: RepositoryEnvironmentWhereInput
+    none?: RepositoryEnvironmentWhereInput
+  }
+
+  export type DeploymentListRelationFilter = {
+    every?: DeploymentWhereInput
+    some?: DeploymentWhereInput
+    none?: DeploymentWhereInput
+  }
+
+  export type HealthCheckResultOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type QuickFixActionOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type RepositoryEnvironmentOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type DeploymentOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type RepositoryMetadataRepositoryNameOwnerCompoundUniqueInput = {
+    repositoryName: string
+    owner: string
+  }
+
+  export type RepositoryMetadataCountOrderByAggregateInput = {
+    id?: SortOrder
+    repositoryName?: SortOrder
+    owner?: SortOrder
+    healthScore?: SortOrder
+    healthStatus?: SortOrder
+    lastHealthCheckAt?: SortOrder
+    teamName?: SortOrder
+    ownerEmail?: SortOrder
+    maintainers?: SortOrder
+    onCallRotationUrl?: SortOrder
+    lastDeploymentAt?: SortOrder
+    lastDeployedVersion?: SortOrder
+    lastDeployedBy?: SortOrder
+    lastDeploymentEnvironment?: SortOrder
+    productionHealthy?: SortOrder
+    description?: SortOrder
+    language?: SortOrder
+    testCoveragePercent?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type RepositoryMetadataAvgOrderByAggregateInput = {
+    healthScore?: SortOrder
+    testCoveragePercent?: SortOrder
+  }
+
+  export type RepositoryMetadataMaxOrderByAggregateInput = {
+    id?: SortOrder
+    repositoryName?: SortOrder
+    owner?: SortOrder
+    healthScore?: SortOrder
+    healthStatus?: SortOrder
+    lastHealthCheckAt?: SortOrder
+    teamName?: SortOrder
+    ownerEmail?: SortOrder
+    onCallRotationUrl?: SortOrder
+    lastDeploymentAt?: SortOrder
+    lastDeployedVersion?: SortOrder
+    lastDeployedBy?: SortOrder
+    lastDeploymentEnvironment?: SortOrder
+    productionHealthy?: SortOrder
+    description?: SortOrder
+    language?: SortOrder
+    testCoveragePercent?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type RepositoryMetadataMinOrderByAggregateInput = {
+    id?: SortOrder
+    repositoryName?: SortOrder
+    owner?: SortOrder
+    healthScore?: SortOrder
+    healthStatus?: SortOrder
+    lastHealthCheckAt?: SortOrder
+    teamName?: SortOrder
+    ownerEmail?: SortOrder
+    onCallRotationUrl?: SortOrder
+    lastDeploymentAt?: SortOrder
+    lastDeployedVersion?: SortOrder
+    lastDeployedBy?: SortOrder
+    lastDeploymentEnvironment?: SortOrder
+    productionHealthy?: SortOrder
+    description?: SortOrder
+    language?: SortOrder
+    testCoveragePercent?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type RepositoryMetadataSumOrderByAggregateInput = {
+    healthScore?: SortOrder
+    testCoveragePercent?: SortOrder
+  }
+
+  export type BoolNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel> | null
+    not?: NestedBoolNullableWithAggregatesFilter<$PrismaModel> | boolean | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedBoolNullableFilter<$PrismaModel>
+    _max?: NestedBoolNullableFilter<$PrismaModel>
+  }
+
+  export type FloatNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel> | null
+    in?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
+    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatNullableWithAggregatesFilter<$PrismaModel> | number | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _avg?: NestedFloatNullableFilter<$PrismaModel>
+    _sum?: NestedFloatNullableFilter<$PrismaModel>
+    _min?: NestedFloatNullableFilter<$PrismaModel>
+    _max?: NestedFloatNullableFilter<$PrismaModel>
+  }
+  export type JsonFilter<$PrismaModel = never> =
+    | PatchUndefined<
+        Either<Required<JsonFilterBase<$PrismaModel>>, Exclude<keyof Required<JsonFilterBase<$PrismaModel>>, 'path'>>,
+        Required<JsonFilterBase<$PrismaModel>>
+      >
+    | OptionalFlat<Omit<Required<JsonFilterBase<$PrismaModel>>, 'path'>>
+
+  export type JsonFilterBase<$PrismaModel = never> = {
+    equals?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+    path?: string[]
+    mode?: QueryMode | EnumQueryModeFieldRefInput<$PrismaModel>
+    string_contains?: string | StringFieldRefInput<$PrismaModel>
+    string_starts_with?: string | StringFieldRefInput<$PrismaModel>
+    string_ends_with?: string | StringFieldRefInput<$PrismaModel>
+    array_starts_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_ends_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_contains?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    lt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    lte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    gt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    gte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    not?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+  }
+
+  export type RepositoryMetadataScalarRelationFilter = {
+    is?: RepositoryMetadataWhereInput
+    isNot?: RepositoryMetadataWhereInput
+  }
+
+  export type HealthCheckResultCountOrderByAggregateInput = {
+    id?: SortOrder
+    repositoryName?: SortOrder
+    repositoryOwner?: SortOrder
+    repositoryMetadataId?: SortOrder
+    securityScore?: SortOrder
+    codeQualityScore?: SortOrder
+    deploymentReadinessScore?: SortOrder
+    teamOwnershipScore?: SortOrder
+    totalScore?: SortOrder
+    overallStatus?: SortOrder
+    securityIssues?: SortOrder
+    codeQualityIssues?: SortOrder
+    deploymentReadinessIssues?: SortOrder
+    teamOwnershipIssues?: SortOrder
+    aiSuggestions?: SortOrder
+    executedAt?: SortOrder
+    executedBy?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type HealthCheckResultAvgOrderByAggregateInput = {
+    securityScore?: SortOrder
+    codeQualityScore?: SortOrder
+    deploymentReadinessScore?: SortOrder
+    teamOwnershipScore?: SortOrder
+    totalScore?: SortOrder
+  }
+
+  export type HealthCheckResultMaxOrderByAggregateInput = {
+    id?: SortOrder
+    repositoryName?: SortOrder
+    repositoryOwner?: SortOrder
+    repositoryMetadataId?: SortOrder
+    securityScore?: SortOrder
+    codeQualityScore?: SortOrder
+    deploymentReadinessScore?: SortOrder
+    teamOwnershipScore?: SortOrder
+    totalScore?: SortOrder
+    overallStatus?: SortOrder
+    executedAt?: SortOrder
+    executedBy?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type HealthCheckResultMinOrderByAggregateInput = {
+    id?: SortOrder
+    repositoryName?: SortOrder
+    repositoryOwner?: SortOrder
+    repositoryMetadataId?: SortOrder
+    securityScore?: SortOrder
+    codeQualityScore?: SortOrder
+    deploymentReadinessScore?: SortOrder
+    teamOwnershipScore?: SortOrder
+    totalScore?: SortOrder
+    overallStatus?: SortOrder
+    executedAt?: SortOrder
+    executedBy?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type HealthCheckResultSumOrderByAggregateInput = {
+    securityScore?: SortOrder
+    codeQualityScore?: SortOrder
+    deploymentReadinessScore?: SortOrder
+    teamOwnershipScore?: SortOrder
+    totalScore?: SortOrder
+  }
+  export type JsonWithAggregatesFilter<$PrismaModel = never> =
+    | PatchUndefined<
+        Either<Required<JsonWithAggregatesFilterBase<$PrismaModel>>, Exclude<keyof Required<JsonWithAggregatesFilterBase<$PrismaModel>>, 'path'>>,
+        Required<JsonWithAggregatesFilterBase<$PrismaModel>>
+      >
+    | OptionalFlat<Omit<Required<JsonWithAggregatesFilterBase<$PrismaModel>>, 'path'>>
+
+  export type JsonWithAggregatesFilterBase<$PrismaModel = never> = {
+    equals?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+    path?: string[]
+    mode?: QueryMode | EnumQueryModeFieldRefInput<$PrismaModel>
+    string_contains?: string | StringFieldRefInput<$PrismaModel>
+    string_starts_with?: string | StringFieldRefInput<$PrismaModel>
+    string_ends_with?: string | StringFieldRefInput<$PrismaModel>
+    array_starts_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_ends_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_contains?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    lt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    lte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    gt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    gte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    not?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedJsonFilter<$PrismaModel>
+    _max?: NestedJsonFilter<$PrismaModel>
+  }
+
+  export type QuickFixActionCountOrderByAggregateInput = {
+    id?: SortOrder
+    repositoryMetadataId?: SortOrder
+    actionType?: SortOrder
+    actionDescription?: SortOrder
+    status?: SortOrder
+    executedBy?: SortOrder
+    result?: SortOrder
+    createdAt?: SortOrder
+    completedAt?: SortOrder
+  }
+
+  export type QuickFixActionMaxOrderByAggregateInput = {
+    id?: SortOrder
+    repositoryMetadataId?: SortOrder
+    actionType?: SortOrder
+    actionDescription?: SortOrder
+    status?: SortOrder
+    executedBy?: SortOrder
+    createdAt?: SortOrder
+    completedAt?: SortOrder
+  }
+
+  export type QuickFixActionMinOrderByAggregateInput = {
+    id?: SortOrder
+    repositoryMetadataId?: SortOrder
+    actionType?: SortOrder
+    actionDescription?: SortOrder
+    status?: SortOrder
+    executedBy?: SortOrder
+    createdAt?: SortOrder
+    completedAt?: SortOrder
+  }
+
+  export type IntNullableFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel> | null
+    in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntNullableFilter<$PrismaModel> | number | null
+  }
+
+  export type RepositoryEnvironmentRepositoryMetadataIdNameCompoundUniqueInput = {
+    repositoryMetadataId: string
+    name: string
+  }
+
+  export type RepositoryEnvironmentCountOrderByAggregateInput = {
+    id?: SortOrder
+    repositoryMetadataId?: SortOrder
+    name?: SortOrder
+    order?: SortOrder
+    requiresApproval?: SortOrder
+    approvalMinCount?: SortOrder
+    autoApproveIfTestsPass?: SortOrder
+    autoRollbackOnFailure?: SortOrder
+    healthCheckUrl?: SortOrder
+    healthCheckInterval?: SortOrder
+    variables?: SortOrder
+    secretNames?: SortOrder
+    slackChannel?: SortOrder
+    notifyOn?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type RepositoryEnvironmentAvgOrderByAggregateInput = {
+    order?: SortOrder
+    approvalMinCount?: SortOrder
+    healthCheckInterval?: SortOrder
+  }
+
+  export type RepositoryEnvironmentMaxOrderByAggregateInput = {
+    id?: SortOrder
+    repositoryMetadataId?: SortOrder
+    name?: SortOrder
+    order?: SortOrder
+    requiresApproval?: SortOrder
+    approvalMinCount?: SortOrder
+    autoApproveIfTestsPass?: SortOrder
+    autoRollbackOnFailure?: SortOrder
+    healthCheckUrl?: SortOrder
+    healthCheckInterval?: SortOrder
+    slackChannel?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type RepositoryEnvironmentMinOrderByAggregateInput = {
+    id?: SortOrder
+    repositoryMetadataId?: SortOrder
+    name?: SortOrder
+    order?: SortOrder
+    requiresApproval?: SortOrder
+    approvalMinCount?: SortOrder
+    autoApproveIfTestsPass?: SortOrder
+    autoRollbackOnFailure?: SortOrder
+    healthCheckUrl?: SortOrder
+    healthCheckInterval?: SortOrder
+    slackChannel?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type RepositoryEnvironmentSumOrderByAggregateInput = {
+    order?: SortOrder
+    approvalMinCount?: SortOrder
+    healthCheckInterval?: SortOrder
+  }
+
+  export type IntNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel> | null
+    in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntNullableWithAggregatesFilter<$PrismaModel> | number | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _avg?: NestedFloatNullableFilter<$PrismaModel>
+    _sum?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedIntNullableFilter<$PrismaModel>
+    _max?: NestedIntNullableFilter<$PrismaModel>
+  }
+
+  export type RepositoryEnvironmentScalarRelationFilter = {
+    is?: RepositoryEnvironmentWhereInput
+    isNot?: RepositoryEnvironmentWhereInput
+  }
+
+  export type DeploymentApprovalListRelationFilter = {
+    every?: DeploymentApprovalWhereInput
+    some?: DeploymentApprovalWhereInput
+    none?: DeploymentApprovalWhereInput
+  }
+
+  export type DeploymentApprovalOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type DeploymentCountOrderByAggregateInput = {
+    id?: SortOrder
+    repositoryMetadataId?: SortOrder
+    environmentId?: SortOrder
+    version?: SortOrder
+    status?: SortOrder
+    deployedAt?: SortOrder
+    deployedBy?: SortOrder
+    duration?: SortOrder
+    riskAssessment?: SortOrder
+    healthCheckPassed?: SortOrder
+    healthCheckDetails?: SortOrder
+    postDeploymentMetrics?: SortOrder
+    preDeploymentNotes?: SortOrder
+    postDeploymentNotes?: SortOrder
+    deploymentLogs?: SortOrder
+    artifacts?: SortOrder
+    approvalRequired?: SortOrder
+    rollbackOf?: SortOrder
+    rollbackReason?: SortOrder
+    rollbackInitiatedAt?: SortOrder
+    rollbackInitiatedBy?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type DeploymentAvgOrderByAggregateInput = {
+    duration?: SortOrder
+  }
+
+  export type DeploymentMaxOrderByAggregateInput = {
+    id?: SortOrder
+    repositoryMetadataId?: SortOrder
+    environmentId?: SortOrder
+    version?: SortOrder
+    status?: SortOrder
+    deployedAt?: SortOrder
+    deployedBy?: SortOrder
+    duration?: SortOrder
+    healthCheckPassed?: SortOrder
+    preDeploymentNotes?: SortOrder
+    postDeploymentNotes?: SortOrder
+    deploymentLogs?: SortOrder
+    approvalRequired?: SortOrder
+    rollbackOf?: SortOrder
+    rollbackReason?: SortOrder
+    rollbackInitiatedAt?: SortOrder
+    rollbackInitiatedBy?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type DeploymentMinOrderByAggregateInput = {
+    id?: SortOrder
+    repositoryMetadataId?: SortOrder
+    environmentId?: SortOrder
+    version?: SortOrder
+    status?: SortOrder
+    deployedAt?: SortOrder
+    deployedBy?: SortOrder
+    duration?: SortOrder
+    healthCheckPassed?: SortOrder
+    preDeploymentNotes?: SortOrder
+    postDeploymentNotes?: SortOrder
+    deploymentLogs?: SortOrder
+    approvalRequired?: SortOrder
+    rollbackOf?: SortOrder
+    rollbackReason?: SortOrder
+    rollbackInitiatedAt?: SortOrder
+    rollbackInitiatedBy?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type DeploymentSumOrderByAggregateInput = {
+    duration?: SortOrder
+  }
+
+  export type DeploymentScalarRelationFilter = {
+    is?: DeploymentWhereInput
+    isNot?: DeploymentWhereInput
+  }
+
+  export type DeploymentApprovalDeploymentIdApproverEmailCompoundUniqueInput = {
+    deploymentId: string
+    approverEmail: string
+  }
+
+  export type DeploymentApprovalCountOrderByAggregateInput = {
+    id?: SortOrder
+    deploymentId?: SortOrder
+    approverEmail?: SortOrder
+    status?: SortOrder
+    reason?: SortOrder
+    comment?: SortOrder
+    respondedAt?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type DeploymentApprovalMaxOrderByAggregateInput = {
+    id?: SortOrder
+    deploymentId?: SortOrder
+    approverEmail?: SortOrder
+    status?: SortOrder
+    reason?: SortOrder
+    comment?: SortOrder
+    respondedAt?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type DeploymentApprovalMinOrderByAggregateInput = {
+    id?: SortOrder
+    deploymentId?: SortOrder
+    approverEmail?: SortOrder
+    status?: SortOrder
+    reason?: SortOrder
+    comment?: SortOrder
+    respondedAt?: SortOrder
+    createdAt?: SortOrder
+  }
+
   export type StringFieldUpdateOperationsInput = {
     set?: string
   }
@@ -10603,11 +22309,25 @@ export namespace Prisma {
     connect?: AuthTokenWhereUniqueInput | AuthTokenWhereUniqueInput[]
   }
 
+  export type ProviderIntegrationCreateNestedManyWithoutUserInput = {
+    create?: XOR<ProviderIntegrationCreateWithoutUserInput, ProviderIntegrationUncheckedCreateWithoutUserInput> | ProviderIntegrationCreateWithoutUserInput[] | ProviderIntegrationUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: ProviderIntegrationCreateOrConnectWithoutUserInput | ProviderIntegrationCreateOrConnectWithoutUserInput[]
+    createMany?: ProviderIntegrationCreateManyUserInputEnvelope
+    connect?: ProviderIntegrationWhereUniqueInput | ProviderIntegrationWhereUniqueInput[]
+  }
+
   export type AuthTokenUncheckedCreateNestedManyWithoutUserInput = {
     create?: XOR<AuthTokenCreateWithoutUserInput, AuthTokenUncheckedCreateWithoutUserInput> | AuthTokenCreateWithoutUserInput[] | AuthTokenUncheckedCreateWithoutUserInput[]
     connectOrCreate?: AuthTokenCreateOrConnectWithoutUserInput | AuthTokenCreateOrConnectWithoutUserInput[]
     createMany?: AuthTokenCreateManyUserInputEnvelope
     connect?: AuthTokenWhereUniqueInput | AuthTokenWhereUniqueInput[]
+  }
+
+  export type ProviderIntegrationUncheckedCreateNestedManyWithoutUserInput = {
+    create?: XOR<ProviderIntegrationCreateWithoutUserInput, ProviderIntegrationUncheckedCreateWithoutUserInput> | ProviderIntegrationCreateWithoutUserInput[] | ProviderIntegrationUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: ProviderIntegrationCreateOrConnectWithoutUserInput | ProviderIntegrationCreateOrConnectWithoutUserInput[]
+    createMany?: ProviderIntegrationCreateManyUserInputEnvelope
+    connect?: ProviderIntegrationWhereUniqueInput | ProviderIntegrationWhereUniqueInput[]
   }
 
   export type NullableStringFieldUpdateOperationsInput = {
@@ -10632,6 +22352,20 @@ export namespace Prisma {
     deleteMany?: AuthTokenScalarWhereInput | AuthTokenScalarWhereInput[]
   }
 
+  export type ProviderIntegrationUpdateManyWithoutUserNestedInput = {
+    create?: XOR<ProviderIntegrationCreateWithoutUserInput, ProviderIntegrationUncheckedCreateWithoutUserInput> | ProviderIntegrationCreateWithoutUserInput[] | ProviderIntegrationUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: ProviderIntegrationCreateOrConnectWithoutUserInput | ProviderIntegrationCreateOrConnectWithoutUserInput[]
+    upsert?: ProviderIntegrationUpsertWithWhereUniqueWithoutUserInput | ProviderIntegrationUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: ProviderIntegrationCreateManyUserInputEnvelope
+    set?: ProviderIntegrationWhereUniqueInput | ProviderIntegrationWhereUniqueInput[]
+    disconnect?: ProviderIntegrationWhereUniqueInput | ProviderIntegrationWhereUniqueInput[]
+    delete?: ProviderIntegrationWhereUniqueInput | ProviderIntegrationWhereUniqueInput[]
+    connect?: ProviderIntegrationWhereUniqueInput | ProviderIntegrationWhereUniqueInput[]
+    update?: ProviderIntegrationUpdateWithWhereUniqueWithoutUserInput | ProviderIntegrationUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: ProviderIntegrationUpdateManyWithWhereWithoutUserInput | ProviderIntegrationUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: ProviderIntegrationScalarWhereInput | ProviderIntegrationScalarWhereInput[]
+  }
+
   export type AuthTokenUncheckedUpdateManyWithoutUserNestedInput = {
     create?: XOR<AuthTokenCreateWithoutUserInput, AuthTokenUncheckedCreateWithoutUserInput> | AuthTokenCreateWithoutUserInput[] | AuthTokenUncheckedCreateWithoutUserInput[]
     connectOrCreate?: AuthTokenCreateOrConnectWithoutUserInput | AuthTokenCreateOrConnectWithoutUserInput[]
@@ -10644,6 +22378,34 @@ export namespace Prisma {
     update?: AuthTokenUpdateWithWhereUniqueWithoutUserInput | AuthTokenUpdateWithWhereUniqueWithoutUserInput[]
     updateMany?: AuthTokenUpdateManyWithWhereWithoutUserInput | AuthTokenUpdateManyWithWhereWithoutUserInput[]
     deleteMany?: AuthTokenScalarWhereInput | AuthTokenScalarWhereInput[]
+  }
+
+  export type ProviderIntegrationUncheckedUpdateManyWithoutUserNestedInput = {
+    create?: XOR<ProviderIntegrationCreateWithoutUserInput, ProviderIntegrationUncheckedCreateWithoutUserInput> | ProviderIntegrationCreateWithoutUserInput[] | ProviderIntegrationUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: ProviderIntegrationCreateOrConnectWithoutUserInput | ProviderIntegrationCreateOrConnectWithoutUserInput[]
+    upsert?: ProviderIntegrationUpsertWithWhereUniqueWithoutUserInput | ProviderIntegrationUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: ProviderIntegrationCreateManyUserInputEnvelope
+    set?: ProviderIntegrationWhereUniqueInput | ProviderIntegrationWhereUniqueInput[]
+    disconnect?: ProviderIntegrationWhereUniqueInput | ProviderIntegrationWhereUniqueInput[]
+    delete?: ProviderIntegrationWhereUniqueInput | ProviderIntegrationWhereUniqueInput[]
+    connect?: ProviderIntegrationWhereUniqueInput | ProviderIntegrationWhereUniqueInput[]
+    update?: ProviderIntegrationUpdateWithWhereUniqueWithoutUserInput | ProviderIntegrationUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: ProviderIntegrationUpdateManyWithWhereWithoutUserInput | ProviderIntegrationUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: ProviderIntegrationScalarWhereInput | ProviderIntegrationScalarWhereInput[]
+  }
+
+  export type UserCreateNestedOneWithoutProviderIntegrationsInput = {
+    create?: XOR<UserCreateWithoutProviderIntegrationsInput, UserUncheckedCreateWithoutProviderIntegrationsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutProviderIntegrationsInput
+    connect?: UserWhereUniqueInput
+  }
+
+  export type UserUpdateOneRequiredWithoutProviderIntegrationsNestedInput = {
+    create?: XOR<UserCreateWithoutProviderIntegrationsInput, UserUncheckedCreateWithoutProviderIntegrationsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutProviderIntegrationsInput
+    upsert?: UserUpsertWithoutProviderIntegrationsInput
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutProviderIntegrationsInput, UserUpdateWithoutProviderIntegrationsInput>, UserUncheckedUpdateWithoutProviderIntegrationsInput>
   }
 
   export type UserCreateNestedOneWithoutAuthTokensInput = {
@@ -10666,6 +22428,389 @@ export namespace Prisma {
     upsert?: UserUpsertWithoutAuthTokensInput
     connect?: UserWhereUniqueInput
     update?: XOR<XOR<UserUpdateToOneWithWhereWithoutAuthTokensInput, UserUpdateWithoutAuthTokensInput>, UserUncheckedUpdateWithoutAuthTokensInput>
+  }
+
+  export type RepositoryMetadataCreatemaintainersInput = {
+    set: string[]
+  }
+
+  export type HealthCheckResultCreateNestedManyWithoutRepositoryMetadataInput = {
+    create?: XOR<HealthCheckResultCreateWithoutRepositoryMetadataInput, HealthCheckResultUncheckedCreateWithoutRepositoryMetadataInput> | HealthCheckResultCreateWithoutRepositoryMetadataInput[] | HealthCheckResultUncheckedCreateWithoutRepositoryMetadataInput[]
+    connectOrCreate?: HealthCheckResultCreateOrConnectWithoutRepositoryMetadataInput | HealthCheckResultCreateOrConnectWithoutRepositoryMetadataInput[]
+    createMany?: HealthCheckResultCreateManyRepositoryMetadataInputEnvelope
+    connect?: HealthCheckResultWhereUniqueInput | HealthCheckResultWhereUniqueInput[]
+  }
+
+  export type QuickFixActionCreateNestedManyWithoutRepositoryMetadataInput = {
+    create?: XOR<QuickFixActionCreateWithoutRepositoryMetadataInput, QuickFixActionUncheckedCreateWithoutRepositoryMetadataInput> | QuickFixActionCreateWithoutRepositoryMetadataInput[] | QuickFixActionUncheckedCreateWithoutRepositoryMetadataInput[]
+    connectOrCreate?: QuickFixActionCreateOrConnectWithoutRepositoryMetadataInput | QuickFixActionCreateOrConnectWithoutRepositoryMetadataInput[]
+    createMany?: QuickFixActionCreateManyRepositoryMetadataInputEnvelope
+    connect?: QuickFixActionWhereUniqueInput | QuickFixActionWhereUniqueInput[]
+  }
+
+  export type RepositoryEnvironmentCreateNestedManyWithoutRepositoryMetadataInput = {
+    create?: XOR<RepositoryEnvironmentCreateWithoutRepositoryMetadataInput, RepositoryEnvironmentUncheckedCreateWithoutRepositoryMetadataInput> | RepositoryEnvironmentCreateWithoutRepositoryMetadataInput[] | RepositoryEnvironmentUncheckedCreateWithoutRepositoryMetadataInput[]
+    connectOrCreate?: RepositoryEnvironmentCreateOrConnectWithoutRepositoryMetadataInput | RepositoryEnvironmentCreateOrConnectWithoutRepositoryMetadataInput[]
+    createMany?: RepositoryEnvironmentCreateManyRepositoryMetadataInputEnvelope
+    connect?: RepositoryEnvironmentWhereUniqueInput | RepositoryEnvironmentWhereUniqueInput[]
+  }
+
+  export type DeploymentCreateNestedManyWithoutRepositoryMetadataInput = {
+    create?: XOR<DeploymentCreateWithoutRepositoryMetadataInput, DeploymentUncheckedCreateWithoutRepositoryMetadataInput> | DeploymentCreateWithoutRepositoryMetadataInput[] | DeploymentUncheckedCreateWithoutRepositoryMetadataInput[]
+    connectOrCreate?: DeploymentCreateOrConnectWithoutRepositoryMetadataInput | DeploymentCreateOrConnectWithoutRepositoryMetadataInput[]
+    createMany?: DeploymentCreateManyRepositoryMetadataInputEnvelope
+    connect?: DeploymentWhereUniqueInput | DeploymentWhereUniqueInput[]
+  }
+
+  export type HealthCheckResultUncheckedCreateNestedManyWithoutRepositoryMetadataInput = {
+    create?: XOR<HealthCheckResultCreateWithoutRepositoryMetadataInput, HealthCheckResultUncheckedCreateWithoutRepositoryMetadataInput> | HealthCheckResultCreateWithoutRepositoryMetadataInput[] | HealthCheckResultUncheckedCreateWithoutRepositoryMetadataInput[]
+    connectOrCreate?: HealthCheckResultCreateOrConnectWithoutRepositoryMetadataInput | HealthCheckResultCreateOrConnectWithoutRepositoryMetadataInput[]
+    createMany?: HealthCheckResultCreateManyRepositoryMetadataInputEnvelope
+    connect?: HealthCheckResultWhereUniqueInput | HealthCheckResultWhereUniqueInput[]
+  }
+
+  export type QuickFixActionUncheckedCreateNestedManyWithoutRepositoryMetadataInput = {
+    create?: XOR<QuickFixActionCreateWithoutRepositoryMetadataInput, QuickFixActionUncheckedCreateWithoutRepositoryMetadataInput> | QuickFixActionCreateWithoutRepositoryMetadataInput[] | QuickFixActionUncheckedCreateWithoutRepositoryMetadataInput[]
+    connectOrCreate?: QuickFixActionCreateOrConnectWithoutRepositoryMetadataInput | QuickFixActionCreateOrConnectWithoutRepositoryMetadataInput[]
+    createMany?: QuickFixActionCreateManyRepositoryMetadataInputEnvelope
+    connect?: QuickFixActionWhereUniqueInput | QuickFixActionWhereUniqueInput[]
+  }
+
+  export type RepositoryEnvironmentUncheckedCreateNestedManyWithoutRepositoryMetadataInput = {
+    create?: XOR<RepositoryEnvironmentCreateWithoutRepositoryMetadataInput, RepositoryEnvironmentUncheckedCreateWithoutRepositoryMetadataInput> | RepositoryEnvironmentCreateWithoutRepositoryMetadataInput[] | RepositoryEnvironmentUncheckedCreateWithoutRepositoryMetadataInput[]
+    connectOrCreate?: RepositoryEnvironmentCreateOrConnectWithoutRepositoryMetadataInput | RepositoryEnvironmentCreateOrConnectWithoutRepositoryMetadataInput[]
+    createMany?: RepositoryEnvironmentCreateManyRepositoryMetadataInputEnvelope
+    connect?: RepositoryEnvironmentWhereUniqueInput | RepositoryEnvironmentWhereUniqueInput[]
+  }
+
+  export type DeploymentUncheckedCreateNestedManyWithoutRepositoryMetadataInput = {
+    create?: XOR<DeploymentCreateWithoutRepositoryMetadataInput, DeploymentUncheckedCreateWithoutRepositoryMetadataInput> | DeploymentCreateWithoutRepositoryMetadataInput[] | DeploymentUncheckedCreateWithoutRepositoryMetadataInput[]
+    connectOrCreate?: DeploymentCreateOrConnectWithoutRepositoryMetadataInput | DeploymentCreateOrConnectWithoutRepositoryMetadataInput[]
+    createMany?: DeploymentCreateManyRepositoryMetadataInputEnvelope
+    connect?: DeploymentWhereUniqueInput | DeploymentWhereUniqueInput[]
+  }
+
+  export type RepositoryMetadataUpdatemaintainersInput = {
+    set?: string[]
+    push?: string | string[]
+  }
+
+  export type NullableBoolFieldUpdateOperationsInput = {
+    set?: boolean | null
+  }
+
+  export type NullableFloatFieldUpdateOperationsInput = {
+    set?: number | null
+    increment?: number
+    decrement?: number
+    multiply?: number
+    divide?: number
+  }
+
+  export type HealthCheckResultUpdateManyWithoutRepositoryMetadataNestedInput = {
+    create?: XOR<HealthCheckResultCreateWithoutRepositoryMetadataInput, HealthCheckResultUncheckedCreateWithoutRepositoryMetadataInput> | HealthCheckResultCreateWithoutRepositoryMetadataInput[] | HealthCheckResultUncheckedCreateWithoutRepositoryMetadataInput[]
+    connectOrCreate?: HealthCheckResultCreateOrConnectWithoutRepositoryMetadataInput | HealthCheckResultCreateOrConnectWithoutRepositoryMetadataInput[]
+    upsert?: HealthCheckResultUpsertWithWhereUniqueWithoutRepositoryMetadataInput | HealthCheckResultUpsertWithWhereUniqueWithoutRepositoryMetadataInput[]
+    createMany?: HealthCheckResultCreateManyRepositoryMetadataInputEnvelope
+    set?: HealthCheckResultWhereUniqueInput | HealthCheckResultWhereUniqueInput[]
+    disconnect?: HealthCheckResultWhereUniqueInput | HealthCheckResultWhereUniqueInput[]
+    delete?: HealthCheckResultWhereUniqueInput | HealthCheckResultWhereUniqueInput[]
+    connect?: HealthCheckResultWhereUniqueInput | HealthCheckResultWhereUniqueInput[]
+    update?: HealthCheckResultUpdateWithWhereUniqueWithoutRepositoryMetadataInput | HealthCheckResultUpdateWithWhereUniqueWithoutRepositoryMetadataInput[]
+    updateMany?: HealthCheckResultUpdateManyWithWhereWithoutRepositoryMetadataInput | HealthCheckResultUpdateManyWithWhereWithoutRepositoryMetadataInput[]
+    deleteMany?: HealthCheckResultScalarWhereInput | HealthCheckResultScalarWhereInput[]
+  }
+
+  export type QuickFixActionUpdateManyWithoutRepositoryMetadataNestedInput = {
+    create?: XOR<QuickFixActionCreateWithoutRepositoryMetadataInput, QuickFixActionUncheckedCreateWithoutRepositoryMetadataInput> | QuickFixActionCreateWithoutRepositoryMetadataInput[] | QuickFixActionUncheckedCreateWithoutRepositoryMetadataInput[]
+    connectOrCreate?: QuickFixActionCreateOrConnectWithoutRepositoryMetadataInput | QuickFixActionCreateOrConnectWithoutRepositoryMetadataInput[]
+    upsert?: QuickFixActionUpsertWithWhereUniqueWithoutRepositoryMetadataInput | QuickFixActionUpsertWithWhereUniqueWithoutRepositoryMetadataInput[]
+    createMany?: QuickFixActionCreateManyRepositoryMetadataInputEnvelope
+    set?: QuickFixActionWhereUniqueInput | QuickFixActionWhereUniqueInput[]
+    disconnect?: QuickFixActionWhereUniqueInput | QuickFixActionWhereUniqueInput[]
+    delete?: QuickFixActionWhereUniqueInput | QuickFixActionWhereUniqueInput[]
+    connect?: QuickFixActionWhereUniqueInput | QuickFixActionWhereUniqueInput[]
+    update?: QuickFixActionUpdateWithWhereUniqueWithoutRepositoryMetadataInput | QuickFixActionUpdateWithWhereUniqueWithoutRepositoryMetadataInput[]
+    updateMany?: QuickFixActionUpdateManyWithWhereWithoutRepositoryMetadataInput | QuickFixActionUpdateManyWithWhereWithoutRepositoryMetadataInput[]
+    deleteMany?: QuickFixActionScalarWhereInput | QuickFixActionScalarWhereInput[]
+  }
+
+  export type RepositoryEnvironmentUpdateManyWithoutRepositoryMetadataNestedInput = {
+    create?: XOR<RepositoryEnvironmentCreateWithoutRepositoryMetadataInput, RepositoryEnvironmentUncheckedCreateWithoutRepositoryMetadataInput> | RepositoryEnvironmentCreateWithoutRepositoryMetadataInput[] | RepositoryEnvironmentUncheckedCreateWithoutRepositoryMetadataInput[]
+    connectOrCreate?: RepositoryEnvironmentCreateOrConnectWithoutRepositoryMetadataInput | RepositoryEnvironmentCreateOrConnectWithoutRepositoryMetadataInput[]
+    upsert?: RepositoryEnvironmentUpsertWithWhereUniqueWithoutRepositoryMetadataInput | RepositoryEnvironmentUpsertWithWhereUniqueWithoutRepositoryMetadataInput[]
+    createMany?: RepositoryEnvironmentCreateManyRepositoryMetadataInputEnvelope
+    set?: RepositoryEnvironmentWhereUniqueInput | RepositoryEnvironmentWhereUniqueInput[]
+    disconnect?: RepositoryEnvironmentWhereUniqueInput | RepositoryEnvironmentWhereUniqueInput[]
+    delete?: RepositoryEnvironmentWhereUniqueInput | RepositoryEnvironmentWhereUniqueInput[]
+    connect?: RepositoryEnvironmentWhereUniqueInput | RepositoryEnvironmentWhereUniqueInput[]
+    update?: RepositoryEnvironmentUpdateWithWhereUniqueWithoutRepositoryMetadataInput | RepositoryEnvironmentUpdateWithWhereUniqueWithoutRepositoryMetadataInput[]
+    updateMany?: RepositoryEnvironmentUpdateManyWithWhereWithoutRepositoryMetadataInput | RepositoryEnvironmentUpdateManyWithWhereWithoutRepositoryMetadataInput[]
+    deleteMany?: RepositoryEnvironmentScalarWhereInput | RepositoryEnvironmentScalarWhereInput[]
+  }
+
+  export type DeploymentUpdateManyWithoutRepositoryMetadataNestedInput = {
+    create?: XOR<DeploymentCreateWithoutRepositoryMetadataInput, DeploymentUncheckedCreateWithoutRepositoryMetadataInput> | DeploymentCreateWithoutRepositoryMetadataInput[] | DeploymentUncheckedCreateWithoutRepositoryMetadataInput[]
+    connectOrCreate?: DeploymentCreateOrConnectWithoutRepositoryMetadataInput | DeploymentCreateOrConnectWithoutRepositoryMetadataInput[]
+    upsert?: DeploymentUpsertWithWhereUniqueWithoutRepositoryMetadataInput | DeploymentUpsertWithWhereUniqueWithoutRepositoryMetadataInput[]
+    createMany?: DeploymentCreateManyRepositoryMetadataInputEnvelope
+    set?: DeploymentWhereUniqueInput | DeploymentWhereUniqueInput[]
+    disconnect?: DeploymentWhereUniqueInput | DeploymentWhereUniqueInput[]
+    delete?: DeploymentWhereUniqueInput | DeploymentWhereUniqueInput[]
+    connect?: DeploymentWhereUniqueInput | DeploymentWhereUniqueInput[]
+    update?: DeploymentUpdateWithWhereUniqueWithoutRepositoryMetadataInput | DeploymentUpdateWithWhereUniqueWithoutRepositoryMetadataInput[]
+    updateMany?: DeploymentUpdateManyWithWhereWithoutRepositoryMetadataInput | DeploymentUpdateManyWithWhereWithoutRepositoryMetadataInput[]
+    deleteMany?: DeploymentScalarWhereInput | DeploymentScalarWhereInput[]
+  }
+
+  export type HealthCheckResultUncheckedUpdateManyWithoutRepositoryMetadataNestedInput = {
+    create?: XOR<HealthCheckResultCreateWithoutRepositoryMetadataInput, HealthCheckResultUncheckedCreateWithoutRepositoryMetadataInput> | HealthCheckResultCreateWithoutRepositoryMetadataInput[] | HealthCheckResultUncheckedCreateWithoutRepositoryMetadataInput[]
+    connectOrCreate?: HealthCheckResultCreateOrConnectWithoutRepositoryMetadataInput | HealthCheckResultCreateOrConnectWithoutRepositoryMetadataInput[]
+    upsert?: HealthCheckResultUpsertWithWhereUniqueWithoutRepositoryMetadataInput | HealthCheckResultUpsertWithWhereUniqueWithoutRepositoryMetadataInput[]
+    createMany?: HealthCheckResultCreateManyRepositoryMetadataInputEnvelope
+    set?: HealthCheckResultWhereUniqueInput | HealthCheckResultWhereUniqueInput[]
+    disconnect?: HealthCheckResultWhereUniqueInput | HealthCheckResultWhereUniqueInput[]
+    delete?: HealthCheckResultWhereUniqueInput | HealthCheckResultWhereUniqueInput[]
+    connect?: HealthCheckResultWhereUniqueInput | HealthCheckResultWhereUniqueInput[]
+    update?: HealthCheckResultUpdateWithWhereUniqueWithoutRepositoryMetadataInput | HealthCheckResultUpdateWithWhereUniqueWithoutRepositoryMetadataInput[]
+    updateMany?: HealthCheckResultUpdateManyWithWhereWithoutRepositoryMetadataInput | HealthCheckResultUpdateManyWithWhereWithoutRepositoryMetadataInput[]
+    deleteMany?: HealthCheckResultScalarWhereInput | HealthCheckResultScalarWhereInput[]
+  }
+
+  export type QuickFixActionUncheckedUpdateManyWithoutRepositoryMetadataNestedInput = {
+    create?: XOR<QuickFixActionCreateWithoutRepositoryMetadataInput, QuickFixActionUncheckedCreateWithoutRepositoryMetadataInput> | QuickFixActionCreateWithoutRepositoryMetadataInput[] | QuickFixActionUncheckedCreateWithoutRepositoryMetadataInput[]
+    connectOrCreate?: QuickFixActionCreateOrConnectWithoutRepositoryMetadataInput | QuickFixActionCreateOrConnectWithoutRepositoryMetadataInput[]
+    upsert?: QuickFixActionUpsertWithWhereUniqueWithoutRepositoryMetadataInput | QuickFixActionUpsertWithWhereUniqueWithoutRepositoryMetadataInput[]
+    createMany?: QuickFixActionCreateManyRepositoryMetadataInputEnvelope
+    set?: QuickFixActionWhereUniqueInput | QuickFixActionWhereUniqueInput[]
+    disconnect?: QuickFixActionWhereUniqueInput | QuickFixActionWhereUniqueInput[]
+    delete?: QuickFixActionWhereUniqueInput | QuickFixActionWhereUniqueInput[]
+    connect?: QuickFixActionWhereUniqueInput | QuickFixActionWhereUniqueInput[]
+    update?: QuickFixActionUpdateWithWhereUniqueWithoutRepositoryMetadataInput | QuickFixActionUpdateWithWhereUniqueWithoutRepositoryMetadataInput[]
+    updateMany?: QuickFixActionUpdateManyWithWhereWithoutRepositoryMetadataInput | QuickFixActionUpdateManyWithWhereWithoutRepositoryMetadataInput[]
+    deleteMany?: QuickFixActionScalarWhereInput | QuickFixActionScalarWhereInput[]
+  }
+
+  export type RepositoryEnvironmentUncheckedUpdateManyWithoutRepositoryMetadataNestedInput = {
+    create?: XOR<RepositoryEnvironmentCreateWithoutRepositoryMetadataInput, RepositoryEnvironmentUncheckedCreateWithoutRepositoryMetadataInput> | RepositoryEnvironmentCreateWithoutRepositoryMetadataInput[] | RepositoryEnvironmentUncheckedCreateWithoutRepositoryMetadataInput[]
+    connectOrCreate?: RepositoryEnvironmentCreateOrConnectWithoutRepositoryMetadataInput | RepositoryEnvironmentCreateOrConnectWithoutRepositoryMetadataInput[]
+    upsert?: RepositoryEnvironmentUpsertWithWhereUniqueWithoutRepositoryMetadataInput | RepositoryEnvironmentUpsertWithWhereUniqueWithoutRepositoryMetadataInput[]
+    createMany?: RepositoryEnvironmentCreateManyRepositoryMetadataInputEnvelope
+    set?: RepositoryEnvironmentWhereUniqueInput | RepositoryEnvironmentWhereUniqueInput[]
+    disconnect?: RepositoryEnvironmentWhereUniqueInput | RepositoryEnvironmentWhereUniqueInput[]
+    delete?: RepositoryEnvironmentWhereUniqueInput | RepositoryEnvironmentWhereUniqueInput[]
+    connect?: RepositoryEnvironmentWhereUniqueInput | RepositoryEnvironmentWhereUniqueInput[]
+    update?: RepositoryEnvironmentUpdateWithWhereUniqueWithoutRepositoryMetadataInput | RepositoryEnvironmentUpdateWithWhereUniqueWithoutRepositoryMetadataInput[]
+    updateMany?: RepositoryEnvironmentUpdateManyWithWhereWithoutRepositoryMetadataInput | RepositoryEnvironmentUpdateManyWithWhereWithoutRepositoryMetadataInput[]
+    deleteMany?: RepositoryEnvironmentScalarWhereInput | RepositoryEnvironmentScalarWhereInput[]
+  }
+
+  export type DeploymentUncheckedUpdateManyWithoutRepositoryMetadataNestedInput = {
+    create?: XOR<DeploymentCreateWithoutRepositoryMetadataInput, DeploymentUncheckedCreateWithoutRepositoryMetadataInput> | DeploymentCreateWithoutRepositoryMetadataInput[] | DeploymentUncheckedCreateWithoutRepositoryMetadataInput[]
+    connectOrCreate?: DeploymentCreateOrConnectWithoutRepositoryMetadataInput | DeploymentCreateOrConnectWithoutRepositoryMetadataInput[]
+    upsert?: DeploymentUpsertWithWhereUniqueWithoutRepositoryMetadataInput | DeploymentUpsertWithWhereUniqueWithoutRepositoryMetadataInput[]
+    createMany?: DeploymentCreateManyRepositoryMetadataInputEnvelope
+    set?: DeploymentWhereUniqueInput | DeploymentWhereUniqueInput[]
+    disconnect?: DeploymentWhereUniqueInput | DeploymentWhereUniqueInput[]
+    delete?: DeploymentWhereUniqueInput | DeploymentWhereUniqueInput[]
+    connect?: DeploymentWhereUniqueInput | DeploymentWhereUniqueInput[]
+    update?: DeploymentUpdateWithWhereUniqueWithoutRepositoryMetadataInput | DeploymentUpdateWithWhereUniqueWithoutRepositoryMetadataInput[]
+    updateMany?: DeploymentUpdateManyWithWhereWithoutRepositoryMetadataInput | DeploymentUpdateManyWithWhereWithoutRepositoryMetadataInput[]
+    deleteMany?: DeploymentScalarWhereInput | DeploymentScalarWhereInput[]
+  }
+
+  export type RepositoryMetadataCreateNestedOneWithoutHealthCheckResultsInput = {
+    create?: XOR<RepositoryMetadataCreateWithoutHealthCheckResultsInput, RepositoryMetadataUncheckedCreateWithoutHealthCheckResultsInput>
+    connectOrCreate?: RepositoryMetadataCreateOrConnectWithoutHealthCheckResultsInput
+    connect?: RepositoryMetadataWhereUniqueInput
+  }
+
+  export type RepositoryMetadataUpdateOneRequiredWithoutHealthCheckResultsNestedInput = {
+    create?: XOR<RepositoryMetadataCreateWithoutHealthCheckResultsInput, RepositoryMetadataUncheckedCreateWithoutHealthCheckResultsInput>
+    connectOrCreate?: RepositoryMetadataCreateOrConnectWithoutHealthCheckResultsInput
+    upsert?: RepositoryMetadataUpsertWithoutHealthCheckResultsInput
+    connect?: RepositoryMetadataWhereUniqueInput
+    update?: XOR<XOR<RepositoryMetadataUpdateToOneWithWhereWithoutHealthCheckResultsInput, RepositoryMetadataUpdateWithoutHealthCheckResultsInput>, RepositoryMetadataUncheckedUpdateWithoutHealthCheckResultsInput>
+  }
+
+  export type RepositoryMetadataCreateNestedOneWithoutQuickFixActionsInput = {
+    create?: XOR<RepositoryMetadataCreateWithoutQuickFixActionsInput, RepositoryMetadataUncheckedCreateWithoutQuickFixActionsInput>
+    connectOrCreate?: RepositoryMetadataCreateOrConnectWithoutQuickFixActionsInput
+    connect?: RepositoryMetadataWhereUniqueInput
+  }
+
+  export type RepositoryMetadataUpdateOneRequiredWithoutQuickFixActionsNestedInput = {
+    create?: XOR<RepositoryMetadataCreateWithoutQuickFixActionsInput, RepositoryMetadataUncheckedCreateWithoutQuickFixActionsInput>
+    connectOrCreate?: RepositoryMetadataCreateOrConnectWithoutQuickFixActionsInput
+    upsert?: RepositoryMetadataUpsertWithoutQuickFixActionsInput
+    connect?: RepositoryMetadataWhereUniqueInput
+    update?: XOR<XOR<RepositoryMetadataUpdateToOneWithWhereWithoutQuickFixActionsInput, RepositoryMetadataUpdateWithoutQuickFixActionsInput>, RepositoryMetadataUncheckedUpdateWithoutQuickFixActionsInput>
+  }
+
+  export type RepositoryEnvironmentCreatesecretNamesInput = {
+    set: string[]
+  }
+
+  export type RepositoryEnvironmentCreatenotifyOnInput = {
+    set: string[]
+  }
+
+  export type RepositoryMetadataCreateNestedOneWithoutEnvironmentsInput = {
+    create?: XOR<RepositoryMetadataCreateWithoutEnvironmentsInput, RepositoryMetadataUncheckedCreateWithoutEnvironmentsInput>
+    connectOrCreate?: RepositoryMetadataCreateOrConnectWithoutEnvironmentsInput
+    connect?: RepositoryMetadataWhereUniqueInput
+  }
+
+  export type DeploymentCreateNestedManyWithoutEnvironmentInput = {
+    create?: XOR<DeploymentCreateWithoutEnvironmentInput, DeploymentUncheckedCreateWithoutEnvironmentInput> | DeploymentCreateWithoutEnvironmentInput[] | DeploymentUncheckedCreateWithoutEnvironmentInput[]
+    connectOrCreate?: DeploymentCreateOrConnectWithoutEnvironmentInput | DeploymentCreateOrConnectWithoutEnvironmentInput[]
+    createMany?: DeploymentCreateManyEnvironmentInputEnvelope
+    connect?: DeploymentWhereUniqueInput | DeploymentWhereUniqueInput[]
+  }
+
+  export type DeploymentUncheckedCreateNestedManyWithoutEnvironmentInput = {
+    create?: XOR<DeploymentCreateWithoutEnvironmentInput, DeploymentUncheckedCreateWithoutEnvironmentInput> | DeploymentCreateWithoutEnvironmentInput[] | DeploymentUncheckedCreateWithoutEnvironmentInput[]
+    connectOrCreate?: DeploymentCreateOrConnectWithoutEnvironmentInput | DeploymentCreateOrConnectWithoutEnvironmentInput[]
+    createMany?: DeploymentCreateManyEnvironmentInputEnvelope
+    connect?: DeploymentWhereUniqueInput | DeploymentWhereUniqueInput[]
+  }
+
+  export type NullableIntFieldUpdateOperationsInput = {
+    set?: number | null
+    increment?: number
+    decrement?: number
+    multiply?: number
+    divide?: number
+  }
+
+  export type RepositoryEnvironmentUpdatesecretNamesInput = {
+    set?: string[]
+    push?: string | string[]
+  }
+
+  export type RepositoryEnvironmentUpdatenotifyOnInput = {
+    set?: string[]
+    push?: string | string[]
+  }
+
+  export type RepositoryMetadataUpdateOneRequiredWithoutEnvironmentsNestedInput = {
+    create?: XOR<RepositoryMetadataCreateWithoutEnvironmentsInput, RepositoryMetadataUncheckedCreateWithoutEnvironmentsInput>
+    connectOrCreate?: RepositoryMetadataCreateOrConnectWithoutEnvironmentsInput
+    upsert?: RepositoryMetadataUpsertWithoutEnvironmentsInput
+    connect?: RepositoryMetadataWhereUniqueInput
+    update?: XOR<XOR<RepositoryMetadataUpdateToOneWithWhereWithoutEnvironmentsInput, RepositoryMetadataUpdateWithoutEnvironmentsInput>, RepositoryMetadataUncheckedUpdateWithoutEnvironmentsInput>
+  }
+
+  export type DeploymentUpdateManyWithoutEnvironmentNestedInput = {
+    create?: XOR<DeploymentCreateWithoutEnvironmentInput, DeploymentUncheckedCreateWithoutEnvironmentInput> | DeploymentCreateWithoutEnvironmentInput[] | DeploymentUncheckedCreateWithoutEnvironmentInput[]
+    connectOrCreate?: DeploymentCreateOrConnectWithoutEnvironmentInput | DeploymentCreateOrConnectWithoutEnvironmentInput[]
+    upsert?: DeploymentUpsertWithWhereUniqueWithoutEnvironmentInput | DeploymentUpsertWithWhereUniqueWithoutEnvironmentInput[]
+    createMany?: DeploymentCreateManyEnvironmentInputEnvelope
+    set?: DeploymentWhereUniqueInput | DeploymentWhereUniqueInput[]
+    disconnect?: DeploymentWhereUniqueInput | DeploymentWhereUniqueInput[]
+    delete?: DeploymentWhereUniqueInput | DeploymentWhereUniqueInput[]
+    connect?: DeploymentWhereUniqueInput | DeploymentWhereUniqueInput[]
+    update?: DeploymentUpdateWithWhereUniqueWithoutEnvironmentInput | DeploymentUpdateWithWhereUniqueWithoutEnvironmentInput[]
+    updateMany?: DeploymentUpdateManyWithWhereWithoutEnvironmentInput | DeploymentUpdateManyWithWhereWithoutEnvironmentInput[]
+    deleteMany?: DeploymentScalarWhereInput | DeploymentScalarWhereInput[]
+  }
+
+  export type DeploymentUncheckedUpdateManyWithoutEnvironmentNestedInput = {
+    create?: XOR<DeploymentCreateWithoutEnvironmentInput, DeploymentUncheckedCreateWithoutEnvironmentInput> | DeploymentCreateWithoutEnvironmentInput[] | DeploymentUncheckedCreateWithoutEnvironmentInput[]
+    connectOrCreate?: DeploymentCreateOrConnectWithoutEnvironmentInput | DeploymentCreateOrConnectWithoutEnvironmentInput[]
+    upsert?: DeploymentUpsertWithWhereUniqueWithoutEnvironmentInput | DeploymentUpsertWithWhereUniqueWithoutEnvironmentInput[]
+    createMany?: DeploymentCreateManyEnvironmentInputEnvelope
+    set?: DeploymentWhereUniqueInput | DeploymentWhereUniqueInput[]
+    disconnect?: DeploymentWhereUniqueInput | DeploymentWhereUniqueInput[]
+    delete?: DeploymentWhereUniqueInput | DeploymentWhereUniqueInput[]
+    connect?: DeploymentWhereUniqueInput | DeploymentWhereUniqueInput[]
+    update?: DeploymentUpdateWithWhereUniqueWithoutEnvironmentInput | DeploymentUpdateWithWhereUniqueWithoutEnvironmentInput[]
+    updateMany?: DeploymentUpdateManyWithWhereWithoutEnvironmentInput | DeploymentUpdateManyWithWhereWithoutEnvironmentInput[]
+    deleteMany?: DeploymentScalarWhereInput | DeploymentScalarWhereInput[]
+  }
+
+  export type RepositoryMetadataCreateNestedOneWithoutDeploymentsInput = {
+    create?: XOR<RepositoryMetadataCreateWithoutDeploymentsInput, RepositoryMetadataUncheckedCreateWithoutDeploymentsInput>
+    connectOrCreate?: RepositoryMetadataCreateOrConnectWithoutDeploymentsInput
+    connect?: RepositoryMetadataWhereUniqueInput
+  }
+
+  export type RepositoryEnvironmentCreateNestedOneWithoutDeploymentsInput = {
+    create?: XOR<RepositoryEnvironmentCreateWithoutDeploymentsInput, RepositoryEnvironmentUncheckedCreateWithoutDeploymentsInput>
+    connectOrCreate?: RepositoryEnvironmentCreateOrConnectWithoutDeploymentsInput
+    connect?: RepositoryEnvironmentWhereUniqueInput
+  }
+
+  export type DeploymentApprovalCreateNestedManyWithoutDeploymentInput = {
+    create?: XOR<DeploymentApprovalCreateWithoutDeploymentInput, DeploymentApprovalUncheckedCreateWithoutDeploymentInput> | DeploymentApprovalCreateWithoutDeploymentInput[] | DeploymentApprovalUncheckedCreateWithoutDeploymentInput[]
+    connectOrCreate?: DeploymentApprovalCreateOrConnectWithoutDeploymentInput | DeploymentApprovalCreateOrConnectWithoutDeploymentInput[]
+    createMany?: DeploymentApprovalCreateManyDeploymentInputEnvelope
+    connect?: DeploymentApprovalWhereUniqueInput | DeploymentApprovalWhereUniqueInput[]
+  }
+
+  export type DeploymentApprovalUncheckedCreateNestedManyWithoutDeploymentInput = {
+    create?: XOR<DeploymentApprovalCreateWithoutDeploymentInput, DeploymentApprovalUncheckedCreateWithoutDeploymentInput> | DeploymentApprovalCreateWithoutDeploymentInput[] | DeploymentApprovalUncheckedCreateWithoutDeploymentInput[]
+    connectOrCreate?: DeploymentApprovalCreateOrConnectWithoutDeploymentInput | DeploymentApprovalCreateOrConnectWithoutDeploymentInput[]
+    createMany?: DeploymentApprovalCreateManyDeploymentInputEnvelope
+    connect?: DeploymentApprovalWhereUniqueInput | DeploymentApprovalWhereUniqueInput[]
+  }
+
+  export type RepositoryMetadataUpdateOneRequiredWithoutDeploymentsNestedInput = {
+    create?: XOR<RepositoryMetadataCreateWithoutDeploymentsInput, RepositoryMetadataUncheckedCreateWithoutDeploymentsInput>
+    connectOrCreate?: RepositoryMetadataCreateOrConnectWithoutDeploymentsInput
+    upsert?: RepositoryMetadataUpsertWithoutDeploymentsInput
+    connect?: RepositoryMetadataWhereUniqueInput
+    update?: XOR<XOR<RepositoryMetadataUpdateToOneWithWhereWithoutDeploymentsInput, RepositoryMetadataUpdateWithoutDeploymentsInput>, RepositoryMetadataUncheckedUpdateWithoutDeploymentsInput>
+  }
+
+  export type RepositoryEnvironmentUpdateOneRequiredWithoutDeploymentsNestedInput = {
+    create?: XOR<RepositoryEnvironmentCreateWithoutDeploymentsInput, RepositoryEnvironmentUncheckedCreateWithoutDeploymentsInput>
+    connectOrCreate?: RepositoryEnvironmentCreateOrConnectWithoutDeploymentsInput
+    upsert?: RepositoryEnvironmentUpsertWithoutDeploymentsInput
+    connect?: RepositoryEnvironmentWhereUniqueInput
+    update?: XOR<XOR<RepositoryEnvironmentUpdateToOneWithWhereWithoutDeploymentsInput, RepositoryEnvironmentUpdateWithoutDeploymentsInput>, RepositoryEnvironmentUncheckedUpdateWithoutDeploymentsInput>
+  }
+
+  export type DeploymentApprovalUpdateManyWithoutDeploymentNestedInput = {
+    create?: XOR<DeploymentApprovalCreateWithoutDeploymentInput, DeploymentApprovalUncheckedCreateWithoutDeploymentInput> | DeploymentApprovalCreateWithoutDeploymentInput[] | DeploymentApprovalUncheckedCreateWithoutDeploymentInput[]
+    connectOrCreate?: DeploymentApprovalCreateOrConnectWithoutDeploymentInput | DeploymentApprovalCreateOrConnectWithoutDeploymentInput[]
+    upsert?: DeploymentApprovalUpsertWithWhereUniqueWithoutDeploymentInput | DeploymentApprovalUpsertWithWhereUniqueWithoutDeploymentInput[]
+    createMany?: DeploymentApprovalCreateManyDeploymentInputEnvelope
+    set?: DeploymentApprovalWhereUniqueInput | DeploymentApprovalWhereUniqueInput[]
+    disconnect?: DeploymentApprovalWhereUniqueInput | DeploymentApprovalWhereUniqueInput[]
+    delete?: DeploymentApprovalWhereUniqueInput | DeploymentApprovalWhereUniqueInput[]
+    connect?: DeploymentApprovalWhereUniqueInput | DeploymentApprovalWhereUniqueInput[]
+    update?: DeploymentApprovalUpdateWithWhereUniqueWithoutDeploymentInput | DeploymentApprovalUpdateWithWhereUniqueWithoutDeploymentInput[]
+    updateMany?: DeploymentApprovalUpdateManyWithWhereWithoutDeploymentInput | DeploymentApprovalUpdateManyWithWhereWithoutDeploymentInput[]
+    deleteMany?: DeploymentApprovalScalarWhereInput | DeploymentApprovalScalarWhereInput[]
+  }
+
+  export type DeploymentApprovalUncheckedUpdateManyWithoutDeploymentNestedInput = {
+    create?: XOR<DeploymentApprovalCreateWithoutDeploymentInput, DeploymentApprovalUncheckedCreateWithoutDeploymentInput> | DeploymentApprovalCreateWithoutDeploymentInput[] | DeploymentApprovalUncheckedCreateWithoutDeploymentInput[]
+    connectOrCreate?: DeploymentApprovalCreateOrConnectWithoutDeploymentInput | DeploymentApprovalCreateOrConnectWithoutDeploymentInput[]
+    upsert?: DeploymentApprovalUpsertWithWhereUniqueWithoutDeploymentInput | DeploymentApprovalUpsertWithWhereUniqueWithoutDeploymentInput[]
+    createMany?: DeploymentApprovalCreateManyDeploymentInputEnvelope
+    set?: DeploymentApprovalWhereUniqueInput | DeploymentApprovalWhereUniqueInput[]
+    disconnect?: DeploymentApprovalWhereUniqueInput | DeploymentApprovalWhereUniqueInput[]
+    delete?: DeploymentApprovalWhereUniqueInput | DeploymentApprovalWhereUniqueInput[]
+    connect?: DeploymentApprovalWhereUniqueInput | DeploymentApprovalWhereUniqueInput[]
+    update?: DeploymentApprovalUpdateWithWhereUniqueWithoutDeploymentInput | DeploymentApprovalUpdateWithWhereUniqueWithoutDeploymentInput[]
+    updateMany?: DeploymentApprovalUpdateManyWithWhereWithoutDeploymentInput | DeploymentApprovalUpdateManyWithWhereWithoutDeploymentInput[]
+    deleteMany?: DeploymentApprovalScalarWhereInput | DeploymentApprovalScalarWhereInput[]
+  }
+
+  export type DeploymentCreateNestedOneWithoutApprovalsInput = {
+    create?: XOR<DeploymentCreateWithoutApprovalsInput, DeploymentUncheckedCreateWithoutApprovalsInput>
+    connectOrCreate?: DeploymentCreateOrConnectWithoutApprovalsInput
+    connect?: DeploymentWhereUniqueInput
+  }
+
+  export type DeploymentUpdateOneRequiredWithoutApprovalsNestedInput = {
+    create?: XOR<DeploymentCreateWithoutApprovalsInput, DeploymentUncheckedCreateWithoutApprovalsInput>
+    connectOrCreate?: DeploymentCreateOrConnectWithoutApprovalsInput
+    upsert?: DeploymentUpsertWithoutApprovalsInput
+    connect?: DeploymentWhereUniqueInput
+    update?: XOR<XOR<DeploymentUpdateToOneWithWhereWithoutApprovalsInput, DeploymentUpdateWithoutApprovalsInput>, DeploymentUncheckedUpdateWithoutApprovalsInput>
   }
 
   export type NestedStringFilter<$PrismaModel = never> = {
@@ -10882,6 +23027,85 @@ export namespace Prisma {
     _max?: NestedDateTimeNullableFilter<$PrismaModel>
   }
 
+  export type NestedBoolNullableFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel> | null
+    not?: NestedBoolNullableFilter<$PrismaModel> | boolean | null
+  }
+
+  export type NestedFloatNullableFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel> | null
+    in?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
+    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatNullableFilter<$PrismaModel> | number | null
+  }
+
+  export type NestedBoolNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel> | null
+    not?: NestedBoolNullableWithAggregatesFilter<$PrismaModel> | boolean | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedBoolNullableFilter<$PrismaModel>
+    _max?: NestedBoolNullableFilter<$PrismaModel>
+  }
+
+  export type NestedFloatNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel> | null
+    in?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
+    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatNullableWithAggregatesFilter<$PrismaModel> | number | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _avg?: NestedFloatNullableFilter<$PrismaModel>
+    _sum?: NestedFloatNullableFilter<$PrismaModel>
+    _min?: NestedFloatNullableFilter<$PrismaModel>
+    _max?: NestedFloatNullableFilter<$PrismaModel>
+  }
+  export type NestedJsonFilter<$PrismaModel = never> =
+    | PatchUndefined<
+        Either<Required<NestedJsonFilterBase<$PrismaModel>>, Exclude<keyof Required<NestedJsonFilterBase<$PrismaModel>>, 'path'>>,
+        Required<NestedJsonFilterBase<$PrismaModel>>
+      >
+    | OptionalFlat<Omit<Required<NestedJsonFilterBase<$PrismaModel>>, 'path'>>
+
+  export type NestedJsonFilterBase<$PrismaModel = never> = {
+    equals?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+    path?: string[]
+    mode?: QueryMode | EnumQueryModeFieldRefInput<$PrismaModel>
+    string_contains?: string | StringFieldRefInput<$PrismaModel>
+    string_starts_with?: string | StringFieldRefInput<$PrismaModel>
+    string_ends_with?: string | StringFieldRefInput<$PrismaModel>
+    array_starts_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_ends_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_contains?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    lt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    lte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    gt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    gte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    not?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+  }
+
+  export type NestedIntNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel> | null
+    in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntNullableWithAggregatesFilter<$PrismaModel> | number | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _avg?: NestedFloatNullableFilter<$PrismaModel>
+    _sum?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedIntNullableFilter<$PrismaModel>
+    _max?: NestedIntNullableFilter<$PrismaModel>
+  }
+
   export type CategoryCreateWithoutTemplatesInput = {
     name: string
   }
@@ -10999,6 +23223,34 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
+  export type ProviderIntegrationCreateWithoutUserInput = {
+    id?: string
+    provider: string
+    apiToken: string
+    teamId?: string | null
+    connectedAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type ProviderIntegrationUncheckedCreateWithoutUserInput = {
+    id?: string
+    provider: string
+    apiToken: string
+    teamId?: string | null
+    connectedAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type ProviderIntegrationCreateOrConnectWithoutUserInput = {
+    where: ProviderIntegrationWhereUniqueInput
+    create: XOR<ProviderIntegrationCreateWithoutUserInput, ProviderIntegrationUncheckedCreateWithoutUserInput>
+  }
+
+  export type ProviderIntegrationCreateManyUserInputEnvelope = {
+    data: ProviderIntegrationCreateManyUserInput | ProviderIntegrationCreateManyUserInput[]
+    skipDuplicates?: boolean
+  }
+
   export type AuthTokenUpsertWithWhereUniqueWithoutUserInput = {
     where: AuthTokenWhereUniqueInput
     update: XOR<AuthTokenUpdateWithoutUserInput, AuthTokenUncheckedUpdateWithoutUserInput>
@@ -11028,6 +23280,111 @@ export namespace Prisma {
     createdAt?: DateTimeFilter<"AuthToken"> | Date | string
   }
 
+  export type ProviderIntegrationUpsertWithWhereUniqueWithoutUserInput = {
+    where: ProviderIntegrationWhereUniqueInput
+    update: XOR<ProviderIntegrationUpdateWithoutUserInput, ProviderIntegrationUncheckedUpdateWithoutUserInput>
+    create: XOR<ProviderIntegrationCreateWithoutUserInput, ProviderIntegrationUncheckedCreateWithoutUserInput>
+  }
+
+  export type ProviderIntegrationUpdateWithWhereUniqueWithoutUserInput = {
+    where: ProviderIntegrationWhereUniqueInput
+    data: XOR<ProviderIntegrationUpdateWithoutUserInput, ProviderIntegrationUncheckedUpdateWithoutUserInput>
+  }
+
+  export type ProviderIntegrationUpdateManyWithWhereWithoutUserInput = {
+    where: ProviderIntegrationScalarWhereInput
+    data: XOR<ProviderIntegrationUpdateManyMutationInput, ProviderIntegrationUncheckedUpdateManyWithoutUserInput>
+  }
+
+  export type ProviderIntegrationScalarWhereInput = {
+    AND?: ProviderIntegrationScalarWhereInput | ProviderIntegrationScalarWhereInput[]
+    OR?: ProviderIntegrationScalarWhereInput[]
+    NOT?: ProviderIntegrationScalarWhereInput | ProviderIntegrationScalarWhereInput[]
+    id?: StringFilter<"ProviderIntegration"> | string
+    userId?: StringFilter<"ProviderIntegration"> | string
+    provider?: StringFilter<"ProviderIntegration"> | string
+    apiToken?: StringFilter<"ProviderIntegration"> | string
+    teamId?: StringNullableFilter<"ProviderIntegration"> | string | null
+    connectedAt?: DateTimeFilter<"ProviderIntegration"> | Date | string
+    updatedAt?: DateTimeFilter<"ProviderIntegration"> | Date | string
+  }
+
+  export type UserCreateWithoutProviderIntegrationsInput = {
+    id?: string
+    email: string
+    name: string
+    passwordHash: string
+    githubUsername?: string | null
+    githubAccessToken?: string | null
+    emailVerified?: boolean
+    role?: string
+    status?: string
+    dashboardPreferences?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    authTokens?: AuthTokenCreateNestedManyWithoutUserInput
+  }
+
+  export type UserUncheckedCreateWithoutProviderIntegrationsInput = {
+    id?: string
+    email: string
+    name: string
+    passwordHash: string
+    githubUsername?: string | null
+    githubAccessToken?: string | null
+    emailVerified?: boolean
+    role?: string
+    status?: string
+    dashboardPreferences?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    authTokens?: AuthTokenUncheckedCreateNestedManyWithoutUserInput
+  }
+
+  export type UserCreateOrConnectWithoutProviderIntegrationsInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutProviderIntegrationsInput, UserUncheckedCreateWithoutProviderIntegrationsInput>
+  }
+
+  export type UserUpsertWithoutProviderIntegrationsInput = {
+    update: XOR<UserUpdateWithoutProviderIntegrationsInput, UserUncheckedUpdateWithoutProviderIntegrationsInput>
+    create: XOR<UserCreateWithoutProviderIntegrationsInput, UserUncheckedCreateWithoutProviderIntegrationsInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutProviderIntegrationsInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutProviderIntegrationsInput, UserUncheckedUpdateWithoutProviderIntegrationsInput>
+  }
+
+  export type UserUpdateWithoutProviderIntegrationsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    passwordHash?: StringFieldUpdateOperationsInput | string
+    githubUsername?: NullableStringFieldUpdateOperationsInput | string | null
+    githubAccessToken?: NullableStringFieldUpdateOperationsInput | string | null
+    emailVerified?: BoolFieldUpdateOperationsInput | boolean
+    role?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    dashboardPreferences?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    authTokens?: AuthTokenUpdateManyWithoutUserNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutProviderIntegrationsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    email?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    passwordHash?: StringFieldUpdateOperationsInput | string
+    githubUsername?: NullableStringFieldUpdateOperationsInput | string | null
+    githubAccessToken?: NullableStringFieldUpdateOperationsInput | string | null
+    emailVerified?: BoolFieldUpdateOperationsInput | boolean
+    role?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    dashboardPreferences?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    authTokens?: AuthTokenUncheckedUpdateManyWithoutUserNestedInput
+  }
+
   export type UserCreateWithoutAuthTokensInput = {
     id?: string
     email: string
@@ -11040,6 +23397,7 @@ export namespace Prisma {
     status?: string
     dashboardPreferences?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
+    providerIntegrations?: ProviderIntegrationCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutAuthTokensInput = {
@@ -11054,6 +23412,7 @@ export namespace Prisma {
     status?: string
     dashboardPreferences?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
+    providerIntegrations?: ProviderIntegrationUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutAuthTokensInput = {
@@ -11084,6 +23443,7 @@ export namespace Prisma {
     status?: StringFieldUpdateOperationsInput | string
     dashboardPreferences?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    providerIntegrations?: ProviderIntegrationUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutAuthTokensInput = {
@@ -11098,6 +23458,1183 @@ export namespace Prisma {
     status?: StringFieldUpdateOperationsInput | string
     dashboardPreferences?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    providerIntegrations?: ProviderIntegrationUncheckedUpdateManyWithoutUserNestedInput
+  }
+
+  export type HealthCheckResultCreateWithoutRepositoryMetadataInput = {
+    id?: string
+    repositoryName: string
+    repositoryOwner: string
+    securityScore?: number
+    codeQualityScore?: number
+    deploymentReadinessScore?: number
+    teamOwnershipScore?: number
+    totalScore?: number
+    overallStatus?: string
+    securityIssues?: JsonNullValueInput | InputJsonValue
+    codeQualityIssues?: JsonNullValueInput | InputJsonValue
+    deploymentReadinessIssues?: JsonNullValueInput | InputJsonValue
+    teamOwnershipIssues?: JsonNullValueInput | InputJsonValue
+    aiSuggestions?: JsonNullValueInput | InputJsonValue
+    executedAt?: Date | string
+    executedBy?: string | null
+    createdAt?: Date | string
+  }
+
+  export type HealthCheckResultUncheckedCreateWithoutRepositoryMetadataInput = {
+    id?: string
+    repositoryName: string
+    repositoryOwner: string
+    securityScore?: number
+    codeQualityScore?: number
+    deploymentReadinessScore?: number
+    teamOwnershipScore?: number
+    totalScore?: number
+    overallStatus?: string
+    securityIssues?: JsonNullValueInput | InputJsonValue
+    codeQualityIssues?: JsonNullValueInput | InputJsonValue
+    deploymentReadinessIssues?: JsonNullValueInput | InputJsonValue
+    teamOwnershipIssues?: JsonNullValueInput | InputJsonValue
+    aiSuggestions?: JsonNullValueInput | InputJsonValue
+    executedAt?: Date | string
+    executedBy?: string | null
+    createdAt?: Date | string
+  }
+
+  export type HealthCheckResultCreateOrConnectWithoutRepositoryMetadataInput = {
+    where: HealthCheckResultWhereUniqueInput
+    create: XOR<HealthCheckResultCreateWithoutRepositoryMetadataInput, HealthCheckResultUncheckedCreateWithoutRepositoryMetadataInput>
+  }
+
+  export type HealthCheckResultCreateManyRepositoryMetadataInputEnvelope = {
+    data: HealthCheckResultCreateManyRepositoryMetadataInput | HealthCheckResultCreateManyRepositoryMetadataInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type QuickFixActionCreateWithoutRepositoryMetadataInput = {
+    id?: string
+    actionType: string
+    actionDescription: string
+    status?: string
+    executedBy?: string | null
+    result?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    completedAt?: Date | string | null
+  }
+
+  export type QuickFixActionUncheckedCreateWithoutRepositoryMetadataInput = {
+    id?: string
+    actionType: string
+    actionDescription: string
+    status?: string
+    executedBy?: string | null
+    result?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    completedAt?: Date | string | null
+  }
+
+  export type QuickFixActionCreateOrConnectWithoutRepositoryMetadataInput = {
+    where: QuickFixActionWhereUniqueInput
+    create: XOR<QuickFixActionCreateWithoutRepositoryMetadataInput, QuickFixActionUncheckedCreateWithoutRepositoryMetadataInput>
+  }
+
+  export type QuickFixActionCreateManyRepositoryMetadataInputEnvelope = {
+    data: QuickFixActionCreateManyRepositoryMetadataInput | QuickFixActionCreateManyRepositoryMetadataInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type RepositoryEnvironmentCreateWithoutRepositoryMetadataInput = {
+    id?: string
+    name: string
+    order?: number
+    requiresApproval?: boolean
+    approvalMinCount?: number
+    autoApproveIfTestsPass?: boolean
+    autoRollbackOnFailure?: boolean
+    healthCheckUrl?: string | null
+    healthCheckInterval?: number | null
+    variables?: JsonNullValueInput | InputJsonValue
+    secretNames?: RepositoryEnvironmentCreatesecretNamesInput | string[]
+    slackChannel?: string | null
+    notifyOn?: RepositoryEnvironmentCreatenotifyOnInput | string[]
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    deployments?: DeploymentCreateNestedManyWithoutEnvironmentInput
+  }
+
+  export type RepositoryEnvironmentUncheckedCreateWithoutRepositoryMetadataInput = {
+    id?: string
+    name: string
+    order?: number
+    requiresApproval?: boolean
+    approvalMinCount?: number
+    autoApproveIfTestsPass?: boolean
+    autoRollbackOnFailure?: boolean
+    healthCheckUrl?: string | null
+    healthCheckInterval?: number | null
+    variables?: JsonNullValueInput | InputJsonValue
+    secretNames?: RepositoryEnvironmentCreatesecretNamesInput | string[]
+    slackChannel?: string | null
+    notifyOn?: RepositoryEnvironmentCreatenotifyOnInput | string[]
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    deployments?: DeploymentUncheckedCreateNestedManyWithoutEnvironmentInput
+  }
+
+  export type RepositoryEnvironmentCreateOrConnectWithoutRepositoryMetadataInput = {
+    where: RepositoryEnvironmentWhereUniqueInput
+    create: XOR<RepositoryEnvironmentCreateWithoutRepositoryMetadataInput, RepositoryEnvironmentUncheckedCreateWithoutRepositoryMetadataInput>
+  }
+
+  export type RepositoryEnvironmentCreateManyRepositoryMetadataInputEnvelope = {
+    data: RepositoryEnvironmentCreateManyRepositoryMetadataInput | RepositoryEnvironmentCreateManyRepositoryMetadataInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type DeploymentCreateWithoutRepositoryMetadataInput = {
+    id?: string
+    version: string
+    status?: string
+    deployedAt: Date | string
+    deployedBy: string
+    duration?: number | null
+    riskAssessment?: NullableJsonNullValueInput | InputJsonValue
+    healthCheckPassed?: boolean | null
+    healthCheckDetails?: NullableJsonNullValueInput | InputJsonValue
+    postDeploymentMetrics?: NullableJsonNullValueInput | InputJsonValue
+    preDeploymentNotes?: string | null
+    postDeploymentNotes?: string | null
+    deploymentLogs?: string | null
+    artifacts?: NullableJsonNullValueInput | InputJsonValue
+    approvalRequired?: boolean
+    rollbackOf?: string | null
+    rollbackReason?: string | null
+    rollbackInitiatedAt?: Date | string | null
+    rollbackInitiatedBy?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    environment: RepositoryEnvironmentCreateNestedOneWithoutDeploymentsInput
+    approvals?: DeploymentApprovalCreateNestedManyWithoutDeploymentInput
+  }
+
+  export type DeploymentUncheckedCreateWithoutRepositoryMetadataInput = {
+    id?: string
+    environmentId: string
+    version: string
+    status?: string
+    deployedAt: Date | string
+    deployedBy: string
+    duration?: number | null
+    riskAssessment?: NullableJsonNullValueInput | InputJsonValue
+    healthCheckPassed?: boolean | null
+    healthCheckDetails?: NullableJsonNullValueInput | InputJsonValue
+    postDeploymentMetrics?: NullableJsonNullValueInput | InputJsonValue
+    preDeploymentNotes?: string | null
+    postDeploymentNotes?: string | null
+    deploymentLogs?: string | null
+    artifacts?: NullableJsonNullValueInput | InputJsonValue
+    approvalRequired?: boolean
+    rollbackOf?: string | null
+    rollbackReason?: string | null
+    rollbackInitiatedAt?: Date | string | null
+    rollbackInitiatedBy?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    approvals?: DeploymentApprovalUncheckedCreateNestedManyWithoutDeploymentInput
+  }
+
+  export type DeploymentCreateOrConnectWithoutRepositoryMetadataInput = {
+    where: DeploymentWhereUniqueInput
+    create: XOR<DeploymentCreateWithoutRepositoryMetadataInput, DeploymentUncheckedCreateWithoutRepositoryMetadataInput>
+  }
+
+  export type DeploymentCreateManyRepositoryMetadataInputEnvelope = {
+    data: DeploymentCreateManyRepositoryMetadataInput | DeploymentCreateManyRepositoryMetadataInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type HealthCheckResultUpsertWithWhereUniqueWithoutRepositoryMetadataInput = {
+    where: HealthCheckResultWhereUniqueInput
+    update: XOR<HealthCheckResultUpdateWithoutRepositoryMetadataInput, HealthCheckResultUncheckedUpdateWithoutRepositoryMetadataInput>
+    create: XOR<HealthCheckResultCreateWithoutRepositoryMetadataInput, HealthCheckResultUncheckedCreateWithoutRepositoryMetadataInput>
+  }
+
+  export type HealthCheckResultUpdateWithWhereUniqueWithoutRepositoryMetadataInput = {
+    where: HealthCheckResultWhereUniqueInput
+    data: XOR<HealthCheckResultUpdateWithoutRepositoryMetadataInput, HealthCheckResultUncheckedUpdateWithoutRepositoryMetadataInput>
+  }
+
+  export type HealthCheckResultUpdateManyWithWhereWithoutRepositoryMetadataInput = {
+    where: HealthCheckResultScalarWhereInput
+    data: XOR<HealthCheckResultUpdateManyMutationInput, HealthCheckResultUncheckedUpdateManyWithoutRepositoryMetadataInput>
+  }
+
+  export type HealthCheckResultScalarWhereInput = {
+    AND?: HealthCheckResultScalarWhereInput | HealthCheckResultScalarWhereInput[]
+    OR?: HealthCheckResultScalarWhereInput[]
+    NOT?: HealthCheckResultScalarWhereInput | HealthCheckResultScalarWhereInput[]
+    id?: StringFilter<"HealthCheckResult"> | string
+    repositoryName?: StringFilter<"HealthCheckResult"> | string
+    repositoryOwner?: StringFilter<"HealthCheckResult"> | string
+    repositoryMetadataId?: StringFilter<"HealthCheckResult"> | string
+    securityScore?: IntFilter<"HealthCheckResult"> | number
+    codeQualityScore?: IntFilter<"HealthCheckResult"> | number
+    deploymentReadinessScore?: IntFilter<"HealthCheckResult"> | number
+    teamOwnershipScore?: IntFilter<"HealthCheckResult"> | number
+    totalScore?: IntFilter<"HealthCheckResult"> | number
+    overallStatus?: StringFilter<"HealthCheckResult"> | string
+    securityIssues?: JsonFilter<"HealthCheckResult">
+    codeQualityIssues?: JsonFilter<"HealthCheckResult">
+    deploymentReadinessIssues?: JsonFilter<"HealthCheckResult">
+    teamOwnershipIssues?: JsonFilter<"HealthCheckResult">
+    aiSuggestions?: JsonFilter<"HealthCheckResult">
+    executedAt?: DateTimeFilter<"HealthCheckResult"> | Date | string
+    executedBy?: StringNullableFilter<"HealthCheckResult"> | string | null
+    createdAt?: DateTimeFilter<"HealthCheckResult"> | Date | string
+  }
+
+  export type QuickFixActionUpsertWithWhereUniqueWithoutRepositoryMetadataInput = {
+    where: QuickFixActionWhereUniqueInput
+    update: XOR<QuickFixActionUpdateWithoutRepositoryMetadataInput, QuickFixActionUncheckedUpdateWithoutRepositoryMetadataInput>
+    create: XOR<QuickFixActionCreateWithoutRepositoryMetadataInput, QuickFixActionUncheckedCreateWithoutRepositoryMetadataInput>
+  }
+
+  export type QuickFixActionUpdateWithWhereUniqueWithoutRepositoryMetadataInput = {
+    where: QuickFixActionWhereUniqueInput
+    data: XOR<QuickFixActionUpdateWithoutRepositoryMetadataInput, QuickFixActionUncheckedUpdateWithoutRepositoryMetadataInput>
+  }
+
+  export type QuickFixActionUpdateManyWithWhereWithoutRepositoryMetadataInput = {
+    where: QuickFixActionScalarWhereInput
+    data: XOR<QuickFixActionUpdateManyMutationInput, QuickFixActionUncheckedUpdateManyWithoutRepositoryMetadataInput>
+  }
+
+  export type QuickFixActionScalarWhereInput = {
+    AND?: QuickFixActionScalarWhereInput | QuickFixActionScalarWhereInput[]
+    OR?: QuickFixActionScalarWhereInput[]
+    NOT?: QuickFixActionScalarWhereInput | QuickFixActionScalarWhereInput[]
+    id?: StringFilter<"QuickFixAction"> | string
+    repositoryMetadataId?: StringFilter<"QuickFixAction"> | string
+    actionType?: StringFilter<"QuickFixAction"> | string
+    actionDescription?: StringFilter<"QuickFixAction"> | string
+    status?: StringFilter<"QuickFixAction"> | string
+    executedBy?: StringNullableFilter<"QuickFixAction"> | string | null
+    result?: JsonNullableFilter<"QuickFixAction">
+    createdAt?: DateTimeFilter<"QuickFixAction"> | Date | string
+    completedAt?: DateTimeNullableFilter<"QuickFixAction"> | Date | string | null
+  }
+
+  export type RepositoryEnvironmentUpsertWithWhereUniqueWithoutRepositoryMetadataInput = {
+    where: RepositoryEnvironmentWhereUniqueInput
+    update: XOR<RepositoryEnvironmentUpdateWithoutRepositoryMetadataInput, RepositoryEnvironmentUncheckedUpdateWithoutRepositoryMetadataInput>
+    create: XOR<RepositoryEnvironmentCreateWithoutRepositoryMetadataInput, RepositoryEnvironmentUncheckedCreateWithoutRepositoryMetadataInput>
+  }
+
+  export type RepositoryEnvironmentUpdateWithWhereUniqueWithoutRepositoryMetadataInput = {
+    where: RepositoryEnvironmentWhereUniqueInput
+    data: XOR<RepositoryEnvironmentUpdateWithoutRepositoryMetadataInput, RepositoryEnvironmentUncheckedUpdateWithoutRepositoryMetadataInput>
+  }
+
+  export type RepositoryEnvironmentUpdateManyWithWhereWithoutRepositoryMetadataInput = {
+    where: RepositoryEnvironmentScalarWhereInput
+    data: XOR<RepositoryEnvironmentUpdateManyMutationInput, RepositoryEnvironmentUncheckedUpdateManyWithoutRepositoryMetadataInput>
+  }
+
+  export type RepositoryEnvironmentScalarWhereInput = {
+    AND?: RepositoryEnvironmentScalarWhereInput | RepositoryEnvironmentScalarWhereInput[]
+    OR?: RepositoryEnvironmentScalarWhereInput[]
+    NOT?: RepositoryEnvironmentScalarWhereInput | RepositoryEnvironmentScalarWhereInput[]
+    id?: StringFilter<"RepositoryEnvironment"> | string
+    repositoryMetadataId?: StringFilter<"RepositoryEnvironment"> | string
+    name?: StringFilter<"RepositoryEnvironment"> | string
+    order?: IntFilter<"RepositoryEnvironment"> | number
+    requiresApproval?: BoolFilter<"RepositoryEnvironment"> | boolean
+    approvalMinCount?: IntFilter<"RepositoryEnvironment"> | number
+    autoApproveIfTestsPass?: BoolFilter<"RepositoryEnvironment"> | boolean
+    autoRollbackOnFailure?: BoolFilter<"RepositoryEnvironment"> | boolean
+    healthCheckUrl?: StringNullableFilter<"RepositoryEnvironment"> | string | null
+    healthCheckInterval?: IntNullableFilter<"RepositoryEnvironment"> | number | null
+    variables?: JsonFilter<"RepositoryEnvironment">
+    secretNames?: StringNullableListFilter<"RepositoryEnvironment">
+    slackChannel?: StringNullableFilter<"RepositoryEnvironment"> | string | null
+    notifyOn?: StringNullableListFilter<"RepositoryEnvironment">
+    createdAt?: DateTimeFilter<"RepositoryEnvironment"> | Date | string
+    updatedAt?: DateTimeFilter<"RepositoryEnvironment"> | Date | string
+  }
+
+  export type DeploymentUpsertWithWhereUniqueWithoutRepositoryMetadataInput = {
+    where: DeploymentWhereUniqueInput
+    update: XOR<DeploymentUpdateWithoutRepositoryMetadataInput, DeploymentUncheckedUpdateWithoutRepositoryMetadataInput>
+    create: XOR<DeploymentCreateWithoutRepositoryMetadataInput, DeploymentUncheckedCreateWithoutRepositoryMetadataInput>
+  }
+
+  export type DeploymentUpdateWithWhereUniqueWithoutRepositoryMetadataInput = {
+    where: DeploymentWhereUniqueInput
+    data: XOR<DeploymentUpdateWithoutRepositoryMetadataInput, DeploymentUncheckedUpdateWithoutRepositoryMetadataInput>
+  }
+
+  export type DeploymentUpdateManyWithWhereWithoutRepositoryMetadataInput = {
+    where: DeploymentScalarWhereInput
+    data: XOR<DeploymentUpdateManyMutationInput, DeploymentUncheckedUpdateManyWithoutRepositoryMetadataInput>
+  }
+
+  export type DeploymentScalarWhereInput = {
+    AND?: DeploymentScalarWhereInput | DeploymentScalarWhereInput[]
+    OR?: DeploymentScalarWhereInput[]
+    NOT?: DeploymentScalarWhereInput | DeploymentScalarWhereInput[]
+    id?: StringFilter<"Deployment"> | string
+    repositoryMetadataId?: StringFilter<"Deployment"> | string
+    environmentId?: StringFilter<"Deployment"> | string
+    version?: StringFilter<"Deployment"> | string
+    status?: StringFilter<"Deployment"> | string
+    deployedAt?: DateTimeFilter<"Deployment"> | Date | string
+    deployedBy?: StringFilter<"Deployment"> | string
+    duration?: IntNullableFilter<"Deployment"> | number | null
+    riskAssessment?: JsonNullableFilter<"Deployment">
+    healthCheckPassed?: BoolNullableFilter<"Deployment"> | boolean | null
+    healthCheckDetails?: JsonNullableFilter<"Deployment">
+    postDeploymentMetrics?: JsonNullableFilter<"Deployment">
+    preDeploymentNotes?: StringNullableFilter<"Deployment"> | string | null
+    postDeploymentNotes?: StringNullableFilter<"Deployment"> | string | null
+    deploymentLogs?: StringNullableFilter<"Deployment"> | string | null
+    artifacts?: JsonNullableFilter<"Deployment">
+    approvalRequired?: BoolFilter<"Deployment"> | boolean
+    rollbackOf?: StringNullableFilter<"Deployment"> | string | null
+    rollbackReason?: StringNullableFilter<"Deployment"> | string | null
+    rollbackInitiatedAt?: DateTimeNullableFilter<"Deployment"> | Date | string | null
+    rollbackInitiatedBy?: StringNullableFilter<"Deployment"> | string | null
+    createdAt?: DateTimeFilter<"Deployment"> | Date | string
+    updatedAt?: DateTimeFilter<"Deployment"> | Date | string
+  }
+
+  export type RepositoryMetadataCreateWithoutHealthCheckResultsInput = {
+    id?: string
+    repositoryName: string
+    owner: string
+    healthScore?: number
+    healthStatus?: string
+    lastHealthCheckAt?: Date | string | null
+    teamName?: string | null
+    ownerEmail?: string | null
+    maintainers?: RepositoryMetadataCreatemaintainersInput | string[]
+    onCallRotationUrl?: string | null
+    lastDeploymentAt?: Date | string | null
+    lastDeployedVersion?: string | null
+    lastDeployedBy?: string | null
+    lastDeploymentEnvironment?: string | null
+    productionHealthy?: boolean | null
+    description?: string | null
+    language?: string | null
+    testCoveragePercent?: number | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    quickFixActions?: QuickFixActionCreateNestedManyWithoutRepositoryMetadataInput
+    environments?: RepositoryEnvironmentCreateNestedManyWithoutRepositoryMetadataInput
+    deployments?: DeploymentCreateNestedManyWithoutRepositoryMetadataInput
+  }
+
+  export type RepositoryMetadataUncheckedCreateWithoutHealthCheckResultsInput = {
+    id?: string
+    repositoryName: string
+    owner: string
+    healthScore?: number
+    healthStatus?: string
+    lastHealthCheckAt?: Date | string | null
+    teamName?: string | null
+    ownerEmail?: string | null
+    maintainers?: RepositoryMetadataCreatemaintainersInput | string[]
+    onCallRotationUrl?: string | null
+    lastDeploymentAt?: Date | string | null
+    lastDeployedVersion?: string | null
+    lastDeployedBy?: string | null
+    lastDeploymentEnvironment?: string | null
+    productionHealthy?: boolean | null
+    description?: string | null
+    language?: string | null
+    testCoveragePercent?: number | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    quickFixActions?: QuickFixActionUncheckedCreateNestedManyWithoutRepositoryMetadataInput
+    environments?: RepositoryEnvironmentUncheckedCreateNestedManyWithoutRepositoryMetadataInput
+    deployments?: DeploymentUncheckedCreateNestedManyWithoutRepositoryMetadataInput
+  }
+
+  export type RepositoryMetadataCreateOrConnectWithoutHealthCheckResultsInput = {
+    where: RepositoryMetadataWhereUniqueInput
+    create: XOR<RepositoryMetadataCreateWithoutHealthCheckResultsInput, RepositoryMetadataUncheckedCreateWithoutHealthCheckResultsInput>
+  }
+
+  export type RepositoryMetadataUpsertWithoutHealthCheckResultsInput = {
+    update: XOR<RepositoryMetadataUpdateWithoutHealthCheckResultsInput, RepositoryMetadataUncheckedUpdateWithoutHealthCheckResultsInput>
+    create: XOR<RepositoryMetadataCreateWithoutHealthCheckResultsInput, RepositoryMetadataUncheckedCreateWithoutHealthCheckResultsInput>
+    where?: RepositoryMetadataWhereInput
+  }
+
+  export type RepositoryMetadataUpdateToOneWithWhereWithoutHealthCheckResultsInput = {
+    where?: RepositoryMetadataWhereInput
+    data: XOR<RepositoryMetadataUpdateWithoutHealthCheckResultsInput, RepositoryMetadataUncheckedUpdateWithoutHealthCheckResultsInput>
+  }
+
+  export type RepositoryMetadataUpdateWithoutHealthCheckResultsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    repositoryName?: StringFieldUpdateOperationsInput | string
+    owner?: StringFieldUpdateOperationsInput | string
+    healthScore?: IntFieldUpdateOperationsInput | number
+    healthStatus?: StringFieldUpdateOperationsInput | string
+    lastHealthCheckAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    teamName?: NullableStringFieldUpdateOperationsInput | string | null
+    ownerEmail?: NullableStringFieldUpdateOperationsInput | string | null
+    maintainers?: RepositoryMetadataUpdatemaintainersInput | string[]
+    onCallRotationUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    lastDeploymentAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    lastDeployedVersion?: NullableStringFieldUpdateOperationsInput | string | null
+    lastDeployedBy?: NullableStringFieldUpdateOperationsInput | string | null
+    lastDeploymentEnvironment?: NullableStringFieldUpdateOperationsInput | string | null
+    productionHealthy?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    language?: NullableStringFieldUpdateOperationsInput | string | null
+    testCoveragePercent?: NullableFloatFieldUpdateOperationsInput | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    quickFixActions?: QuickFixActionUpdateManyWithoutRepositoryMetadataNestedInput
+    environments?: RepositoryEnvironmentUpdateManyWithoutRepositoryMetadataNestedInput
+    deployments?: DeploymentUpdateManyWithoutRepositoryMetadataNestedInput
+  }
+
+  export type RepositoryMetadataUncheckedUpdateWithoutHealthCheckResultsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    repositoryName?: StringFieldUpdateOperationsInput | string
+    owner?: StringFieldUpdateOperationsInput | string
+    healthScore?: IntFieldUpdateOperationsInput | number
+    healthStatus?: StringFieldUpdateOperationsInput | string
+    lastHealthCheckAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    teamName?: NullableStringFieldUpdateOperationsInput | string | null
+    ownerEmail?: NullableStringFieldUpdateOperationsInput | string | null
+    maintainers?: RepositoryMetadataUpdatemaintainersInput | string[]
+    onCallRotationUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    lastDeploymentAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    lastDeployedVersion?: NullableStringFieldUpdateOperationsInput | string | null
+    lastDeployedBy?: NullableStringFieldUpdateOperationsInput | string | null
+    lastDeploymentEnvironment?: NullableStringFieldUpdateOperationsInput | string | null
+    productionHealthy?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    language?: NullableStringFieldUpdateOperationsInput | string | null
+    testCoveragePercent?: NullableFloatFieldUpdateOperationsInput | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    quickFixActions?: QuickFixActionUncheckedUpdateManyWithoutRepositoryMetadataNestedInput
+    environments?: RepositoryEnvironmentUncheckedUpdateManyWithoutRepositoryMetadataNestedInput
+    deployments?: DeploymentUncheckedUpdateManyWithoutRepositoryMetadataNestedInput
+  }
+
+  export type RepositoryMetadataCreateWithoutQuickFixActionsInput = {
+    id?: string
+    repositoryName: string
+    owner: string
+    healthScore?: number
+    healthStatus?: string
+    lastHealthCheckAt?: Date | string | null
+    teamName?: string | null
+    ownerEmail?: string | null
+    maintainers?: RepositoryMetadataCreatemaintainersInput | string[]
+    onCallRotationUrl?: string | null
+    lastDeploymentAt?: Date | string | null
+    lastDeployedVersion?: string | null
+    lastDeployedBy?: string | null
+    lastDeploymentEnvironment?: string | null
+    productionHealthy?: boolean | null
+    description?: string | null
+    language?: string | null
+    testCoveragePercent?: number | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    healthCheckResults?: HealthCheckResultCreateNestedManyWithoutRepositoryMetadataInput
+    environments?: RepositoryEnvironmentCreateNestedManyWithoutRepositoryMetadataInput
+    deployments?: DeploymentCreateNestedManyWithoutRepositoryMetadataInput
+  }
+
+  export type RepositoryMetadataUncheckedCreateWithoutQuickFixActionsInput = {
+    id?: string
+    repositoryName: string
+    owner: string
+    healthScore?: number
+    healthStatus?: string
+    lastHealthCheckAt?: Date | string | null
+    teamName?: string | null
+    ownerEmail?: string | null
+    maintainers?: RepositoryMetadataCreatemaintainersInput | string[]
+    onCallRotationUrl?: string | null
+    lastDeploymentAt?: Date | string | null
+    lastDeployedVersion?: string | null
+    lastDeployedBy?: string | null
+    lastDeploymentEnvironment?: string | null
+    productionHealthy?: boolean | null
+    description?: string | null
+    language?: string | null
+    testCoveragePercent?: number | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    healthCheckResults?: HealthCheckResultUncheckedCreateNestedManyWithoutRepositoryMetadataInput
+    environments?: RepositoryEnvironmentUncheckedCreateNestedManyWithoutRepositoryMetadataInput
+    deployments?: DeploymentUncheckedCreateNestedManyWithoutRepositoryMetadataInput
+  }
+
+  export type RepositoryMetadataCreateOrConnectWithoutQuickFixActionsInput = {
+    where: RepositoryMetadataWhereUniqueInput
+    create: XOR<RepositoryMetadataCreateWithoutQuickFixActionsInput, RepositoryMetadataUncheckedCreateWithoutQuickFixActionsInput>
+  }
+
+  export type RepositoryMetadataUpsertWithoutQuickFixActionsInput = {
+    update: XOR<RepositoryMetadataUpdateWithoutQuickFixActionsInput, RepositoryMetadataUncheckedUpdateWithoutQuickFixActionsInput>
+    create: XOR<RepositoryMetadataCreateWithoutQuickFixActionsInput, RepositoryMetadataUncheckedCreateWithoutQuickFixActionsInput>
+    where?: RepositoryMetadataWhereInput
+  }
+
+  export type RepositoryMetadataUpdateToOneWithWhereWithoutQuickFixActionsInput = {
+    where?: RepositoryMetadataWhereInput
+    data: XOR<RepositoryMetadataUpdateWithoutQuickFixActionsInput, RepositoryMetadataUncheckedUpdateWithoutQuickFixActionsInput>
+  }
+
+  export type RepositoryMetadataUpdateWithoutQuickFixActionsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    repositoryName?: StringFieldUpdateOperationsInput | string
+    owner?: StringFieldUpdateOperationsInput | string
+    healthScore?: IntFieldUpdateOperationsInput | number
+    healthStatus?: StringFieldUpdateOperationsInput | string
+    lastHealthCheckAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    teamName?: NullableStringFieldUpdateOperationsInput | string | null
+    ownerEmail?: NullableStringFieldUpdateOperationsInput | string | null
+    maintainers?: RepositoryMetadataUpdatemaintainersInput | string[]
+    onCallRotationUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    lastDeploymentAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    lastDeployedVersion?: NullableStringFieldUpdateOperationsInput | string | null
+    lastDeployedBy?: NullableStringFieldUpdateOperationsInput | string | null
+    lastDeploymentEnvironment?: NullableStringFieldUpdateOperationsInput | string | null
+    productionHealthy?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    language?: NullableStringFieldUpdateOperationsInput | string | null
+    testCoveragePercent?: NullableFloatFieldUpdateOperationsInput | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    healthCheckResults?: HealthCheckResultUpdateManyWithoutRepositoryMetadataNestedInput
+    environments?: RepositoryEnvironmentUpdateManyWithoutRepositoryMetadataNestedInput
+    deployments?: DeploymentUpdateManyWithoutRepositoryMetadataNestedInput
+  }
+
+  export type RepositoryMetadataUncheckedUpdateWithoutQuickFixActionsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    repositoryName?: StringFieldUpdateOperationsInput | string
+    owner?: StringFieldUpdateOperationsInput | string
+    healthScore?: IntFieldUpdateOperationsInput | number
+    healthStatus?: StringFieldUpdateOperationsInput | string
+    lastHealthCheckAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    teamName?: NullableStringFieldUpdateOperationsInput | string | null
+    ownerEmail?: NullableStringFieldUpdateOperationsInput | string | null
+    maintainers?: RepositoryMetadataUpdatemaintainersInput | string[]
+    onCallRotationUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    lastDeploymentAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    lastDeployedVersion?: NullableStringFieldUpdateOperationsInput | string | null
+    lastDeployedBy?: NullableStringFieldUpdateOperationsInput | string | null
+    lastDeploymentEnvironment?: NullableStringFieldUpdateOperationsInput | string | null
+    productionHealthy?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    language?: NullableStringFieldUpdateOperationsInput | string | null
+    testCoveragePercent?: NullableFloatFieldUpdateOperationsInput | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    healthCheckResults?: HealthCheckResultUncheckedUpdateManyWithoutRepositoryMetadataNestedInput
+    environments?: RepositoryEnvironmentUncheckedUpdateManyWithoutRepositoryMetadataNestedInput
+    deployments?: DeploymentUncheckedUpdateManyWithoutRepositoryMetadataNestedInput
+  }
+
+  export type RepositoryMetadataCreateWithoutEnvironmentsInput = {
+    id?: string
+    repositoryName: string
+    owner: string
+    healthScore?: number
+    healthStatus?: string
+    lastHealthCheckAt?: Date | string | null
+    teamName?: string | null
+    ownerEmail?: string | null
+    maintainers?: RepositoryMetadataCreatemaintainersInput | string[]
+    onCallRotationUrl?: string | null
+    lastDeploymentAt?: Date | string | null
+    lastDeployedVersion?: string | null
+    lastDeployedBy?: string | null
+    lastDeploymentEnvironment?: string | null
+    productionHealthy?: boolean | null
+    description?: string | null
+    language?: string | null
+    testCoveragePercent?: number | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    healthCheckResults?: HealthCheckResultCreateNestedManyWithoutRepositoryMetadataInput
+    quickFixActions?: QuickFixActionCreateNestedManyWithoutRepositoryMetadataInput
+    deployments?: DeploymentCreateNestedManyWithoutRepositoryMetadataInput
+  }
+
+  export type RepositoryMetadataUncheckedCreateWithoutEnvironmentsInput = {
+    id?: string
+    repositoryName: string
+    owner: string
+    healthScore?: number
+    healthStatus?: string
+    lastHealthCheckAt?: Date | string | null
+    teamName?: string | null
+    ownerEmail?: string | null
+    maintainers?: RepositoryMetadataCreatemaintainersInput | string[]
+    onCallRotationUrl?: string | null
+    lastDeploymentAt?: Date | string | null
+    lastDeployedVersion?: string | null
+    lastDeployedBy?: string | null
+    lastDeploymentEnvironment?: string | null
+    productionHealthy?: boolean | null
+    description?: string | null
+    language?: string | null
+    testCoveragePercent?: number | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    healthCheckResults?: HealthCheckResultUncheckedCreateNestedManyWithoutRepositoryMetadataInput
+    quickFixActions?: QuickFixActionUncheckedCreateNestedManyWithoutRepositoryMetadataInput
+    deployments?: DeploymentUncheckedCreateNestedManyWithoutRepositoryMetadataInput
+  }
+
+  export type RepositoryMetadataCreateOrConnectWithoutEnvironmentsInput = {
+    where: RepositoryMetadataWhereUniqueInput
+    create: XOR<RepositoryMetadataCreateWithoutEnvironmentsInput, RepositoryMetadataUncheckedCreateWithoutEnvironmentsInput>
+  }
+
+  export type DeploymentCreateWithoutEnvironmentInput = {
+    id?: string
+    version: string
+    status?: string
+    deployedAt: Date | string
+    deployedBy: string
+    duration?: number | null
+    riskAssessment?: NullableJsonNullValueInput | InputJsonValue
+    healthCheckPassed?: boolean | null
+    healthCheckDetails?: NullableJsonNullValueInput | InputJsonValue
+    postDeploymentMetrics?: NullableJsonNullValueInput | InputJsonValue
+    preDeploymentNotes?: string | null
+    postDeploymentNotes?: string | null
+    deploymentLogs?: string | null
+    artifacts?: NullableJsonNullValueInput | InputJsonValue
+    approvalRequired?: boolean
+    rollbackOf?: string | null
+    rollbackReason?: string | null
+    rollbackInitiatedAt?: Date | string | null
+    rollbackInitiatedBy?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    repositoryMetadata: RepositoryMetadataCreateNestedOneWithoutDeploymentsInput
+    approvals?: DeploymentApprovalCreateNestedManyWithoutDeploymentInput
+  }
+
+  export type DeploymentUncheckedCreateWithoutEnvironmentInput = {
+    id?: string
+    repositoryMetadataId: string
+    version: string
+    status?: string
+    deployedAt: Date | string
+    deployedBy: string
+    duration?: number | null
+    riskAssessment?: NullableJsonNullValueInput | InputJsonValue
+    healthCheckPassed?: boolean | null
+    healthCheckDetails?: NullableJsonNullValueInput | InputJsonValue
+    postDeploymentMetrics?: NullableJsonNullValueInput | InputJsonValue
+    preDeploymentNotes?: string | null
+    postDeploymentNotes?: string | null
+    deploymentLogs?: string | null
+    artifacts?: NullableJsonNullValueInput | InputJsonValue
+    approvalRequired?: boolean
+    rollbackOf?: string | null
+    rollbackReason?: string | null
+    rollbackInitiatedAt?: Date | string | null
+    rollbackInitiatedBy?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    approvals?: DeploymentApprovalUncheckedCreateNestedManyWithoutDeploymentInput
+  }
+
+  export type DeploymentCreateOrConnectWithoutEnvironmentInput = {
+    where: DeploymentWhereUniqueInput
+    create: XOR<DeploymentCreateWithoutEnvironmentInput, DeploymentUncheckedCreateWithoutEnvironmentInput>
+  }
+
+  export type DeploymentCreateManyEnvironmentInputEnvelope = {
+    data: DeploymentCreateManyEnvironmentInput | DeploymentCreateManyEnvironmentInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type RepositoryMetadataUpsertWithoutEnvironmentsInput = {
+    update: XOR<RepositoryMetadataUpdateWithoutEnvironmentsInput, RepositoryMetadataUncheckedUpdateWithoutEnvironmentsInput>
+    create: XOR<RepositoryMetadataCreateWithoutEnvironmentsInput, RepositoryMetadataUncheckedCreateWithoutEnvironmentsInput>
+    where?: RepositoryMetadataWhereInput
+  }
+
+  export type RepositoryMetadataUpdateToOneWithWhereWithoutEnvironmentsInput = {
+    where?: RepositoryMetadataWhereInput
+    data: XOR<RepositoryMetadataUpdateWithoutEnvironmentsInput, RepositoryMetadataUncheckedUpdateWithoutEnvironmentsInput>
+  }
+
+  export type RepositoryMetadataUpdateWithoutEnvironmentsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    repositoryName?: StringFieldUpdateOperationsInput | string
+    owner?: StringFieldUpdateOperationsInput | string
+    healthScore?: IntFieldUpdateOperationsInput | number
+    healthStatus?: StringFieldUpdateOperationsInput | string
+    lastHealthCheckAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    teamName?: NullableStringFieldUpdateOperationsInput | string | null
+    ownerEmail?: NullableStringFieldUpdateOperationsInput | string | null
+    maintainers?: RepositoryMetadataUpdatemaintainersInput | string[]
+    onCallRotationUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    lastDeploymentAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    lastDeployedVersion?: NullableStringFieldUpdateOperationsInput | string | null
+    lastDeployedBy?: NullableStringFieldUpdateOperationsInput | string | null
+    lastDeploymentEnvironment?: NullableStringFieldUpdateOperationsInput | string | null
+    productionHealthy?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    language?: NullableStringFieldUpdateOperationsInput | string | null
+    testCoveragePercent?: NullableFloatFieldUpdateOperationsInput | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    healthCheckResults?: HealthCheckResultUpdateManyWithoutRepositoryMetadataNestedInput
+    quickFixActions?: QuickFixActionUpdateManyWithoutRepositoryMetadataNestedInput
+    deployments?: DeploymentUpdateManyWithoutRepositoryMetadataNestedInput
+  }
+
+  export type RepositoryMetadataUncheckedUpdateWithoutEnvironmentsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    repositoryName?: StringFieldUpdateOperationsInput | string
+    owner?: StringFieldUpdateOperationsInput | string
+    healthScore?: IntFieldUpdateOperationsInput | number
+    healthStatus?: StringFieldUpdateOperationsInput | string
+    lastHealthCheckAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    teamName?: NullableStringFieldUpdateOperationsInput | string | null
+    ownerEmail?: NullableStringFieldUpdateOperationsInput | string | null
+    maintainers?: RepositoryMetadataUpdatemaintainersInput | string[]
+    onCallRotationUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    lastDeploymentAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    lastDeployedVersion?: NullableStringFieldUpdateOperationsInput | string | null
+    lastDeployedBy?: NullableStringFieldUpdateOperationsInput | string | null
+    lastDeploymentEnvironment?: NullableStringFieldUpdateOperationsInput | string | null
+    productionHealthy?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    language?: NullableStringFieldUpdateOperationsInput | string | null
+    testCoveragePercent?: NullableFloatFieldUpdateOperationsInput | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    healthCheckResults?: HealthCheckResultUncheckedUpdateManyWithoutRepositoryMetadataNestedInput
+    quickFixActions?: QuickFixActionUncheckedUpdateManyWithoutRepositoryMetadataNestedInput
+    deployments?: DeploymentUncheckedUpdateManyWithoutRepositoryMetadataNestedInput
+  }
+
+  export type DeploymentUpsertWithWhereUniqueWithoutEnvironmentInput = {
+    where: DeploymentWhereUniqueInput
+    update: XOR<DeploymentUpdateWithoutEnvironmentInput, DeploymentUncheckedUpdateWithoutEnvironmentInput>
+    create: XOR<DeploymentCreateWithoutEnvironmentInput, DeploymentUncheckedCreateWithoutEnvironmentInput>
+  }
+
+  export type DeploymentUpdateWithWhereUniqueWithoutEnvironmentInput = {
+    where: DeploymentWhereUniqueInput
+    data: XOR<DeploymentUpdateWithoutEnvironmentInput, DeploymentUncheckedUpdateWithoutEnvironmentInput>
+  }
+
+  export type DeploymentUpdateManyWithWhereWithoutEnvironmentInput = {
+    where: DeploymentScalarWhereInput
+    data: XOR<DeploymentUpdateManyMutationInput, DeploymentUncheckedUpdateManyWithoutEnvironmentInput>
+  }
+
+  export type RepositoryMetadataCreateWithoutDeploymentsInput = {
+    id?: string
+    repositoryName: string
+    owner: string
+    healthScore?: number
+    healthStatus?: string
+    lastHealthCheckAt?: Date | string | null
+    teamName?: string | null
+    ownerEmail?: string | null
+    maintainers?: RepositoryMetadataCreatemaintainersInput | string[]
+    onCallRotationUrl?: string | null
+    lastDeploymentAt?: Date | string | null
+    lastDeployedVersion?: string | null
+    lastDeployedBy?: string | null
+    lastDeploymentEnvironment?: string | null
+    productionHealthy?: boolean | null
+    description?: string | null
+    language?: string | null
+    testCoveragePercent?: number | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    healthCheckResults?: HealthCheckResultCreateNestedManyWithoutRepositoryMetadataInput
+    quickFixActions?: QuickFixActionCreateNestedManyWithoutRepositoryMetadataInput
+    environments?: RepositoryEnvironmentCreateNestedManyWithoutRepositoryMetadataInput
+  }
+
+  export type RepositoryMetadataUncheckedCreateWithoutDeploymentsInput = {
+    id?: string
+    repositoryName: string
+    owner: string
+    healthScore?: number
+    healthStatus?: string
+    lastHealthCheckAt?: Date | string | null
+    teamName?: string | null
+    ownerEmail?: string | null
+    maintainers?: RepositoryMetadataCreatemaintainersInput | string[]
+    onCallRotationUrl?: string | null
+    lastDeploymentAt?: Date | string | null
+    lastDeployedVersion?: string | null
+    lastDeployedBy?: string | null
+    lastDeploymentEnvironment?: string | null
+    productionHealthy?: boolean | null
+    description?: string | null
+    language?: string | null
+    testCoveragePercent?: number | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    healthCheckResults?: HealthCheckResultUncheckedCreateNestedManyWithoutRepositoryMetadataInput
+    quickFixActions?: QuickFixActionUncheckedCreateNestedManyWithoutRepositoryMetadataInput
+    environments?: RepositoryEnvironmentUncheckedCreateNestedManyWithoutRepositoryMetadataInput
+  }
+
+  export type RepositoryMetadataCreateOrConnectWithoutDeploymentsInput = {
+    where: RepositoryMetadataWhereUniqueInput
+    create: XOR<RepositoryMetadataCreateWithoutDeploymentsInput, RepositoryMetadataUncheckedCreateWithoutDeploymentsInput>
+  }
+
+  export type RepositoryEnvironmentCreateWithoutDeploymentsInput = {
+    id?: string
+    name: string
+    order?: number
+    requiresApproval?: boolean
+    approvalMinCount?: number
+    autoApproveIfTestsPass?: boolean
+    autoRollbackOnFailure?: boolean
+    healthCheckUrl?: string | null
+    healthCheckInterval?: number | null
+    variables?: JsonNullValueInput | InputJsonValue
+    secretNames?: RepositoryEnvironmentCreatesecretNamesInput | string[]
+    slackChannel?: string | null
+    notifyOn?: RepositoryEnvironmentCreatenotifyOnInput | string[]
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    repositoryMetadata: RepositoryMetadataCreateNestedOneWithoutEnvironmentsInput
+  }
+
+  export type RepositoryEnvironmentUncheckedCreateWithoutDeploymentsInput = {
+    id?: string
+    repositoryMetadataId: string
+    name: string
+    order?: number
+    requiresApproval?: boolean
+    approvalMinCount?: number
+    autoApproveIfTestsPass?: boolean
+    autoRollbackOnFailure?: boolean
+    healthCheckUrl?: string | null
+    healthCheckInterval?: number | null
+    variables?: JsonNullValueInput | InputJsonValue
+    secretNames?: RepositoryEnvironmentCreatesecretNamesInput | string[]
+    slackChannel?: string | null
+    notifyOn?: RepositoryEnvironmentCreatenotifyOnInput | string[]
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type RepositoryEnvironmentCreateOrConnectWithoutDeploymentsInput = {
+    where: RepositoryEnvironmentWhereUniqueInput
+    create: XOR<RepositoryEnvironmentCreateWithoutDeploymentsInput, RepositoryEnvironmentUncheckedCreateWithoutDeploymentsInput>
+  }
+
+  export type DeploymentApprovalCreateWithoutDeploymentInput = {
+    id?: string
+    approverEmail: string
+    status?: string
+    reason?: string | null
+    comment?: string | null
+    respondedAt?: Date | string | null
+    createdAt?: Date | string
+  }
+
+  export type DeploymentApprovalUncheckedCreateWithoutDeploymentInput = {
+    id?: string
+    approverEmail: string
+    status?: string
+    reason?: string | null
+    comment?: string | null
+    respondedAt?: Date | string | null
+    createdAt?: Date | string
+  }
+
+  export type DeploymentApprovalCreateOrConnectWithoutDeploymentInput = {
+    where: DeploymentApprovalWhereUniqueInput
+    create: XOR<DeploymentApprovalCreateWithoutDeploymentInput, DeploymentApprovalUncheckedCreateWithoutDeploymentInput>
+  }
+
+  export type DeploymentApprovalCreateManyDeploymentInputEnvelope = {
+    data: DeploymentApprovalCreateManyDeploymentInput | DeploymentApprovalCreateManyDeploymentInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type RepositoryMetadataUpsertWithoutDeploymentsInput = {
+    update: XOR<RepositoryMetadataUpdateWithoutDeploymentsInput, RepositoryMetadataUncheckedUpdateWithoutDeploymentsInput>
+    create: XOR<RepositoryMetadataCreateWithoutDeploymentsInput, RepositoryMetadataUncheckedCreateWithoutDeploymentsInput>
+    where?: RepositoryMetadataWhereInput
+  }
+
+  export type RepositoryMetadataUpdateToOneWithWhereWithoutDeploymentsInput = {
+    where?: RepositoryMetadataWhereInput
+    data: XOR<RepositoryMetadataUpdateWithoutDeploymentsInput, RepositoryMetadataUncheckedUpdateWithoutDeploymentsInput>
+  }
+
+  export type RepositoryMetadataUpdateWithoutDeploymentsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    repositoryName?: StringFieldUpdateOperationsInput | string
+    owner?: StringFieldUpdateOperationsInput | string
+    healthScore?: IntFieldUpdateOperationsInput | number
+    healthStatus?: StringFieldUpdateOperationsInput | string
+    lastHealthCheckAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    teamName?: NullableStringFieldUpdateOperationsInput | string | null
+    ownerEmail?: NullableStringFieldUpdateOperationsInput | string | null
+    maintainers?: RepositoryMetadataUpdatemaintainersInput | string[]
+    onCallRotationUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    lastDeploymentAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    lastDeployedVersion?: NullableStringFieldUpdateOperationsInput | string | null
+    lastDeployedBy?: NullableStringFieldUpdateOperationsInput | string | null
+    lastDeploymentEnvironment?: NullableStringFieldUpdateOperationsInput | string | null
+    productionHealthy?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    language?: NullableStringFieldUpdateOperationsInput | string | null
+    testCoveragePercent?: NullableFloatFieldUpdateOperationsInput | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    healthCheckResults?: HealthCheckResultUpdateManyWithoutRepositoryMetadataNestedInput
+    quickFixActions?: QuickFixActionUpdateManyWithoutRepositoryMetadataNestedInput
+    environments?: RepositoryEnvironmentUpdateManyWithoutRepositoryMetadataNestedInput
+  }
+
+  export type RepositoryMetadataUncheckedUpdateWithoutDeploymentsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    repositoryName?: StringFieldUpdateOperationsInput | string
+    owner?: StringFieldUpdateOperationsInput | string
+    healthScore?: IntFieldUpdateOperationsInput | number
+    healthStatus?: StringFieldUpdateOperationsInput | string
+    lastHealthCheckAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    teamName?: NullableStringFieldUpdateOperationsInput | string | null
+    ownerEmail?: NullableStringFieldUpdateOperationsInput | string | null
+    maintainers?: RepositoryMetadataUpdatemaintainersInput | string[]
+    onCallRotationUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    lastDeploymentAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    lastDeployedVersion?: NullableStringFieldUpdateOperationsInput | string | null
+    lastDeployedBy?: NullableStringFieldUpdateOperationsInput | string | null
+    lastDeploymentEnvironment?: NullableStringFieldUpdateOperationsInput | string | null
+    productionHealthy?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    language?: NullableStringFieldUpdateOperationsInput | string | null
+    testCoveragePercent?: NullableFloatFieldUpdateOperationsInput | number | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    healthCheckResults?: HealthCheckResultUncheckedUpdateManyWithoutRepositoryMetadataNestedInput
+    quickFixActions?: QuickFixActionUncheckedUpdateManyWithoutRepositoryMetadataNestedInput
+    environments?: RepositoryEnvironmentUncheckedUpdateManyWithoutRepositoryMetadataNestedInput
+  }
+
+  export type RepositoryEnvironmentUpsertWithoutDeploymentsInput = {
+    update: XOR<RepositoryEnvironmentUpdateWithoutDeploymentsInput, RepositoryEnvironmentUncheckedUpdateWithoutDeploymentsInput>
+    create: XOR<RepositoryEnvironmentCreateWithoutDeploymentsInput, RepositoryEnvironmentUncheckedCreateWithoutDeploymentsInput>
+    where?: RepositoryEnvironmentWhereInput
+  }
+
+  export type RepositoryEnvironmentUpdateToOneWithWhereWithoutDeploymentsInput = {
+    where?: RepositoryEnvironmentWhereInput
+    data: XOR<RepositoryEnvironmentUpdateWithoutDeploymentsInput, RepositoryEnvironmentUncheckedUpdateWithoutDeploymentsInput>
+  }
+
+  export type RepositoryEnvironmentUpdateWithoutDeploymentsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    order?: IntFieldUpdateOperationsInput | number
+    requiresApproval?: BoolFieldUpdateOperationsInput | boolean
+    approvalMinCount?: IntFieldUpdateOperationsInput | number
+    autoApproveIfTestsPass?: BoolFieldUpdateOperationsInput | boolean
+    autoRollbackOnFailure?: BoolFieldUpdateOperationsInput | boolean
+    healthCheckUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    healthCheckInterval?: NullableIntFieldUpdateOperationsInput | number | null
+    variables?: JsonNullValueInput | InputJsonValue
+    secretNames?: RepositoryEnvironmentUpdatesecretNamesInput | string[]
+    slackChannel?: NullableStringFieldUpdateOperationsInput | string | null
+    notifyOn?: RepositoryEnvironmentUpdatenotifyOnInput | string[]
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    repositoryMetadata?: RepositoryMetadataUpdateOneRequiredWithoutEnvironmentsNestedInput
+  }
+
+  export type RepositoryEnvironmentUncheckedUpdateWithoutDeploymentsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    repositoryMetadataId?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    order?: IntFieldUpdateOperationsInput | number
+    requiresApproval?: BoolFieldUpdateOperationsInput | boolean
+    approvalMinCount?: IntFieldUpdateOperationsInput | number
+    autoApproveIfTestsPass?: BoolFieldUpdateOperationsInput | boolean
+    autoRollbackOnFailure?: BoolFieldUpdateOperationsInput | boolean
+    healthCheckUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    healthCheckInterval?: NullableIntFieldUpdateOperationsInput | number | null
+    variables?: JsonNullValueInput | InputJsonValue
+    secretNames?: RepositoryEnvironmentUpdatesecretNamesInput | string[]
+    slackChannel?: NullableStringFieldUpdateOperationsInput | string | null
+    notifyOn?: RepositoryEnvironmentUpdatenotifyOnInput | string[]
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type DeploymentApprovalUpsertWithWhereUniqueWithoutDeploymentInput = {
+    where: DeploymentApprovalWhereUniqueInput
+    update: XOR<DeploymentApprovalUpdateWithoutDeploymentInput, DeploymentApprovalUncheckedUpdateWithoutDeploymentInput>
+    create: XOR<DeploymentApprovalCreateWithoutDeploymentInput, DeploymentApprovalUncheckedCreateWithoutDeploymentInput>
+  }
+
+  export type DeploymentApprovalUpdateWithWhereUniqueWithoutDeploymentInput = {
+    where: DeploymentApprovalWhereUniqueInput
+    data: XOR<DeploymentApprovalUpdateWithoutDeploymentInput, DeploymentApprovalUncheckedUpdateWithoutDeploymentInput>
+  }
+
+  export type DeploymentApprovalUpdateManyWithWhereWithoutDeploymentInput = {
+    where: DeploymentApprovalScalarWhereInput
+    data: XOR<DeploymentApprovalUpdateManyMutationInput, DeploymentApprovalUncheckedUpdateManyWithoutDeploymentInput>
+  }
+
+  export type DeploymentApprovalScalarWhereInput = {
+    AND?: DeploymentApprovalScalarWhereInput | DeploymentApprovalScalarWhereInput[]
+    OR?: DeploymentApprovalScalarWhereInput[]
+    NOT?: DeploymentApprovalScalarWhereInput | DeploymentApprovalScalarWhereInput[]
+    id?: StringFilter<"DeploymentApproval"> | string
+    deploymentId?: StringFilter<"DeploymentApproval"> | string
+    approverEmail?: StringFilter<"DeploymentApproval"> | string
+    status?: StringFilter<"DeploymentApproval"> | string
+    reason?: StringNullableFilter<"DeploymentApproval"> | string | null
+    comment?: StringNullableFilter<"DeploymentApproval"> | string | null
+    respondedAt?: DateTimeNullableFilter<"DeploymentApproval"> | Date | string | null
+    createdAt?: DateTimeFilter<"DeploymentApproval"> | Date | string
+  }
+
+  export type DeploymentCreateWithoutApprovalsInput = {
+    id?: string
+    version: string
+    status?: string
+    deployedAt: Date | string
+    deployedBy: string
+    duration?: number | null
+    riskAssessment?: NullableJsonNullValueInput | InputJsonValue
+    healthCheckPassed?: boolean | null
+    healthCheckDetails?: NullableJsonNullValueInput | InputJsonValue
+    postDeploymentMetrics?: NullableJsonNullValueInput | InputJsonValue
+    preDeploymentNotes?: string | null
+    postDeploymentNotes?: string | null
+    deploymentLogs?: string | null
+    artifacts?: NullableJsonNullValueInput | InputJsonValue
+    approvalRequired?: boolean
+    rollbackOf?: string | null
+    rollbackReason?: string | null
+    rollbackInitiatedAt?: Date | string | null
+    rollbackInitiatedBy?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    repositoryMetadata: RepositoryMetadataCreateNestedOneWithoutDeploymentsInput
+    environment: RepositoryEnvironmentCreateNestedOneWithoutDeploymentsInput
+  }
+
+  export type DeploymentUncheckedCreateWithoutApprovalsInput = {
+    id?: string
+    repositoryMetadataId: string
+    environmentId: string
+    version: string
+    status?: string
+    deployedAt: Date | string
+    deployedBy: string
+    duration?: number | null
+    riskAssessment?: NullableJsonNullValueInput | InputJsonValue
+    healthCheckPassed?: boolean | null
+    healthCheckDetails?: NullableJsonNullValueInput | InputJsonValue
+    postDeploymentMetrics?: NullableJsonNullValueInput | InputJsonValue
+    preDeploymentNotes?: string | null
+    postDeploymentNotes?: string | null
+    deploymentLogs?: string | null
+    artifacts?: NullableJsonNullValueInput | InputJsonValue
+    approvalRequired?: boolean
+    rollbackOf?: string | null
+    rollbackReason?: string | null
+    rollbackInitiatedAt?: Date | string | null
+    rollbackInitiatedBy?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type DeploymentCreateOrConnectWithoutApprovalsInput = {
+    where: DeploymentWhereUniqueInput
+    create: XOR<DeploymentCreateWithoutApprovalsInput, DeploymentUncheckedCreateWithoutApprovalsInput>
+  }
+
+  export type DeploymentUpsertWithoutApprovalsInput = {
+    update: XOR<DeploymentUpdateWithoutApprovalsInput, DeploymentUncheckedUpdateWithoutApprovalsInput>
+    create: XOR<DeploymentCreateWithoutApprovalsInput, DeploymentUncheckedCreateWithoutApprovalsInput>
+    where?: DeploymentWhereInput
+  }
+
+  export type DeploymentUpdateToOneWithWhereWithoutApprovalsInput = {
+    where?: DeploymentWhereInput
+    data: XOR<DeploymentUpdateWithoutApprovalsInput, DeploymentUncheckedUpdateWithoutApprovalsInput>
+  }
+
+  export type DeploymentUpdateWithoutApprovalsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    version?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    deployedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    deployedBy?: StringFieldUpdateOperationsInput | string
+    duration?: NullableIntFieldUpdateOperationsInput | number | null
+    riskAssessment?: NullableJsonNullValueInput | InputJsonValue
+    healthCheckPassed?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    healthCheckDetails?: NullableJsonNullValueInput | InputJsonValue
+    postDeploymentMetrics?: NullableJsonNullValueInput | InputJsonValue
+    preDeploymentNotes?: NullableStringFieldUpdateOperationsInput | string | null
+    postDeploymentNotes?: NullableStringFieldUpdateOperationsInput | string | null
+    deploymentLogs?: NullableStringFieldUpdateOperationsInput | string | null
+    artifacts?: NullableJsonNullValueInput | InputJsonValue
+    approvalRequired?: BoolFieldUpdateOperationsInput | boolean
+    rollbackOf?: NullableStringFieldUpdateOperationsInput | string | null
+    rollbackReason?: NullableStringFieldUpdateOperationsInput | string | null
+    rollbackInitiatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    rollbackInitiatedBy?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    repositoryMetadata?: RepositoryMetadataUpdateOneRequiredWithoutDeploymentsNestedInput
+    environment?: RepositoryEnvironmentUpdateOneRequiredWithoutDeploymentsNestedInput
+  }
+
+  export type DeploymentUncheckedUpdateWithoutApprovalsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    repositoryMetadataId?: StringFieldUpdateOperationsInput | string
+    environmentId?: StringFieldUpdateOperationsInput | string
+    version?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    deployedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    deployedBy?: StringFieldUpdateOperationsInput | string
+    duration?: NullableIntFieldUpdateOperationsInput | number | null
+    riskAssessment?: NullableJsonNullValueInput | InputJsonValue
+    healthCheckPassed?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    healthCheckDetails?: NullableJsonNullValueInput | InputJsonValue
+    postDeploymentMetrics?: NullableJsonNullValueInput | InputJsonValue
+    preDeploymentNotes?: NullableStringFieldUpdateOperationsInput | string | null
+    postDeploymentNotes?: NullableStringFieldUpdateOperationsInput | string | null
+    deploymentLogs?: NullableStringFieldUpdateOperationsInput | string | null
+    artifacts?: NullableJsonNullValueInput | InputJsonValue
+    approvalRequired?: BoolFieldUpdateOperationsInput | boolean
+    rollbackOf?: NullableStringFieldUpdateOperationsInput | string | null
+    rollbackReason?: NullableStringFieldUpdateOperationsInput | string | null
+    rollbackInitiatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    rollbackInitiatedBy?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type TemplateCreateManyCategoryInput = {
@@ -11144,6 +24681,15 @@ export namespace Prisma {
     createdAt?: Date | string
   }
 
+  export type ProviderIntegrationCreateManyUserInput = {
+    id?: string
+    provider: string
+    apiToken: string
+    teamId?: string | null
+    connectedAt?: Date | string
+    updatedAt?: Date | string
+  }
+
   export type AuthTokenUpdateWithoutUserInput = {
     tokenHash?: StringFieldUpdateOperationsInput | string
     type?: EnumAuthTokenTypeFieldUpdateOperationsInput | $Enums.AuthTokenType
@@ -11167,6 +24713,475 @@ export namespace Prisma {
     type?: EnumAuthTokenTypeFieldUpdateOperationsInput | $Enums.AuthTokenType
     expiresAt?: DateTimeFieldUpdateOperationsInput | Date | string
     usedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ProviderIntegrationUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    provider?: StringFieldUpdateOperationsInput | string
+    apiToken?: StringFieldUpdateOperationsInput | string
+    teamId?: NullableStringFieldUpdateOperationsInput | string | null
+    connectedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ProviderIntegrationUncheckedUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    provider?: StringFieldUpdateOperationsInput | string
+    apiToken?: StringFieldUpdateOperationsInput | string
+    teamId?: NullableStringFieldUpdateOperationsInput | string | null
+    connectedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ProviderIntegrationUncheckedUpdateManyWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    provider?: StringFieldUpdateOperationsInput | string
+    apiToken?: StringFieldUpdateOperationsInput | string
+    teamId?: NullableStringFieldUpdateOperationsInput | string | null
+    connectedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type HealthCheckResultCreateManyRepositoryMetadataInput = {
+    id?: string
+    repositoryName: string
+    repositoryOwner: string
+    securityScore?: number
+    codeQualityScore?: number
+    deploymentReadinessScore?: number
+    teamOwnershipScore?: number
+    totalScore?: number
+    overallStatus?: string
+    securityIssues?: JsonNullValueInput | InputJsonValue
+    codeQualityIssues?: JsonNullValueInput | InputJsonValue
+    deploymentReadinessIssues?: JsonNullValueInput | InputJsonValue
+    teamOwnershipIssues?: JsonNullValueInput | InputJsonValue
+    aiSuggestions?: JsonNullValueInput | InputJsonValue
+    executedAt?: Date | string
+    executedBy?: string | null
+    createdAt?: Date | string
+  }
+
+  export type QuickFixActionCreateManyRepositoryMetadataInput = {
+    id?: string
+    actionType: string
+    actionDescription: string
+    status?: string
+    executedBy?: string | null
+    result?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    completedAt?: Date | string | null
+  }
+
+  export type RepositoryEnvironmentCreateManyRepositoryMetadataInput = {
+    id?: string
+    name: string
+    order?: number
+    requiresApproval?: boolean
+    approvalMinCount?: number
+    autoApproveIfTestsPass?: boolean
+    autoRollbackOnFailure?: boolean
+    healthCheckUrl?: string | null
+    healthCheckInterval?: number | null
+    variables?: JsonNullValueInput | InputJsonValue
+    secretNames?: RepositoryEnvironmentCreatesecretNamesInput | string[]
+    slackChannel?: string | null
+    notifyOn?: RepositoryEnvironmentCreatenotifyOnInput | string[]
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type DeploymentCreateManyRepositoryMetadataInput = {
+    id?: string
+    environmentId: string
+    version: string
+    status?: string
+    deployedAt: Date | string
+    deployedBy: string
+    duration?: number | null
+    riskAssessment?: NullableJsonNullValueInput | InputJsonValue
+    healthCheckPassed?: boolean | null
+    healthCheckDetails?: NullableJsonNullValueInput | InputJsonValue
+    postDeploymentMetrics?: NullableJsonNullValueInput | InputJsonValue
+    preDeploymentNotes?: string | null
+    postDeploymentNotes?: string | null
+    deploymentLogs?: string | null
+    artifacts?: NullableJsonNullValueInput | InputJsonValue
+    approvalRequired?: boolean
+    rollbackOf?: string | null
+    rollbackReason?: string | null
+    rollbackInitiatedAt?: Date | string | null
+    rollbackInitiatedBy?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type HealthCheckResultUpdateWithoutRepositoryMetadataInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    repositoryName?: StringFieldUpdateOperationsInput | string
+    repositoryOwner?: StringFieldUpdateOperationsInput | string
+    securityScore?: IntFieldUpdateOperationsInput | number
+    codeQualityScore?: IntFieldUpdateOperationsInput | number
+    deploymentReadinessScore?: IntFieldUpdateOperationsInput | number
+    teamOwnershipScore?: IntFieldUpdateOperationsInput | number
+    totalScore?: IntFieldUpdateOperationsInput | number
+    overallStatus?: StringFieldUpdateOperationsInput | string
+    securityIssues?: JsonNullValueInput | InputJsonValue
+    codeQualityIssues?: JsonNullValueInput | InputJsonValue
+    deploymentReadinessIssues?: JsonNullValueInput | InputJsonValue
+    teamOwnershipIssues?: JsonNullValueInput | InputJsonValue
+    aiSuggestions?: JsonNullValueInput | InputJsonValue
+    executedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    executedBy?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type HealthCheckResultUncheckedUpdateWithoutRepositoryMetadataInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    repositoryName?: StringFieldUpdateOperationsInput | string
+    repositoryOwner?: StringFieldUpdateOperationsInput | string
+    securityScore?: IntFieldUpdateOperationsInput | number
+    codeQualityScore?: IntFieldUpdateOperationsInput | number
+    deploymentReadinessScore?: IntFieldUpdateOperationsInput | number
+    teamOwnershipScore?: IntFieldUpdateOperationsInput | number
+    totalScore?: IntFieldUpdateOperationsInput | number
+    overallStatus?: StringFieldUpdateOperationsInput | string
+    securityIssues?: JsonNullValueInput | InputJsonValue
+    codeQualityIssues?: JsonNullValueInput | InputJsonValue
+    deploymentReadinessIssues?: JsonNullValueInput | InputJsonValue
+    teamOwnershipIssues?: JsonNullValueInput | InputJsonValue
+    aiSuggestions?: JsonNullValueInput | InputJsonValue
+    executedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    executedBy?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type HealthCheckResultUncheckedUpdateManyWithoutRepositoryMetadataInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    repositoryName?: StringFieldUpdateOperationsInput | string
+    repositoryOwner?: StringFieldUpdateOperationsInput | string
+    securityScore?: IntFieldUpdateOperationsInput | number
+    codeQualityScore?: IntFieldUpdateOperationsInput | number
+    deploymentReadinessScore?: IntFieldUpdateOperationsInput | number
+    teamOwnershipScore?: IntFieldUpdateOperationsInput | number
+    totalScore?: IntFieldUpdateOperationsInput | number
+    overallStatus?: StringFieldUpdateOperationsInput | string
+    securityIssues?: JsonNullValueInput | InputJsonValue
+    codeQualityIssues?: JsonNullValueInput | InputJsonValue
+    deploymentReadinessIssues?: JsonNullValueInput | InputJsonValue
+    teamOwnershipIssues?: JsonNullValueInput | InputJsonValue
+    aiSuggestions?: JsonNullValueInput | InputJsonValue
+    executedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    executedBy?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type QuickFixActionUpdateWithoutRepositoryMetadataInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    actionType?: StringFieldUpdateOperationsInput | string
+    actionDescription?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    executedBy?: NullableStringFieldUpdateOperationsInput | string | null
+    result?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    completedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  }
+
+  export type QuickFixActionUncheckedUpdateWithoutRepositoryMetadataInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    actionType?: StringFieldUpdateOperationsInput | string
+    actionDescription?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    executedBy?: NullableStringFieldUpdateOperationsInput | string | null
+    result?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    completedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  }
+
+  export type QuickFixActionUncheckedUpdateManyWithoutRepositoryMetadataInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    actionType?: StringFieldUpdateOperationsInput | string
+    actionDescription?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    executedBy?: NullableStringFieldUpdateOperationsInput | string | null
+    result?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    completedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  }
+
+  export type RepositoryEnvironmentUpdateWithoutRepositoryMetadataInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    order?: IntFieldUpdateOperationsInput | number
+    requiresApproval?: BoolFieldUpdateOperationsInput | boolean
+    approvalMinCount?: IntFieldUpdateOperationsInput | number
+    autoApproveIfTestsPass?: BoolFieldUpdateOperationsInput | boolean
+    autoRollbackOnFailure?: BoolFieldUpdateOperationsInput | boolean
+    healthCheckUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    healthCheckInterval?: NullableIntFieldUpdateOperationsInput | number | null
+    variables?: JsonNullValueInput | InputJsonValue
+    secretNames?: RepositoryEnvironmentUpdatesecretNamesInput | string[]
+    slackChannel?: NullableStringFieldUpdateOperationsInput | string | null
+    notifyOn?: RepositoryEnvironmentUpdatenotifyOnInput | string[]
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    deployments?: DeploymentUpdateManyWithoutEnvironmentNestedInput
+  }
+
+  export type RepositoryEnvironmentUncheckedUpdateWithoutRepositoryMetadataInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    order?: IntFieldUpdateOperationsInput | number
+    requiresApproval?: BoolFieldUpdateOperationsInput | boolean
+    approvalMinCount?: IntFieldUpdateOperationsInput | number
+    autoApproveIfTestsPass?: BoolFieldUpdateOperationsInput | boolean
+    autoRollbackOnFailure?: BoolFieldUpdateOperationsInput | boolean
+    healthCheckUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    healthCheckInterval?: NullableIntFieldUpdateOperationsInput | number | null
+    variables?: JsonNullValueInput | InputJsonValue
+    secretNames?: RepositoryEnvironmentUpdatesecretNamesInput | string[]
+    slackChannel?: NullableStringFieldUpdateOperationsInput | string | null
+    notifyOn?: RepositoryEnvironmentUpdatenotifyOnInput | string[]
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    deployments?: DeploymentUncheckedUpdateManyWithoutEnvironmentNestedInput
+  }
+
+  export type RepositoryEnvironmentUncheckedUpdateManyWithoutRepositoryMetadataInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    order?: IntFieldUpdateOperationsInput | number
+    requiresApproval?: BoolFieldUpdateOperationsInput | boolean
+    approvalMinCount?: IntFieldUpdateOperationsInput | number
+    autoApproveIfTestsPass?: BoolFieldUpdateOperationsInput | boolean
+    autoRollbackOnFailure?: BoolFieldUpdateOperationsInput | boolean
+    healthCheckUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    healthCheckInterval?: NullableIntFieldUpdateOperationsInput | number | null
+    variables?: JsonNullValueInput | InputJsonValue
+    secretNames?: RepositoryEnvironmentUpdatesecretNamesInput | string[]
+    slackChannel?: NullableStringFieldUpdateOperationsInput | string | null
+    notifyOn?: RepositoryEnvironmentUpdatenotifyOnInput | string[]
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type DeploymentUpdateWithoutRepositoryMetadataInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    version?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    deployedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    deployedBy?: StringFieldUpdateOperationsInput | string
+    duration?: NullableIntFieldUpdateOperationsInput | number | null
+    riskAssessment?: NullableJsonNullValueInput | InputJsonValue
+    healthCheckPassed?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    healthCheckDetails?: NullableJsonNullValueInput | InputJsonValue
+    postDeploymentMetrics?: NullableJsonNullValueInput | InputJsonValue
+    preDeploymentNotes?: NullableStringFieldUpdateOperationsInput | string | null
+    postDeploymentNotes?: NullableStringFieldUpdateOperationsInput | string | null
+    deploymentLogs?: NullableStringFieldUpdateOperationsInput | string | null
+    artifacts?: NullableJsonNullValueInput | InputJsonValue
+    approvalRequired?: BoolFieldUpdateOperationsInput | boolean
+    rollbackOf?: NullableStringFieldUpdateOperationsInput | string | null
+    rollbackReason?: NullableStringFieldUpdateOperationsInput | string | null
+    rollbackInitiatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    rollbackInitiatedBy?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    environment?: RepositoryEnvironmentUpdateOneRequiredWithoutDeploymentsNestedInput
+    approvals?: DeploymentApprovalUpdateManyWithoutDeploymentNestedInput
+  }
+
+  export type DeploymentUncheckedUpdateWithoutRepositoryMetadataInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    environmentId?: StringFieldUpdateOperationsInput | string
+    version?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    deployedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    deployedBy?: StringFieldUpdateOperationsInput | string
+    duration?: NullableIntFieldUpdateOperationsInput | number | null
+    riskAssessment?: NullableJsonNullValueInput | InputJsonValue
+    healthCheckPassed?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    healthCheckDetails?: NullableJsonNullValueInput | InputJsonValue
+    postDeploymentMetrics?: NullableJsonNullValueInput | InputJsonValue
+    preDeploymentNotes?: NullableStringFieldUpdateOperationsInput | string | null
+    postDeploymentNotes?: NullableStringFieldUpdateOperationsInput | string | null
+    deploymentLogs?: NullableStringFieldUpdateOperationsInput | string | null
+    artifacts?: NullableJsonNullValueInput | InputJsonValue
+    approvalRequired?: BoolFieldUpdateOperationsInput | boolean
+    rollbackOf?: NullableStringFieldUpdateOperationsInput | string | null
+    rollbackReason?: NullableStringFieldUpdateOperationsInput | string | null
+    rollbackInitiatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    rollbackInitiatedBy?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    approvals?: DeploymentApprovalUncheckedUpdateManyWithoutDeploymentNestedInput
+  }
+
+  export type DeploymentUncheckedUpdateManyWithoutRepositoryMetadataInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    environmentId?: StringFieldUpdateOperationsInput | string
+    version?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    deployedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    deployedBy?: StringFieldUpdateOperationsInput | string
+    duration?: NullableIntFieldUpdateOperationsInput | number | null
+    riskAssessment?: NullableJsonNullValueInput | InputJsonValue
+    healthCheckPassed?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    healthCheckDetails?: NullableJsonNullValueInput | InputJsonValue
+    postDeploymentMetrics?: NullableJsonNullValueInput | InputJsonValue
+    preDeploymentNotes?: NullableStringFieldUpdateOperationsInput | string | null
+    postDeploymentNotes?: NullableStringFieldUpdateOperationsInput | string | null
+    deploymentLogs?: NullableStringFieldUpdateOperationsInput | string | null
+    artifacts?: NullableJsonNullValueInput | InputJsonValue
+    approvalRequired?: BoolFieldUpdateOperationsInput | boolean
+    rollbackOf?: NullableStringFieldUpdateOperationsInput | string | null
+    rollbackReason?: NullableStringFieldUpdateOperationsInput | string | null
+    rollbackInitiatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    rollbackInitiatedBy?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type DeploymentCreateManyEnvironmentInput = {
+    id?: string
+    repositoryMetadataId: string
+    version: string
+    status?: string
+    deployedAt: Date | string
+    deployedBy: string
+    duration?: number | null
+    riskAssessment?: NullableJsonNullValueInput | InputJsonValue
+    healthCheckPassed?: boolean | null
+    healthCheckDetails?: NullableJsonNullValueInput | InputJsonValue
+    postDeploymentMetrics?: NullableJsonNullValueInput | InputJsonValue
+    preDeploymentNotes?: string | null
+    postDeploymentNotes?: string | null
+    deploymentLogs?: string | null
+    artifacts?: NullableJsonNullValueInput | InputJsonValue
+    approvalRequired?: boolean
+    rollbackOf?: string | null
+    rollbackReason?: string | null
+    rollbackInitiatedAt?: Date | string | null
+    rollbackInitiatedBy?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type DeploymentUpdateWithoutEnvironmentInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    version?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    deployedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    deployedBy?: StringFieldUpdateOperationsInput | string
+    duration?: NullableIntFieldUpdateOperationsInput | number | null
+    riskAssessment?: NullableJsonNullValueInput | InputJsonValue
+    healthCheckPassed?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    healthCheckDetails?: NullableJsonNullValueInput | InputJsonValue
+    postDeploymentMetrics?: NullableJsonNullValueInput | InputJsonValue
+    preDeploymentNotes?: NullableStringFieldUpdateOperationsInput | string | null
+    postDeploymentNotes?: NullableStringFieldUpdateOperationsInput | string | null
+    deploymentLogs?: NullableStringFieldUpdateOperationsInput | string | null
+    artifacts?: NullableJsonNullValueInput | InputJsonValue
+    approvalRequired?: BoolFieldUpdateOperationsInput | boolean
+    rollbackOf?: NullableStringFieldUpdateOperationsInput | string | null
+    rollbackReason?: NullableStringFieldUpdateOperationsInput | string | null
+    rollbackInitiatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    rollbackInitiatedBy?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    repositoryMetadata?: RepositoryMetadataUpdateOneRequiredWithoutDeploymentsNestedInput
+    approvals?: DeploymentApprovalUpdateManyWithoutDeploymentNestedInput
+  }
+
+  export type DeploymentUncheckedUpdateWithoutEnvironmentInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    repositoryMetadataId?: StringFieldUpdateOperationsInput | string
+    version?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    deployedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    deployedBy?: StringFieldUpdateOperationsInput | string
+    duration?: NullableIntFieldUpdateOperationsInput | number | null
+    riskAssessment?: NullableJsonNullValueInput | InputJsonValue
+    healthCheckPassed?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    healthCheckDetails?: NullableJsonNullValueInput | InputJsonValue
+    postDeploymentMetrics?: NullableJsonNullValueInput | InputJsonValue
+    preDeploymentNotes?: NullableStringFieldUpdateOperationsInput | string | null
+    postDeploymentNotes?: NullableStringFieldUpdateOperationsInput | string | null
+    deploymentLogs?: NullableStringFieldUpdateOperationsInput | string | null
+    artifacts?: NullableJsonNullValueInput | InputJsonValue
+    approvalRequired?: BoolFieldUpdateOperationsInput | boolean
+    rollbackOf?: NullableStringFieldUpdateOperationsInput | string | null
+    rollbackReason?: NullableStringFieldUpdateOperationsInput | string | null
+    rollbackInitiatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    rollbackInitiatedBy?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    approvals?: DeploymentApprovalUncheckedUpdateManyWithoutDeploymentNestedInput
+  }
+
+  export type DeploymentUncheckedUpdateManyWithoutEnvironmentInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    repositoryMetadataId?: StringFieldUpdateOperationsInput | string
+    version?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    deployedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    deployedBy?: StringFieldUpdateOperationsInput | string
+    duration?: NullableIntFieldUpdateOperationsInput | number | null
+    riskAssessment?: NullableJsonNullValueInput | InputJsonValue
+    healthCheckPassed?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    healthCheckDetails?: NullableJsonNullValueInput | InputJsonValue
+    postDeploymentMetrics?: NullableJsonNullValueInput | InputJsonValue
+    preDeploymentNotes?: NullableStringFieldUpdateOperationsInput | string | null
+    postDeploymentNotes?: NullableStringFieldUpdateOperationsInput | string | null
+    deploymentLogs?: NullableStringFieldUpdateOperationsInput | string | null
+    artifacts?: NullableJsonNullValueInput | InputJsonValue
+    approvalRequired?: BoolFieldUpdateOperationsInput | boolean
+    rollbackOf?: NullableStringFieldUpdateOperationsInput | string | null
+    rollbackReason?: NullableStringFieldUpdateOperationsInput | string | null
+    rollbackInitiatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    rollbackInitiatedBy?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type DeploymentApprovalCreateManyDeploymentInput = {
+    id?: string
+    approverEmail: string
+    status?: string
+    reason?: string | null
+    comment?: string | null
+    respondedAt?: Date | string | null
+    createdAt?: Date | string
+  }
+
+  export type DeploymentApprovalUpdateWithoutDeploymentInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    approverEmail?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    reason?: NullableStringFieldUpdateOperationsInput | string | null
+    comment?: NullableStringFieldUpdateOperationsInput | string | null
+    respondedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type DeploymentApprovalUncheckedUpdateWithoutDeploymentInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    approverEmail?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    reason?: NullableStringFieldUpdateOperationsInput | string | null
+    comment?: NullableStringFieldUpdateOperationsInput | string | null
+    respondedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type DeploymentApprovalUncheckedUpdateManyWithoutDeploymentInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    approverEmail?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    reason?: NullableStringFieldUpdateOperationsInput | string | null
+    comment?: NullableStringFieldUpdateOperationsInput | string | null
+    respondedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 

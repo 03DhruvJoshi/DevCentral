@@ -155,6 +155,16 @@ exports.Prisma.UserScalarFieldEnum = {
   createdAt: 'createdAt'
 };
 
+exports.Prisma.ProviderIntegrationScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  provider: 'provider',
+  apiToken: 'apiToken',
+  teamId: 'teamId',
+  connectedAt: 'connectedAt',
+  updatedAt: 'updatedAt'
+};
+
 exports.Prisma.AuthTokenScalarFieldEnum = {
   id: 'id',
   userId: 'userId',
@@ -182,6 +192,118 @@ exports.Prisma.PlatformConfigScalarFieldEnum = {
   updatedAt: 'updatedAt'
 };
 
+exports.Prisma.RepositoryMetadataScalarFieldEnum = {
+  id: 'id',
+  repositoryName: 'repositoryName',
+  owner: 'owner',
+  healthScore: 'healthScore',
+  healthStatus: 'healthStatus',
+  lastHealthCheckAt: 'lastHealthCheckAt',
+  teamName: 'teamName',
+  ownerEmail: 'ownerEmail',
+  maintainers: 'maintainers',
+  onCallRotationUrl: 'onCallRotationUrl',
+  lastDeploymentAt: 'lastDeploymentAt',
+  lastDeployedVersion: 'lastDeployedVersion',
+  lastDeployedBy: 'lastDeployedBy',
+  lastDeploymentEnvironment: 'lastDeploymentEnvironment',
+  productionHealthy: 'productionHealthy',
+  description: 'description',
+  language: 'language',
+  testCoveragePercent: 'testCoveragePercent',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.HealthCheckResultScalarFieldEnum = {
+  id: 'id',
+  repositoryName: 'repositoryName',
+  repositoryOwner: 'repositoryOwner',
+  repositoryMetadataId: 'repositoryMetadataId',
+  securityScore: 'securityScore',
+  codeQualityScore: 'codeQualityScore',
+  deploymentReadinessScore: 'deploymentReadinessScore',
+  teamOwnershipScore: 'teamOwnershipScore',
+  totalScore: 'totalScore',
+  overallStatus: 'overallStatus',
+  securityIssues: 'securityIssues',
+  codeQualityIssues: 'codeQualityIssues',
+  deploymentReadinessIssues: 'deploymentReadinessIssues',
+  teamOwnershipIssues: 'teamOwnershipIssues',
+  aiSuggestions: 'aiSuggestions',
+  executedAt: 'executedAt',
+  executedBy: 'executedBy',
+  createdAt: 'createdAt'
+};
+
+exports.Prisma.QuickFixActionScalarFieldEnum = {
+  id: 'id',
+  repositoryMetadataId: 'repositoryMetadataId',
+  actionType: 'actionType',
+  actionDescription: 'actionDescription',
+  status: 'status',
+  executedBy: 'executedBy',
+  result: 'result',
+  createdAt: 'createdAt',
+  completedAt: 'completedAt'
+};
+
+exports.Prisma.RepositoryEnvironmentScalarFieldEnum = {
+  id: 'id',
+  repositoryMetadataId: 'repositoryMetadataId',
+  name: 'name',
+  order: 'order',
+  requiresApproval: 'requiresApproval',
+  approvalMinCount: 'approvalMinCount',
+  autoApproveIfTestsPass: 'autoApproveIfTestsPass',
+  autoRollbackOnFailure: 'autoRollbackOnFailure',
+  healthCheckUrl: 'healthCheckUrl',
+  healthCheckInterval: 'healthCheckInterval',
+  variables: 'variables',
+  secretNames: 'secretNames',
+  slackChannel: 'slackChannel',
+  notifyOn: 'notifyOn',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.DeploymentScalarFieldEnum = {
+  id: 'id',
+  repositoryMetadataId: 'repositoryMetadataId',
+  environmentId: 'environmentId',
+  version: 'version',
+  status: 'status',
+  deployedAt: 'deployedAt',
+  deployedBy: 'deployedBy',
+  duration: 'duration',
+  riskAssessment: 'riskAssessment',
+  healthCheckPassed: 'healthCheckPassed',
+  healthCheckDetails: 'healthCheckDetails',
+  postDeploymentMetrics: 'postDeploymentMetrics',
+  preDeploymentNotes: 'preDeploymentNotes',
+  postDeploymentNotes: 'postDeploymentNotes',
+  deploymentLogs: 'deploymentLogs',
+  artifacts: 'artifacts',
+  approvalRequired: 'approvalRequired',
+  rollbackOf: 'rollbackOf',
+  rollbackReason: 'rollbackReason',
+  rollbackInitiatedAt: 'rollbackInitiatedAt',
+  rollbackInitiatedBy: 'rollbackInitiatedBy',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.DeploymentApprovalScalarFieldEnum = {
+  id: 'id',
+  deploymentId: 'deploymentId',
+  approverEmail: 'approverEmail',
+  status: 'status',
+  reason: 'reason',
+  comment: 'comment',
+  respondedAt: 'respondedAt',
+  createdAt: 'createdAt'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -189,6 +311,10 @@ exports.Prisma.SortOrder = {
 
 exports.Prisma.NullableJsonNullValueInput = {
   DbNull: Prisma.DbNull,
+  JsonNull: Prisma.JsonNull
+};
+
+exports.Prisma.JsonNullValueInput = {
   JsonNull: Prisma.JsonNull
 };
 
@@ -217,9 +343,16 @@ exports.Prisma.ModelName = {
   Template: 'Template',
   Category: 'Category',
   User: 'User',
+  ProviderIntegration: 'ProviderIntegration',
   AuthToken: 'AuthToken',
   AuditLog: 'AuditLog',
-  PlatformConfig: 'PlatformConfig'
+  PlatformConfig: 'PlatformConfig',
+  RepositoryMetadata: 'RepositoryMetadata',
+  HealthCheckResult: 'HealthCheckResult',
+  QuickFixAction: 'QuickFixAction',
+  RepositoryEnvironment: 'RepositoryEnvironment',
+  Deployment: 'Deployment',
+  DeploymentApproval: 'DeploymentApproval'
 };
 
 /**
