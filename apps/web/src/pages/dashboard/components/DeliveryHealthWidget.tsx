@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
-import { Activity, Gauge, TimerReset, Rocket } from "lucide-react";
+import { Activity, Gauge, TimerReset, Rocket, TrendingUp, TrendingDown, Minus } from "lucide-react";
 import {
   Card,
   CardContent,
@@ -8,7 +8,15 @@ import {
 } from "../../../components/ui/card.js";
 import { Badge } from "../../../components/ui/badge.js";
 import { Progress } from "../../../components/ui/progress.js";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "../../../components/ui/select.js";
 import { API_BASE_URL } from "../types.js";
+import { useDashboardContext } from "../DashboardContext.js";
 
 type GitHubRepo = {
   id: number;
@@ -29,7 +37,30 @@ type CiCdData = {
 
 const clampPercent = (value: number) => Math.min(100, Math.max(0, value));
 
+function TrendIndicator({ rate }: { rate: number }) {
+  if (rate >= 90)
+    return (
+      <span className="inline-flex items-center gap-0.5 text-emerald-600 text-xs font-semibold">
+        <TrendingUp className="h-3.5 w-3.5" /> Strong
+      </span>
+    );
+  if (rate < 75)
+    return (
+      <span className="inline-flex items-center gap-0.5 text-red-600 text-xs font-semibold">
+        <TrendingDown className="h-3.5 w-3.5" /> Needs attention
+      </span>
+    );
+  return (
+    <span className="inline-flex items-center gap-0.5 text-amber-600 text-xs font-semibold">
+      <Minus className="h-3.5 w-3.5" /> Stable
+    </span>
+  );
+}
+
 export function DeliveryHealthWidget() {
+  const { dateRange } = useDashboardContext();
+  const days = dateRange.replace("d", "");
+
   const [repos, setRepos] = useState<GitHubRepo[]>([]);
   const [selectedRepo, setSelectedRepo] = useState<string>("");
   const [metrics, setMetrics] = useState<CiCdData | null>(null);
@@ -42,9 +73,7 @@ export function DeliveryHealthWidget() {
       headers: { Authorization: `Bearer ${token}` },
     });
 
-    if (!res.ok) {
-      throw new Error("Unable to load repositories");
-    }
+    if (!res.ok) throw new Error("Unable to load repositories");
 
     const data = (await res.json()) as GitHubRepo[];
     const compact = data.slice(0, 8);
@@ -67,15 +96,11 @@ export function DeliveryHealthWidget() {
     try {
       const token = localStorage.getItem("devcentral_token");
       const res = await fetch(
-        `${API_BASE_URL}/api/analytics/cicd/${owner}/${repo}`,
-        {
-          headers: { Authorization: `Bearer ${token}` },
-        },
+        `${API_BASE_URL}/api/analytics/cicd/${owner}/${repo}?days=${days}`,
+        { headers: { Authorization: `Bearer ${token}` } },
       );
 
-      if (!res.ok) {
-        throw new Error("Unable to load CI/CD metrics");
-      }
+      if (!res.ok) throw new Error("Unable to load CI/CD metrics");
 
       const data = (await res.json()) as CiCdData;
       setMetrics(data);
@@ -86,7 +111,7 @@ export function DeliveryHealthWidget() {
     } finally {
       setIsLoading(false);
     }
-  }, [selectedRepo]);
+  }, [selectedRepo, days]);
 
   useEffect(() => {
     fetchRepos().catch((err) => {
@@ -107,6 +132,13 @@ export function DeliveryHealthWidget() {
     return clampPercent((success / total) * 100);
   }, [metrics?.summary.failure, metrics?.summary.success]);
 
+  const dateRangeLabel: Record<string, string> = {
+    "7": "Last 7 days",
+    "14": "Last 14 days",
+    "30": "Last 30 days",
+    "90": "Last 90 days",
+  };
+
   return (
     <Card className="h-full border-emerald-200 bg-gradient-to-br from-emerald-50/80 via-white to-teal-50/50">
       <CardHeader className="pb-3">
@@ -114,32 +146,33 @@ export function DeliveryHealthWidget() {
           <CardTitle className="text-lg text-emerald-800 flex items-center gap-2">
             <Activity className="h-5 w-5" /> Delivery Health
           </CardTitle>
-          <Badge
-            variant="outline"
-            className="border-emerald-300 text-emerald-700"
-          >
-            CI/CD
-          </Badge>
+          <div className="flex items-center gap-1.5">
+            <span className="text-xs text-muted-foreground hidden sm:inline">
+              {dateRangeLabel[days] ?? `Last ${days}d`}
+            </span>
+            <Badge variant="outline" className="border-emerald-300 text-emerald-700">
+              CI/CD
+            </Badge>
+          </div>
         </div>
 
-        <select
-          className="h-9 rounded-md border border-emerald-200 bg-white px-2 text-sm text-slate-800"
-          value={selectedRepo}
-          onChange={(event) => setSelectedRepo(event.target.value)}
-        >
-          {repos.map((repo) => (
-            <option key={repo.id} value={`${repo.owner}/${repo.name}`}>
-              {repo.owner}/{repo.name}
-            </option>
-          ))}
-        </select>
+        <Select value={selectedRepo} onValueChange={setSelectedRepo}>
+          <SelectTrigger className="h-9 border-emerald-200 text-sm w-full mt-1">
+            <SelectValue placeholder="Select repository" />
+          </SelectTrigger>
+          <SelectContent>
+            {repos.map((repo) => (
+              <SelectItem key={repo.id} value={`${repo.owner}/${repo.name}`}>
+                {repo.owner}/{repo.name}
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
       </CardHeader>
 
       <CardContent className="space-y-3">
         {isLoading && (
-          <p className="text-sm text-muted-foreground">
-            Loading delivery telemetry...
-          </p>
+          <p className="text-sm text-muted-foreground">Loading delivery telemetry...</p>
         )}
 
         {!isLoading && error && (
@@ -152,12 +185,13 @@ export function DeliveryHealthWidget() {
           <>
             <div className="rounded-lg border border-emerald-100 bg-white p-3 space-y-2">
               <div className="flex items-center justify-between text-xs">
-                <span className="text-muted-foreground">
-                  Workflow success rate
-                </span>
-                <span className="font-semibold text-emerald-700">
-                  {successRate.toFixed(1)}%
-                </span>
+                <span className="text-muted-foreground">Workflow success rate</span>
+                <div className="flex items-center gap-2">
+                  <TrendIndicator rate={successRate} />
+                  <span className="font-semibold text-emerald-700">
+                    {successRate.toFixed(1)}%
+                  </span>
+                </div>
               </div>
               <Progress
                 value={successRate}
@@ -185,8 +219,8 @@ export function DeliveryHealthWidget() {
 
             <div className="rounded-lg border border-sky-200 bg-sky-50 p-3 text-sm text-sky-800 inline-flex items-center gap-2 w-full">
               <Rocket className="h-4 w-4" />
-              Deployment frequency:{" "}
-              {metrics.summary.deploy_frequency_per_day.toFixed(2)} per day
+              Deploy frequency:{" "}
+              <strong>{metrics.summary.deploy_frequency_per_day.toFixed(2)}</strong>/day
             </div>
           </>
         )}
