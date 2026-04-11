@@ -5,6 +5,7 @@ import {
   AlertCircle,
   Clock3,
   ExternalLink,
+  CheckCircle2,
 } from "lucide-react";
 import {
   Card,
@@ -54,6 +55,8 @@ export function RepoPulseWidget() {
   const [issues, setIssues] = useState<GitHubIssue[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [stateFilter, setStateFilter] = useState<"open" | "all">("open");
+  const [sortNewest, setSortNewest] = useState(true);
 
   const fetchRepos = useCallback(async () => {
     const token = localStorage.getItem("devcentral_token");
@@ -61,9 +64,7 @@ export function RepoPulseWidget() {
       headers: { Authorization: `Bearer ${token}` },
     });
 
-    if (!res.ok) {
-      throw new Error("Failed to load repositories");
-    }
+    if (!res.ok) throw new Error("Failed to load repositories");
 
     const data = (await res.json()) as GitHubRepo[];
     const compact = data.slice(0, 8);
@@ -87,14 +88,10 @@ export function RepoPulseWidget() {
       const token = localStorage.getItem("devcentral_token");
       const res = await fetch(
         `${API_BASE_URL}/api/github/repos/${owner}/${repo}/issues`,
-        {
-          headers: { Authorization: `Bearer ${token}` },
-        },
+        { headers: { Authorization: `Bearer ${token}` } },
       );
 
-      if (!res.ok) {
-        throw new Error("Failed to load GitHub issues");
-      }
+      if (!res.ok) throw new Error("Failed to load GitHub issues");
 
       const data = (await res.json()) as GitHubIssue[];
       const issueOnly = data.filter((item) => !item.pull_request);
@@ -119,30 +116,42 @@ export function RepoPulseWidget() {
     fetchIssues();
   }, [fetchIssues]);
 
+  const filteredIssues = issues
+    .filter((i) => stateFilter === "all" || i.state === "open")
+    .sort((a, b) => {
+      if (!sortNewest) return 0;
+      return new Date(b.created_at).getTime() - new Date(a.created_at).getTime();
+    });
+
+  const openCount = issues.filter((i) => i.state === "open").length;
+
   return (
     <Card className="h-full border-cyan-200 bg-gradient-to-br from-cyan-50/70 via-white to-sky-50/50">
-      <CardHeader className="pb-3">
+      <CardHeader className="pb-2">
         <div className="flex items-center justify-between gap-2">
           <CardTitle className="text-lg text-cyan-800 flex items-center gap-2">
             <Bug className="h-5 w-5" /> GitHub Issues
           </CardTitle>
-          <Button
-            type="button"
-            size="sm"
-            variant="ghost"
-            className="h-8 px-2 text-cyan-700 hover:bg-cyan-100"
-            onClick={fetchIssues}
-            disabled={isLoading}
-            aria-label="Refresh issues"
-          >
-            <RefreshCw
-              className={`h-4 w-4 ${isLoading ? "animate-spin" : ""}`}
-            />
-          </Button>
+          <div className="flex items-center gap-1">
+            <Badge variant="outline" className="border-cyan-300 text-cyan-700 text-xs">
+              {openCount} open
+            </Badge>
+            <Button
+              type="button"
+              size="sm"
+              variant="ghost"
+              className="h-7 w-7 p-0 text-cyan-700 hover:bg-cyan-100"
+              onClick={fetchIssues}
+              disabled={isLoading}
+              aria-label="Refresh issues"
+            >
+              <RefreshCw className={`h-3.5 w-3.5 ${isLoading ? "animate-spin" : ""}`} />
+            </Button>
+          </div>
         </div>
 
         <select
-          className="h-9 rounded-md border border-cyan-200 bg-white px-2 text-sm text-slate-800"
+          className="h-9 rounded-md border border-cyan-200 bg-white px-2 text-sm text-slate-800 mt-1"
           value={selectedRepo}
           onChange={(event) => setSelectedRepo(event.target.value)}
         >
@@ -153,15 +162,49 @@ export function RepoPulseWidget() {
           ))}
         </select>
 
-        <div className="flex items-center gap-2 text-xs text-cyan-700">
-          <Badge variant="outline" className="border-cyan-300 text-cyan-700">
-            {issues.length} issues shown
-          </Badge>
+        {/* Filter/sort row */}
+        <div className="flex items-center justify-between gap-2 mt-1">
+          <div className="flex rounded-lg border border-cyan-200 overflow-hidden">
+            <button
+              type="button"
+              onClick={() => setStateFilter("open")}
+              className={`px-2.5 py-1 text-xs font-medium transition-colors ${
+                stateFilter === "open"
+                  ? "bg-cyan-600 text-white"
+                  : "bg-white text-cyan-700 hover:bg-cyan-50"
+              }`}
+            >
+              Open
+            </button>
+            <button
+              type="button"
+              onClick={() => setStateFilter("all")}
+              className={`px-2.5 py-1 text-xs font-medium border-l border-cyan-200 transition-colors ${
+                stateFilter === "all"
+                  ? "bg-cyan-600 text-white"
+                  : "bg-white text-cyan-700 hover:bg-cyan-50"
+              }`}
+            >
+              All
+            </button>
+          </div>
+          <button
+            type="button"
+            onClick={() => setSortNewest((v) => !v)}
+            className={`px-2.5 py-1 rounded-lg text-xs font-medium border transition-colors ${
+              sortNewest
+                ? "bg-cyan-50 border-cyan-300 text-cyan-700"
+                : "bg-white border-cyan-200 text-muted-foreground"
+            }`}
+          >
+            Newest {sortNewest ? "↓" : "↑"}
+          </button>
         </div>
       </CardHeader>
-      <CardContent className="space-y-2">
+
+      <CardContent className="space-y-2 overflow-auto">
         {isLoading && (
-          <p className="text-sm text-muted-foreground">Loading issues...</p>
+          <p className="text-sm text-muted-foreground py-4 text-center">Loading issues...</p>
         )}
 
         {!isLoading && error && (
@@ -171,60 +214,66 @@ export function RepoPulseWidget() {
         )}
 
         {!isLoading && !error && repos.length === 0 && (
-          <p className="text-sm text-muted-foreground">
-            No repositories available for this user.
-          </p>
+          <p className="text-sm text-muted-foreground">No repositories available.</p>
         )}
 
-        {!isLoading && !error && repos.length > 0 && issues.length === 0 && (
-          <p className="text-sm text-muted-foreground">
-            No issues found for this repository.
-          </p>
+        {!isLoading && !error && repos.length > 0 && filteredIssues.length === 0 && (
+          <div className="flex flex-col items-center justify-center py-8 gap-2">
+            <CheckCircle2 className="h-8 w-8 text-cyan-200" />
+            <p className="text-sm text-muted-foreground">No issues found</p>
+          </div>
         )}
 
         {!isLoading &&
           !error &&
-          issues.length > 0 &&
-          issues.map((issue) => (
+          filteredIssues.map((issue) => (
             <a
               key={issue.id}
               href={issue.html_url}
               target="_blank"
               rel="noreferrer"
-              className="block rounded-xl border border-cyan-100 bg-white/90 p-3 transition hover:border-cyan-300 hover:shadow-sm"
+              className="block rounded-xl border border-cyan-100 bg-white/90 p-3 transition hover:border-cyan-300 hover:shadow-sm group"
             >
-              <div className="flex items-start justify-between gap-3">
-                <div className="min-w-0">
-                  <p className="truncate text-sm font-semibold text-slate-900">
-                    #{issue.number} {issue.title}
-                  </p>
+              <div className="flex items-start justify-between gap-2">
+                <div className="min-w-0 flex-1 flex items-start gap-2">
+                  <span
+                    className={`mt-1.5 h-2 w-2 rounded-full shrink-0 ${
+                      issue.state === "open" ? "bg-emerald-400" : "bg-slate-300"
+                    }`}
+                  />
+                  <div className="min-w-0">
+                    <p className="truncate text-sm font-semibold text-slate-900 leading-snug">
+                      {issue.title}
+                    </p>
+                    <p className="text-xs text-muted-foreground font-mono">
+                      #{issue.number}
+                    </p>
+                  </div>
                 </div>
-                <Badge
-                  variant="outline"
-                  className={
-                    issue.state === "open"
-                      ? "border-emerald-300 text-emerald-700"
-                      : "border-slate-300 text-slate-700"
-                  }
-                >
-                  {issue.state === "open" ? (
-                    <>
-                      <AlertCircle className="h-3 w-3" /> Open
-                    </>
-                  ) : (
-                    <>Closed</>
-                  )}
-                </Badge>
+                <div className="flex items-center gap-1 shrink-0">
+                  <Badge
+                    variant="outline"
+                    className={
+                      issue.state === "open"
+                        ? "border-emerald-300 text-emerald-700 text-xs"
+                        : "border-slate-300 text-slate-500 text-xs"
+                    }
+                  >
+                    {issue.state === "open" ? (
+                      <span className="inline-flex items-center gap-1">
+                        <AlertCircle className="h-3 w-3" /> Open
+                      </span>
+                    ) : (
+                      "Closed"
+                    )}
+                  </Badge>
+                  <ExternalLink className="h-3 w-3 text-muted-foreground opacity-0 group-hover:opacity-100 transition-opacity" />
+                </div>
               </div>
 
-              <div className="mt-2 flex items-center justify-between text-xs text-muted-foreground">
-                <span className="inline-flex items-center gap-1">
-                  <Clock3 className="h-3 w-3" />
-                  {formatRelativeDate(issue.created_at, "opened")}
-                </span>
-                <span className="inline-flex items-center gap-1 text-cyan-700">
-                  Open in GitHub <ExternalLink className="h-3 w-3" />
-                </span>
+              <div className="mt-1.5 flex items-center gap-1 text-xs text-muted-foreground pl-4">
+                <Clock3 className="h-3 w-3" />
+                {formatRelativeDate(issue.created_at, "opened")}
               </div>
             </a>
           ))}

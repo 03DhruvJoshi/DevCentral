@@ -1,19 +1,18 @@
-import { type ReactNode, useState, useEffect } from "react";
-import { PlayCircle, Box, Loader2, Sparkles, Tag } from "lucide-react";
+import { useState, useEffect, useMemo } from "react";
+import { PlayCircle, Box, Loader2, Search } from "lucide-react";
 import {
   Card,
   CardContent,
   CardHeader,
   CardTitle,
 } from "../../../components/ui/card.js";
-import { Button } from "../../../components/ui/button.js";
 import { Badge } from "../../../components/ui/badge.js";
-
 import { API_BASE_URL } from "../types.js";
 
 type Template = {
   id: number;
   title: string;
+  description?: string;
   categoryName: string;
 };
 
@@ -27,6 +26,8 @@ export function QuickScaffoldWidget() {
   const [categories, setCategories] = useState<Category[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [search, setSearch] = useState("");
+  const [activeCategory, setActiveCategory] = useState<string>("All");
 
   useEffect(() => {
     const fetchTemplates = async () => {
@@ -43,7 +44,7 @@ export function QuickScaffoldWidget() {
         const templatesData = (await templatesRes.json()) as Template[];
         const categoriesData = (await categoriesRes.json()) as Category[];
 
-        setTemplates(templatesData.slice(0, 4));
+        setTemplates(templatesData);
         setCategories(categoriesData);
       } catch (err) {
         const message = err instanceof Error ? err.message : "Unknown error";
@@ -55,62 +56,136 @@ export function QuickScaffoldWidget() {
     fetchTemplates();
   }, []);
 
-  let templatesContent: ReactNode;
+  const filteredTemplates = useMemo(() => {
+    let result = templates;
+    if (activeCategory !== "All") {
+      result = result.filter((t) => t.categoryName === activeCategory);
+    }
+    if (search.trim()) {
+      const q = search.toLowerCase();
+      result = result.filter(
+        (t) =>
+          t.title.toLowerCase().includes(q) ||
+          (t.description ?? "").toLowerCase().includes(q),
+      );
+    }
+    return result.slice(0, 4);
+  }, [templates, activeCategory, search]);
 
-  if (isLoading) {
-    templatesContent = (
-      <Loader2 className="animate-spin h-5 w-5 mx-auto text-blue-600" />
-    );
-  } else if (error) {
-    templatesContent = <p className="text-sm text-red-600">{error}</p>;
-  } else if (templates.length === 0) {
-    templatesContent = (
-      <p className="text-sm text-muted-foreground">No templates available.</p>
-    );
-  } else {
-    templatesContent = templates.map((template) => (
-      <div
-        key={template.id}
-        className="flex items-center justify-between p-3 border border-blue-100 rounded-lg bg-white/90"
-      >
-        <div className="min-w-0">
-          <p className="font-medium text-sm truncate">{template.title}</p>
-          <p className="text-xs text-muted-foreground inline-flex items-center gap-1 mt-1">
-            <Tag className="h-3 w-3" />
-            {template.categoryName}
-          </p>
-        </div>
-        <Button
-          size="sm"
-          variant="outline"
-          className="border-blue-200 hover:bg-blue-50"
-        >
-          <PlayCircle className="h-4 w-4 text-blue-600" />
-        </Button>
-      </div>
-    ));
-  }
+  const categoryNames = useMemo(
+    () => ["All", ...categories.map((c) => c.name)],
+    [categories],
+  );
 
   return (
     <Card className="flex flex-col h-full border-blue-200 bg-gradient-to-br from-blue-50/80 via-white to-indigo-50/40">
-      <CardHeader className="pb-3">
+      <CardHeader className="pb-2">
         <CardTitle className="text-lg flex items-center justify-between text-blue-800">
           <span className="inline-flex items-center gap-2">
             <Box className="h-5 w-5 text-blue-600" /> Quick Scaffold
           </span>
           <Badge variant="outline" className="border-blue-300 text-blue-700">
-            {categories.length} categories
+            {templates.length} templates
           </Badge>
         </CardTitle>
-      </CardHeader>
-      <CardContent className="flex-1 flex flex-col gap-3">
-        {templatesContent}
 
-        {!isLoading && !error && (
-          <div className="mt-auto rounded-lg border border-indigo-200 bg-indigo-50/70 p-3 text-xs text-indigo-800 inline-flex items-center gap-2">
-            <Sparkles className="h-4 w-4" />
-            Draft scaffolds faster with reusable template starters.
+        {/* Search */}
+        <div className="relative mt-1">
+          <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-muted-foreground" />
+          <input
+            type="text"
+            placeholder="Search templates..."
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            className="h-8 w-full rounded-md border border-blue-200 bg-white pl-8 pr-3 text-sm text-slate-800 placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-blue-300"
+          />
+        </div>
+
+        {/* Category filters */}
+        {!isLoading && categoryNames.length > 1 && (
+          <div className="flex gap-1.5 flex-wrap mt-1.5">
+            {categoryNames.map((cat) => (
+              <button
+                key={cat}
+                type="button"
+                onClick={() => setActiveCategory(cat)}
+                className={`px-2 py-0.5 rounded-full text-xs font-medium border transition-all ${
+                  activeCategory === cat
+                    ? "bg-blue-600 text-white border-blue-600"
+                    : "bg-white text-blue-700 border-blue-200 hover:bg-blue-50"
+                }`}
+              >
+                {cat}
+              </button>
+            ))}
           </div>
+        )}
+      </CardHeader>
+
+      <CardContent className="flex-1 flex flex-col gap-2 overflow-auto">
+        {isLoading && (
+          <div className="flex items-center justify-center py-8">
+            <Loader2 className="animate-spin h-5 w-5 text-blue-500" />
+          </div>
+        )}
+
+        {!isLoading && error && (
+          <p className="text-sm text-red-600">{error}</p>
+        )}
+
+        {!isLoading && !error && filteredTemplates.length === 0 && (
+          <p className="text-sm text-muted-foreground py-4 text-center">
+            No templates match your search.
+          </p>
+        )}
+
+        {!isLoading &&
+          !error &&
+          filteredTemplates.map((template) => (
+            <div
+              key={template.id}
+              className="flex items-center justify-between p-3 border border-blue-100 rounded-xl bg-white/90 hover:border-blue-300 hover:shadow-sm transition-all"
+            >
+              <div className="min-w-0 flex-1">
+                <p className="font-medium text-sm truncate text-slate-800">
+                  {template.title}
+                </p>
+                {template.description ? (
+                  <p className="text-xs text-muted-foreground truncate mt-0.5">
+                    {template.description}
+                  </p>
+                ) : (
+                  <Badge
+                    variant="outline"
+                    className="mt-0.5 text-xs border-blue-200 text-blue-600 h-4 px-1"
+                  >
+                    {template.categoryName}
+                  </Badge>
+                )}
+              </div>
+              <button
+                type="button"
+                onClick={() => {
+                  window.location.href = "/scaffolder";
+                }}
+                className="ml-2 flex items-center gap-1 px-2.5 py-1.5 rounded-lg border border-blue-200 bg-blue-50 text-blue-700 text-xs font-medium hover:bg-blue-100 transition-colors shrink-0"
+              >
+                <PlayCircle className="h-3.5 w-3.5" />
+                Use
+              </button>
+            </div>
+          ))}
+
+        {!isLoading && !error && templates.length > 0 && (
+          <button
+            type="button"
+            onClick={() => {
+              window.location.href = "/scaffolder";
+            }}
+            className="mt-auto w-full py-2 text-xs text-blue-600 font-medium hover:text-blue-800 hover:underline transition-colors"
+          >
+            View all templates →
+          </button>
         )}
       </CardContent>
     </Card>

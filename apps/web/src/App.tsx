@@ -14,13 +14,12 @@ import { ConnectGitHubPage } from "./pages/auth/ConnectGitHubPage.js";
 import { AdminRoute } from "./pages/admin/AdminRoute.js";
 import { GlobalBroadcast } from "./pages/admin/components/GlobalBroadcast.js";
 import { Analytics } from "@vercel/analytics/react";
+import { isUserLoggedIn } from "./lib/auth.js";
 
 const queryClient = new QueryClient();
 
 const ProtectedLayout = () => {
-  const token = localStorage.getItem("devcentral_token");
-
-  if (!token) {
+  if (!isUserLoggedIn()) {
     return <Navigate to="/login" replace />;
   }
 
