@@ -268,7 +268,7 @@ export function ScaffolderPage() {
       </div>
 
       <Tabs defaultValue="browse" className="w-full">
-        <TabsList className="grid w-full grid-cols-2  mb-6 bg-slate-100 p-1 rounded-xl h-20">
+        <TabsList className="grid w-full grid-cols-2  mb-6 bg-slate-100 rounded-xl">
           <TabsTrigger
             value="browse"
             className="rounded-lg text-sm font-medium data-[state=active]:bg-white data-[state=active]:shadow-md"
