@@ -893,7 +893,7 @@ function buildDockerComposeYaml(opts: Set<string>): string {
   return toYaml(files);
 }
 
-function buildGithubActionsYaml(opts: Set<string>): string {
+function buildGithubActionsYaml(): string {
   const files: { path: string; content: string }[] = [
     {
       path: ".github/workflows/ci.yml",
@@ -1002,7 +1002,7 @@ export function generateYaml(frameworkId: string, optionIds: string[]): string {
     case "data-pipeline":    return buildDataPipelineYaml(opts);
     case "jupyter":          return buildJupyterYaml(opts);
     case "docker-compose":   return buildDockerComposeYaml(opts);
-    case "github-actions":   return buildGithubActionsYaml(opts);
+    case "github-actions":   return buildGithubActionsYaml();
     case "terraform-aws":    return buildTerraformAwsYaml(opts);
     case "kubernetes":       return buildKubernetesYaml(opts);
     default:
