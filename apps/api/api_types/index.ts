@@ -12,7 +12,7 @@ export interface CreateProjectRequest {
 
 export interface CreateTemplateRequest {
   title: string;
-  description: string;
+  description?: string;
   categoryName: string;
   yaml: string;
 }
@@ -20,7 +20,7 @@ export interface CreateTemplateRequest {
 export interface TemplateResponse {
   id: number;
   title: string;
-  description: string;
+  description?: string;
   categoryName: string;
   yaml: string;
   createdAt: string;
@@ -48,4 +48,68 @@ export interface AuthenticatedRequest extends Request {
       }>;
     };
   };
+}
+
+export type WizardOptionTier =
+  | "INFRASTRUCTURE"
+  | "QUALITY"
+  | "SECURITY"
+  | "FEATURES";
+
+export interface WizardCatalogCategoryResponse {
+  id: string;
+  label: string;
+  description?: string;
+  icon?: string;
+  accentClass?: string;
+  displayOrder: number;
+  isActive: boolean;
+}
+
+export interface WizardFrameworkResponse {
+  id: string;
+  categoryId: string;
+  label: string;
+  description: string;
+  badge?: string;
+  tags: string[];
+  popularity?: string;
+  icon?: string;
+  accentClass?: string;
+  displayOrder: number;
+  isActive: boolean;
+}
+
+export interface WizardOptionResponse {
+  id: string;
+  label: string;
+  description: string;
+  tier: WizardOptionTier;
+  icon?: string;
+  displayOrder: number;
+  isActive: boolean;
+  defaultEnabled?: boolean;
+}
+
+export interface TemplateRevisionResponse {
+  id: string;
+  templateId: number;
+  frameworkId?: string;
+  selectedOptionIds: string[];
+  source?: Record<string, unknown>;
+  compiledYaml: string;
+  version: number;
+  isActive: boolean;
+  createdBy?: string;
+  notes?: string;
+  createdAt: string;
+}
+
+export interface CreateTemplateRevisionRequest {
+  templateId: number;
+  frameworkId?: string;
+  selectedOptionIds?: string[];
+  source?: Record<string, unknown>;
+  compiledYaml: string;
+  notes?: string;
 }

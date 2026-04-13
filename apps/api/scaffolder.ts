@@ -1,6 +1,12 @@
 import express, { IRouter, Response } from "express";
 import cors from "cors";
-import { CreateTemplateRequest } from "./api_types/index";
+import {
+  CreateTemplateRequest,
+  WizardCatalogCategoryResponse,
+  WizardFrameworkResponse,
+  WizardOptionResponse,
+} from "./api_types/index";
+import { generateYaml } from "./wizardgenerator.js";
 import yaml from "js-yaml";
 import { Octokit } from "octokit";
 import { authenticateToken } from "./authenticatetoken.js";
@@ -27,6 +33,120 @@ const adapter = new PrismaPg({
 const prisma = new PrismaClient({
   adapter,
 });
+
+type WizardFrameworkOptionRow = {
+  option: WizardOptionResponse;
+  displayOrder: number;
+  defaultEnabled: boolean;
+};
+
+type TemplateRevisionRecord = {
+  id: string;
+  templateId: number;
+  frameworkId: string | null;
+  selectedOptionIds: string[];
+  source: unknown;
+  compiledYaml: string;
+  version: number;
+  isActive: boolean;
+  createdBy: string | null;
+  notes: string | null;
+  createdAt: Date;
+};
+
+type TemplateRecord = {
+  id: number;
+  title: string;
+  description: string | null;
+  categoryName: string;
+  yaml: string;
+  createdAt: Date;
+  updatedAt: Date;
+};
+
+type WizardPrismaDelegates = {
+  wizardCatalogCategory: {
+    findMany(args: unknown): Promise<WizardCatalogCategoryResponse[]>;
+  };
+  wizardFramework: {
+    findMany(args: unknown): Promise<WizardFrameworkResponse[]>;
+  };
+  wizardOption: {
+    findMany(args: unknown): Promise<WizardOptionResponse[]>;
+  };
+  wizardFrameworkOption: {
+    findMany(args: unknown): Promise<WizardFrameworkOptionRow[]>;
+  };
+  templateRevision: {
+    findFirst(args: unknown): Promise<TemplateRevisionRecord | null>;
+    findMany(args: unknown): Promise<TemplateRevisionRecord[]>;
+    create(args: unknown): Promise<TemplateRevisionRecord>;
+    updateMany(args: unknown): Promise<{ count: number }>;
+  };
+};
+
+async function createTemplateRevisionSnapshot(
+  templateId: number,
+  compiledYaml: string,
+  notes: string,
+) {
+  try {
+    const db = prisma as unknown as WizardPrismaDelegates;
+
+    const latestRevision = await db.templateRevision.findFirst({
+      where: { templateId },
+      orderBy: { version: "desc" },
+    });
+
+    if (latestRevision?.compiledYaml === compiledYaml) {
+      return;
+    }
+
+    const nextVersion = latestRevision ? latestRevision.version + 1 : 1;
+
+    await db.templateRevision.updateMany({
+      where: { templateId, isActive: true },
+      data: { isActive: false },
+    });
+
+    await db.templateRevision.create({
+      data: {
+        templateId,
+        frameworkId: null,
+        selectedOptionIds: [],
+        source: { legacyMode: true },
+        compiledYaml,
+        version: nextVersion,
+        isActive: true,
+        notes,
+      },
+    });
+  } catch (error) {
+    console.warn("Template revision snapshot skipped:", error);
+  }
+}
+
+async function backfillLegacyTemplateRevision(template: TemplateRecord) {
+  try {
+    const db = prisma as unknown as WizardPrismaDelegates;
+    const existingActive = await db.templateRevision.findFirst({
+      where: { templateId: template.id, isActive: true },
+      orderBy: { version: "desc" },
+    });
+
+    if (existingActive) {
+      return;
+    }
+
+    await createTemplateRevisionSnapshot(
+      template.id,
+      template.yaml,
+      "Backfilled from legacy template row",
+    );
+  } catch (error) {
+    console.warn("Legacy template backfill skipped:", error);
+  }
+}
 
 router.use(cors());
 router.use(express.json());
@@ -100,14 +220,182 @@ router.post("/api/categories", async (req, res) => {
   }
 });
 
+router.get("/api/wizard/categories", async (_req, res) => {
+  try {
+    const db = prisma as unknown as WizardPrismaDelegates;
+    const categories = await db.wizardCatalogCategory.findMany({
+      where: { isActive: true },
+      orderBy: [{ displayOrder: "asc" }, { label: "asc" }],
+    });
+
+    res.json(categories);
+  } catch (error) {
+    console.error("Failed to fetch wizard categories:", error);
+    res.status(500).json({
+      error: "Internal Server Error",
+      detail: error instanceof Error ? error.message : String(error),
+    });
+  }
+});
+
+router.get("/api/wizard/frameworks", async (req, res) => {
+  try {
+    const db = prisma as unknown as WizardPrismaDelegates;
+    const categoryId =
+      typeof req.query.categoryId === "string"
+        ? req.query.categoryId
+        : undefined;
+
+    const frameworks = await db.wizardFramework.findMany({
+      where: {
+        isActive: true,
+        ...(categoryId ? { categoryId } : {}),
+      },
+      orderBy: [{ displayOrder: "asc" }, { label: "asc" }],
+    });
+
+    res.json(frameworks);
+  } catch (error) {
+    console.error("Failed to fetch wizard frameworks:", error);
+    res.status(500).json({
+      error: "Internal Server Error",
+      detail: error instanceof Error ? error.message : String(error),
+    });
+  }
+});
+
+router.get("/api/wizard/options", async (req, res) => {
+  try {
+    const db = prisma as unknown as WizardPrismaDelegates;
+    const frameworkId =
+      typeof req.query.frameworkId === "string"
+        ? req.query.frameworkId
+        : undefined;
+
+    if (frameworkId) {
+      const mappings = await db.wizardFrameworkOption.findMany({
+        where: {
+          frameworkId,
+          option: { isActive: true },
+        },
+        include: { option: true },
+        orderBy: [{ displayOrder: "asc" }],
+      });
+
+      const frameworkOptions = mappings.map((mapping) => ({
+        id: mapping.option.id,
+        label: mapping.option.label,
+        description: mapping.option.description,
+        tier: mapping.option.tier,
+        icon: mapping.option.icon,
+        displayOrder: mapping.displayOrder,
+        isActive: mapping.option.isActive,
+        defaultEnabled: mapping.defaultEnabled,
+      }));
+
+      return res.json(frameworkOptions);
+    }
+
+    const options = await db.wizardOption.findMany({
+      where: { isActive: true },
+      orderBy: [{ displayOrder: "asc" }, { label: "asc" }],
+    });
+
+    res.json(options);
+  } catch (error) {
+    console.error("Failed to fetch wizard options:", error);
+    res.status(500).json({
+      error: "Internal Server Error",
+      detail: error instanceof Error ? error.message : String(error),
+    });
+  }
+});
+
+router.post("/api/wizard/generate", async (req, res) => {
+  try {
+    const { frameworkId, optionIds } = req.body as {
+      frameworkId?: string;
+      optionIds?: string[];
+    };
+
+    if (!frameworkId || typeof frameworkId !== "string") {
+      return res.status(400).json({ error: "frameworkId is required" });
+    }
+
+    const yaml = generateYaml(frameworkId, Array.isArray(optionIds) ? optionIds : []);
+    res.json({ yaml });
+  } catch (error) {
+    console.error("Wizard generate error:", error);
+    res.status(500).json({
+      error: "Failed to generate YAML",
+      detail: error instanceof Error ? error.message : String(error),
+    });
+  }
+});
+
 router.get("/api/templates", async (_req, res) => {
   try {
     const templates = await prisma.template.findMany({
       orderBy: { createdAt: "desc" },
     });
-    res.json(templates);
+
+    const normalizedTemplates = templates.map((template) => ({
+      ...template,
+      description: template.description ?? "",
+    }));
+
+    await Promise.all(
+      normalizedTemplates.map((template) =>
+        backfillLegacyTemplateRevision(template as TemplateRecord),
+      ),
+    );
+
+    res.json(normalizedTemplates);
   } catch (error) {
     console.error("Failed to fetch templates:", error);
+    res.status(500).json({
+      error: "Internal Server Error",
+      detail: error instanceof Error ? error.message : String(error),
+    });
+  }
+});
+
+router.get("/api/templates/:id/revisions", async (req, res) => {
+  try {
+    const templateId = Number.parseInt(req.params.id, 10);
+
+    if (Number.isNaN(templateId)) {
+      return res.status(400).json({ error: "Invalid template ID" });
+    }
+
+    const db = prisma as unknown as WizardPrismaDelegates;
+    const revisions = await db.templateRevision.findMany({
+      where: { templateId },
+      orderBy: { version: "desc" },
+    });
+
+    if (revisions.length > 0) {
+      return res.json(revisions);
+    }
+
+    const legacyTemplate = await prisma.template.findUnique({
+      where: { id: templateId },
+    });
+
+    if (!legacyTemplate) {
+      return res.status(404).json({ error: "Template not found" });
+    }
+
+    await backfillLegacyTemplateRevision(legacyTemplate as TemplateRecord);
+
+    const hydratedRevisions = await db.templateRevision.findMany({
+      where: { templateId },
+      orderBy: { version: "desc" },
+    });
+
+    res.json(hydratedRevisions);
+  } catch (error) {
+    console.error("Failed to fetch template revisions:", error);
     res.status(500).json({
       error: "Internal Server Error",
       detail: error instanceof Error ? error.message : String(error),
@@ -125,21 +413,27 @@ router.post("/api/templates", async (req, res) => {
       });
     }
 
-    if (!data.title || !data.categoryName || !data.description || !data.yaml) {
+    if (!data.title || !data.categoryName || !data.yaml) {
       return res.status(400).json({
         error:
-          "Missing required fields: title, categoryName, description, and yaml are all required",
+          "Missing required fields: title, categoryName, and yaml are all required",
       });
     }
 
     const newTemplate = await prisma.template.create({
       data: {
         title: data.title,
-        description: data.description,
+        description: data.description ?? "",
         categoryName: data.categoryName,
         yaml: data.yaml,
       },
     });
+
+    await createTemplateRevisionSnapshot(
+      newTemplate.id,
+      newTemplate.yaml,
+      "Initial template creation snapshot",
+    );
 
     res.status(201).json(newTemplate);
   } catch (error) {
@@ -202,6 +496,12 @@ router.put("/api/templates/:id", async (req, res) => {
       },
     });
 
+    await createTemplateRevisionSnapshot(
+      updatedTemplate.id,
+      updatedTemplate.yaml,
+      "Template update snapshot",
+    );
+
     res.status(200).json(updatedTemplate);
   } catch (error: unknown) {
     console.error("Update Template Error:", error);
@@ -263,7 +563,9 @@ router.post(
 
       const githubUsername = dbUser.githubUsername;
       if (!githubUsername) {
-        return res.status(400).json({ error: "No GitHub username linked to your account." });
+        return res
+          .status(400)
+          .json({ error: "No GitHub username linked to your account." });
       }
 
       const octokit = new Octokit({ auth: dbUser.githubAccessToken });
