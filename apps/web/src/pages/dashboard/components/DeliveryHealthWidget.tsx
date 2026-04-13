@@ -1,5 +1,13 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
-import { Activity, Gauge, TimerReset, Rocket, TrendingUp, TrendingDown, Minus } from "lucide-react";
+import {
+  Activity,
+  Gauge,
+  TimerReset,
+  Rocket,
+  TrendingUp,
+  TrendingDown,
+  Minus,
+} from "lucide-react";
 import {
   Card,
   CardContent,
@@ -150,29 +158,33 @@ export function DeliveryHealthWidget() {
             <span className="text-xs text-muted-foreground hidden sm:inline">
               {dateRangeLabel[days] ?? `Last ${days}d`}
             </span>
-            <Badge variant="outline" className="border-emerald-300 text-emerald-700">
+            <Badge
+              variant="outline"
+              className="border-emerald-300 text-emerald-700"
+            >
               CI/CD
             </Badge>
           </div>
         </div>
 
-        <Select value={selectedRepo} onValueChange={setSelectedRepo}>
-          <SelectTrigger className="h-9 border-emerald-200 text-sm w-full mt-1">
-            <SelectValue placeholder="Select repository" />
-          </SelectTrigger>
-          <SelectContent>
-            {repos.map((repo) => (
-              <SelectItem key={repo.id} value={`${repo.owner}/${repo.name}`}>
-                {repo.owner}/{repo.name}
-              </SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
+        <select
+          className="h-9 rounded-md border border-emerald-200 bg-white px-2 text-sm text-slate-800 mt-1"
+          value={selectedRepo}
+          onChange={(e) => setSelectedRepo(e.target.value)}
+        >
+          {repos.map((r) => (
+            <option key={r.id} value={`${r.owner}/${r.name}`}>
+              {r.owner}/{r.name}
+            </option>
+          ))}
+        </select>
       </CardHeader>
 
       <CardContent className="space-y-3">
         {isLoading && (
-          <p className="text-sm text-muted-foreground">Loading delivery telemetry...</p>
+          <p className="text-sm text-muted-foreground">
+            Loading delivery telemetry...
+          </p>
         )}
 
         {!isLoading && error && (
@@ -185,7 +197,9 @@ export function DeliveryHealthWidget() {
           <>
             <div className="rounded-lg border border-emerald-100 bg-white p-3 space-y-2">
               <div className="flex items-center justify-between text-xs">
-                <span className="text-muted-foreground">Workflow success rate</span>
+                <span className="text-muted-foreground">
+                  Workflow success rate
+                </span>
                 <div className="flex items-center gap-2">
                   <TrendIndicator rate={successRate} />
                   <span className="font-semibold text-emerald-700">
@@ -220,7 +234,10 @@ export function DeliveryHealthWidget() {
             <div className="rounded-lg border border-sky-200 bg-sky-50 p-3 text-sm text-sky-800 inline-flex items-center gap-2 w-full">
               <Rocket className="h-4 w-4" />
               Deploy frequency:{" "}
-              <strong>{metrics.summary.deploy_frequency_per_day.toFixed(2)}</strong>/day
+              <strong>
+                {metrics.summary.deploy_frequency_per_day.toFixed(2)}
+              </strong>
+              /day
             </div>
           </>
         )}

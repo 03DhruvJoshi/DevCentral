@@ -12,13 +12,7 @@ import {
   DialogTrigger,
 } from "../../components/ui/dialog.js";
 import { Label } from "../../components/ui/label.js";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "../../components/ui/select.js";
+
 import {
   Loader2,
   LayoutGrid,
@@ -36,7 +30,8 @@ import {
   Bug,
   GitPullRequest,
   GitBranch,
-  BarChart2,
+  AreaChart,
+  WandSparkles,
   Settings,
   Shield,
   CalendarDays,
@@ -174,14 +169,25 @@ const WIDGET_CATALOG: WidgetDefinition[] = [
   },
 ];
 
-const CATEGORY_ORDER = ["Platform", "GitOps", "Analytics", "Repository", "Scaffolding"];
+const CATEGORY_ORDER = [
+  "Platform",
+  "GitOps",
+  "Analytics",
+  "Repository",
+  "Scaffolding",
+];
 
 // --- ERROR BOUNDARY FALLBACK ---
 const WidgetErrorFallback = ({ error, resetErrorBoundary }: FallbackProps) => (
   <div className="p-4 text-red-500">
     <p className="text-sm font-medium">Something went wrong with this widget</p>
     <pre className="text-xs mt-1 text-red-400">{String(error)}</pre>
-    <Button onClick={resetErrorBoundary} variant="outline" size="sm" className="mt-2">
+    <Button
+      onClick={resetErrorBoundary}
+      variant="outline"
+      size="sm"
+      className="mt-2"
+    >
       Retry
     </Button>
   </div>
@@ -392,9 +398,10 @@ type NavItem = {
 };
 
 const NAV_ITEMS: NavItem[] = [
+    { label: "Scaffolder", href: "/scaffold", icon: WandSparkles },
   { label: "GitOps", href: "/gitops", icon: GitBranch },
-  { label: "Analytics", href: "/analytics", icon: BarChart2 },
-  { label: "Scaffolder", href: "/scaffolder", icon: Box },
+  { label: "Analytics", href: "/analytics", icon: AreaChart },
+
   { label: "Admin", href: "/admin", icon: Shield, adminOnly: true },
   { label: "Settings", href: "/settings", icon: Settings },
 ];
@@ -418,7 +425,7 @@ function DashboardInner() {
 
   const gridContainerRef = useRef<HTMLDivElement>(null);
   const cols = useBreakpoint();
-  const [gridWidth, setGridWidth] = useState(1200);
+  const [gridWidth, setGridWidth] = useState(1275);
   const [user, setUser] = useState<UserInfo>({});
   const [currentTime, setCurrentTime] = useState(new Date());
 
@@ -463,7 +470,8 @@ function DashboardInner() {
     [addWidget, removeWidget],
   );
 
-  const firstName = user.name?.split(" ")[0] ?? user.githubUsername ?? "Developer";
+  const firstName =
+    user.name?.split(" ")[0] ?? user.githubUsername ?? "Developer";
   const isAdmin = user.role === "ADMIN";
 
   const dateRangeOptions: { value: string; label: string }[] = [
@@ -547,18 +555,18 @@ function DashboardInner() {
         </div>
         <div className="flex items-center gap-2">
           {/* Date Range Selector */}
-          <Select value={dateRange} onValueChange={(v) => setDateRange(v as typeof dateRange)}>
-            <SelectTrigger className="h-9 w-36 border-slate-200 text-sm">
-              <SelectValue />
-            </SelectTrigger>
-            <SelectContent>
-              {dateRangeOptions.map((opt) => (
-                <SelectItem key={opt.value} value={opt.value}>
-                  {opt.label}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
+
+          <select
+            value={dateRange}
+            onChange={(e) => setDateRange(e.target.value as typeof dateRange)}
+            className="h-9 rounded-md border border-slate-200 bg-white px-2 text-sm text-slate-800 w-48"
+          >
+            {dateRangeOptions.map((opt) => (
+              <option key={opt.value} value={opt.value}>
+                {opt.label}
+              </option>
+            ))}
+          </select>
 
           <Button
             variant="outline"
@@ -583,7 +591,10 @@ function DashboardInner() {
 
           <Dialog>
             <DialogTrigger asChild>
-              <Button variant="outline" className="gap-2 border-slate-200 hover:border-indigo-300 hover:bg-indigo-50">
+              <Button
+                variant="outline"
+                className="gap-2 border-slate-200 hover:border-indigo-300 hover:bg-indigo-50"
+              >
                 <LayoutGrid className="h-4 w-4 text-indigo-600" />
                 Manage Widgets
               </Button>
@@ -623,14 +634,18 @@ function DashboardInner() {
                               >
                                 <widget.icon
                                   className={`h-4 w-4 ${
-                                    active ? "text-indigo-600" : "text-slate-500"
+                                    active
+                                      ? "text-indigo-600"
+                                      : "text-slate-500"
                                   }`}
                                 />
                               </div>
                               <div className="min-w-0">
                                 <Label
                                   className={`font-semibold text-sm cursor-pointer ${
-                                    active ? "text-indigo-900" : "text-slate-700"
+                                    active
+                                      ? "text-indigo-900"
+                                      : "text-slate-700"
                                   }`}
                                 >
                                   {widget.label}
@@ -735,7 +750,9 @@ function DashboardInner() {
                       {widgetDef ? (
                         <widgetDef.component />
                       ) : (
-                        <div className="text-sm text-muted-foreground">Unknown Widget</div>
+                        <div className="text-sm text-muted-foreground">
+                          Unknown Widget
+                        </div>
                       )}
                     </ErrorBoundary>
                   </div>
@@ -797,14 +814,18 @@ function DashboardInner() {
                               >
                                 <widget.icon
                                   className={`h-4 w-4 ${
-                                    active ? "text-indigo-600" : "text-slate-500"
+                                    active
+                                      ? "text-indigo-600"
+                                      : "text-slate-500"
                                   }`}
                                 />
                               </div>
                               <div className="min-w-0">
                                 <Label
                                   className={`font-semibold text-sm cursor-pointer ${
-                                    active ? "text-indigo-900" : "text-slate-700"
+                                    active
+                                      ? "text-indigo-900"
+                                      : "text-slate-700"
                                   }`}
                                 >
                                   {widget.label}
