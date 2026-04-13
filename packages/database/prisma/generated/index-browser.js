@@ -304,6 +304,70 @@ exports.Prisma.DeploymentApprovalScalarFieldEnum = {
   createdAt: 'createdAt'
 };
 
+exports.Prisma.WizardCatalogCategoryScalarFieldEnum = {
+  id: 'id',
+  label: 'label',
+  description: 'description',
+  icon: 'icon',
+  accentClass: 'accentClass',
+  displayOrder: 'displayOrder',
+  isActive: 'isActive',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.WizardFrameworkScalarFieldEnum = {
+  id: 'id',
+  categoryId: 'categoryId',
+  label: 'label',
+  description: 'description',
+  badge: 'badge',
+  tags: 'tags',
+  popularity: 'popularity',
+  icon: 'icon',
+  accentClass: 'accentClass',
+  displayOrder: 'displayOrder',
+  isActive: 'isActive',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.WizardOptionScalarFieldEnum = {
+  id: 'id',
+  label: 'label',
+  description: 'description',
+  tier: 'tier',
+  icon: 'icon',
+  displayOrder: 'displayOrder',
+  isActive: 'isActive',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.WizardFrameworkOptionScalarFieldEnum = {
+  id: 'id',
+  frameworkId: 'frameworkId',
+  optionId: 'optionId',
+  defaultEnabled: 'defaultEnabled',
+  displayOrder: 'displayOrder',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.TemplateRevisionScalarFieldEnum = {
+  id: 'id',
+  templateId: 'templateId',
+  frameworkId: 'frameworkId',
+  selectedOptionIds: 'selectedOptionIds',
+  source: 'source',
+  compiledYaml: 'compiledYaml',
+  version: 'version',
+  isActive: 'isActive',
+  createdBy: 'createdBy',
+  notes: 'notes',
+  createdAt: 'createdAt'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -323,19 +387,26 @@ exports.Prisma.QueryMode = {
   insensitive: 'insensitive'
 };
 
+exports.Prisma.NullsOrder = {
+  first: 'first',
+  last: 'last'
+};
+
 exports.Prisma.JsonNullValueFilter = {
   DbNull: Prisma.DbNull,
   JsonNull: Prisma.JsonNull,
   AnyNull: Prisma.AnyNull
 };
-
-exports.Prisma.NullsOrder = {
-  first: 'first',
-  last: 'last'
-};
 exports.AuthTokenType = exports.$Enums.AuthTokenType = {
   EMAIL_VERIFY: 'EMAIL_VERIFY',
   PASSWORD_RESET: 'PASSWORD_RESET'
+};
+
+exports.WizardOptionTier = exports.$Enums.WizardOptionTier = {
+  INFRASTRUCTURE: 'INFRASTRUCTURE',
+  QUALITY: 'QUALITY',
+  SECURITY: 'SECURITY',
+  FEATURES: 'FEATURES'
 };
 
 exports.Prisma.ModelName = {
@@ -352,7 +423,12 @@ exports.Prisma.ModelName = {
   QuickFixAction: 'QuickFixAction',
   RepositoryEnvironment: 'RepositoryEnvironment',
   Deployment: 'Deployment',
-  DeploymentApproval: 'DeploymentApproval'
+  DeploymentApproval: 'DeploymentApproval',
+  WizardCatalogCategory: 'WizardCatalogCategory',
+  WizardFramework: 'WizardFramework',
+  WizardOption: 'WizardOption',
+  WizardFrameworkOption: 'WizardFrameworkOption',
+  TemplateRevision: 'TemplateRevision'
 };
 
 /**

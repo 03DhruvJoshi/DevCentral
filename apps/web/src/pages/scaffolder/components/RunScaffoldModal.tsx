@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 
-import { Loader2, PlayCircle } from "lucide-react";
+import { Loader2, PlayCircle, CheckCircle2, AlertCircle } from "lucide-react";
 
 import { Button } from "../../../components/ui/button.js";
 import { Input } from "../../../components/ui/input.js";
@@ -98,78 +98,89 @@ function RunScaffoldModal({
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button className="flex-1" size="sm">
+        <Button
+          variant="outline"
+          className="flex-1 bg-blue-100 hover:bg-blue-200 text-slate-800 border-blue-200"
+        >
           <PlayCircle className="mr-2 h-4 w-4" /> Scaffold
         </Button>
       </DialogTrigger>
-      <DialogContent className="max-h-[90vh] w-[95vw] max-w-xl sm:max-w-2xl overflow-y-auto p-4 sm:p-6 bg-white">
-        <DialogHeader>
-          <DialogTitle>Execute Scaffold: {templateName}</DialogTitle>
+      <DialogContent className="max-h-[90vh] w-[95vw] max-w-xl sm:max-w-2xl overflow-y-auto p-0 bg-slate-50 border-slate-200">
+        <DialogHeader className="px-6 py-5 bg-white border-b border-slate-200">
+          <DialogTitle className="text-slate-900">
+            Execute Scaffold: {templateName}
+          </DialogTitle>
         </DialogHeader>
 
         {successUrl ? (
-          <div className="py-6 text-center text-green-600">
-            <h3 className="font-bold text-lg mb-2">Success!</h3>
-            <p className="mb-4">
+          <div className="mx-6 my-6 rounded-xl border border-emerald-200 bg-emerald-50 px-5 py-6 text-center text-emerald-700">
+            <h3 className="font-bold text-lg mb-2 flex items-center justify-center gap-2">
+              <CheckCircle2 className="h-5 w-5" /> Success!
+            </h3>
+            <p className="mb-4 text-sm">
               Your boilerplate has been generated and pushed to GitHub.
             </p>
             <a href={successUrl} target="_blank" rel="noreferrer">
-              <Button>View on GitHub</Button>
+              <Button className="bg-emerald-600 hover:bg-emerald-700 text-white">
+                View on GitHub
+              </Button>
             </a>
           </div>
         ) : (
-          <form onSubmit={handleExecute} className="space-y-4 py-4">
+          <form onSubmit={handleExecute} className="space-y-4 px-6 pb-6">
             {error && (
-              <div className="rounded border border-red-200 bg-red-50 p-3 text-sm text-red-600">
-                <p className="font-semibold">Unable to run scaffold</p>
+              <div className="rounded-lg border border-rose-200 bg-rose-50 p-3 text-sm text-rose-700">
+                <p className="font-semibold flex items-center gap-2">
+                  <AlertCircle className="h-4 w-4" /> Unable to run scaffold
+                </p>
                 <p>{error}</p>
               </div>
             )}
 
-            <div className="space-y-2 rounded-lg border p-4">
-              <p className="text-sm font-semibold">
+            <div className="space-y-4 rounded-xl border border-slate-200 bg-white p-4 shadow-sm">
+              <p className="text-sm font-semibold text-slate-900">
                 1. Choose target destination
               </p>
-              <div className="flex items-start space-x-3 rounded-lg border bg-muted/20 p-3">
+              <div className="flex items-start space-x-3 rounded-lg border border-slate-200 bg-slate-50 p-3">
                 <input
                   type="radio"
                   name="repoMode"
                   id="newRepoToggle"
                   checked={isNewRepo}
                   onChange={() => setIsNewRepo(true)}
-                  className="mt-1 h-4 w-4 cursor-pointer rounded border-gray-300 text-primary"
+                  className="mt-1 h-4 w-4 cursor-pointer rounded border-slate-300 text-blue-600"
                 />
                 <div className="space-y-1">
                   <Label
                     htmlFor="newRepoToggle"
-                    className="cursor-pointer text-base font-bold"
+                    className="cursor-pointer text-base font-bold text-slate-900"
                   >
                     Create a new private GitHub repository
                   </Label>
-                  <p className="text-sm text-muted-foreground">
+                  <p className="text-sm text-slate-600">
                     A new repo will be created first, then your scaffold files
                     will be committed
                   </p>
                 </div>
               </div>
 
-              <div className="flex items-start space-x-3 rounded-lg border bg-muted/20 p-3">
+              <div className="flex items-start space-x-3 rounded-lg border border-slate-200 bg-slate-50 p-3">
                 <input
                   type="radio"
                   name="repoMode"
                   id="existingRepoToggle"
                   checked={!isNewRepo}
                   onChange={() => setIsNewRepo(false)}
-                  className="mt-1 h-4 w-4 cursor-pointer rounded border-gray-300 text-primary"
+                  className="mt-1 h-4 w-4 cursor-pointer rounded border-slate-300 text-blue-600"
                 />
                 <div className="space-y-1">
                   <Label
                     htmlFor="existingRepoToggle"
-                    className="cursor-pointer text-base font-bold"
+                    className="cursor-pointer text-base font-bold text-slate-900"
                   >
                     Use an existing GitHub repository
                   </Label>
-                  <p className="text-sm text-muted-foreground">
+                  <p className="text-sm text-slate-600">
                     Files will be created or updated in your existing
                     repository.
                   </p>
@@ -177,47 +188,56 @@ function RunScaffoldModal({
               </div>
             </div>
 
-            <div className="space-y-2 rounded-lg border p-4">
-              <p className="text-sm font-semibold">2. Repository details</p>
-              <Label htmlFor="repoNameInput">Target Repository Name</Label>
+            <div className="space-y-2 rounded-xl border border-slate-200 bg-white p-4 shadow-sm">
+              <p className="text-sm font-semibold text-slate-900">
+                2. Repository details
+              </p>
+              <Label htmlFor="repoNameInput" className="text-slate-700">
+                Target Repository Name
+              </Label>
               <Input
                 id="repoNameInput"
                 placeholder="e.g., payment-microservice"
                 value={targetRepoName}
                 onChange={(e) => setTargetRepoName(e.target.value)}
+                className="bg-white border-slate-200 focus-visible:ring-blue-500"
                 required
               />
-              <p className="text-xs text-muted-foreground">
+              <p className="text-xs text-slate-600">
                 This should match your GitHub repository name. The variable{" "}
                 {"{{projectName}}"} in your YAML is replaced with this value.
               </p>
             </div>
 
-            <div className="space-y-2 rounded-lg border border-dashed p-4">
-              <p className="text-sm font-semibold">3. Review</p>
-              <p className="text-sm text-muted-foreground">
+            <div className="space-y-2 rounded-xl border border-dashed border-slate-300 bg-slate-50 p-4">
+              <p className="text-sm font-semibold text-slate-900">3. Review</p>
+              <p className="text-sm text-slate-600">
                 Template:{" "}
-                <span className="font-medium text-foreground">
+                <span className="font-medium text-slate-900">
                   {templateName}
                 </span>
               </p>
-              <p className="text-sm text-muted-foreground">
+              <p className="text-sm text-slate-600">
                 Mode:{" "}
-                <span className="font-medium text-foreground">
+                <span className="font-medium text-slate-900">
                   {isNewRepo
                     ? "Create new repository"
                     : "Update existing repository"}
                 </span>
               </p>
-              <p className="text-sm text-muted-foreground">
+              <p className="text-sm text-slate-600">
                 Repository:{" "}
-                <span className="font-medium text-foreground">
+                <span className="font-medium text-slate-900">
                   {normalizedRepoName || "Not set"}
                 </span>
               </p>
             </div>
 
-            <Button type="submit" className="mt-4 w-full" disabled={!canSubmit}>
+            <Button
+              type="submit"
+              className="mt-2 w-full bg-blue-600 hover:bg-blue-700 text-white"
+              disabled={!canSubmit}
+            >
               {isLoading ? (
                 <>
                   <Loader2 className="mr-2 h-4 w-4 animate-spin" /> Running

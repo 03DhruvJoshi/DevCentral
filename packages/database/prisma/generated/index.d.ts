@@ -83,6 +83,31 @@ export type Deployment = $Result.DefaultSelection<Prisma.$DeploymentPayload>
  * 
  */
 export type DeploymentApproval = $Result.DefaultSelection<Prisma.$DeploymentApprovalPayload>
+/**
+ * Model WizardCatalogCategory
+ * 
+ */
+export type WizardCatalogCategory = $Result.DefaultSelection<Prisma.$WizardCatalogCategoryPayload>
+/**
+ * Model WizardFramework
+ * 
+ */
+export type WizardFramework = $Result.DefaultSelection<Prisma.$WizardFrameworkPayload>
+/**
+ * Model WizardOption
+ * 
+ */
+export type WizardOption = $Result.DefaultSelection<Prisma.$WizardOptionPayload>
+/**
+ * Model WizardFrameworkOption
+ * 
+ */
+export type WizardFrameworkOption = $Result.DefaultSelection<Prisma.$WizardFrameworkOptionPayload>
+/**
+ * Model TemplateRevision
+ * 
+ */
+export type TemplateRevision = $Result.DefaultSelection<Prisma.$TemplateRevisionPayload>
 
 /**
  * Enums
@@ -95,11 +120,25 @@ export namespace $Enums {
 
 export type AuthTokenType = (typeof AuthTokenType)[keyof typeof AuthTokenType]
 
+
+export const WizardOptionTier: {
+  INFRASTRUCTURE: 'INFRASTRUCTURE',
+  QUALITY: 'QUALITY',
+  SECURITY: 'SECURITY',
+  FEATURES: 'FEATURES'
+};
+
+export type WizardOptionTier = (typeof WizardOptionTier)[keyof typeof WizardOptionTier]
+
 }
 
 export type AuthTokenType = $Enums.AuthTokenType
 
 export const AuthTokenType: typeof $Enums.AuthTokenType
+
+export type WizardOptionTier = $Enums.WizardOptionTier
+
+export const WizardOptionTier: typeof $Enums.WizardOptionTier
 
 /**
  * ##  Prisma Client ʲˢ
@@ -357,6 +396,56 @@ export class PrismaClient<
     * ```
     */
   get deploymentApproval(): Prisma.DeploymentApprovalDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.wizardCatalogCategory`: Exposes CRUD operations for the **WizardCatalogCategory** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more WizardCatalogCategories
+    * const wizardCatalogCategories = await prisma.wizardCatalogCategory.findMany()
+    * ```
+    */
+  get wizardCatalogCategory(): Prisma.WizardCatalogCategoryDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.wizardFramework`: Exposes CRUD operations for the **WizardFramework** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more WizardFrameworks
+    * const wizardFrameworks = await prisma.wizardFramework.findMany()
+    * ```
+    */
+  get wizardFramework(): Prisma.WizardFrameworkDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.wizardOption`: Exposes CRUD operations for the **WizardOption** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more WizardOptions
+    * const wizardOptions = await prisma.wizardOption.findMany()
+    * ```
+    */
+  get wizardOption(): Prisma.WizardOptionDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.wizardFrameworkOption`: Exposes CRUD operations for the **WizardFrameworkOption** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more WizardFrameworkOptions
+    * const wizardFrameworkOptions = await prisma.wizardFrameworkOption.findMany()
+    * ```
+    */
+  get wizardFrameworkOption(): Prisma.WizardFrameworkOptionDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.templateRevision`: Exposes CRUD operations for the **TemplateRevision** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more TemplateRevisions
+    * const templateRevisions = await prisma.templateRevision.findMany()
+    * ```
+    */
+  get templateRevision(): Prisma.TemplateRevisionDelegate<ExtArgs, ClientOptions>;
 }
 
 export namespace Prisma {
@@ -804,7 +893,12 @@ export namespace Prisma {
     QuickFixAction: 'QuickFixAction',
     RepositoryEnvironment: 'RepositoryEnvironment',
     Deployment: 'Deployment',
-    DeploymentApproval: 'DeploymentApproval'
+    DeploymentApproval: 'DeploymentApproval',
+    WizardCatalogCategory: 'WizardCatalogCategory',
+    WizardFramework: 'WizardFramework',
+    WizardOption: 'WizardOption',
+    WizardFrameworkOption: 'WizardFrameworkOption',
+    TemplateRevision: 'TemplateRevision'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -820,7 +914,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "project" | "template" | "category" | "user" | "providerIntegration" | "authToken" | "auditLog" | "platformConfig" | "repositoryMetadata" | "healthCheckResult" | "quickFixAction" | "repositoryEnvironment" | "deployment" | "deploymentApproval"
+      modelProps: "project" | "template" | "category" | "user" | "providerIntegration" | "authToken" | "auditLog" | "platformConfig" | "repositoryMetadata" | "healthCheckResult" | "quickFixAction" | "repositoryEnvironment" | "deployment" | "deploymentApproval" | "wizardCatalogCategory" | "wizardFramework" | "wizardOption" | "wizardFrameworkOption" | "templateRevision"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -1860,6 +1954,376 @@ export namespace Prisma {
           }
         }
       }
+      WizardCatalogCategory: {
+        payload: Prisma.$WizardCatalogCategoryPayload<ExtArgs>
+        fields: Prisma.WizardCatalogCategoryFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.WizardCatalogCategoryFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$WizardCatalogCategoryPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.WizardCatalogCategoryFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$WizardCatalogCategoryPayload>
+          }
+          findFirst: {
+            args: Prisma.WizardCatalogCategoryFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$WizardCatalogCategoryPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.WizardCatalogCategoryFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$WizardCatalogCategoryPayload>
+          }
+          findMany: {
+            args: Prisma.WizardCatalogCategoryFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$WizardCatalogCategoryPayload>[]
+          }
+          create: {
+            args: Prisma.WizardCatalogCategoryCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$WizardCatalogCategoryPayload>
+          }
+          createMany: {
+            args: Prisma.WizardCatalogCategoryCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.WizardCatalogCategoryCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$WizardCatalogCategoryPayload>[]
+          }
+          delete: {
+            args: Prisma.WizardCatalogCategoryDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$WizardCatalogCategoryPayload>
+          }
+          update: {
+            args: Prisma.WizardCatalogCategoryUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$WizardCatalogCategoryPayload>
+          }
+          deleteMany: {
+            args: Prisma.WizardCatalogCategoryDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.WizardCatalogCategoryUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.WizardCatalogCategoryUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$WizardCatalogCategoryPayload>[]
+          }
+          upsert: {
+            args: Prisma.WizardCatalogCategoryUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$WizardCatalogCategoryPayload>
+          }
+          aggregate: {
+            args: Prisma.WizardCatalogCategoryAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateWizardCatalogCategory>
+          }
+          groupBy: {
+            args: Prisma.WizardCatalogCategoryGroupByArgs<ExtArgs>
+            result: $Utils.Optional<WizardCatalogCategoryGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.WizardCatalogCategoryCountArgs<ExtArgs>
+            result: $Utils.Optional<WizardCatalogCategoryCountAggregateOutputType> | number
+          }
+        }
+      }
+      WizardFramework: {
+        payload: Prisma.$WizardFrameworkPayload<ExtArgs>
+        fields: Prisma.WizardFrameworkFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.WizardFrameworkFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$WizardFrameworkPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.WizardFrameworkFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$WizardFrameworkPayload>
+          }
+          findFirst: {
+            args: Prisma.WizardFrameworkFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$WizardFrameworkPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.WizardFrameworkFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$WizardFrameworkPayload>
+          }
+          findMany: {
+            args: Prisma.WizardFrameworkFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$WizardFrameworkPayload>[]
+          }
+          create: {
+            args: Prisma.WizardFrameworkCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$WizardFrameworkPayload>
+          }
+          createMany: {
+            args: Prisma.WizardFrameworkCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.WizardFrameworkCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$WizardFrameworkPayload>[]
+          }
+          delete: {
+            args: Prisma.WizardFrameworkDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$WizardFrameworkPayload>
+          }
+          update: {
+            args: Prisma.WizardFrameworkUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$WizardFrameworkPayload>
+          }
+          deleteMany: {
+            args: Prisma.WizardFrameworkDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.WizardFrameworkUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.WizardFrameworkUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$WizardFrameworkPayload>[]
+          }
+          upsert: {
+            args: Prisma.WizardFrameworkUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$WizardFrameworkPayload>
+          }
+          aggregate: {
+            args: Prisma.WizardFrameworkAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateWizardFramework>
+          }
+          groupBy: {
+            args: Prisma.WizardFrameworkGroupByArgs<ExtArgs>
+            result: $Utils.Optional<WizardFrameworkGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.WizardFrameworkCountArgs<ExtArgs>
+            result: $Utils.Optional<WizardFrameworkCountAggregateOutputType> | number
+          }
+        }
+      }
+      WizardOption: {
+        payload: Prisma.$WizardOptionPayload<ExtArgs>
+        fields: Prisma.WizardOptionFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.WizardOptionFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$WizardOptionPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.WizardOptionFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$WizardOptionPayload>
+          }
+          findFirst: {
+            args: Prisma.WizardOptionFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$WizardOptionPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.WizardOptionFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$WizardOptionPayload>
+          }
+          findMany: {
+            args: Prisma.WizardOptionFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$WizardOptionPayload>[]
+          }
+          create: {
+            args: Prisma.WizardOptionCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$WizardOptionPayload>
+          }
+          createMany: {
+            args: Prisma.WizardOptionCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.WizardOptionCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$WizardOptionPayload>[]
+          }
+          delete: {
+            args: Prisma.WizardOptionDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$WizardOptionPayload>
+          }
+          update: {
+            args: Prisma.WizardOptionUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$WizardOptionPayload>
+          }
+          deleteMany: {
+            args: Prisma.WizardOptionDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.WizardOptionUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.WizardOptionUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$WizardOptionPayload>[]
+          }
+          upsert: {
+            args: Prisma.WizardOptionUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$WizardOptionPayload>
+          }
+          aggregate: {
+            args: Prisma.WizardOptionAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateWizardOption>
+          }
+          groupBy: {
+            args: Prisma.WizardOptionGroupByArgs<ExtArgs>
+            result: $Utils.Optional<WizardOptionGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.WizardOptionCountArgs<ExtArgs>
+            result: $Utils.Optional<WizardOptionCountAggregateOutputType> | number
+          }
+        }
+      }
+      WizardFrameworkOption: {
+        payload: Prisma.$WizardFrameworkOptionPayload<ExtArgs>
+        fields: Prisma.WizardFrameworkOptionFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.WizardFrameworkOptionFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$WizardFrameworkOptionPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.WizardFrameworkOptionFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$WizardFrameworkOptionPayload>
+          }
+          findFirst: {
+            args: Prisma.WizardFrameworkOptionFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$WizardFrameworkOptionPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.WizardFrameworkOptionFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$WizardFrameworkOptionPayload>
+          }
+          findMany: {
+            args: Prisma.WizardFrameworkOptionFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$WizardFrameworkOptionPayload>[]
+          }
+          create: {
+            args: Prisma.WizardFrameworkOptionCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$WizardFrameworkOptionPayload>
+          }
+          createMany: {
+            args: Prisma.WizardFrameworkOptionCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.WizardFrameworkOptionCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$WizardFrameworkOptionPayload>[]
+          }
+          delete: {
+            args: Prisma.WizardFrameworkOptionDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$WizardFrameworkOptionPayload>
+          }
+          update: {
+            args: Prisma.WizardFrameworkOptionUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$WizardFrameworkOptionPayload>
+          }
+          deleteMany: {
+            args: Prisma.WizardFrameworkOptionDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.WizardFrameworkOptionUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.WizardFrameworkOptionUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$WizardFrameworkOptionPayload>[]
+          }
+          upsert: {
+            args: Prisma.WizardFrameworkOptionUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$WizardFrameworkOptionPayload>
+          }
+          aggregate: {
+            args: Prisma.WizardFrameworkOptionAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateWizardFrameworkOption>
+          }
+          groupBy: {
+            args: Prisma.WizardFrameworkOptionGroupByArgs<ExtArgs>
+            result: $Utils.Optional<WizardFrameworkOptionGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.WizardFrameworkOptionCountArgs<ExtArgs>
+            result: $Utils.Optional<WizardFrameworkOptionCountAggregateOutputType> | number
+          }
+        }
+      }
+      TemplateRevision: {
+        payload: Prisma.$TemplateRevisionPayload<ExtArgs>
+        fields: Prisma.TemplateRevisionFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.TemplateRevisionFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TemplateRevisionPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.TemplateRevisionFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TemplateRevisionPayload>
+          }
+          findFirst: {
+            args: Prisma.TemplateRevisionFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TemplateRevisionPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.TemplateRevisionFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TemplateRevisionPayload>
+          }
+          findMany: {
+            args: Prisma.TemplateRevisionFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TemplateRevisionPayload>[]
+          }
+          create: {
+            args: Prisma.TemplateRevisionCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TemplateRevisionPayload>
+          }
+          createMany: {
+            args: Prisma.TemplateRevisionCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.TemplateRevisionCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TemplateRevisionPayload>[]
+          }
+          delete: {
+            args: Prisma.TemplateRevisionDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TemplateRevisionPayload>
+          }
+          update: {
+            args: Prisma.TemplateRevisionUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TemplateRevisionPayload>
+          }
+          deleteMany: {
+            args: Prisma.TemplateRevisionDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.TemplateRevisionUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.TemplateRevisionUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TemplateRevisionPayload>[]
+          }
+          upsert: {
+            args: Prisma.TemplateRevisionUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TemplateRevisionPayload>
+          }
+          aggregate: {
+            args: Prisma.TemplateRevisionAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateTemplateRevision>
+          }
+          groupBy: {
+            args: Prisma.TemplateRevisionGroupByArgs<ExtArgs>
+            result: $Utils.Optional<TemplateRevisionGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.TemplateRevisionCountArgs<ExtArgs>
+            result: $Utils.Optional<TemplateRevisionCountAggregateOutputType> | number
+          }
+        }
+      }
     }
   } & {
     other: {
@@ -1982,6 +2446,11 @@ export namespace Prisma {
     repositoryEnvironment?: RepositoryEnvironmentOmit
     deployment?: DeploymentOmit
     deploymentApproval?: DeploymentApprovalOmit
+    wizardCatalogCategory?: WizardCatalogCategoryOmit
+    wizardFramework?: WizardFrameworkOmit
+    wizardOption?: WizardOptionOmit
+    wizardFrameworkOption?: WizardFrameworkOptionOmit
+    templateRevision?: TemplateRevisionOmit
   }
 
   /* Types for Logging */
@@ -2055,6 +2524,37 @@ export namespace Prisma {
   /**
    * Count Types
    */
+
+
+  /**
+   * Count Type TemplateCountOutputType
+   */
+
+  export type TemplateCountOutputType = {
+    revisions: number
+  }
+
+  export type TemplateCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    revisions?: boolean | TemplateCountOutputTypeCountRevisionsArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * TemplateCountOutputType without action
+   */
+  export type TemplateCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TemplateCountOutputType
+     */
+    select?: TemplateCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * TemplateCountOutputType without action
+   */
+  export type TemplateCountOutputTypeCountRevisionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: TemplateRevisionWhereInput
+  }
 
 
   /**
@@ -2245,6 +2745,108 @@ export namespace Prisma {
    */
   export type DeploymentCountOutputTypeCountApprovalsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: DeploymentApprovalWhereInput
+  }
+
+
+  /**
+   * Count Type WizardCatalogCategoryCountOutputType
+   */
+
+  export type WizardCatalogCategoryCountOutputType = {
+    frameworks: number
+  }
+
+  export type WizardCatalogCategoryCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    frameworks?: boolean | WizardCatalogCategoryCountOutputTypeCountFrameworksArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * WizardCatalogCategoryCountOutputType without action
+   */
+  export type WizardCatalogCategoryCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the WizardCatalogCategoryCountOutputType
+     */
+    select?: WizardCatalogCategoryCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * WizardCatalogCategoryCountOutputType without action
+   */
+  export type WizardCatalogCategoryCountOutputTypeCountFrameworksArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: WizardFrameworkWhereInput
+  }
+
+
+  /**
+   * Count Type WizardFrameworkCountOutputType
+   */
+
+  export type WizardFrameworkCountOutputType = {
+    options: number
+    revisions: number
+  }
+
+  export type WizardFrameworkCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    options?: boolean | WizardFrameworkCountOutputTypeCountOptionsArgs
+    revisions?: boolean | WizardFrameworkCountOutputTypeCountRevisionsArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * WizardFrameworkCountOutputType without action
+   */
+  export type WizardFrameworkCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the WizardFrameworkCountOutputType
+     */
+    select?: WizardFrameworkCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * WizardFrameworkCountOutputType without action
+   */
+  export type WizardFrameworkCountOutputTypeCountOptionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: WizardFrameworkOptionWhereInput
+  }
+
+  /**
+   * WizardFrameworkCountOutputType without action
+   */
+  export type WizardFrameworkCountOutputTypeCountRevisionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: TemplateRevisionWhereInput
+  }
+
+
+  /**
+   * Count Type WizardOptionCountOutputType
+   */
+
+  export type WizardOptionCountOutputType = {
+    frameworks: number
+  }
+
+  export type WizardOptionCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    frameworks?: boolean | WizardOptionCountOutputTypeCountFrameworksArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * WizardOptionCountOutputType without action
+   */
+  export type WizardOptionCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the WizardOptionCountOutputType
+     */
+    select?: WizardOptionCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * WizardOptionCountOutputType without action
+   */
+  export type WizardOptionCountOutputTypeCountFrameworksArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: WizardFrameworkOptionWhereInput
   }
 
 
@@ -3434,7 +4036,7 @@ export namespace Prisma {
 
   export type TemplateGroupByOutputType = {
     title: string
-    description: string
+    description: string | null
     categoryName: string
     yaml: string
     createdAt: Date
@@ -3470,6 +4072,8 @@ export namespace Prisma {
     updatedAt?: boolean
     id?: boolean
     category?: boolean | CategoryDefaultArgs<ExtArgs>
+    revisions?: boolean | Template$revisionsArgs<ExtArgs>
+    _count?: boolean | TemplateCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["template"]>
 
   export type TemplateSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -3507,6 +4111,8 @@ export namespace Prisma {
   export type TemplateOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"title" | "description" | "categoryName" | "yaml" | "createdAt" | "updatedAt" | "id", ExtArgs["result"]["template"]>
   export type TemplateInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     category?: boolean | CategoryDefaultArgs<ExtArgs>
+    revisions?: boolean | Template$revisionsArgs<ExtArgs>
+    _count?: boolean | TemplateCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type TemplateIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     category?: boolean | CategoryDefaultArgs<ExtArgs>
@@ -3519,10 +4125,11 @@ export namespace Prisma {
     name: "Template"
     objects: {
       category: Prisma.$CategoryPayload<ExtArgs>
+      revisions: Prisma.$TemplateRevisionPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       title: string
-      description: string
+      description: string | null
       categoryName: string
       yaml: string
       createdAt: Date
@@ -3923,6 +4530,7 @@ export namespace Prisma {
   export interface Prisma__TemplateClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     category<T extends CategoryDefaultArgs<ExtArgs> = {}>(args?: Subset<T, CategoryDefaultArgs<ExtArgs>>): Prisma__CategoryClient<$Result.GetResult<Prisma.$CategoryPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    revisions<T extends Template$revisionsArgs<ExtArgs> = {}>(args?: Subset<T, Template$revisionsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TemplateRevisionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -4352,6 +4960,30 @@ export namespace Prisma {
      * Limit how many Templates to delete.
      */
     limit?: number
+  }
+
+  /**
+   * Template.revisions
+   */
+  export type Template$revisionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TemplateRevision
+     */
+    select?: TemplateRevisionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the TemplateRevision
+     */
+    omit?: TemplateRevisionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TemplateRevisionInclude<ExtArgs> | null
+    where?: TemplateRevisionWhereInput
+    orderBy?: TemplateRevisionOrderByWithRelationInput | TemplateRevisionOrderByWithRelationInput[]
+    cursor?: TemplateRevisionWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: TemplateRevisionScalarFieldEnum | TemplateRevisionScalarFieldEnum[]
   }
 
   /**
@@ -18298,6 +18930,5887 @@ export namespace Prisma {
 
 
   /**
+   * Model WizardCatalogCategory
+   */
+
+  export type AggregateWizardCatalogCategory = {
+    _count: WizardCatalogCategoryCountAggregateOutputType | null
+    _avg: WizardCatalogCategoryAvgAggregateOutputType | null
+    _sum: WizardCatalogCategorySumAggregateOutputType | null
+    _min: WizardCatalogCategoryMinAggregateOutputType | null
+    _max: WizardCatalogCategoryMaxAggregateOutputType | null
+  }
+
+  export type WizardCatalogCategoryAvgAggregateOutputType = {
+    displayOrder: number | null
+  }
+
+  export type WizardCatalogCategorySumAggregateOutputType = {
+    displayOrder: number | null
+  }
+
+  export type WizardCatalogCategoryMinAggregateOutputType = {
+    id: string | null
+    label: string | null
+    description: string | null
+    icon: string | null
+    accentClass: string | null
+    displayOrder: number | null
+    isActive: boolean | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type WizardCatalogCategoryMaxAggregateOutputType = {
+    id: string | null
+    label: string | null
+    description: string | null
+    icon: string | null
+    accentClass: string | null
+    displayOrder: number | null
+    isActive: boolean | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type WizardCatalogCategoryCountAggregateOutputType = {
+    id: number
+    label: number
+    description: number
+    icon: number
+    accentClass: number
+    displayOrder: number
+    isActive: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type WizardCatalogCategoryAvgAggregateInputType = {
+    displayOrder?: true
+  }
+
+  export type WizardCatalogCategorySumAggregateInputType = {
+    displayOrder?: true
+  }
+
+  export type WizardCatalogCategoryMinAggregateInputType = {
+    id?: true
+    label?: true
+    description?: true
+    icon?: true
+    accentClass?: true
+    displayOrder?: true
+    isActive?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type WizardCatalogCategoryMaxAggregateInputType = {
+    id?: true
+    label?: true
+    description?: true
+    icon?: true
+    accentClass?: true
+    displayOrder?: true
+    isActive?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type WizardCatalogCategoryCountAggregateInputType = {
+    id?: true
+    label?: true
+    description?: true
+    icon?: true
+    accentClass?: true
+    displayOrder?: true
+    isActive?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type WizardCatalogCategoryAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which WizardCatalogCategory to aggregate.
+     */
+    where?: WizardCatalogCategoryWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of WizardCatalogCategories to fetch.
+     */
+    orderBy?: WizardCatalogCategoryOrderByWithRelationInput | WizardCatalogCategoryOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: WizardCatalogCategoryWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` WizardCatalogCategories from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` WizardCatalogCategories.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned WizardCatalogCategories
+    **/
+    _count?: true | WizardCatalogCategoryCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: WizardCatalogCategoryAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: WizardCatalogCategorySumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: WizardCatalogCategoryMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: WizardCatalogCategoryMaxAggregateInputType
+  }
+
+  export type GetWizardCatalogCategoryAggregateType<T extends WizardCatalogCategoryAggregateArgs> = {
+        [P in keyof T & keyof AggregateWizardCatalogCategory]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateWizardCatalogCategory[P]>
+      : GetScalarType<T[P], AggregateWizardCatalogCategory[P]>
+  }
+
+
+
+
+  export type WizardCatalogCategoryGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: WizardCatalogCategoryWhereInput
+    orderBy?: WizardCatalogCategoryOrderByWithAggregationInput | WizardCatalogCategoryOrderByWithAggregationInput[]
+    by: WizardCatalogCategoryScalarFieldEnum[] | WizardCatalogCategoryScalarFieldEnum
+    having?: WizardCatalogCategoryScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: WizardCatalogCategoryCountAggregateInputType | true
+    _avg?: WizardCatalogCategoryAvgAggregateInputType
+    _sum?: WizardCatalogCategorySumAggregateInputType
+    _min?: WizardCatalogCategoryMinAggregateInputType
+    _max?: WizardCatalogCategoryMaxAggregateInputType
+  }
+
+  export type WizardCatalogCategoryGroupByOutputType = {
+    id: string
+    label: string
+    description: string | null
+    icon: string | null
+    accentClass: string | null
+    displayOrder: number
+    isActive: boolean
+    createdAt: Date
+    updatedAt: Date
+    _count: WizardCatalogCategoryCountAggregateOutputType | null
+    _avg: WizardCatalogCategoryAvgAggregateOutputType | null
+    _sum: WizardCatalogCategorySumAggregateOutputType | null
+    _min: WizardCatalogCategoryMinAggregateOutputType | null
+    _max: WizardCatalogCategoryMaxAggregateOutputType | null
+  }
+
+  type GetWizardCatalogCategoryGroupByPayload<T extends WizardCatalogCategoryGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<WizardCatalogCategoryGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof WizardCatalogCategoryGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], WizardCatalogCategoryGroupByOutputType[P]>
+            : GetScalarType<T[P], WizardCatalogCategoryGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type WizardCatalogCategorySelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    label?: boolean
+    description?: boolean
+    icon?: boolean
+    accentClass?: boolean
+    displayOrder?: boolean
+    isActive?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    frameworks?: boolean | WizardCatalogCategory$frameworksArgs<ExtArgs>
+    _count?: boolean | WizardCatalogCategoryCountOutputTypeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["wizardCatalogCategory"]>
+
+  export type WizardCatalogCategorySelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    label?: boolean
+    description?: boolean
+    icon?: boolean
+    accentClass?: boolean
+    displayOrder?: boolean
+    isActive?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }, ExtArgs["result"]["wizardCatalogCategory"]>
+
+  export type WizardCatalogCategorySelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    label?: boolean
+    description?: boolean
+    icon?: boolean
+    accentClass?: boolean
+    displayOrder?: boolean
+    isActive?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }, ExtArgs["result"]["wizardCatalogCategory"]>
+
+  export type WizardCatalogCategorySelectScalar = {
+    id?: boolean
+    label?: boolean
+    description?: boolean
+    icon?: boolean
+    accentClass?: boolean
+    displayOrder?: boolean
+    isActive?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type WizardCatalogCategoryOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "label" | "description" | "icon" | "accentClass" | "displayOrder" | "isActive" | "createdAt" | "updatedAt", ExtArgs["result"]["wizardCatalogCategory"]>
+  export type WizardCatalogCategoryInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    frameworks?: boolean | WizardCatalogCategory$frameworksArgs<ExtArgs>
+    _count?: boolean | WizardCatalogCategoryCountOutputTypeDefaultArgs<ExtArgs>
+  }
+  export type WizardCatalogCategoryIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+  export type WizardCatalogCategoryIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+
+  export type $WizardCatalogCategoryPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "WizardCatalogCategory"
+    objects: {
+      frameworks: Prisma.$WizardFrameworkPayload<ExtArgs>[]
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      label: string
+      description: string | null
+      icon: string | null
+      accentClass: string | null
+      displayOrder: number
+      isActive: boolean
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["wizardCatalogCategory"]>
+    composites: {}
+  }
+
+  type WizardCatalogCategoryGetPayload<S extends boolean | null | undefined | WizardCatalogCategoryDefaultArgs> = $Result.GetResult<Prisma.$WizardCatalogCategoryPayload, S>
+
+  type WizardCatalogCategoryCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<WizardCatalogCategoryFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: WizardCatalogCategoryCountAggregateInputType | true
+    }
+
+  export interface WizardCatalogCategoryDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['WizardCatalogCategory'], meta: { name: 'WizardCatalogCategory' } }
+    /**
+     * Find zero or one WizardCatalogCategory that matches the filter.
+     * @param {WizardCatalogCategoryFindUniqueArgs} args - Arguments to find a WizardCatalogCategory
+     * @example
+     * // Get one WizardCatalogCategory
+     * const wizardCatalogCategory = await prisma.wizardCatalogCategory.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends WizardCatalogCategoryFindUniqueArgs>(args: SelectSubset<T, WizardCatalogCategoryFindUniqueArgs<ExtArgs>>): Prisma__WizardCatalogCategoryClient<$Result.GetResult<Prisma.$WizardCatalogCategoryPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one WizardCatalogCategory that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {WizardCatalogCategoryFindUniqueOrThrowArgs} args - Arguments to find a WizardCatalogCategory
+     * @example
+     * // Get one WizardCatalogCategory
+     * const wizardCatalogCategory = await prisma.wizardCatalogCategory.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends WizardCatalogCategoryFindUniqueOrThrowArgs>(args: SelectSubset<T, WizardCatalogCategoryFindUniqueOrThrowArgs<ExtArgs>>): Prisma__WizardCatalogCategoryClient<$Result.GetResult<Prisma.$WizardCatalogCategoryPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first WizardCatalogCategory that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {WizardCatalogCategoryFindFirstArgs} args - Arguments to find a WizardCatalogCategory
+     * @example
+     * // Get one WizardCatalogCategory
+     * const wizardCatalogCategory = await prisma.wizardCatalogCategory.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends WizardCatalogCategoryFindFirstArgs>(args?: SelectSubset<T, WizardCatalogCategoryFindFirstArgs<ExtArgs>>): Prisma__WizardCatalogCategoryClient<$Result.GetResult<Prisma.$WizardCatalogCategoryPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first WizardCatalogCategory that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {WizardCatalogCategoryFindFirstOrThrowArgs} args - Arguments to find a WizardCatalogCategory
+     * @example
+     * // Get one WizardCatalogCategory
+     * const wizardCatalogCategory = await prisma.wizardCatalogCategory.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends WizardCatalogCategoryFindFirstOrThrowArgs>(args?: SelectSubset<T, WizardCatalogCategoryFindFirstOrThrowArgs<ExtArgs>>): Prisma__WizardCatalogCategoryClient<$Result.GetResult<Prisma.$WizardCatalogCategoryPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more WizardCatalogCategories that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {WizardCatalogCategoryFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all WizardCatalogCategories
+     * const wizardCatalogCategories = await prisma.wizardCatalogCategory.findMany()
+     * 
+     * // Get first 10 WizardCatalogCategories
+     * const wizardCatalogCategories = await prisma.wizardCatalogCategory.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const wizardCatalogCategoryWithIdOnly = await prisma.wizardCatalogCategory.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends WizardCatalogCategoryFindManyArgs>(args?: SelectSubset<T, WizardCatalogCategoryFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$WizardCatalogCategoryPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a WizardCatalogCategory.
+     * @param {WizardCatalogCategoryCreateArgs} args - Arguments to create a WizardCatalogCategory.
+     * @example
+     * // Create one WizardCatalogCategory
+     * const WizardCatalogCategory = await prisma.wizardCatalogCategory.create({
+     *   data: {
+     *     // ... data to create a WizardCatalogCategory
+     *   }
+     * })
+     * 
+     */
+    create<T extends WizardCatalogCategoryCreateArgs>(args: SelectSubset<T, WizardCatalogCategoryCreateArgs<ExtArgs>>): Prisma__WizardCatalogCategoryClient<$Result.GetResult<Prisma.$WizardCatalogCategoryPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many WizardCatalogCategories.
+     * @param {WizardCatalogCategoryCreateManyArgs} args - Arguments to create many WizardCatalogCategories.
+     * @example
+     * // Create many WizardCatalogCategories
+     * const wizardCatalogCategory = await prisma.wizardCatalogCategory.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends WizardCatalogCategoryCreateManyArgs>(args?: SelectSubset<T, WizardCatalogCategoryCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many WizardCatalogCategories and returns the data saved in the database.
+     * @param {WizardCatalogCategoryCreateManyAndReturnArgs} args - Arguments to create many WizardCatalogCategories.
+     * @example
+     * // Create many WizardCatalogCategories
+     * const wizardCatalogCategory = await prisma.wizardCatalogCategory.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many WizardCatalogCategories and only return the `id`
+     * const wizardCatalogCategoryWithIdOnly = await prisma.wizardCatalogCategory.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends WizardCatalogCategoryCreateManyAndReturnArgs>(args?: SelectSubset<T, WizardCatalogCategoryCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$WizardCatalogCategoryPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a WizardCatalogCategory.
+     * @param {WizardCatalogCategoryDeleteArgs} args - Arguments to delete one WizardCatalogCategory.
+     * @example
+     * // Delete one WizardCatalogCategory
+     * const WizardCatalogCategory = await prisma.wizardCatalogCategory.delete({
+     *   where: {
+     *     // ... filter to delete one WizardCatalogCategory
+     *   }
+     * })
+     * 
+     */
+    delete<T extends WizardCatalogCategoryDeleteArgs>(args: SelectSubset<T, WizardCatalogCategoryDeleteArgs<ExtArgs>>): Prisma__WizardCatalogCategoryClient<$Result.GetResult<Prisma.$WizardCatalogCategoryPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one WizardCatalogCategory.
+     * @param {WizardCatalogCategoryUpdateArgs} args - Arguments to update one WizardCatalogCategory.
+     * @example
+     * // Update one WizardCatalogCategory
+     * const wizardCatalogCategory = await prisma.wizardCatalogCategory.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends WizardCatalogCategoryUpdateArgs>(args: SelectSubset<T, WizardCatalogCategoryUpdateArgs<ExtArgs>>): Prisma__WizardCatalogCategoryClient<$Result.GetResult<Prisma.$WizardCatalogCategoryPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more WizardCatalogCategories.
+     * @param {WizardCatalogCategoryDeleteManyArgs} args - Arguments to filter WizardCatalogCategories to delete.
+     * @example
+     * // Delete a few WizardCatalogCategories
+     * const { count } = await prisma.wizardCatalogCategory.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends WizardCatalogCategoryDeleteManyArgs>(args?: SelectSubset<T, WizardCatalogCategoryDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more WizardCatalogCategories.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {WizardCatalogCategoryUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many WizardCatalogCategories
+     * const wizardCatalogCategory = await prisma.wizardCatalogCategory.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends WizardCatalogCategoryUpdateManyArgs>(args: SelectSubset<T, WizardCatalogCategoryUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more WizardCatalogCategories and returns the data updated in the database.
+     * @param {WizardCatalogCategoryUpdateManyAndReturnArgs} args - Arguments to update many WizardCatalogCategories.
+     * @example
+     * // Update many WizardCatalogCategories
+     * const wizardCatalogCategory = await prisma.wizardCatalogCategory.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more WizardCatalogCategories and only return the `id`
+     * const wizardCatalogCategoryWithIdOnly = await prisma.wizardCatalogCategory.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends WizardCatalogCategoryUpdateManyAndReturnArgs>(args: SelectSubset<T, WizardCatalogCategoryUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$WizardCatalogCategoryPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one WizardCatalogCategory.
+     * @param {WizardCatalogCategoryUpsertArgs} args - Arguments to update or create a WizardCatalogCategory.
+     * @example
+     * // Update or create a WizardCatalogCategory
+     * const wizardCatalogCategory = await prisma.wizardCatalogCategory.upsert({
+     *   create: {
+     *     // ... data to create a WizardCatalogCategory
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the WizardCatalogCategory we want to update
+     *   }
+     * })
+     */
+    upsert<T extends WizardCatalogCategoryUpsertArgs>(args: SelectSubset<T, WizardCatalogCategoryUpsertArgs<ExtArgs>>): Prisma__WizardCatalogCategoryClient<$Result.GetResult<Prisma.$WizardCatalogCategoryPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of WizardCatalogCategories.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {WizardCatalogCategoryCountArgs} args - Arguments to filter WizardCatalogCategories to count.
+     * @example
+     * // Count the number of WizardCatalogCategories
+     * const count = await prisma.wizardCatalogCategory.count({
+     *   where: {
+     *     // ... the filter for the WizardCatalogCategories we want to count
+     *   }
+     * })
+    **/
+    count<T extends WizardCatalogCategoryCountArgs>(
+      args?: Subset<T, WizardCatalogCategoryCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], WizardCatalogCategoryCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a WizardCatalogCategory.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {WizardCatalogCategoryAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends WizardCatalogCategoryAggregateArgs>(args: Subset<T, WizardCatalogCategoryAggregateArgs>): Prisma.PrismaPromise<GetWizardCatalogCategoryAggregateType<T>>
+
+    /**
+     * Group by WizardCatalogCategory.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {WizardCatalogCategoryGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends WizardCatalogCategoryGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: WizardCatalogCategoryGroupByArgs['orderBy'] }
+        : { orderBy?: WizardCatalogCategoryGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, WizardCatalogCategoryGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetWizardCatalogCategoryGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the WizardCatalogCategory model
+   */
+  readonly fields: WizardCatalogCategoryFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for WizardCatalogCategory.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__WizardCatalogCategoryClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    frameworks<T extends WizardCatalogCategory$frameworksArgs<ExtArgs> = {}>(args?: Subset<T, WizardCatalogCategory$frameworksArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$WizardFrameworkPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the WizardCatalogCategory model
+   */
+  interface WizardCatalogCategoryFieldRefs {
+    readonly id: FieldRef<"WizardCatalogCategory", 'String'>
+    readonly label: FieldRef<"WizardCatalogCategory", 'String'>
+    readonly description: FieldRef<"WizardCatalogCategory", 'String'>
+    readonly icon: FieldRef<"WizardCatalogCategory", 'String'>
+    readonly accentClass: FieldRef<"WizardCatalogCategory", 'String'>
+    readonly displayOrder: FieldRef<"WizardCatalogCategory", 'Int'>
+    readonly isActive: FieldRef<"WizardCatalogCategory", 'Boolean'>
+    readonly createdAt: FieldRef<"WizardCatalogCategory", 'DateTime'>
+    readonly updatedAt: FieldRef<"WizardCatalogCategory", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * WizardCatalogCategory findUnique
+   */
+  export type WizardCatalogCategoryFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the WizardCatalogCategory
+     */
+    select?: WizardCatalogCategorySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the WizardCatalogCategory
+     */
+    omit?: WizardCatalogCategoryOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: WizardCatalogCategoryInclude<ExtArgs> | null
+    /**
+     * Filter, which WizardCatalogCategory to fetch.
+     */
+    where: WizardCatalogCategoryWhereUniqueInput
+  }
+
+  /**
+   * WizardCatalogCategory findUniqueOrThrow
+   */
+  export type WizardCatalogCategoryFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the WizardCatalogCategory
+     */
+    select?: WizardCatalogCategorySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the WizardCatalogCategory
+     */
+    omit?: WizardCatalogCategoryOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: WizardCatalogCategoryInclude<ExtArgs> | null
+    /**
+     * Filter, which WizardCatalogCategory to fetch.
+     */
+    where: WizardCatalogCategoryWhereUniqueInput
+  }
+
+  /**
+   * WizardCatalogCategory findFirst
+   */
+  export type WizardCatalogCategoryFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the WizardCatalogCategory
+     */
+    select?: WizardCatalogCategorySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the WizardCatalogCategory
+     */
+    omit?: WizardCatalogCategoryOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: WizardCatalogCategoryInclude<ExtArgs> | null
+    /**
+     * Filter, which WizardCatalogCategory to fetch.
+     */
+    where?: WizardCatalogCategoryWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of WizardCatalogCategories to fetch.
+     */
+    orderBy?: WizardCatalogCategoryOrderByWithRelationInput | WizardCatalogCategoryOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for WizardCatalogCategories.
+     */
+    cursor?: WizardCatalogCategoryWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` WizardCatalogCategories from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` WizardCatalogCategories.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of WizardCatalogCategories.
+     */
+    distinct?: WizardCatalogCategoryScalarFieldEnum | WizardCatalogCategoryScalarFieldEnum[]
+  }
+
+  /**
+   * WizardCatalogCategory findFirstOrThrow
+   */
+  export type WizardCatalogCategoryFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the WizardCatalogCategory
+     */
+    select?: WizardCatalogCategorySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the WizardCatalogCategory
+     */
+    omit?: WizardCatalogCategoryOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: WizardCatalogCategoryInclude<ExtArgs> | null
+    /**
+     * Filter, which WizardCatalogCategory to fetch.
+     */
+    where?: WizardCatalogCategoryWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of WizardCatalogCategories to fetch.
+     */
+    orderBy?: WizardCatalogCategoryOrderByWithRelationInput | WizardCatalogCategoryOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for WizardCatalogCategories.
+     */
+    cursor?: WizardCatalogCategoryWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` WizardCatalogCategories from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` WizardCatalogCategories.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of WizardCatalogCategories.
+     */
+    distinct?: WizardCatalogCategoryScalarFieldEnum | WizardCatalogCategoryScalarFieldEnum[]
+  }
+
+  /**
+   * WizardCatalogCategory findMany
+   */
+  export type WizardCatalogCategoryFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the WizardCatalogCategory
+     */
+    select?: WizardCatalogCategorySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the WizardCatalogCategory
+     */
+    omit?: WizardCatalogCategoryOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: WizardCatalogCategoryInclude<ExtArgs> | null
+    /**
+     * Filter, which WizardCatalogCategories to fetch.
+     */
+    where?: WizardCatalogCategoryWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of WizardCatalogCategories to fetch.
+     */
+    orderBy?: WizardCatalogCategoryOrderByWithRelationInput | WizardCatalogCategoryOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing WizardCatalogCategories.
+     */
+    cursor?: WizardCatalogCategoryWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` WizardCatalogCategories from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` WizardCatalogCategories.
+     */
+    skip?: number
+    distinct?: WizardCatalogCategoryScalarFieldEnum | WizardCatalogCategoryScalarFieldEnum[]
+  }
+
+  /**
+   * WizardCatalogCategory create
+   */
+  export type WizardCatalogCategoryCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the WizardCatalogCategory
+     */
+    select?: WizardCatalogCategorySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the WizardCatalogCategory
+     */
+    omit?: WizardCatalogCategoryOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: WizardCatalogCategoryInclude<ExtArgs> | null
+    /**
+     * The data needed to create a WizardCatalogCategory.
+     */
+    data: XOR<WizardCatalogCategoryCreateInput, WizardCatalogCategoryUncheckedCreateInput>
+  }
+
+  /**
+   * WizardCatalogCategory createMany
+   */
+  export type WizardCatalogCategoryCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many WizardCatalogCategories.
+     */
+    data: WizardCatalogCategoryCreateManyInput | WizardCatalogCategoryCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * WizardCatalogCategory createManyAndReturn
+   */
+  export type WizardCatalogCategoryCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the WizardCatalogCategory
+     */
+    select?: WizardCatalogCategorySelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the WizardCatalogCategory
+     */
+    omit?: WizardCatalogCategoryOmit<ExtArgs> | null
+    /**
+     * The data used to create many WizardCatalogCategories.
+     */
+    data: WizardCatalogCategoryCreateManyInput | WizardCatalogCategoryCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * WizardCatalogCategory update
+   */
+  export type WizardCatalogCategoryUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the WizardCatalogCategory
+     */
+    select?: WizardCatalogCategorySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the WizardCatalogCategory
+     */
+    omit?: WizardCatalogCategoryOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: WizardCatalogCategoryInclude<ExtArgs> | null
+    /**
+     * The data needed to update a WizardCatalogCategory.
+     */
+    data: XOR<WizardCatalogCategoryUpdateInput, WizardCatalogCategoryUncheckedUpdateInput>
+    /**
+     * Choose, which WizardCatalogCategory to update.
+     */
+    where: WizardCatalogCategoryWhereUniqueInput
+  }
+
+  /**
+   * WizardCatalogCategory updateMany
+   */
+  export type WizardCatalogCategoryUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update WizardCatalogCategories.
+     */
+    data: XOR<WizardCatalogCategoryUpdateManyMutationInput, WizardCatalogCategoryUncheckedUpdateManyInput>
+    /**
+     * Filter which WizardCatalogCategories to update
+     */
+    where?: WizardCatalogCategoryWhereInput
+    /**
+     * Limit how many WizardCatalogCategories to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * WizardCatalogCategory updateManyAndReturn
+   */
+  export type WizardCatalogCategoryUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the WizardCatalogCategory
+     */
+    select?: WizardCatalogCategorySelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the WizardCatalogCategory
+     */
+    omit?: WizardCatalogCategoryOmit<ExtArgs> | null
+    /**
+     * The data used to update WizardCatalogCategories.
+     */
+    data: XOR<WizardCatalogCategoryUpdateManyMutationInput, WizardCatalogCategoryUncheckedUpdateManyInput>
+    /**
+     * Filter which WizardCatalogCategories to update
+     */
+    where?: WizardCatalogCategoryWhereInput
+    /**
+     * Limit how many WizardCatalogCategories to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * WizardCatalogCategory upsert
+   */
+  export type WizardCatalogCategoryUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the WizardCatalogCategory
+     */
+    select?: WizardCatalogCategorySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the WizardCatalogCategory
+     */
+    omit?: WizardCatalogCategoryOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: WizardCatalogCategoryInclude<ExtArgs> | null
+    /**
+     * The filter to search for the WizardCatalogCategory to update in case it exists.
+     */
+    where: WizardCatalogCategoryWhereUniqueInput
+    /**
+     * In case the WizardCatalogCategory found by the `where` argument doesn't exist, create a new WizardCatalogCategory with this data.
+     */
+    create: XOR<WizardCatalogCategoryCreateInput, WizardCatalogCategoryUncheckedCreateInput>
+    /**
+     * In case the WizardCatalogCategory was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<WizardCatalogCategoryUpdateInput, WizardCatalogCategoryUncheckedUpdateInput>
+  }
+
+  /**
+   * WizardCatalogCategory delete
+   */
+  export type WizardCatalogCategoryDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the WizardCatalogCategory
+     */
+    select?: WizardCatalogCategorySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the WizardCatalogCategory
+     */
+    omit?: WizardCatalogCategoryOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: WizardCatalogCategoryInclude<ExtArgs> | null
+    /**
+     * Filter which WizardCatalogCategory to delete.
+     */
+    where: WizardCatalogCategoryWhereUniqueInput
+  }
+
+  /**
+   * WizardCatalogCategory deleteMany
+   */
+  export type WizardCatalogCategoryDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which WizardCatalogCategories to delete
+     */
+    where?: WizardCatalogCategoryWhereInput
+    /**
+     * Limit how many WizardCatalogCategories to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * WizardCatalogCategory.frameworks
+   */
+  export type WizardCatalogCategory$frameworksArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the WizardFramework
+     */
+    select?: WizardFrameworkSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the WizardFramework
+     */
+    omit?: WizardFrameworkOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: WizardFrameworkInclude<ExtArgs> | null
+    where?: WizardFrameworkWhereInput
+    orderBy?: WizardFrameworkOrderByWithRelationInput | WizardFrameworkOrderByWithRelationInput[]
+    cursor?: WizardFrameworkWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: WizardFrameworkScalarFieldEnum | WizardFrameworkScalarFieldEnum[]
+  }
+
+  /**
+   * WizardCatalogCategory without action
+   */
+  export type WizardCatalogCategoryDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the WizardCatalogCategory
+     */
+    select?: WizardCatalogCategorySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the WizardCatalogCategory
+     */
+    omit?: WizardCatalogCategoryOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: WizardCatalogCategoryInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model WizardFramework
+   */
+
+  export type AggregateWizardFramework = {
+    _count: WizardFrameworkCountAggregateOutputType | null
+    _avg: WizardFrameworkAvgAggregateOutputType | null
+    _sum: WizardFrameworkSumAggregateOutputType | null
+    _min: WizardFrameworkMinAggregateOutputType | null
+    _max: WizardFrameworkMaxAggregateOutputType | null
+  }
+
+  export type WizardFrameworkAvgAggregateOutputType = {
+    displayOrder: number | null
+  }
+
+  export type WizardFrameworkSumAggregateOutputType = {
+    displayOrder: number | null
+  }
+
+  export type WizardFrameworkMinAggregateOutputType = {
+    id: string | null
+    categoryId: string | null
+    label: string | null
+    description: string | null
+    badge: string | null
+    popularity: string | null
+    icon: string | null
+    accentClass: string | null
+    displayOrder: number | null
+    isActive: boolean | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type WizardFrameworkMaxAggregateOutputType = {
+    id: string | null
+    categoryId: string | null
+    label: string | null
+    description: string | null
+    badge: string | null
+    popularity: string | null
+    icon: string | null
+    accentClass: string | null
+    displayOrder: number | null
+    isActive: boolean | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type WizardFrameworkCountAggregateOutputType = {
+    id: number
+    categoryId: number
+    label: number
+    description: number
+    badge: number
+    tags: number
+    popularity: number
+    icon: number
+    accentClass: number
+    displayOrder: number
+    isActive: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type WizardFrameworkAvgAggregateInputType = {
+    displayOrder?: true
+  }
+
+  export type WizardFrameworkSumAggregateInputType = {
+    displayOrder?: true
+  }
+
+  export type WizardFrameworkMinAggregateInputType = {
+    id?: true
+    categoryId?: true
+    label?: true
+    description?: true
+    badge?: true
+    popularity?: true
+    icon?: true
+    accentClass?: true
+    displayOrder?: true
+    isActive?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type WizardFrameworkMaxAggregateInputType = {
+    id?: true
+    categoryId?: true
+    label?: true
+    description?: true
+    badge?: true
+    popularity?: true
+    icon?: true
+    accentClass?: true
+    displayOrder?: true
+    isActive?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type WizardFrameworkCountAggregateInputType = {
+    id?: true
+    categoryId?: true
+    label?: true
+    description?: true
+    badge?: true
+    tags?: true
+    popularity?: true
+    icon?: true
+    accentClass?: true
+    displayOrder?: true
+    isActive?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type WizardFrameworkAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which WizardFramework to aggregate.
+     */
+    where?: WizardFrameworkWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of WizardFrameworks to fetch.
+     */
+    orderBy?: WizardFrameworkOrderByWithRelationInput | WizardFrameworkOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: WizardFrameworkWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` WizardFrameworks from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` WizardFrameworks.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned WizardFrameworks
+    **/
+    _count?: true | WizardFrameworkCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: WizardFrameworkAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: WizardFrameworkSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: WizardFrameworkMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: WizardFrameworkMaxAggregateInputType
+  }
+
+  export type GetWizardFrameworkAggregateType<T extends WizardFrameworkAggregateArgs> = {
+        [P in keyof T & keyof AggregateWizardFramework]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateWizardFramework[P]>
+      : GetScalarType<T[P], AggregateWizardFramework[P]>
+  }
+
+
+
+
+  export type WizardFrameworkGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: WizardFrameworkWhereInput
+    orderBy?: WizardFrameworkOrderByWithAggregationInput | WizardFrameworkOrderByWithAggregationInput[]
+    by: WizardFrameworkScalarFieldEnum[] | WizardFrameworkScalarFieldEnum
+    having?: WizardFrameworkScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: WizardFrameworkCountAggregateInputType | true
+    _avg?: WizardFrameworkAvgAggregateInputType
+    _sum?: WizardFrameworkSumAggregateInputType
+    _min?: WizardFrameworkMinAggregateInputType
+    _max?: WizardFrameworkMaxAggregateInputType
+  }
+
+  export type WizardFrameworkGroupByOutputType = {
+    id: string
+    categoryId: string
+    label: string
+    description: string
+    badge: string | null
+    tags: string[]
+    popularity: string | null
+    icon: string | null
+    accentClass: string | null
+    displayOrder: number
+    isActive: boolean
+    createdAt: Date
+    updatedAt: Date
+    _count: WizardFrameworkCountAggregateOutputType | null
+    _avg: WizardFrameworkAvgAggregateOutputType | null
+    _sum: WizardFrameworkSumAggregateOutputType | null
+    _min: WizardFrameworkMinAggregateOutputType | null
+    _max: WizardFrameworkMaxAggregateOutputType | null
+  }
+
+  type GetWizardFrameworkGroupByPayload<T extends WizardFrameworkGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<WizardFrameworkGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof WizardFrameworkGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], WizardFrameworkGroupByOutputType[P]>
+            : GetScalarType<T[P], WizardFrameworkGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type WizardFrameworkSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    categoryId?: boolean
+    label?: boolean
+    description?: boolean
+    badge?: boolean
+    tags?: boolean
+    popularity?: boolean
+    icon?: boolean
+    accentClass?: boolean
+    displayOrder?: boolean
+    isActive?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    category?: boolean | WizardCatalogCategoryDefaultArgs<ExtArgs>
+    options?: boolean | WizardFramework$optionsArgs<ExtArgs>
+    revisions?: boolean | WizardFramework$revisionsArgs<ExtArgs>
+    _count?: boolean | WizardFrameworkCountOutputTypeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["wizardFramework"]>
+
+  export type WizardFrameworkSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    categoryId?: boolean
+    label?: boolean
+    description?: boolean
+    badge?: boolean
+    tags?: boolean
+    popularity?: boolean
+    icon?: boolean
+    accentClass?: boolean
+    displayOrder?: boolean
+    isActive?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    category?: boolean | WizardCatalogCategoryDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["wizardFramework"]>
+
+  export type WizardFrameworkSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    categoryId?: boolean
+    label?: boolean
+    description?: boolean
+    badge?: boolean
+    tags?: boolean
+    popularity?: boolean
+    icon?: boolean
+    accentClass?: boolean
+    displayOrder?: boolean
+    isActive?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    category?: boolean | WizardCatalogCategoryDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["wizardFramework"]>
+
+  export type WizardFrameworkSelectScalar = {
+    id?: boolean
+    categoryId?: boolean
+    label?: boolean
+    description?: boolean
+    badge?: boolean
+    tags?: boolean
+    popularity?: boolean
+    icon?: boolean
+    accentClass?: boolean
+    displayOrder?: boolean
+    isActive?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type WizardFrameworkOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "categoryId" | "label" | "description" | "badge" | "tags" | "popularity" | "icon" | "accentClass" | "displayOrder" | "isActive" | "createdAt" | "updatedAt", ExtArgs["result"]["wizardFramework"]>
+  export type WizardFrameworkInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    category?: boolean | WizardCatalogCategoryDefaultArgs<ExtArgs>
+    options?: boolean | WizardFramework$optionsArgs<ExtArgs>
+    revisions?: boolean | WizardFramework$revisionsArgs<ExtArgs>
+    _count?: boolean | WizardFrameworkCountOutputTypeDefaultArgs<ExtArgs>
+  }
+  export type WizardFrameworkIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    category?: boolean | WizardCatalogCategoryDefaultArgs<ExtArgs>
+  }
+  export type WizardFrameworkIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    category?: boolean | WizardCatalogCategoryDefaultArgs<ExtArgs>
+  }
+
+  export type $WizardFrameworkPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "WizardFramework"
+    objects: {
+      category: Prisma.$WizardCatalogCategoryPayload<ExtArgs>
+      options: Prisma.$WizardFrameworkOptionPayload<ExtArgs>[]
+      revisions: Prisma.$TemplateRevisionPayload<ExtArgs>[]
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      categoryId: string
+      label: string
+      description: string
+      badge: string | null
+      tags: string[]
+      popularity: string | null
+      icon: string | null
+      accentClass: string | null
+      displayOrder: number
+      isActive: boolean
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["wizardFramework"]>
+    composites: {}
+  }
+
+  type WizardFrameworkGetPayload<S extends boolean | null | undefined | WizardFrameworkDefaultArgs> = $Result.GetResult<Prisma.$WizardFrameworkPayload, S>
+
+  type WizardFrameworkCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<WizardFrameworkFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: WizardFrameworkCountAggregateInputType | true
+    }
+
+  export interface WizardFrameworkDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['WizardFramework'], meta: { name: 'WizardFramework' } }
+    /**
+     * Find zero or one WizardFramework that matches the filter.
+     * @param {WizardFrameworkFindUniqueArgs} args - Arguments to find a WizardFramework
+     * @example
+     * // Get one WizardFramework
+     * const wizardFramework = await prisma.wizardFramework.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends WizardFrameworkFindUniqueArgs>(args: SelectSubset<T, WizardFrameworkFindUniqueArgs<ExtArgs>>): Prisma__WizardFrameworkClient<$Result.GetResult<Prisma.$WizardFrameworkPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one WizardFramework that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {WizardFrameworkFindUniqueOrThrowArgs} args - Arguments to find a WizardFramework
+     * @example
+     * // Get one WizardFramework
+     * const wizardFramework = await prisma.wizardFramework.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends WizardFrameworkFindUniqueOrThrowArgs>(args: SelectSubset<T, WizardFrameworkFindUniqueOrThrowArgs<ExtArgs>>): Prisma__WizardFrameworkClient<$Result.GetResult<Prisma.$WizardFrameworkPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first WizardFramework that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {WizardFrameworkFindFirstArgs} args - Arguments to find a WizardFramework
+     * @example
+     * // Get one WizardFramework
+     * const wizardFramework = await prisma.wizardFramework.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends WizardFrameworkFindFirstArgs>(args?: SelectSubset<T, WizardFrameworkFindFirstArgs<ExtArgs>>): Prisma__WizardFrameworkClient<$Result.GetResult<Prisma.$WizardFrameworkPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first WizardFramework that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {WizardFrameworkFindFirstOrThrowArgs} args - Arguments to find a WizardFramework
+     * @example
+     * // Get one WizardFramework
+     * const wizardFramework = await prisma.wizardFramework.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends WizardFrameworkFindFirstOrThrowArgs>(args?: SelectSubset<T, WizardFrameworkFindFirstOrThrowArgs<ExtArgs>>): Prisma__WizardFrameworkClient<$Result.GetResult<Prisma.$WizardFrameworkPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more WizardFrameworks that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {WizardFrameworkFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all WizardFrameworks
+     * const wizardFrameworks = await prisma.wizardFramework.findMany()
+     * 
+     * // Get first 10 WizardFrameworks
+     * const wizardFrameworks = await prisma.wizardFramework.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const wizardFrameworkWithIdOnly = await prisma.wizardFramework.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends WizardFrameworkFindManyArgs>(args?: SelectSubset<T, WizardFrameworkFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$WizardFrameworkPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a WizardFramework.
+     * @param {WizardFrameworkCreateArgs} args - Arguments to create a WizardFramework.
+     * @example
+     * // Create one WizardFramework
+     * const WizardFramework = await prisma.wizardFramework.create({
+     *   data: {
+     *     // ... data to create a WizardFramework
+     *   }
+     * })
+     * 
+     */
+    create<T extends WizardFrameworkCreateArgs>(args: SelectSubset<T, WizardFrameworkCreateArgs<ExtArgs>>): Prisma__WizardFrameworkClient<$Result.GetResult<Prisma.$WizardFrameworkPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many WizardFrameworks.
+     * @param {WizardFrameworkCreateManyArgs} args - Arguments to create many WizardFrameworks.
+     * @example
+     * // Create many WizardFrameworks
+     * const wizardFramework = await prisma.wizardFramework.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends WizardFrameworkCreateManyArgs>(args?: SelectSubset<T, WizardFrameworkCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many WizardFrameworks and returns the data saved in the database.
+     * @param {WizardFrameworkCreateManyAndReturnArgs} args - Arguments to create many WizardFrameworks.
+     * @example
+     * // Create many WizardFrameworks
+     * const wizardFramework = await prisma.wizardFramework.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many WizardFrameworks and only return the `id`
+     * const wizardFrameworkWithIdOnly = await prisma.wizardFramework.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends WizardFrameworkCreateManyAndReturnArgs>(args?: SelectSubset<T, WizardFrameworkCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$WizardFrameworkPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a WizardFramework.
+     * @param {WizardFrameworkDeleteArgs} args - Arguments to delete one WizardFramework.
+     * @example
+     * // Delete one WizardFramework
+     * const WizardFramework = await prisma.wizardFramework.delete({
+     *   where: {
+     *     // ... filter to delete one WizardFramework
+     *   }
+     * })
+     * 
+     */
+    delete<T extends WizardFrameworkDeleteArgs>(args: SelectSubset<T, WizardFrameworkDeleteArgs<ExtArgs>>): Prisma__WizardFrameworkClient<$Result.GetResult<Prisma.$WizardFrameworkPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one WizardFramework.
+     * @param {WizardFrameworkUpdateArgs} args - Arguments to update one WizardFramework.
+     * @example
+     * // Update one WizardFramework
+     * const wizardFramework = await prisma.wizardFramework.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends WizardFrameworkUpdateArgs>(args: SelectSubset<T, WizardFrameworkUpdateArgs<ExtArgs>>): Prisma__WizardFrameworkClient<$Result.GetResult<Prisma.$WizardFrameworkPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more WizardFrameworks.
+     * @param {WizardFrameworkDeleteManyArgs} args - Arguments to filter WizardFrameworks to delete.
+     * @example
+     * // Delete a few WizardFrameworks
+     * const { count } = await prisma.wizardFramework.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends WizardFrameworkDeleteManyArgs>(args?: SelectSubset<T, WizardFrameworkDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more WizardFrameworks.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {WizardFrameworkUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many WizardFrameworks
+     * const wizardFramework = await prisma.wizardFramework.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends WizardFrameworkUpdateManyArgs>(args: SelectSubset<T, WizardFrameworkUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more WizardFrameworks and returns the data updated in the database.
+     * @param {WizardFrameworkUpdateManyAndReturnArgs} args - Arguments to update many WizardFrameworks.
+     * @example
+     * // Update many WizardFrameworks
+     * const wizardFramework = await prisma.wizardFramework.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more WizardFrameworks and only return the `id`
+     * const wizardFrameworkWithIdOnly = await prisma.wizardFramework.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends WizardFrameworkUpdateManyAndReturnArgs>(args: SelectSubset<T, WizardFrameworkUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$WizardFrameworkPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one WizardFramework.
+     * @param {WizardFrameworkUpsertArgs} args - Arguments to update or create a WizardFramework.
+     * @example
+     * // Update or create a WizardFramework
+     * const wizardFramework = await prisma.wizardFramework.upsert({
+     *   create: {
+     *     // ... data to create a WizardFramework
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the WizardFramework we want to update
+     *   }
+     * })
+     */
+    upsert<T extends WizardFrameworkUpsertArgs>(args: SelectSubset<T, WizardFrameworkUpsertArgs<ExtArgs>>): Prisma__WizardFrameworkClient<$Result.GetResult<Prisma.$WizardFrameworkPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of WizardFrameworks.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {WizardFrameworkCountArgs} args - Arguments to filter WizardFrameworks to count.
+     * @example
+     * // Count the number of WizardFrameworks
+     * const count = await prisma.wizardFramework.count({
+     *   where: {
+     *     // ... the filter for the WizardFrameworks we want to count
+     *   }
+     * })
+    **/
+    count<T extends WizardFrameworkCountArgs>(
+      args?: Subset<T, WizardFrameworkCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], WizardFrameworkCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a WizardFramework.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {WizardFrameworkAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends WizardFrameworkAggregateArgs>(args: Subset<T, WizardFrameworkAggregateArgs>): Prisma.PrismaPromise<GetWizardFrameworkAggregateType<T>>
+
+    /**
+     * Group by WizardFramework.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {WizardFrameworkGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends WizardFrameworkGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: WizardFrameworkGroupByArgs['orderBy'] }
+        : { orderBy?: WizardFrameworkGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, WizardFrameworkGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetWizardFrameworkGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the WizardFramework model
+   */
+  readonly fields: WizardFrameworkFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for WizardFramework.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__WizardFrameworkClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    category<T extends WizardCatalogCategoryDefaultArgs<ExtArgs> = {}>(args?: Subset<T, WizardCatalogCategoryDefaultArgs<ExtArgs>>): Prisma__WizardCatalogCategoryClient<$Result.GetResult<Prisma.$WizardCatalogCategoryPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    options<T extends WizardFramework$optionsArgs<ExtArgs> = {}>(args?: Subset<T, WizardFramework$optionsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$WizardFrameworkOptionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    revisions<T extends WizardFramework$revisionsArgs<ExtArgs> = {}>(args?: Subset<T, WizardFramework$revisionsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TemplateRevisionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the WizardFramework model
+   */
+  interface WizardFrameworkFieldRefs {
+    readonly id: FieldRef<"WizardFramework", 'String'>
+    readonly categoryId: FieldRef<"WizardFramework", 'String'>
+    readonly label: FieldRef<"WizardFramework", 'String'>
+    readonly description: FieldRef<"WizardFramework", 'String'>
+    readonly badge: FieldRef<"WizardFramework", 'String'>
+    readonly tags: FieldRef<"WizardFramework", 'String[]'>
+    readonly popularity: FieldRef<"WizardFramework", 'String'>
+    readonly icon: FieldRef<"WizardFramework", 'String'>
+    readonly accentClass: FieldRef<"WizardFramework", 'String'>
+    readonly displayOrder: FieldRef<"WizardFramework", 'Int'>
+    readonly isActive: FieldRef<"WizardFramework", 'Boolean'>
+    readonly createdAt: FieldRef<"WizardFramework", 'DateTime'>
+    readonly updatedAt: FieldRef<"WizardFramework", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * WizardFramework findUnique
+   */
+  export type WizardFrameworkFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the WizardFramework
+     */
+    select?: WizardFrameworkSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the WizardFramework
+     */
+    omit?: WizardFrameworkOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: WizardFrameworkInclude<ExtArgs> | null
+    /**
+     * Filter, which WizardFramework to fetch.
+     */
+    where: WizardFrameworkWhereUniqueInput
+  }
+
+  /**
+   * WizardFramework findUniqueOrThrow
+   */
+  export type WizardFrameworkFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the WizardFramework
+     */
+    select?: WizardFrameworkSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the WizardFramework
+     */
+    omit?: WizardFrameworkOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: WizardFrameworkInclude<ExtArgs> | null
+    /**
+     * Filter, which WizardFramework to fetch.
+     */
+    where: WizardFrameworkWhereUniqueInput
+  }
+
+  /**
+   * WizardFramework findFirst
+   */
+  export type WizardFrameworkFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the WizardFramework
+     */
+    select?: WizardFrameworkSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the WizardFramework
+     */
+    omit?: WizardFrameworkOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: WizardFrameworkInclude<ExtArgs> | null
+    /**
+     * Filter, which WizardFramework to fetch.
+     */
+    where?: WizardFrameworkWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of WizardFrameworks to fetch.
+     */
+    orderBy?: WizardFrameworkOrderByWithRelationInput | WizardFrameworkOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for WizardFrameworks.
+     */
+    cursor?: WizardFrameworkWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` WizardFrameworks from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` WizardFrameworks.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of WizardFrameworks.
+     */
+    distinct?: WizardFrameworkScalarFieldEnum | WizardFrameworkScalarFieldEnum[]
+  }
+
+  /**
+   * WizardFramework findFirstOrThrow
+   */
+  export type WizardFrameworkFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the WizardFramework
+     */
+    select?: WizardFrameworkSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the WizardFramework
+     */
+    omit?: WizardFrameworkOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: WizardFrameworkInclude<ExtArgs> | null
+    /**
+     * Filter, which WizardFramework to fetch.
+     */
+    where?: WizardFrameworkWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of WizardFrameworks to fetch.
+     */
+    orderBy?: WizardFrameworkOrderByWithRelationInput | WizardFrameworkOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for WizardFrameworks.
+     */
+    cursor?: WizardFrameworkWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` WizardFrameworks from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` WizardFrameworks.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of WizardFrameworks.
+     */
+    distinct?: WizardFrameworkScalarFieldEnum | WizardFrameworkScalarFieldEnum[]
+  }
+
+  /**
+   * WizardFramework findMany
+   */
+  export type WizardFrameworkFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the WizardFramework
+     */
+    select?: WizardFrameworkSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the WizardFramework
+     */
+    omit?: WizardFrameworkOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: WizardFrameworkInclude<ExtArgs> | null
+    /**
+     * Filter, which WizardFrameworks to fetch.
+     */
+    where?: WizardFrameworkWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of WizardFrameworks to fetch.
+     */
+    orderBy?: WizardFrameworkOrderByWithRelationInput | WizardFrameworkOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing WizardFrameworks.
+     */
+    cursor?: WizardFrameworkWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` WizardFrameworks from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` WizardFrameworks.
+     */
+    skip?: number
+    distinct?: WizardFrameworkScalarFieldEnum | WizardFrameworkScalarFieldEnum[]
+  }
+
+  /**
+   * WizardFramework create
+   */
+  export type WizardFrameworkCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the WizardFramework
+     */
+    select?: WizardFrameworkSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the WizardFramework
+     */
+    omit?: WizardFrameworkOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: WizardFrameworkInclude<ExtArgs> | null
+    /**
+     * The data needed to create a WizardFramework.
+     */
+    data: XOR<WizardFrameworkCreateInput, WizardFrameworkUncheckedCreateInput>
+  }
+
+  /**
+   * WizardFramework createMany
+   */
+  export type WizardFrameworkCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many WizardFrameworks.
+     */
+    data: WizardFrameworkCreateManyInput | WizardFrameworkCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * WizardFramework createManyAndReturn
+   */
+  export type WizardFrameworkCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the WizardFramework
+     */
+    select?: WizardFrameworkSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the WizardFramework
+     */
+    omit?: WizardFrameworkOmit<ExtArgs> | null
+    /**
+     * The data used to create many WizardFrameworks.
+     */
+    data: WizardFrameworkCreateManyInput | WizardFrameworkCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: WizardFrameworkIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * WizardFramework update
+   */
+  export type WizardFrameworkUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the WizardFramework
+     */
+    select?: WizardFrameworkSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the WizardFramework
+     */
+    omit?: WizardFrameworkOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: WizardFrameworkInclude<ExtArgs> | null
+    /**
+     * The data needed to update a WizardFramework.
+     */
+    data: XOR<WizardFrameworkUpdateInput, WizardFrameworkUncheckedUpdateInput>
+    /**
+     * Choose, which WizardFramework to update.
+     */
+    where: WizardFrameworkWhereUniqueInput
+  }
+
+  /**
+   * WizardFramework updateMany
+   */
+  export type WizardFrameworkUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update WizardFrameworks.
+     */
+    data: XOR<WizardFrameworkUpdateManyMutationInput, WizardFrameworkUncheckedUpdateManyInput>
+    /**
+     * Filter which WizardFrameworks to update
+     */
+    where?: WizardFrameworkWhereInput
+    /**
+     * Limit how many WizardFrameworks to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * WizardFramework updateManyAndReturn
+   */
+  export type WizardFrameworkUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the WizardFramework
+     */
+    select?: WizardFrameworkSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the WizardFramework
+     */
+    omit?: WizardFrameworkOmit<ExtArgs> | null
+    /**
+     * The data used to update WizardFrameworks.
+     */
+    data: XOR<WizardFrameworkUpdateManyMutationInput, WizardFrameworkUncheckedUpdateManyInput>
+    /**
+     * Filter which WizardFrameworks to update
+     */
+    where?: WizardFrameworkWhereInput
+    /**
+     * Limit how many WizardFrameworks to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: WizardFrameworkIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * WizardFramework upsert
+   */
+  export type WizardFrameworkUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the WizardFramework
+     */
+    select?: WizardFrameworkSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the WizardFramework
+     */
+    omit?: WizardFrameworkOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: WizardFrameworkInclude<ExtArgs> | null
+    /**
+     * The filter to search for the WizardFramework to update in case it exists.
+     */
+    where: WizardFrameworkWhereUniqueInput
+    /**
+     * In case the WizardFramework found by the `where` argument doesn't exist, create a new WizardFramework with this data.
+     */
+    create: XOR<WizardFrameworkCreateInput, WizardFrameworkUncheckedCreateInput>
+    /**
+     * In case the WizardFramework was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<WizardFrameworkUpdateInput, WizardFrameworkUncheckedUpdateInput>
+  }
+
+  /**
+   * WizardFramework delete
+   */
+  export type WizardFrameworkDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the WizardFramework
+     */
+    select?: WizardFrameworkSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the WizardFramework
+     */
+    omit?: WizardFrameworkOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: WizardFrameworkInclude<ExtArgs> | null
+    /**
+     * Filter which WizardFramework to delete.
+     */
+    where: WizardFrameworkWhereUniqueInput
+  }
+
+  /**
+   * WizardFramework deleteMany
+   */
+  export type WizardFrameworkDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which WizardFrameworks to delete
+     */
+    where?: WizardFrameworkWhereInput
+    /**
+     * Limit how many WizardFrameworks to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * WizardFramework.options
+   */
+  export type WizardFramework$optionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the WizardFrameworkOption
+     */
+    select?: WizardFrameworkOptionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the WizardFrameworkOption
+     */
+    omit?: WizardFrameworkOptionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: WizardFrameworkOptionInclude<ExtArgs> | null
+    where?: WizardFrameworkOptionWhereInput
+    orderBy?: WizardFrameworkOptionOrderByWithRelationInput | WizardFrameworkOptionOrderByWithRelationInput[]
+    cursor?: WizardFrameworkOptionWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: WizardFrameworkOptionScalarFieldEnum | WizardFrameworkOptionScalarFieldEnum[]
+  }
+
+  /**
+   * WizardFramework.revisions
+   */
+  export type WizardFramework$revisionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TemplateRevision
+     */
+    select?: TemplateRevisionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the TemplateRevision
+     */
+    omit?: TemplateRevisionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TemplateRevisionInclude<ExtArgs> | null
+    where?: TemplateRevisionWhereInput
+    orderBy?: TemplateRevisionOrderByWithRelationInput | TemplateRevisionOrderByWithRelationInput[]
+    cursor?: TemplateRevisionWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: TemplateRevisionScalarFieldEnum | TemplateRevisionScalarFieldEnum[]
+  }
+
+  /**
+   * WizardFramework without action
+   */
+  export type WizardFrameworkDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the WizardFramework
+     */
+    select?: WizardFrameworkSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the WizardFramework
+     */
+    omit?: WizardFrameworkOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: WizardFrameworkInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model WizardOption
+   */
+
+  export type AggregateWizardOption = {
+    _count: WizardOptionCountAggregateOutputType | null
+    _avg: WizardOptionAvgAggregateOutputType | null
+    _sum: WizardOptionSumAggregateOutputType | null
+    _min: WizardOptionMinAggregateOutputType | null
+    _max: WizardOptionMaxAggregateOutputType | null
+  }
+
+  export type WizardOptionAvgAggregateOutputType = {
+    displayOrder: number | null
+  }
+
+  export type WizardOptionSumAggregateOutputType = {
+    displayOrder: number | null
+  }
+
+  export type WizardOptionMinAggregateOutputType = {
+    id: string | null
+    label: string | null
+    description: string | null
+    tier: $Enums.WizardOptionTier | null
+    icon: string | null
+    displayOrder: number | null
+    isActive: boolean | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type WizardOptionMaxAggregateOutputType = {
+    id: string | null
+    label: string | null
+    description: string | null
+    tier: $Enums.WizardOptionTier | null
+    icon: string | null
+    displayOrder: number | null
+    isActive: boolean | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type WizardOptionCountAggregateOutputType = {
+    id: number
+    label: number
+    description: number
+    tier: number
+    icon: number
+    displayOrder: number
+    isActive: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type WizardOptionAvgAggregateInputType = {
+    displayOrder?: true
+  }
+
+  export type WizardOptionSumAggregateInputType = {
+    displayOrder?: true
+  }
+
+  export type WizardOptionMinAggregateInputType = {
+    id?: true
+    label?: true
+    description?: true
+    tier?: true
+    icon?: true
+    displayOrder?: true
+    isActive?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type WizardOptionMaxAggregateInputType = {
+    id?: true
+    label?: true
+    description?: true
+    tier?: true
+    icon?: true
+    displayOrder?: true
+    isActive?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type WizardOptionCountAggregateInputType = {
+    id?: true
+    label?: true
+    description?: true
+    tier?: true
+    icon?: true
+    displayOrder?: true
+    isActive?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type WizardOptionAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which WizardOption to aggregate.
+     */
+    where?: WizardOptionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of WizardOptions to fetch.
+     */
+    orderBy?: WizardOptionOrderByWithRelationInput | WizardOptionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: WizardOptionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` WizardOptions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` WizardOptions.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned WizardOptions
+    **/
+    _count?: true | WizardOptionCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: WizardOptionAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: WizardOptionSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: WizardOptionMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: WizardOptionMaxAggregateInputType
+  }
+
+  export type GetWizardOptionAggregateType<T extends WizardOptionAggregateArgs> = {
+        [P in keyof T & keyof AggregateWizardOption]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateWizardOption[P]>
+      : GetScalarType<T[P], AggregateWizardOption[P]>
+  }
+
+
+
+
+  export type WizardOptionGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: WizardOptionWhereInput
+    orderBy?: WizardOptionOrderByWithAggregationInput | WizardOptionOrderByWithAggregationInput[]
+    by: WizardOptionScalarFieldEnum[] | WizardOptionScalarFieldEnum
+    having?: WizardOptionScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: WizardOptionCountAggregateInputType | true
+    _avg?: WizardOptionAvgAggregateInputType
+    _sum?: WizardOptionSumAggregateInputType
+    _min?: WizardOptionMinAggregateInputType
+    _max?: WizardOptionMaxAggregateInputType
+  }
+
+  export type WizardOptionGroupByOutputType = {
+    id: string
+    label: string
+    description: string
+    tier: $Enums.WizardOptionTier
+    icon: string | null
+    displayOrder: number
+    isActive: boolean
+    createdAt: Date
+    updatedAt: Date
+    _count: WizardOptionCountAggregateOutputType | null
+    _avg: WizardOptionAvgAggregateOutputType | null
+    _sum: WizardOptionSumAggregateOutputType | null
+    _min: WizardOptionMinAggregateOutputType | null
+    _max: WizardOptionMaxAggregateOutputType | null
+  }
+
+  type GetWizardOptionGroupByPayload<T extends WizardOptionGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<WizardOptionGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof WizardOptionGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], WizardOptionGroupByOutputType[P]>
+            : GetScalarType<T[P], WizardOptionGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type WizardOptionSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    label?: boolean
+    description?: boolean
+    tier?: boolean
+    icon?: boolean
+    displayOrder?: boolean
+    isActive?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    frameworks?: boolean | WizardOption$frameworksArgs<ExtArgs>
+    _count?: boolean | WizardOptionCountOutputTypeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["wizardOption"]>
+
+  export type WizardOptionSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    label?: boolean
+    description?: boolean
+    tier?: boolean
+    icon?: boolean
+    displayOrder?: boolean
+    isActive?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }, ExtArgs["result"]["wizardOption"]>
+
+  export type WizardOptionSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    label?: boolean
+    description?: boolean
+    tier?: boolean
+    icon?: boolean
+    displayOrder?: boolean
+    isActive?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }, ExtArgs["result"]["wizardOption"]>
+
+  export type WizardOptionSelectScalar = {
+    id?: boolean
+    label?: boolean
+    description?: boolean
+    tier?: boolean
+    icon?: boolean
+    displayOrder?: boolean
+    isActive?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type WizardOptionOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "label" | "description" | "tier" | "icon" | "displayOrder" | "isActive" | "createdAt" | "updatedAt", ExtArgs["result"]["wizardOption"]>
+  export type WizardOptionInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    frameworks?: boolean | WizardOption$frameworksArgs<ExtArgs>
+    _count?: boolean | WizardOptionCountOutputTypeDefaultArgs<ExtArgs>
+  }
+  export type WizardOptionIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+  export type WizardOptionIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+
+  export type $WizardOptionPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "WizardOption"
+    objects: {
+      frameworks: Prisma.$WizardFrameworkOptionPayload<ExtArgs>[]
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      label: string
+      description: string
+      tier: $Enums.WizardOptionTier
+      icon: string | null
+      displayOrder: number
+      isActive: boolean
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["wizardOption"]>
+    composites: {}
+  }
+
+  type WizardOptionGetPayload<S extends boolean | null | undefined | WizardOptionDefaultArgs> = $Result.GetResult<Prisma.$WizardOptionPayload, S>
+
+  type WizardOptionCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<WizardOptionFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: WizardOptionCountAggregateInputType | true
+    }
+
+  export interface WizardOptionDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['WizardOption'], meta: { name: 'WizardOption' } }
+    /**
+     * Find zero or one WizardOption that matches the filter.
+     * @param {WizardOptionFindUniqueArgs} args - Arguments to find a WizardOption
+     * @example
+     * // Get one WizardOption
+     * const wizardOption = await prisma.wizardOption.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends WizardOptionFindUniqueArgs>(args: SelectSubset<T, WizardOptionFindUniqueArgs<ExtArgs>>): Prisma__WizardOptionClient<$Result.GetResult<Prisma.$WizardOptionPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one WizardOption that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {WizardOptionFindUniqueOrThrowArgs} args - Arguments to find a WizardOption
+     * @example
+     * // Get one WizardOption
+     * const wizardOption = await prisma.wizardOption.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends WizardOptionFindUniqueOrThrowArgs>(args: SelectSubset<T, WizardOptionFindUniqueOrThrowArgs<ExtArgs>>): Prisma__WizardOptionClient<$Result.GetResult<Prisma.$WizardOptionPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first WizardOption that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {WizardOptionFindFirstArgs} args - Arguments to find a WizardOption
+     * @example
+     * // Get one WizardOption
+     * const wizardOption = await prisma.wizardOption.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends WizardOptionFindFirstArgs>(args?: SelectSubset<T, WizardOptionFindFirstArgs<ExtArgs>>): Prisma__WizardOptionClient<$Result.GetResult<Prisma.$WizardOptionPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first WizardOption that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {WizardOptionFindFirstOrThrowArgs} args - Arguments to find a WizardOption
+     * @example
+     * // Get one WizardOption
+     * const wizardOption = await prisma.wizardOption.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends WizardOptionFindFirstOrThrowArgs>(args?: SelectSubset<T, WizardOptionFindFirstOrThrowArgs<ExtArgs>>): Prisma__WizardOptionClient<$Result.GetResult<Prisma.$WizardOptionPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more WizardOptions that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {WizardOptionFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all WizardOptions
+     * const wizardOptions = await prisma.wizardOption.findMany()
+     * 
+     * // Get first 10 WizardOptions
+     * const wizardOptions = await prisma.wizardOption.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const wizardOptionWithIdOnly = await prisma.wizardOption.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends WizardOptionFindManyArgs>(args?: SelectSubset<T, WizardOptionFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$WizardOptionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a WizardOption.
+     * @param {WizardOptionCreateArgs} args - Arguments to create a WizardOption.
+     * @example
+     * // Create one WizardOption
+     * const WizardOption = await prisma.wizardOption.create({
+     *   data: {
+     *     // ... data to create a WizardOption
+     *   }
+     * })
+     * 
+     */
+    create<T extends WizardOptionCreateArgs>(args: SelectSubset<T, WizardOptionCreateArgs<ExtArgs>>): Prisma__WizardOptionClient<$Result.GetResult<Prisma.$WizardOptionPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many WizardOptions.
+     * @param {WizardOptionCreateManyArgs} args - Arguments to create many WizardOptions.
+     * @example
+     * // Create many WizardOptions
+     * const wizardOption = await prisma.wizardOption.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends WizardOptionCreateManyArgs>(args?: SelectSubset<T, WizardOptionCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many WizardOptions and returns the data saved in the database.
+     * @param {WizardOptionCreateManyAndReturnArgs} args - Arguments to create many WizardOptions.
+     * @example
+     * // Create many WizardOptions
+     * const wizardOption = await prisma.wizardOption.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many WizardOptions and only return the `id`
+     * const wizardOptionWithIdOnly = await prisma.wizardOption.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends WizardOptionCreateManyAndReturnArgs>(args?: SelectSubset<T, WizardOptionCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$WizardOptionPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a WizardOption.
+     * @param {WizardOptionDeleteArgs} args - Arguments to delete one WizardOption.
+     * @example
+     * // Delete one WizardOption
+     * const WizardOption = await prisma.wizardOption.delete({
+     *   where: {
+     *     // ... filter to delete one WizardOption
+     *   }
+     * })
+     * 
+     */
+    delete<T extends WizardOptionDeleteArgs>(args: SelectSubset<T, WizardOptionDeleteArgs<ExtArgs>>): Prisma__WizardOptionClient<$Result.GetResult<Prisma.$WizardOptionPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one WizardOption.
+     * @param {WizardOptionUpdateArgs} args - Arguments to update one WizardOption.
+     * @example
+     * // Update one WizardOption
+     * const wizardOption = await prisma.wizardOption.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends WizardOptionUpdateArgs>(args: SelectSubset<T, WizardOptionUpdateArgs<ExtArgs>>): Prisma__WizardOptionClient<$Result.GetResult<Prisma.$WizardOptionPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more WizardOptions.
+     * @param {WizardOptionDeleteManyArgs} args - Arguments to filter WizardOptions to delete.
+     * @example
+     * // Delete a few WizardOptions
+     * const { count } = await prisma.wizardOption.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends WizardOptionDeleteManyArgs>(args?: SelectSubset<T, WizardOptionDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more WizardOptions.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {WizardOptionUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many WizardOptions
+     * const wizardOption = await prisma.wizardOption.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends WizardOptionUpdateManyArgs>(args: SelectSubset<T, WizardOptionUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more WizardOptions and returns the data updated in the database.
+     * @param {WizardOptionUpdateManyAndReturnArgs} args - Arguments to update many WizardOptions.
+     * @example
+     * // Update many WizardOptions
+     * const wizardOption = await prisma.wizardOption.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more WizardOptions and only return the `id`
+     * const wizardOptionWithIdOnly = await prisma.wizardOption.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends WizardOptionUpdateManyAndReturnArgs>(args: SelectSubset<T, WizardOptionUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$WizardOptionPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one WizardOption.
+     * @param {WizardOptionUpsertArgs} args - Arguments to update or create a WizardOption.
+     * @example
+     * // Update or create a WizardOption
+     * const wizardOption = await prisma.wizardOption.upsert({
+     *   create: {
+     *     // ... data to create a WizardOption
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the WizardOption we want to update
+     *   }
+     * })
+     */
+    upsert<T extends WizardOptionUpsertArgs>(args: SelectSubset<T, WizardOptionUpsertArgs<ExtArgs>>): Prisma__WizardOptionClient<$Result.GetResult<Prisma.$WizardOptionPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of WizardOptions.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {WizardOptionCountArgs} args - Arguments to filter WizardOptions to count.
+     * @example
+     * // Count the number of WizardOptions
+     * const count = await prisma.wizardOption.count({
+     *   where: {
+     *     // ... the filter for the WizardOptions we want to count
+     *   }
+     * })
+    **/
+    count<T extends WizardOptionCountArgs>(
+      args?: Subset<T, WizardOptionCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], WizardOptionCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a WizardOption.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {WizardOptionAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends WizardOptionAggregateArgs>(args: Subset<T, WizardOptionAggregateArgs>): Prisma.PrismaPromise<GetWizardOptionAggregateType<T>>
+
+    /**
+     * Group by WizardOption.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {WizardOptionGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends WizardOptionGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: WizardOptionGroupByArgs['orderBy'] }
+        : { orderBy?: WizardOptionGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, WizardOptionGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetWizardOptionGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the WizardOption model
+   */
+  readonly fields: WizardOptionFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for WizardOption.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__WizardOptionClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    frameworks<T extends WizardOption$frameworksArgs<ExtArgs> = {}>(args?: Subset<T, WizardOption$frameworksArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$WizardFrameworkOptionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the WizardOption model
+   */
+  interface WizardOptionFieldRefs {
+    readonly id: FieldRef<"WizardOption", 'String'>
+    readonly label: FieldRef<"WizardOption", 'String'>
+    readonly description: FieldRef<"WizardOption", 'String'>
+    readonly tier: FieldRef<"WizardOption", 'WizardOptionTier'>
+    readonly icon: FieldRef<"WizardOption", 'String'>
+    readonly displayOrder: FieldRef<"WizardOption", 'Int'>
+    readonly isActive: FieldRef<"WizardOption", 'Boolean'>
+    readonly createdAt: FieldRef<"WizardOption", 'DateTime'>
+    readonly updatedAt: FieldRef<"WizardOption", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * WizardOption findUnique
+   */
+  export type WizardOptionFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the WizardOption
+     */
+    select?: WizardOptionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the WizardOption
+     */
+    omit?: WizardOptionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: WizardOptionInclude<ExtArgs> | null
+    /**
+     * Filter, which WizardOption to fetch.
+     */
+    where: WizardOptionWhereUniqueInput
+  }
+
+  /**
+   * WizardOption findUniqueOrThrow
+   */
+  export type WizardOptionFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the WizardOption
+     */
+    select?: WizardOptionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the WizardOption
+     */
+    omit?: WizardOptionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: WizardOptionInclude<ExtArgs> | null
+    /**
+     * Filter, which WizardOption to fetch.
+     */
+    where: WizardOptionWhereUniqueInput
+  }
+
+  /**
+   * WizardOption findFirst
+   */
+  export type WizardOptionFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the WizardOption
+     */
+    select?: WizardOptionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the WizardOption
+     */
+    omit?: WizardOptionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: WizardOptionInclude<ExtArgs> | null
+    /**
+     * Filter, which WizardOption to fetch.
+     */
+    where?: WizardOptionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of WizardOptions to fetch.
+     */
+    orderBy?: WizardOptionOrderByWithRelationInput | WizardOptionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for WizardOptions.
+     */
+    cursor?: WizardOptionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` WizardOptions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` WizardOptions.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of WizardOptions.
+     */
+    distinct?: WizardOptionScalarFieldEnum | WizardOptionScalarFieldEnum[]
+  }
+
+  /**
+   * WizardOption findFirstOrThrow
+   */
+  export type WizardOptionFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the WizardOption
+     */
+    select?: WizardOptionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the WizardOption
+     */
+    omit?: WizardOptionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: WizardOptionInclude<ExtArgs> | null
+    /**
+     * Filter, which WizardOption to fetch.
+     */
+    where?: WizardOptionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of WizardOptions to fetch.
+     */
+    orderBy?: WizardOptionOrderByWithRelationInput | WizardOptionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for WizardOptions.
+     */
+    cursor?: WizardOptionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` WizardOptions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` WizardOptions.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of WizardOptions.
+     */
+    distinct?: WizardOptionScalarFieldEnum | WizardOptionScalarFieldEnum[]
+  }
+
+  /**
+   * WizardOption findMany
+   */
+  export type WizardOptionFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the WizardOption
+     */
+    select?: WizardOptionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the WizardOption
+     */
+    omit?: WizardOptionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: WizardOptionInclude<ExtArgs> | null
+    /**
+     * Filter, which WizardOptions to fetch.
+     */
+    where?: WizardOptionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of WizardOptions to fetch.
+     */
+    orderBy?: WizardOptionOrderByWithRelationInput | WizardOptionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing WizardOptions.
+     */
+    cursor?: WizardOptionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` WizardOptions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` WizardOptions.
+     */
+    skip?: number
+    distinct?: WizardOptionScalarFieldEnum | WizardOptionScalarFieldEnum[]
+  }
+
+  /**
+   * WizardOption create
+   */
+  export type WizardOptionCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the WizardOption
+     */
+    select?: WizardOptionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the WizardOption
+     */
+    omit?: WizardOptionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: WizardOptionInclude<ExtArgs> | null
+    /**
+     * The data needed to create a WizardOption.
+     */
+    data: XOR<WizardOptionCreateInput, WizardOptionUncheckedCreateInput>
+  }
+
+  /**
+   * WizardOption createMany
+   */
+  export type WizardOptionCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many WizardOptions.
+     */
+    data: WizardOptionCreateManyInput | WizardOptionCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * WizardOption createManyAndReturn
+   */
+  export type WizardOptionCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the WizardOption
+     */
+    select?: WizardOptionSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the WizardOption
+     */
+    omit?: WizardOptionOmit<ExtArgs> | null
+    /**
+     * The data used to create many WizardOptions.
+     */
+    data: WizardOptionCreateManyInput | WizardOptionCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * WizardOption update
+   */
+  export type WizardOptionUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the WizardOption
+     */
+    select?: WizardOptionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the WizardOption
+     */
+    omit?: WizardOptionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: WizardOptionInclude<ExtArgs> | null
+    /**
+     * The data needed to update a WizardOption.
+     */
+    data: XOR<WizardOptionUpdateInput, WizardOptionUncheckedUpdateInput>
+    /**
+     * Choose, which WizardOption to update.
+     */
+    where: WizardOptionWhereUniqueInput
+  }
+
+  /**
+   * WizardOption updateMany
+   */
+  export type WizardOptionUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update WizardOptions.
+     */
+    data: XOR<WizardOptionUpdateManyMutationInput, WizardOptionUncheckedUpdateManyInput>
+    /**
+     * Filter which WizardOptions to update
+     */
+    where?: WizardOptionWhereInput
+    /**
+     * Limit how many WizardOptions to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * WizardOption updateManyAndReturn
+   */
+  export type WizardOptionUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the WizardOption
+     */
+    select?: WizardOptionSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the WizardOption
+     */
+    omit?: WizardOptionOmit<ExtArgs> | null
+    /**
+     * The data used to update WizardOptions.
+     */
+    data: XOR<WizardOptionUpdateManyMutationInput, WizardOptionUncheckedUpdateManyInput>
+    /**
+     * Filter which WizardOptions to update
+     */
+    where?: WizardOptionWhereInput
+    /**
+     * Limit how many WizardOptions to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * WizardOption upsert
+   */
+  export type WizardOptionUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the WizardOption
+     */
+    select?: WizardOptionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the WizardOption
+     */
+    omit?: WizardOptionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: WizardOptionInclude<ExtArgs> | null
+    /**
+     * The filter to search for the WizardOption to update in case it exists.
+     */
+    where: WizardOptionWhereUniqueInput
+    /**
+     * In case the WizardOption found by the `where` argument doesn't exist, create a new WizardOption with this data.
+     */
+    create: XOR<WizardOptionCreateInput, WizardOptionUncheckedCreateInput>
+    /**
+     * In case the WizardOption was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<WizardOptionUpdateInput, WizardOptionUncheckedUpdateInput>
+  }
+
+  /**
+   * WizardOption delete
+   */
+  export type WizardOptionDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the WizardOption
+     */
+    select?: WizardOptionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the WizardOption
+     */
+    omit?: WizardOptionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: WizardOptionInclude<ExtArgs> | null
+    /**
+     * Filter which WizardOption to delete.
+     */
+    where: WizardOptionWhereUniqueInput
+  }
+
+  /**
+   * WizardOption deleteMany
+   */
+  export type WizardOptionDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which WizardOptions to delete
+     */
+    where?: WizardOptionWhereInput
+    /**
+     * Limit how many WizardOptions to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * WizardOption.frameworks
+   */
+  export type WizardOption$frameworksArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the WizardFrameworkOption
+     */
+    select?: WizardFrameworkOptionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the WizardFrameworkOption
+     */
+    omit?: WizardFrameworkOptionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: WizardFrameworkOptionInclude<ExtArgs> | null
+    where?: WizardFrameworkOptionWhereInput
+    orderBy?: WizardFrameworkOptionOrderByWithRelationInput | WizardFrameworkOptionOrderByWithRelationInput[]
+    cursor?: WizardFrameworkOptionWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: WizardFrameworkOptionScalarFieldEnum | WizardFrameworkOptionScalarFieldEnum[]
+  }
+
+  /**
+   * WizardOption without action
+   */
+  export type WizardOptionDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the WizardOption
+     */
+    select?: WizardOptionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the WizardOption
+     */
+    omit?: WizardOptionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: WizardOptionInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model WizardFrameworkOption
+   */
+
+  export type AggregateWizardFrameworkOption = {
+    _count: WizardFrameworkOptionCountAggregateOutputType | null
+    _avg: WizardFrameworkOptionAvgAggregateOutputType | null
+    _sum: WizardFrameworkOptionSumAggregateOutputType | null
+    _min: WizardFrameworkOptionMinAggregateOutputType | null
+    _max: WizardFrameworkOptionMaxAggregateOutputType | null
+  }
+
+  export type WizardFrameworkOptionAvgAggregateOutputType = {
+    displayOrder: number | null
+  }
+
+  export type WizardFrameworkOptionSumAggregateOutputType = {
+    displayOrder: number | null
+  }
+
+  export type WizardFrameworkOptionMinAggregateOutputType = {
+    id: string | null
+    frameworkId: string | null
+    optionId: string | null
+    defaultEnabled: boolean | null
+    displayOrder: number | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type WizardFrameworkOptionMaxAggregateOutputType = {
+    id: string | null
+    frameworkId: string | null
+    optionId: string | null
+    defaultEnabled: boolean | null
+    displayOrder: number | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type WizardFrameworkOptionCountAggregateOutputType = {
+    id: number
+    frameworkId: number
+    optionId: number
+    defaultEnabled: number
+    displayOrder: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type WizardFrameworkOptionAvgAggregateInputType = {
+    displayOrder?: true
+  }
+
+  export type WizardFrameworkOptionSumAggregateInputType = {
+    displayOrder?: true
+  }
+
+  export type WizardFrameworkOptionMinAggregateInputType = {
+    id?: true
+    frameworkId?: true
+    optionId?: true
+    defaultEnabled?: true
+    displayOrder?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type WizardFrameworkOptionMaxAggregateInputType = {
+    id?: true
+    frameworkId?: true
+    optionId?: true
+    defaultEnabled?: true
+    displayOrder?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type WizardFrameworkOptionCountAggregateInputType = {
+    id?: true
+    frameworkId?: true
+    optionId?: true
+    defaultEnabled?: true
+    displayOrder?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type WizardFrameworkOptionAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which WizardFrameworkOption to aggregate.
+     */
+    where?: WizardFrameworkOptionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of WizardFrameworkOptions to fetch.
+     */
+    orderBy?: WizardFrameworkOptionOrderByWithRelationInput | WizardFrameworkOptionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: WizardFrameworkOptionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` WizardFrameworkOptions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` WizardFrameworkOptions.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned WizardFrameworkOptions
+    **/
+    _count?: true | WizardFrameworkOptionCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: WizardFrameworkOptionAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: WizardFrameworkOptionSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: WizardFrameworkOptionMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: WizardFrameworkOptionMaxAggregateInputType
+  }
+
+  export type GetWizardFrameworkOptionAggregateType<T extends WizardFrameworkOptionAggregateArgs> = {
+        [P in keyof T & keyof AggregateWizardFrameworkOption]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateWizardFrameworkOption[P]>
+      : GetScalarType<T[P], AggregateWizardFrameworkOption[P]>
+  }
+
+
+
+
+  export type WizardFrameworkOptionGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: WizardFrameworkOptionWhereInput
+    orderBy?: WizardFrameworkOptionOrderByWithAggregationInput | WizardFrameworkOptionOrderByWithAggregationInput[]
+    by: WizardFrameworkOptionScalarFieldEnum[] | WizardFrameworkOptionScalarFieldEnum
+    having?: WizardFrameworkOptionScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: WizardFrameworkOptionCountAggregateInputType | true
+    _avg?: WizardFrameworkOptionAvgAggregateInputType
+    _sum?: WizardFrameworkOptionSumAggregateInputType
+    _min?: WizardFrameworkOptionMinAggregateInputType
+    _max?: WizardFrameworkOptionMaxAggregateInputType
+  }
+
+  export type WizardFrameworkOptionGroupByOutputType = {
+    id: string
+    frameworkId: string
+    optionId: string
+    defaultEnabled: boolean
+    displayOrder: number
+    createdAt: Date
+    updatedAt: Date
+    _count: WizardFrameworkOptionCountAggregateOutputType | null
+    _avg: WizardFrameworkOptionAvgAggregateOutputType | null
+    _sum: WizardFrameworkOptionSumAggregateOutputType | null
+    _min: WizardFrameworkOptionMinAggregateOutputType | null
+    _max: WizardFrameworkOptionMaxAggregateOutputType | null
+  }
+
+  type GetWizardFrameworkOptionGroupByPayload<T extends WizardFrameworkOptionGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<WizardFrameworkOptionGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof WizardFrameworkOptionGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], WizardFrameworkOptionGroupByOutputType[P]>
+            : GetScalarType<T[P], WizardFrameworkOptionGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type WizardFrameworkOptionSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    frameworkId?: boolean
+    optionId?: boolean
+    defaultEnabled?: boolean
+    displayOrder?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    framework?: boolean | WizardFrameworkDefaultArgs<ExtArgs>
+    option?: boolean | WizardOptionDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["wizardFrameworkOption"]>
+
+  export type WizardFrameworkOptionSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    frameworkId?: boolean
+    optionId?: boolean
+    defaultEnabled?: boolean
+    displayOrder?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    framework?: boolean | WizardFrameworkDefaultArgs<ExtArgs>
+    option?: boolean | WizardOptionDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["wizardFrameworkOption"]>
+
+  export type WizardFrameworkOptionSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    frameworkId?: boolean
+    optionId?: boolean
+    defaultEnabled?: boolean
+    displayOrder?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    framework?: boolean | WizardFrameworkDefaultArgs<ExtArgs>
+    option?: boolean | WizardOptionDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["wizardFrameworkOption"]>
+
+  export type WizardFrameworkOptionSelectScalar = {
+    id?: boolean
+    frameworkId?: boolean
+    optionId?: boolean
+    defaultEnabled?: boolean
+    displayOrder?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type WizardFrameworkOptionOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "frameworkId" | "optionId" | "defaultEnabled" | "displayOrder" | "createdAt" | "updatedAt", ExtArgs["result"]["wizardFrameworkOption"]>
+  export type WizardFrameworkOptionInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    framework?: boolean | WizardFrameworkDefaultArgs<ExtArgs>
+    option?: boolean | WizardOptionDefaultArgs<ExtArgs>
+  }
+  export type WizardFrameworkOptionIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    framework?: boolean | WizardFrameworkDefaultArgs<ExtArgs>
+    option?: boolean | WizardOptionDefaultArgs<ExtArgs>
+  }
+  export type WizardFrameworkOptionIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    framework?: boolean | WizardFrameworkDefaultArgs<ExtArgs>
+    option?: boolean | WizardOptionDefaultArgs<ExtArgs>
+  }
+
+  export type $WizardFrameworkOptionPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "WizardFrameworkOption"
+    objects: {
+      framework: Prisma.$WizardFrameworkPayload<ExtArgs>
+      option: Prisma.$WizardOptionPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      frameworkId: string
+      optionId: string
+      defaultEnabled: boolean
+      displayOrder: number
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["wizardFrameworkOption"]>
+    composites: {}
+  }
+
+  type WizardFrameworkOptionGetPayload<S extends boolean | null | undefined | WizardFrameworkOptionDefaultArgs> = $Result.GetResult<Prisma.$WizardFrameworkOptionPayload, S>
+
+  type WizardFrameworkOptionCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<WizardFrameworkOptionFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: WizardFrameworkOptionCountAggregateInputType | true
+    }
+
+  export interface WizardFrameworkOptionDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['WizardFrameworkOption'], meta: { name: 'WizardFrameworkOption' } }
+    /**
+     * Find zero or one WizardFrameworkOption that matches the filter.
+     * @param {WizardFrameworkOptionFindUniqueArgs} args - Arguments to find a WizardFrameworkOption
+     * @example
+     * // Get one WizardFrameworkOption
+     * const wizardFrameworkOption = await prisma.wizardFrameworkOption.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends WizardFrameworkOptionFindUniqueArgs>(args: SelectSubset<T, WizardFrameworkOptionFindUniqueArgs<ExtArgs>>): Prisma__WizardFrameworkOptionClient<$Result.GetResult<Prisma.$WizardFrameworkOptionPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one WizardFrameworkOption that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {WizardFrameworkOptionFindUniqueOrThrowArgs} args - Arguments to find a WizardFrameworkOption
+     * @example
+     * // Get one WizardFrameworkOption
+     * const wizardFrameworkOption = await prisma.wizardFrameworkOption.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends WizardFrameworkOptionFindUniqueOrThrowArgs>(args: SelectSubset<T, WizardFrameworkOptionFindUniqueOrThrowArgs<ExtArgs>>): Prisma__WizardFrameworkOptionClient<$Result.GetResult<Prisma.$WizardFrameworkOptionPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first WizardFrameworkOption that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {WizardFrameworkOptionFindFirstArgs} args - Arguments to find a WizardFrameworkOption
+     * @example
+     * // Get one WizardFrameworkOption
+     * const wizardFrameworkOption = await prisma.wizardFrameworkOption.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends WizardFrameworkOptionFindFirstArgs>(args?: SelectSubset<T, WizardFrameworkOptionFindFirstArgs<ExtArgs>>): Prisma__WizardFrameworkOptionClient<$Result.GetResult<Prisma.$WizardFrameworkOptionPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first WizardFrameworkOption that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {WizardFrameworkOptionFindFirstOrThrowArgs} args - Arguments to find a WizardFrameworkOption
+     * @example
+     * // Get one WizardFrameworkOption
+     * const wizardFrameworkOption = await prisma.wizardFrameworkOption.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends WizardFrameworkOptionFindFirstOrThrowArgs>(args?: SelectSubset<T, WizardFrameworkOptionFindFirstOrThrowArgs<ExtArgs>>): Prisma__WizardFrameworkOptionClient<$Result.GetResult<Prisma.$WizardFrameworkOptionPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more WizardFrameworkOptions that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {WizardFrameworkOptionFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all WizardFrameworkOptions
+     * const wizardFrameworkOptions = await prisma.wizardFrameworkOption.findMany()
+     * 
+     * // Get first 10 WizardFrameworkOptions
+     * const wizardFrameworkOptions = await prisma.wizardFrameworkOption.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const wizardFrameworkOptionWithIdOnly = await prisma.wizardFrameworkOption.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends WizardFrameworkOptionFindManyArgs>(args?: SelectSubset<T, WizardFrameworkOptionFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$WizardFrameworkOptionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a WizardFrameworkOption.
+     * @param {WizardFrameworkOptionCreateArgs} args - Arguments to create a WizardFrameworkOption.
+     * @example
+     * // Create one WizardFrameworkOption
+     * const WizardFrameworkOption = await prisma.wizardFrameworkOption.create({
+     *   data: {
+     *     // ... data to create a WizardFrameworkOption
+     *   }
+     * })
+     * 
+     */
+    create<T extends WizardFrameworkOptionCreateArgs>(args: SelectSubset<T, WizardFrameworkOptionCreateArgs<ExtArgs>>): Prisma__WizardFrameworkOptionClient<$Result.GetResult<Prisma.$WizardFrameworkOptionPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many WizardFrameworkOptions.
+     * @param {WizardFrameworkOptionCreateManyArgs} args - Arguments to create many WizardFrameworkOptions.
+     * @example
+     * // Create many WizardFrameworkOptions
+     * const wizardFrameworkOption = await prisma.wizardFrameworkOption.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends WizardFrameworkOptionCreateManyArgs>(args?: SelectSubset<T, WizardFrameworkOptionCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many WizardFrameworkOptions and returns the data saved in the database.
+     * @param {WizardFrameworkOptionCreateManyAndReturnArgs} args - Arguments to create many WizardFrameworkOptions.
+     * @example
+     * // Create many WizardFrameworkOptions
+     * const wizardFrameworkOption = await prisma.wizardFrameworkOption.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many WizardFrameworkOptions and only return the `id`
+     * const wizardFrameworkOptionWithIdOnly = await prisma.wizardFrameworkOption.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends WizardFrameworkOptionCreateManyAndReturnArgs>(args?: SelectSubset<T, WizardFrameworkOptionCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$WizardFrameworkOptionPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a WizardFrameworkOption.
+     * @param {WizardFrameworkOptionDeleteArgs} args - Arguments to delete one WizardFrameworkOption.
+     * @example
+     * // Delete one WizardFrameworkOption
+     * const WizardFrameworkOption = await prisma.wizardFrameworkOption.delete({
+     *   where: {
+     *     // ... filter to delete one WizardFrameworkOption
+     *   }
+     * })
+     * 
+     */
+    delete<T extends WizardFrameworkOptionDeleteArgs>(args: SelectSubset<T, WizardFrameworkOptionDeleteArgs<ExtArgs>>): Prisma__WizardFrameworkOptionClient<$Result.GetResult<Prisma.$WizardFrameworkOptionPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one WizardFrameworkOption.
+     * @param {WizardFrameworkOptionUpdateArgs} args - Arguments to update one WizardFrameworkOption.
+     * @example
+     * // Update one WizardFrameworkOption
+     * const wizardFrameworkOption = await prisma.wizardFrameworkOption.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends WizardFrameworkOptionUpdateArgs>(args: SelectSubset<T, WizardFrameworkOptionUpdateArgs<ExtArgs>>): Prisma__WizardFrameworkOptionClient<$Result.GetResult<Prisma.$WizardFrameworkOptionPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more WizardFrameworkOptions.
+     * @param {WizardFrameworkOptionDeleteManyArgs} args - Arguments to filter WizardFrameworkOptions to delete.
+     * @example
+     * // Delete a few WizardFrameworkOptions
+     * const { count } = await prisma.wizardFrameworkOption.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends WizardFrameworkOptionDeleteManyArgs>(args?: SelectSubset<T, WizardFrameworkOptionDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more WizardFrameworkOptions.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {WizardFrameworkOptionUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many WizardFrameworkOptions
+     * const wizardFrameworkOption = await prisma.wizardFrameworkOption.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends WizardFrameworkOptionUpdateManyArgs>(args: SelectSubset<T, WizardFrameworkOptionUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more WizardFrameworkOptions and returns the data updated in the database.
+     * @param {WizardFrameworkOptionUpdateManyAndReturnArgs} args - Arguments to update many WizardFrameworkOptions.
+     * @example
+     * // Update many WizardFrameworkOptions
+     * const wizardFrameworkOption = await prisma.wizardFrameworkOption.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more WizardFrameworkOptions and only return the `id`
+     * const wizardFrameworkOptionWithIdOnly = await prisma.wizardFrameworkOption.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends WizardFrameworkOptionUpdateManyAndReturnArgs>(args: SelectSubset<T, WizardFrameworkOptionUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$WizardFrameworkOptionPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one WizardFrameworkOption.
+     * @param {WizardFrameworkOptionUpsertArgs} args - Arguments to update or create a WizardFrameworkOption.
+     * @example
+     * // Update or create a WizardFrameworkOption
+     * const wizardFrameworkOption = await prisma.wizardFrameworkOption.upsert({
+     *   create: {
+     *     // ... data to create a WizardFrameworkOption
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the WizardFrameworkOption we want to update
+     *   }
+     * })
+     */
+    upsert<T extends WizardFrameworkOptionUpsertArgs>(args: SelectSubset<T, WizardFrameworkOptionUpsertArgs<ExtArgs>>): Prisma__WizardFrameworkOptionClient<$Result.GetResult<Prisma.$WizardFrameworkOptionPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of WizardFrameworkOptions.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {WizardFrameworkOptionCountArgs} args - Arguments to filter WizardFrameworkOptions to count.
+     * @example
+     * // Count the number of WizardFrameworkOptions
+     * const count = await prisma.wizardFrameworkOption.count({
+     *   where: {
+     *     // ... the filter for the WizardFrameworkOptions we want to count
+     *   }
+     * })
+    **/
+    count<T extends WizardFrameworkOptionCountArgs>(
+      args?: Subset<T, WizardFrameworkOptionCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], WizardFrameworkOptionCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a WizardFrameworkOption.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {WizardFrameworkOptionAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends WizardFrameworkOptionAggregateArgs>(args: Subset<T, WizardFrameworkOptionAggregateArgs>): Prisma.PrismaPromise<GetWizardFrameworkOptionAggregateType<T>>
+
+    /**
+     * Group by WizardFrameworkOption.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {WizardFrameworkOptionGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends WizardFrameworkOptionGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: WizardFrameworkOptionGroupByArgs['orderBy'] }
+        : { orderBy?: WizardFrameworkOptionGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, WizardFrameworkOptionGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetWizardFrameworkOptionGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the WizardFrameworkOption model
+   */
+  readonly fields: WizardFrameworkOptionFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for WizardFrameworkOption.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__WizardFrameworkOptionClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    framework<T extends WizardFrameworkDefaultArgs<ExtArgs> = {}>(args?: Subset<T, WizardFrameworkDefaultArgs<ExtArgs>>): Prisma__WizardFrameworkClient<$Result.GetResult<Prisma.$WizardFrameworkPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    option<T extends WizardOptionDefaultArgs<ExtArgs> = {}>(args?: Subset<T, WizardOptionDefaultArgs<ExtArgs>>): Prisma__WizardOptionClient<$Result.GetResult<Prisma.$WizardOptionPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the WizardFrameworkOption model
+   */
+  interface WizardFrameworkOptionFieldRefs {
+    readonly id: FieldRef<"WizardFrameworkOption", 'String'>
+    readonly frameworkId: FieldRef<"WizardFrameworkOption", 'String'>
+    readonly optionId: FieldRef<"WizardFrameworkOption", 'String'>
+    readonly defaultEnabled: FieldRef<"WizardFrameworkOption", 'Boolean'>
+    readonly displayOrder: FieldRef<"WizardFrameworkOption", 'Int'>
+    readonly createdAt: FieldRef<"WizardFrameworkOption", 'DateTime'>
+    readonly updatedAt: FieldRef<"WizardFrameworkOption", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * WizardFrameworkOption findUnique
+   */
+  export type WizardFrameworkOptionFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the WizardFrameworkOption
+     */
+    select?: WizardFrameworkOptionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the WizardFrameworkOption
+     */
+    omit?: WizardFrameworkOptionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: WizardFrameworkOptionInclude<ExtArgs> | null
+    /**
+     * Filter, which WizardFrameworkOption to fetch.
+     */
+    where: WizardFrameworkOptionWhereUniqueInput
+  }
+
+  /**
+   * WizardFrameworkOption findUniqueOrThrow
+   */
+  export type WizardFrameworkOptionFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the WizardFrameworkOption
+     */
+    select?: WizardFrameworkOptionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the WizardFrameworkOption
+     */
+    omit?: WizardFrameworkOptionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: WizardFrameworkOptionInclude<ExtArgs> | null
+    /**
+     * Filter, which WizardFrameworkOption to fetch.
+     */
+    where: WizardFrameworkOptionWhereUniqueInput
+  }
+
+  /**
+   * WizardFrameworkOption findFirst
+   */
+  export type WizardFrameworkOptionFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the WizardFrameworkOption
+     */
+    select?: WizardFrameworkOptionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the WizardFrameworkOption
+     */
+    omit?: WizardFrameworkOptionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: WizardFrameworkOptionInclude<ExtArgs> | null
+    /**
+     * Filter, which WizardFrameworkOption to fetch.
+     */
+    where?: WizardFrameworkOptionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of WizardFrameworkOptions to fetch.
+     */
+    orderBy?: WizardFrameworkOptionOrderByWithRelationInput | WizardFrameworkOptionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for WizardFrameworkOptions.
+     */
+    cursor?: WizardFrameworkOptionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` WizardFrameworkOptions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` WizardFrameworkOptions.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of WizardFrameworkOptions.
+     */
+    distinct?: WizardFrameworkOptionScalarFieldEnum | WizardFrameworkOptionScalarFieldEnum[]
+  }
+
+  /**
+   * WizardFrameworkOption findFirstOrThrow
+   */
+  export type WizardFrameworkOptionFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the WizardFrameworkOption
+     */
+    select?: WizardFrameworkOptionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the WizardFrameworkOption
+     */
+    omit?: WizardFrameworkOptionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: WizardFrameworkOptionInclude<ExtArgs> | null
+    /**
+     * Filter, which WizardFrameworkOption to fetch.
+     */
+    where?: WizardFrameworkOptionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of WizardFrameworkOptions to fetch.
+     */
+    orderBy?: WizardFrameworkOptionOrderByWithRelationInput | WizardFrameworkOptionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for WizardFrameworkOptions.
+     */
+    cursor?: WizardFrameworkOptionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` WizardFrameworkOptions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` WizardFrameworkOptions.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of WizardFrameworkOptions.
+     */
+    distinct?: WizardFrameworkOptionScalarFieldEnum | WizardFrameworkOptionScalarFieldEnum[]
+  }
+
+  /**
+   * WizardFrameworkOption findMany
+   */
+  export type WizardFrameworkOptionFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the WizardFrameworkOption
+     */
+    select?: WizardFrameworkOptionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the WizardFrameworkOption
+     */
+    omit?: WizardFrameworkOptionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: WizardFrameworkOptionInclude<ExtArgs> | null
+    /**
+     * Filter, which WizardFrameworkOptions to fetch.
+     */
+    where?: WizardFrameworkOptionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of WizardFrameworkOptions to fetch.
+     */
+    orderBy?: WizardFrameworkOptionOrderByWithRelationInput | WizardFrameworkOptionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing WizardFrameworkOptions.
+     */
+    cursor?: WizardFrameworkOptionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` WizardFrameworkOptions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` WizardFrameworkOptions.
+     */
+    skip?: number
+    distinct?: WizardFrameworkOptionScalarFieldEnum | WizardFrameworkOptionScalarFieldEnum[]
+  }
+
+  /**
+   * WizardFrameworkOption create
+   */
+  export type WizardFrameworkOptionCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the WizardFrameworkOption
+     */
+    select?: WizardFrameworkOptionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the WizardFrameworkOption
+     */
+    omit?: WizardFrameworkOptionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: WizardFrameworkOptionInclude<ExtArgs> | null
+    /**
+     * The data needed to create a WizardFrameworkOption.
+     */
+    data: XOR<WizardFrameworkOptionCreateInput, WizardFrameworkOptionUncheckedCreateInput>
+  }
+
+  /**
+   * WizardFrameworkOption createMany
+   */
+  export type WizardFrameworkOptionCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many WizardFrameworkOptions.
+     */
+    data: WizardFrameworkOptionCreateManyInput | WizardFrameworkOptionCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * WizardFrameworkOption createManyAndReturn
+   */
+  export type WizardFrameworkOptionCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the WizardFrameworkOption
+     */
+    select?: WizardFrameworkOptionSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the WizardFrameworkOption
+     */
+    omit?: WizardFrameworkOptionOmit<ExtArgs> | null
+    /**
+     * The data used to create many WizardFrameworkOptions.
+     */
+    data: WizardFrameworkOptionCreateManyInput | WizardFrameworkOptionCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: WizardFrameworkOptionIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * WizardFrameworkOption update
+   */
+  export type WizardFrameworkOptionUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the WizardFrameworkOption
+     */
+    select?: WizardFrameworkOptionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the WizardFrameworkOption
+     */
+    omit?: WizardFrameworkOptionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: WizardFrameworkOptionInclude<ExtArgs> | null
+    /**
+     * The data needed to update a WizardFrameworkOption.
+     */
+    data: XOR<WizardFrameworkOptionUpdateInput, WizardFrameworkOptionUncheckedUpdateInput>
+    /**
+     * Choose, which WizardFrameworkOption to update.
+     */
+    where: WizardFrameworkOptionWhereUniqueInput
+  }
+
+  /**
+   * WizardFrameworkOption updateMany
+   */
+  export type WizardFrameworkOptionUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update WizardFrameworkOptions.
+     */
+    data: XOR<WizardFrameworkOptionUpdateManyMutationInput, WizardFrameworkOptionUncheckedUpdateManyInput>
+    /**
+     * Filter which WizardFrameworkOptions to update
+     */
+    where?: WizardFrameworkOptionWhereInput
+    /**
+     * Limit how many WizardFrameworkOptions to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * WizardFrameworkOption updateManyAndReturn
+   */
+  export type WizardFrameworkOptionUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the WizardFrameworkOption
+     */
+    select?: WizardFrameworkOptionSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the WizardFrameworkOption
+     */
+    omit?: WizardFrameworkOptionOmit<ExtArgs> | null
+    /**
+     * The data used to update WizardFrameworkOptions.
+     */
+    data: XOR<WizardFrameworkOptionUpdateManyMutationInput, WizardFrameworkOptionUncheckedUpdateManyInput>
+    /**
+     * Filter which WizardFrameworkOptions to update
+     */
+    where?: WizardFrameworkOptionWhereInput
+    /**
+     * Limit how many WizardFrameworkOptions to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: WizardFrameworkOptionIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * WizardFrameworkOption upsert
+   */
+  export type WizardFrameworkOptionUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the WizardFrameworkOption
+     */
+    select?: WizardFrameworkOptionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the WizardFrameworkOption
+     */
+    omit?: WizardFrameworkOptionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: WizardFrameworkOptionInclude<ExtArgs> | null
+    /**
+     * The filter to search for the WizardFrameworkOption to update in case it exists.
+     */
+    where: WizardFrameworkOptionWhereUniqueInput
+    /**
+     * In case the WizardFrameworkOption found by the `where` argument doesn't exist, create a new WizardFrameworkOption with this data.
+     */
+    create: XOR<WizardFrameworkOptionCreateInput, WizardFrameworkOptionUncheckedCreateInput>
+    /**
+     * In case the WizardFrameworkOption was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<WizardFrameworkOptionUpdateInput, WizardFrameworkOptionUncheckedUpdateInput>
+  }
+
+  /**
+   * WizardFrameworkOption delete
+   */
+  export type WizardFrameworkOptionDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the WizardFrameworkOption
+     */
+    select?: WizardFrameworkOptionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the WizardFrameworkOption
+     */
+    omit?: WizardFrameworkOptionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: WizardFrameworkOptionInclude<ExtArgs> | null
+    /**
+     * Filter which WizardFrameworkOption to delete.
+     */
+    where: WizardFrameworkOptionWhereUniqueInput
+  }
+
+  /**
+   * WizardFrameworkOption deleteMany
+   */
+  export type WizardFrameworkOptionDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which WizardFrameworkOptions to delete
+     */
+    where?: WizardFrameworkOptionWhereInput
+    /**
+     * Limit how many WizardFrameworkOptions to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * WizardFrameworkOption without action
+   */
+  export type WizardFrameworkOptionDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the WizardFrameworkOption
+     */
+    select?: WizardFrameworkOptionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the WizardFrameworkOption
+     */
+    omit?: WizardFrameworkOptionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: WizardFrameworkOptionInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model TemplateRevision
+   */
+
+  export type AggregateTemplateRevision = {
+    _count: TemplateRevisionCountAggregateOutputType | null
+    _avg: TemplateRevisionAvgAggregateOutputType | null
+    _sum: TemplateRevisionSumAggregateOutputType | null
+    _min: TemplateRevisionMinAggregateOutputType | null
+    _max: TemplateRevisionMaxAggregateOutputType | null
+  }
+
+  export type TemplateRevisionAvgAggregateOutputType = {
+    templateId: number | null
+    version: number | null
+  }
+
+  export type TemplateRevisionSumAggregateOutputType = {
+    templateId: number | null
+    version: number | null
+  }
+
+  export type TemplateRevisionMinAggregateOutputType = {
+    id: string | null
+    templateId: number | null
+    frameworkId: string | null
+    compiledYaml: string | null
+    version: number | null
+    isActive: boolean | null
+    createdBy: string | null
+    notes: string | null
+    createdAt: Date | null
+  }
+
+  export type TemplateRevisionMaxAggregateOutputType = {
+    id: string | null
+    templateId: number | null
+    frameworkId: string | null
+    compiledYaml: string | null
+    version: number | null
+    isActive: boolean | null
+    createdBy: string | null
+    notes: string | null
+    createdAt: Date | null
+  }
+
+  export type TemplateRevisionCountAggregateOutputType = {
+    id: number
+    templateId: number
+    frameworkId: number
+    selectedOptionIds: number
+    source: number
+    compiledYaml: number
+    version: number
+    isActive: number
+    createdBy: number
+    notes: number
+    createdAt: number
+    _all: number
+  }
+
+
+  export type TemplateRevisionAvgAggregateInputType = {
+    templateId?: true
+    version?: true
+  }
+
+  export type TemplateRevisionSumAggregateInputType = {
+    templateId?: true
+    version?: true
+  }
+
+  export type TemplateRevisionMinAggregateInputType = {
+    id?: true
+    templateId?: true
+    frameworkId?: true
+    compiledYaml?: true
+    version?: true
+    isActive?: true
+    createdBy?: true
+    notes?: true
+    createdAt?: true
+  }
+
+  export type TemplateRevisionMaxAggregateInputType = {
+    id?: true
+    templateId?: true
+    frameworkId?: true
+    compiledYaml?: true
+    version?: true
+    isActive?: true
+    createdBy?: true
+    notes?: true
+    createdAt?: true
+  }
+
+  export type TemplateRevisionCountAggregateInputType = {
+    id?: true
+    templateId?: true
+    frameworkId?: true
+    selectedOptionIds?: true
+    source?: true
+    compiledYaml?: true
+    version?: true
+    isActive?: true
+    createdBy?: true
+    notes?: true
+    createdAt?: true
+    _all?: true
+  }
+
+  export type TemplateRevisionAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which TemplateRevision to aggregate.
+     */
+    where?: TemplateRevisionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of TemplateRevisions to fetch.
+     */
+    orderBy?: TemplateRevisionOrderByWithRelationInput | TemplateRevisionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: TemplateRevisionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` TemplateRevisions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` TemplateRevisions.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned TemplateRevisions
+    **/
+    _count?: true | TemplateRevisionCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: TemplateRevisionAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: TemplateRevisionSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: TemplateRevisionMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: TemplateRevisionMaxAggregateInputType
+  }
+
+  export type GetTemplateRevisionAggregateType<T extends TemplateRevisionAggregateArgs> = {
+        [P in keyof T & keyof AggregateTemplateRevision]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateTemplateRevision[P]>
+      : GetScalarType<T[P], AggregateTemplateRevision[P]>
+  }
+
+
+
+
+  export type TemplateRevisionGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: TemplateRevisionWhereInput
+    orderBy?: TemplateRevisionOrderByWithAggregationInput | TemplateRevisionOrderByWithAggregationInput[]
+    by: TemplateRevisionScalarFieldEnum[] | TemplateRevisionScalarFieldEnum
+    having?: TemplateRevisionScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: TemplateRevisionCountAggregateInputType | true
+    _avg?: TemplateRevisionAvgAggregateInputType
+    _sum?: TemplateRevisionSumAggregateInputType
+    _min?: TemplateRevisionMinAggregateInputType
+    _max?: TemplateRevisionMaxAggregateInputType
+  }
+
+  export type TemplateRevisionGroupByOutputType = {
+    id: string
+    templateId: number
+    frameworkId: string | null
+    selectedOptionIds: string[]
+    source: JsonValue | null
+    compiledYaml: string
+    version: number
+    isActive: boolean
+    createdBy: string | null
+    notes: string | null
+    createdAt: Date
+    _count: TemplateRevisionCountAggregateOutputType | null
+    _avg: TemplateRevisionAvgAggregateOutputType | null
+    _sum: TemplateRevisionSumAggregateOutputType | null
+    _min: TemplateRevisionMinAggregateOutputType | null
+    _max: TemplateRevisionMaxAggregateOutputType | null
+  }
+
+  type GetTemplateRevisionGroupByPayload<T extends TemplateRevisionGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<TemplateRevisionGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof TemplateRevisionGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], TemplateRevisionGroupByOutputType[P]>
+            : GetScalarType<T[P], TemplateRevisionGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type TemplateRevisionSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    templateId?: boolean
+    frameworkId?: boolean
+    selectedOptionIds?: boolean
+    source?: boolean
+    compiledYaml?: boolean
+    version?: boolean
+    isActive?: boolean
+    createdBy?: boolean
+    notes?: boolean
+    createdAt?: boolean
+    template?: boolean | TemplateDefaultArgs<ExtArgs>
+    framework?: boolean | TemplateRevision$frameworkArgs<ExtArgs>
+  }, ExtArgs["result"]["templateRevision"]>
+
+  export type TemplateRevisionSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    templateId?: boolean
+    frameworkId?: boolean
+    selectedOptionIds?: boolean
+    source?: boolean
+    compiledYaml?: boolean
+    version?: boolean
+    isActive?: boolean
+    createdBy?: boolean
+    notes?: boolean
+    createdAt?: boolean
+    template?: boolean | TemplateDefaultArgs<ExtArgs>
+    framework?: boolean | TemplateRevision$frameworkArgs<ExtArgs>
+  }, ExtArgs["result"]["templateRevision"]>
+
+  export type TemplateRevisionSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    templateId?: boolean
+    frameworkId?: boolean
+    selectedOptionIds?: boolean
+    source?: boolean
+    compiledYaml?: boolean
+    version?: boolean
+    isActive?: boolean
+    createdBy?: boolean
+    notes?: boolean
+    createdAt?: boolean
+    template?: boolean | TemplateDefaultArgs<ExtArgs>
+    framework?: boolean | TemplateRevision$frameworkArgs<ExtArgs>
+  }, ExtArgs["result"]["templateRevision"]>
+
+  export type TemplateRevisionSelectScalar = {
+    id?: boolean
+    templateId?: boolean
+    frameworkId?: boolean
+    selectedOptionIds?: boolean
+    source?: boolean
+    compiledYaml?: boolean
+    version?: boolean
+    isActive?: boolean
+    createdBy?: boolean
+    notes?: boolean
+    createdAt?: boolean
+  }
+
+  export type TemplateRevisionOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "templateId" | "frameworkId" | "selectedOptionIds" | "source" | "compiledYaml" | "version" | "isActive" | "createdBy" | "notes" | "createdAt", ExtArgs["result"]["templateRevision"]>
+  export type TemplateRevisionInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    template?: boolean | TemplateDefaultArgs<ExtArgs>
+    framework?: boolean | TemplateRevision$frameworkArgs<ExtArgs>
+  }
+  export type TemplateRevisionIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    template?: boolean | TemplateDefaultArgs<ExtArgs>
+    framework?: boolean | TemplateRevision$frameworkArgs<ExtArgs>
+  }
+  export type TemplateRevisionIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    template?: boolean | TemplateDefaultArgs<ExtArgs>
+    framework?: boolean | TemplateRevision$frameworkArgs<ExtArgs>
+  }
+
+  export type $TemplateRevisionPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "TemplateRevision"
+    objects: {
+      template: Prisma.$TemplatePayload<ExtArgs>
+      framework: Prisma.$WizardFrameworkPayload<ExtArgs> | null
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      templateId: number
+      frameworkId: string | null
+      selectedOptionIds: string[]
+      source: Prisma.JsonValue | null
+      compiledYaml: string
+      version: number
+      isActive: boolean
+      createdBy: string | null
+      notes: string | null
+      createdAt: Date
+    }, ExtArgs["result"]["templateRevision"]>
+    composites: {}
+  }
+
+  type TemplateRevisionGetPayload<S extends boolean | null | undefined | TemplateRevisionDefaultArgs> = $Result.GetResult<Prisma.$TemplateRevisionPayload, S>
+
+  type TemplateRevisionCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<TemplateRevisionFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: TemplateRevisionCountAggregateInputType | true
+    }
+
+  export interface TemplateRevisionDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['TemplateRevision'], meta: { name: 'TemplateRevision' } }
+    /**
+     * Find zero or one TemplateRevision that matches the filter.
+     * @param {TemplateRevisionFindUniqueArgs} args - Arguments to find a TemplateRevision
+     * @example
+     * // Get one TemplateRevision
+     * const templateRevision = await prisma.templateRevision.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends TemplateRevisionFindUniqueArgs>(args: SelectSubset<T, TemplateRevisionFindUniqueArgs<ExtArgs>>): Prisma__TemplateRevisionClient<$Result.GetResult<Prisma.$TemplateRevisionPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one TemplateRevision that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {TemplateRevisionFindUniqueOrThrowArgs} args - Arguments to find a TemplateRevision
+     * @example
+     * // Get one TemplateRevision
+     * const templateRevision = await prisma.templateRevision.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends TemplateRevisionFindUniqueOrThrowArgs>(args: SelectSubset<T, TemplateRevisionFindUniqueOrThrowArgs<ExtArgs>>): Prisma__TemplateRevisionClient<$Result.GetResult<Prisma.$TemplateRevisionPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first TemplateRevision that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TemplateRevisionFindFirstArgs} args - Arguments to find a TemplateRevision
+     * @example
+     * // Get one TemplateRevision
+     * const templateRevision = await prisma.templateRevision.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends TemplateRevisionFindFirstArgs>(args?: SelectSubset<T, TemplateRevisionFindFirstArgs<ExtArgs>>): Prisma__TemplateRevisionClient<$Result.GetResult<Prisma.$TemplateRevisionPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first TemplateRevision that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TemplateRevisionFindFirstOrThrowArgs} args - Arguments to find a TemplateRevision
+     * @example
+     * // Get one TemplateRevision
+     * const templateRevision = await prisma.templateRevision.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends TemplateRevisionFindFirstOrThrowArgs>(args?: SelectSubset<T, TemplateRevisionFindFirstOrThrowArgs<ExtArgs>>): Prisma__TemplateRevisionClient<$Result.GetResult<Prisma.$TemplateRevisionPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more TemplateRevisions that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TemplateRevisionFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all TemplateRevisions
+     * const templateRevisions = await prisma.templateRevision.findMany()
+     * 
+     * // Get first 10 TemplateRevisions
+     * const templateRevisions = await prisma.templateRevision.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const templateRevisionWithIdOnly = await prisma.templateRevision.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends TemplateRevisionFindManyArgs>(args?: SelectSubset<T, TemplateRevisionFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TemplateRevisionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a TemplateRevision.
+     * @param {TemplateRevisionCreateArgs} args - Arguments to create a TemplateRevision.
+     * @example
+     * // Create one TemplateRevision
+     * const TemplateRevision = await prisma.templateRevision.create({
+     *   data: {
+     *     // ... data to create a TemplateRevision
+     *   }
+     * })
+     * 
+     */
+    create<T extends TemplateRevisionCreateArgs>(args: SelectSubset<T, TemplateRevisionCreateArgs<ExtArgs>>): Prisma__TemplateRevisionClient<$Result.GetResult<Prisma.$TemplateRevisionPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many TemplateRevisions.
+     * @param {TemplateRevisionCreateManyArgs} args - Arguments to create many TemplateRevisions.
+     * @example
+     * // Create many TemplateRevisions
+     * const templateRevision = await prisma.templateRevision.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends TemplateRevisionCreateManyArgs>(args?: SelectSubset<T, TemplateRevisionCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many TemplateRevisions and returns the data saved in the database.
+     * @param {TemplateRevisionCreateManyAndReturnArgs} args - Arguments to create many TemplateRevisions.
+     * @example
+     * // Create many TemplateRevisions
+     * const templateRevision = await prisma.templateRevision.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many TemplateRevisions and only return the `id`
+     * const templateRevisionWithIdOnly = await prisma.templateRevision.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends TemplateRevisionCreateManyAndReturnArgs>(args?: SelectSubset<T, TemplateRevisionCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TemplateRevisionPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a TemplateRevision.
+     * @param {TemplateRevisionDeleteArgs} args - Arguments to delete one TemplateRevision.
+     * @example
+     * // Delete one TemplateRevision
+     * const TemplateRevision = await prisma.templateRevision.delete({
+     *   where: {
+     *     // ... filter to delete one TemplateRevision
+     *   }
+     * })
+     * 
+     */
+    delete<T extends TemplateRevisionDeleteArgs>(args: SelectSubset<T, TemplateRevisionDeleteArgs<ExtArgs>>): Prisma__TemplateRevisionClient<$Result.GetResult<Prisma.$TemplateRevisionPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one TemplateRevision.
+     * @param {TemplateRevisionUpdateArgs} args - Arguments to update one TemplateRevision.
+     * @example
+     * // Update one TemplateRevision
+     * const templateRevision = await prisma.templateRevision.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends TemplateRevisionUpdateArgs>(args: SelectSubset<T, TemplateRevisionUpdateArgs<ExtArgs>>): Prisma__TemplateRevisionClient<$Result.GetResult<Prisma.$TemplateRevisionPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more TemplateRevisions.
+     * @param {TemplateRevisionDeleteManyArgs} args - Arguments to filter TemplateRevisions to delete.
+     * @example
+     * // Delete a few TemplateRevisions
+     * const { count } = await prisma.templateRevision.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends TemplateRevisionDeleteManyArgs>(args?: SelectSubset<T, TemplateRevisionDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more TemplateRevisions.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TemplateRevisionUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many TemplateRevisions
+     * const templateRevision = await prisma.templateRevision.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends TemplateRevisionUpdateManyArgs>(args: SelectSubset<T, TemplateRevisionUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more TemplateRevisions and returns the data updated in the database.
+     * @param {TemplateRevisionUpdateManyAndReturnArgs} args - Arguments to update many TemplateRevisions.
+     * @example
+     * // Update many TemplateRevisions
+     * const templateRevision = await prisma.templateRevision.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more TemplateRevisions and only return the `id`
+     * const templateRevisionWithIdOnly = await prisma.templateRevision.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends TemplateRevisionUpdateManyAndReturnArgs>(args: SelectSubset<T, TemplateRevisionUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TemplateRevisionPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one TemplateRevision.
+     * @param {TemplateRevisionUpsertArgs} args - Arguments to update or create a TemplateRevision.
+     * @example
+     * // Update or create a TemplateRevision
+     * const templateRevision = await prisma.templateRevision.upsert({
+     *   create: {
+     *     // ... data to create a TemplateRevision
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the TemplateRevision we want to update
+     *   }
+     * })
+     */
+    upsert<T extends TemplateRevisionUpsertArgs>(args: SelectSubset<T, TemplateRevisionUpsertArgs<ExtArgs>>): Prisma__TemplateRevisionClient<$Result.GetResult<Prisma.$TemplateRevisionPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of TemplateRevisions.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TemplateRevisionCountArgs} args - Arguments to filter TemplateRevisions to count.
+     * @example
+     * // Count the number of TemplateRevisions
+     * const count = await prisma.templateRevision.count({
+     *   where: {
+     *     // ... the filter for the TemplateRevisions we want to count
+     *   }
+     * })
+    **/
+    count<T extends TemplateRevisionCountArgs>(
+      args?: Subset<T, TemplateRevisionCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], TemplateRevisionCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a TemplateRevision.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TemplateRevisionAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends TemplateRevisionAggregateArgs>(args: Subset<T, TemplateRevisionAggregateArgs>): Prisma.PrismaPromise<GetTemplateRevisionAggregateType<T>>
+
+    /**
+     * Group by TemplateRevision.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TemplateRevisionGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends TemplateRevisionGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: TemplateRevisionGroupByArgs['orderBy'] }
+        : { orderBy?: TemplateRevisionGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, TemplateRevisionGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetTemplateRevisionGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the TemplateRevision model
+   */
+  readonly fields: TemplateRevisionFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for TemplateRevision.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__TemplateRevisionClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    template<T extends TemplateDefaultArgs<ExtArgs> = {}>(args?: Subset<T, TemplateDefaultArgs<ExtArgs>>): Prisma__TemplateClient<$Result.GetResult<Prisma.$TemplatePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    framework<T extends TemplateRevision$frameworkArgs<ExtArgs> = {}>(args?: Subset<T, TemplateRevision$frameworkArgs<ExtArgs>>): Prisma__WizardFrameworkClient<$Result.GetResult<Prisma.$WizardFrameworkPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the TemplateRevision model
+   */
+  interface TemplateRevisionFieldRefs {
+    readonly id: FieldRef<"TemplateRevision", 'String'>
+    readonly templateId: FieldRef<"TemplateRevision", 'Int'>
+    readonly frameworkId: FieldRef<"TemplateRevision", 'String'>
+    readonly selectedOptionIds: FieldRef<"TemplateRevision", 'String[]'>
+    readonly source: FieldRef<"TemplateRevision", 'Json'>
+    readonly compiledYaml: FieldRef<"TemplateRevision", 'String'>
+    readonly version: FieldRef<"TemplateRevision", 'Int'>
+    readonly isActive: FieldRef<"TemplateRevision", 'Boolean'>
+    readonly createdBy: FieldRef<"TemplateRevision", 'String'>
+    readonly notes: FieldRef<"TemplateRevision", 'String'>
+    readonly createdAt: FieldRef<"TemplateRevision", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * TemplateRevision findUnique
+   */
+  export type TemplateRevisionFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TemplateRevision
+     */
+    select?: TemplateRevisionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the TemplateRevision
+     */
+    omit?: TemplateRevisionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TemplateRevisionInclude<ExtArgs> | null
+    /**
+     * Filter, which TemplateRevision to fetch.
+     */
+    where: TemplateRevisionWhereUniqueInput
+  }
+
+  /**
+   * TemplateRevision findUniqueOrThrow
+   */
+  export type TemplateRevisionFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TemplateRevision
+     */
+    select?: TemplateRevisionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the TemplateRevision
+     */
+    omit?: TemplateRevisionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TemplateRevisionInclude<ExtArgs> | null
+    /**
+     * Filter, which TemplateRevision to fetch.
+     */
+    where: TemplateRevisionWhereUniqueInput
+  }
+
+  /**
+   * TemplateRevision findFirst
+   */
+  export type TemplateRevisionFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TemplateRevision
+     */
+    select?: TemplateRevisionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the TemplateRevision
+     */
+    omit?: TemplateRevisionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TemplateRevisionInclude<ExtArgs> | null
+    /**
+     * Filter, which TemplateRevision to fetch.
+     */
+    where?: TemplateRevisionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of TemplateRevisions to fetch.
+     */
+    orderBy?: TemplateRevisionOrderByWithRelationInput | TemplateRevisionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for TemplateRevisions.
+     */
+    cursor?: TemplateRevisionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` TemplateRevisions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` TemplateRevisions.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of TemplateRevisions.
+     */
+    distinct?: TemplateRevisionScalarFieldEnum | TemplateRevisionScalarFieldEnum[]
+  }
+
+  /**
+   * TemplateRevision findFirstOrThrow
+   */
+  export type TemplateRevisionFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TemplateRevision
+     */
+    select?: TemplateRevisionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the TemplateRevision
+     */
+    omit?: TemplateRevisionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TemplateRevisionInclude<ExtArgs> | null
+    /**
+     * Filter, which TemplateRevision to fetch.
+     */
+    where?: TemplateRevisionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of TemplateRevisions to fetch.
+     */
+    orderBy?: TemplateRevisionOrderByWithRelationInput | TemplateRevisionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for TemplateRevisions.
+     */
+    cursor?: TemplateRevisionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` TemplateRevisions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` TemplateRevisions.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of TemplateRevisions.
+     */
+    distinct?: TemplateRevisionScalarFieldEnum | TemplateRevisionScalarFieldEnum[]
+  }
+
+  /**
+   * TemplateRevision findMany
+   */
+  export type TemplateRevisionFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TemplateRevision
+     */
+    select?: TemplateRevisionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the TemplateRevision
+     */
+    omit?: TemplateRevisionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TemplateRevisionInclude<ExtArgs> | null
+    /**
+     * Filter, which TemplateRevisions to fetch.
+     */
+    where?: TemplateRevisionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of TemplateRevisions to fetch.
+     */
+    orderBy?: TemplateRevisionOrderByWithRelationInput | TemplateRevisionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing TemplateRevisions.
+     */
+    cursor?: TemplateRevisionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` TemplateRevisions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` TemplateRevisions.
+     */
+    skip?: number
+    distinct?: TemplateRevisionScalarFieldEnum | TemplateRevisionScalarFieldEnum[]
+  }
+
+  /**
+   * TemplateRevision create
+   */
+  export type TemplateRevisionCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TemplateRevision
+     */
+    select?: TemplateRevisionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the TemplateRevision
+     */
+    omit?: TemplateRevisionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TemplateRevisionInclude<ExtArgs> | null
+    /**
+     * The data needed to create a TemplateRevision.
+     */
+    data: XOR<TemplateRevisionCreateInput, TemplateRevisionUncheckedCreateInput>
+  }
+
+  /**
+   * TemplateRevision createMany
+   */
+  export type TemplateRevisionCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many TemplateRevisions.
+     */
+    data: TemplateRevisionCreateManyInput | TemplateRevisionCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * TemplateRevision createManyAndReturn
+   */
+  export type TemplateRevisionCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TemplateRevision
+     */
+    select?: TemplateRevisionSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the TemplateRevision
+     */
+    omit?: TemplateRevisionOmit<ExtArgs> | null
+    /**
+     * The data used to create many TemplateRevisions.
+     */
+    data: TemplateRevisionCreateManyInput | TemplateRevisionCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TemplateRevisionIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * TemplateRevision update
+   */
+  export type TemplateRevisionUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TemplateRevision
+     */
+    select?: TemplateRevisionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the TemplateRevision
+     */
+    omit?: TemplateRevisionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TemplateRevisionInclude<ExtArgs> | null
+    /**
+     * The data needed to update a TemplateRevision.
+     */
+    data: XOR<TemplateRevisionUpdateInput, TemplateRevisionUncheckedUpdateInput>
+    /**
+     * Choose, which TemplateRevision to update.
+     */
+    where: TemplateRevisionWhereUniqueInput
+  }
+
+  /**
+   * TemplateRevision updateMany
+   */
+  export type TemplateRevisionUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update TemplateRevisions.
+     */
+    data: XOR<TemplateRevisionUpdateManyMutationInput, TemplateRevisionUncheckedUpdateManyInput>
+    /**
+     * Filter which TemplateRevisions to update
+     */
+    where?: TemplateRevisionWhereInput
+    /**
+     * Limit how many TemplateRevisions to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * TemplateRevision updateManyAndReturn
+   */
+  export type TemplateRevisionUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TemplateRevision
+     */
+    select?: TemplateRevisionSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the TemplateRevision
+     */
+    omit?: TemplateRevisionOmit<ExtArgs> | null
+    /**
+     * The data used to update TemplateRevisions.
+     */
+    data: XOR<TemplateRevisionUpdateManyMutationInput, TemplateRevisionUncheckedUpdateManyInput>
+    /**
+     * Filter which TemplateRevisions to update
+     */
+    where?: TemplateRevisionWhereInput
+    /**
+     * Limit how many TemplateRevisions to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TemplateRevisionIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * TemplateRevision upsert
+   */
+  export type TemplateRevisionUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TemplateRevision
+     */
+    select?: TemplateRevisionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the TemplateRevision
+     */
+    omit?: TemplateRevisionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TemplateRevisionInclude<ExtArgs> | null
+    /**
+     * The filter to search for the TemplateRevision to update in case it exists.
+     */
+    where: TemplateRevisionWhereUniqueInput
+    /**
+     * In case the TemplateRevision found by the `where` argument doesn't exist, create a new TemplateRevision with this data.
+     */
+    create: XOR<TemplateRevisionCreateInput, TemplateRevisionUncheckedCreateInput>
+    /**
+     * In case the TemplateRevision was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<TemplateRevisionUpdateInput, TemplateRevisionUncheckedUpdateInput>
+  }
+
+  /**
+   * TemplateRevision delete
+   */
+  export type TemplateRevisionDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TemplateRevision
+     */
+    select?: TemplateRevisionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the TemplateRevision
+     */
+    omit?: TemplateRevisionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TemplateRevisionInclude<ExtArgs> | null
+    /**
+     * Filter which TemplateRevision to delete.
+     */
+    where: TemplateRevisionWhereUniqueInput
+  }
+
+  /**
+   * TemplateRevision deleteMany
+   */
+  export type TemplateRevisionDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which TemplateRevisions to delete
+     */
+    where?: TemplateRevisionWhereInput
+    /**
+     * Limit how many TemplateRevisions to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * TemplateRevision.framework
+   */
+  export type TemplateRevision$frameworkArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the WizardFramework
+     */
+    select?: WizardFrameworkSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the WizardFramework
+     */
+    omit?: WizardFrameworkOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: WizardFrameworkInclude<ExtArgs> | null
+    where?: WizardFrameworkWhereInput
+  }
+
+  /**
+   * TemplateRevision without action
+   */
+  export type TemplateRevisionDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TemplateRevision
+     */
+    select?: TemplateRevisionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the TemplateRevision
+     */
+    omit?: TemplateRevisionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TemplateRevisionInclude<ExtArgs> | null
+  }
+
+
+  /**
    * Enums
    */
 
@@ -18537,6 +25050,85 @@ export namespace Prisma {
   export type DeploymentApprovalScalarFieldEnum = (typeof DeploymentApprovalScalarFieldEnum)[keyof typeof DeploymentApprovalScalarFieldEnum]
 
 
+  export const WizardCatalogCategoryScalarFieldEnum: {
+    id: 'id',
+    label: 'label',
+    description: 'description',
+    icon: 'icon',
+    accentClass: 'accentClass',
+    displayOrder: 'displayOrder',
+    isActive: 'isActive',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type WizardCatalogCategoryScalarFieldEnum = (typeof WizardCatalogCategoryScalarFieldEnum)[keyof typeof WizardCatalogCategoryScalarFieldEnum]
+
+
+  export const WizardFrameworkScalarFieldEnum: {
+    id: 'id',
+    categoryId: 'categoryId',
+    label: 'label',
+    description: 'description',
+    badge: 'badge',
+    tags: 'tags',
+    popularity: 'popularity',
+    icon: 'icon',
+    accentClass: 'accentClass',
+    displayOrder: 'displayOrder',
+    isActive: 'isActive',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type WizardFrameworkScalarFieldEnum = (typeof WizardFrameworkScalarFieldEnum)[keyof typeof WizardFrameworkScalarFieldEnum]
+
+
+  export const WizardOptionScalarFieldEnum: {
+    id: 'id',
+    label: 'label',
+    description: 'description',
+    tier: 'tier',
+    icon: 'icon',
+    displayOrder: 'displayOrder',
+    isActive: 'isActive',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type WizardOptionScalarFieldEnum = (typeof WizardOptionScalarFieldEnum)[keyof typeof WizardOptionScalarFieldEnum]
+
+
+  export const WizardFrameworkOptionScalarFieldEnum: {
+    id: 'id',
+    frameworkId: 'frameworkId',
+    optionId: 'optionId',
+    defaultEnabled: 'defaultEnabled',
+    displayOrder: 'displayOrder',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type WizardFrameworkOptionScalarFieldEnum = (typeof WizardFrameworkOptionScalarFieldEnum)[keyof typeof WizardFrameworkOptionScalarFieldEnum]
+
+
+  export const TemplateRevisionScalarFieldEnum: {
+    id: 'id',
+    templateId: 'templateId',
+    frameworkId: 'frameworkId',
+    selectedOptionIds: 'selectedOptionIds',
+    source: 'source',
+    compiledYaml: 'compiledYaml',
+    version: 'version',
+    isActive: 'isActive',
+    createdBy: 'createdBy',
+    notes: 'notes',
+    createdAt: 'createdAt'
+  };
+
+  export type TemplateRevisionScalarFieldEnum = (typeof TemplateRevisionScalarFieldEnum)[keyof typeof TemplateRevisionScalarFieldEnum]
+
+
   export const SortOrder: {
     asc: 'asc',
     desc: 'desc'
@@ -18568,6 +25160,14 @@ export namespace Prisma {
   export type QueryMode = (typeof QueryMode)[keyof typeof QueryMode]
 
 
+  export const NullsOrder: {
+    first: 'first',
+    last: 'last'
+  };
+
+  export type NullsOrder = (typeof NullsOrder)[keyof typeof NullsOrder]
+
+
   export const JsonNullValueFilter: {
     DbNull: typeof DbNull,
     JsonNull: typeof JsonNull,
@@ -18575,14 +25175,6 @@ export namespace Prisma {
   };
 
   export type JsonNullValueFilter = (typeof JsonNullValueFilter)[keyof typeof JsonNullValueFilter]
-
-
-  export const NullsOrder: {
-    first: 'first',
-    last: 'last'
-  };
-
-  export type NullsOrder = (typeof NullsOrder)[keyof typeof NullsOrder]
 
 
   /**
@@ -18679,6 +25271,20 @@ export namespace Prisma {
    */
   export type ListFloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float[]'>
     
+
+
+  /**
+   * Reference to a field of type 'WizardOptionTier'
+   */
+  export type EnumWizardOptionTierFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'WizardOptionTier'>
+    
+
+
+  /**
+   * Reference to a field of type 'WizardOptionTier[]'
+   */
+  export type ListEnumWizardOptionTierFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'WizardOptionTier[]'>
+    
   /**
    * Deep Input Types
    */
@@ -18733,24 +25339,26 @@ export namespace Prisma {
     OR?: TemplateWhereInput[]
     NOT?: TemplateWhereInput | TemplateWhereInput[]
     title?: StringFilter<"Template"> | string
-    description?: StringFilter<"Template"> | string
+    description?: StringNullableFilter<"Template"> | string | null
     categoryName?: StringFilter<"Template"> | string
     yaml?: StringFilter<"Template"> | string
     createdAt?: DateTimeFilter<"Template"> | Date | string
     updatedAt?: DateTimeFilter<"Template"> | Date | string
     id?: IntFilter<"Template"> | number
     category?: XOR<CategoryScalarRelationFilter, CategoryWhereInput>
+    revisions?: TemplateRevisionListRelationFilter
   }
 
   export type TemplateOrderByWithRelationInput = {
     title?: SortOrder
-    description?: SortOrder
+    description?: SortOrderInput | SortOrder
     categoryName?: SortOrder
     yaml?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     id?: SortOrder
     category?: CategoryOrderByWithRelationInput
+    revisions?: TemplateRevisionOrderByRelationAggregateInput
   }
 
   export type TemplateWhereUniqueInput = Prisma.AtLeast<{
@@ -18759,17 +25367,18 @@ export namespace Prisma {
     OR?: TemplateWhereInput[]
     NOT?: TemplateWhereInput | TemplateWhereInput[]
     title?: StringFilter<"Template"> | string
-    description?: StringFilter<"Template"> | string
+    description?: StringNullableFilter<"Template"> | string | null
     categoryName?: StringFilter<"Template"> | string
     yaml?: StringFilter<"Template"> | string
     createdAt?: DateTimeFilter<"Template"> | Date | string
     updatedAt?: DateTimeFilter<"Template"> | Date | string
     category?: XOR<CategoryScalarRelationFilter, CategoryWhereInput>
+    revisions?: TemplateRevisionListRelationFilter
   }, "id">
 
   export type TemplateOrderByWithAggregationInput = {
     title?: SortOrder
-    description?: SortOrder
+    description?: SortOrderInput | SortOrder
     categoryName?: SortOrder
     yaml?: SortOrder
     createdAt?: SortOrder
@@ -18787,7 +25396,7 @@ export namespace Prisma {
     OR?: TemplateScalarWhereWithAggregatesInput[]
     NOT?: TemplateScalarWhereWithAggregatesInput | TemplateScalarWhereWithAggregatesInput[]
     title?: StringWithAggregatesFilter<"Template"> | string
-    description?: StringWithAggregatesFilter<"Template"> | string
+    description?: StringNullableWithAggregatesFilter<"Template"> | string | null
     categoryName?: StringWithAggregatesFilter<"Template"> | string
     yaml?: StringWithAggregatesFilter<"Template"> | string
     createdAt?: DateTimeWithAggregatesFilter<"Template"> | Date | string
@@ -19848,6 +26457,425 @@ export namespace Prisma {
     createdAt?: DateTimeWithAggregatesFilter<"DeploymentApproval"> | Date | string
   }
 
+  export type WizardCatalogCategoryWhereInput = {
+    AND?: WizardCatalogCategoryWhereInput | WizardCatalogCategoryWhereInput[]
+    OR?: WizardCatalogCategoryWhereInput[]
+    NOT?: WizardCatalogCategoryWhereInput | WizardCatalogCategoryWhereInput[]
+    id?: StringFilter<"WizardCatalogCategory"> | string
+    label?: StringFilter<"WizardCatalogCategory"> | string
+    description?: StringNullableFilter<"WizardCatalogCategory"> | string | null
+    icon?: StringNullableFilter<"WizardCatalogCategory"> | string | null
+    accentClass?: StringNullableFilter<"WizardCatalogCategory"> | string | null
+    displayOrder?: IntFilter<"WizardCatalogCategory"> | number
+    isActive?: BoolFilter<"WizardCatalogCategory"> | boolean
+    createdAt?: DateTimeFilter<"WizardCatalogCategory"> | Date | string
+    updatedAt?: DateTimeFilter<"WizardCatalogCategory"> | Date | string
+    frameworks?: WizardFrameworkListRelationFilter
+  }
+
+  export type WizardCatalogCategoryOrderByWithRelationInput = {
+    id?: SortOrder
+    label?: SortOrder
+    description?: SortOrderInput | SortOrder
+    icon?: SortOrderInput | SortOrder
+    accentClass?: SortOrderInput | SortOrder
+    displayOrder?: SortOrder
+    isActive?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    frameworks?: WizardFrameworkOrderByRelationAggregateInput
+  }
+
+  export type WizardCatalogCategoryWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: WizardCatalogCategoryWhereInput | WizardCatalogCategoryWhereInput[]
+    OR?: WizardCatalogCategoryWhereInput[]
+    NOT?: WizardCatalogCategoryWhereInput | WizardCatalogCategoryWhereInput[]
+    label?: StringFilter<"WizardCatalogCategory"> | string
+    description?: StringNullableFilter<"WizardCatalogCategory"> | string | null
+    icon?: StringNullableFilter<"WizardCatalogCategory"> | string | null
+    accentClass?: StringNullableFilter<"WizardCatalogCategory"> | string | null
+    displayOrder?: IntFilter<"WizardCatalogCategory"> | number
+    isActive?: BoolFilter<"WizardCatalogCategory"> | boolean
+    createdAt?: DateTimeFilter<"WizardCatalogCategory"> | Date | string
+    updatedAt?: DateTimeFilter<"WizardCatalogCategory"> | Date | string
+    frameworks?: WizardFrameworkListRelationFilter
+  }, "id">
+
+  export type WizardCatalogCategoryOrderByWithAggregationInput = {
+    id?: SortOrder
+    label?: SortOrder
+    description?: SortOrderInput | SortOrder
+    icon?: SortOrderInput | SortOrder
+    accentClass?: SortOrderInput | SortOrder
+    displayOrder?: SortOrder
+    isActive?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: WizardCatalogCategoryCountOrderByAggregateInput
+    _avg?: WizardCatalogCategoryAvgOrderByAggregateInput
+    _max?: WizardCatalogCategoryMaxOrderByAggregateInput
+    _min?: WizardCatalogCategoryMinOrderByAggregateInput
+    _sum?: WizardCatalogCategorySumOrderByAggregateInput
+  }
+
+  export type WizardCatalogCategoryScalarWhereWithAggregatesInput = {
+    AND?: WizardCatalogCategoryScalarWhereWithAggregatesInput | WizardCatalogCategoryScalarWhereWithAggregatesInput[]
+    OR?: WizardCatalogCategoryScalarWhereWithAggregatesInput[]
+    NOT?: WizardCatalogCategoryScalarWhereWithAggregatesInput | WizardCatalogCategoryScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"WizardCatalogCategory"> | string
+    label?: StringWithAggregatesFilter<"WizardCatalogCategory"> | string
+    description?: StringNullableWithAggregatesFilter<"WizardCatalogCategory"> | string | null
+    icon?: StringNullableWithAggregatesFilter<"WizardCatalogCategory"> | string | null
+    accentClass?: StringNullableWithAggregatesFilter<"WizardCatalogCategory"> | string | null
+    displayOrder?: IntWithAggregatesFilter<"WizardCatalogCategory"> | number
+    isActive?: BoolWithAggregatesFilter<"WizardCatalogCategory"> | boolean
+    createdAt?: DateTimeWithAggregatesFilter<"WizardCatalogCategory"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"WizardCatalogCategory"> | Date | string
+  }
+
+  export type WizardFrameworkWhereInput = {
+    AND?: WizardFrameworkWhereInput | WizardFrameworkWhereInput[]
+    OR?: WizardFrameworkWhereInput[]
+    NOT?: WizardFrameworkWhereInput | WizardFrameworkWhereInput[]
+    id?: StringFilter<"WizardFramework"> | string
+    categoryId?: StringFilter<"WizardFramework"> | string
+    label?: StringFilter<"WizardFramework"> | string
+    description?: StringFilter<"WizardFramework"> | string
+    badge?: StringNullableFilter<"WizardFramework"> | string | null
+    tags?: StringNullableListFilter<"WizardFramework">
+    popularity?: StringNullableFilter<"WizardFramework"> | string | null
+    icon?: StringNullableFilter<"WizardFramework"> | string | null
+    accentClass?: StringNullableFilter<"WizardFramework"> | string | null
+    displayOrder?: IntFilter<"WizardFramework"> | number
+    isActive?: BoolFilter<"WizardFramework"> | boolean
+    createdAt?: DateTimeFilter<"WizardFramework"> | Date | string
+    updatedAt?: DateTimeFilter<"WizardFramework"> | Date | string
+    category?: XOR<WizardCatalogCategoryScalarRelationFilter, WizardCatalogCategoryWhereInput>
+    options?: WizardFrameworkOptionListRelationFilter
+    revisions?: TemplateRevisionListRelationFilter
+  }
+
+  export type WizardFrameworkOrderByWithRelationInput = {
+    id?: SortOrder
+    categoryId?: SortOrder
+    label?: SortOrder
+    description?: SortOrder
+    badge?: SortOrderInput | SortOrder
+    tags?: SortOrder
+    popularity?: SortOrderInput | SortOrder
+    icon?: SortOrderInput | SortOrder
+    accentClass?: SortOrderInput | SortOrder
+    displayOrder?: SortOrder
+    isActive?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    category?: WizardCatalogCategoryOrderByWithRelationInput
+    options?: WizardFrameworkOptionOrderByRelationAggregateInput
+    revisions?: TemplateRevisionOrderByRelationAggregateInput
+  }
+
+  export type WizardFrameworkWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: WizardFrameworkWhereInput | WizardFrameworkWhereInput[]
+    OR?: WizardFrameworkWhereInput[]
+    NOT?: WizardFrameworkWhereInput | WizardFrameworkWhereInput[]
+    categoryId?: StringFilter<"WizardFramework"> | string
+    label?: StringFilter<"WizardFramework"> | string
+    description?: StringFilter<"WizardFramework"> | string
+    badge?: StringNullableFilter<"WizardFramework"> | string | null
+    tags?: StringNullableListFilter<"WizardFramework">
+    popularity?: StringNullableFilter<"WizardFramework"> | string | null
+    icon?: StringNullableFilter<"WizardFramework"> | string | null
+    accentClass?: StringNullableFilter<"WizardFramework"> | string | null
+    displayOrder?: IntFilter<"WizardFramework"> | number
+    isActive?: BoolFilter<"WizardFramework"> | boolean
+    createdAt?: DateTimeFilter<"WizardFramework"> | Date | string
+    updatedAt?: DateTimeFilter<"WizardFramework"> | Date | string
+    category?: XOR<WizardCatalogCategoryScalarRelationFilter, WizardCatalogCategoryWhereInput>
+    options?: WizardFrameworkOptionListRelationFilter
+    revisions?: TemplateRevisionListRelationFilter
+  }, "id">
+
+  export type WizardFrameworkOrderByWithAggregationInput = {
+    id?: SortOrder
+    categoryId?: SortOrder
+    label?: SortOrder
+    description?: SortOrder
+    badge?: SortOrderInput | SortOrder
+    tags?: SortOrder
+    popularity?: SortOrderInput | SortOrder
+    icon?: SortOrderInput | SortOrder
+    accentClass?: SortOrderInput | SortOrder
+    displayOrder?: SortOrder
+    isActive?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: WizardFrameworkCountOrderByAggregateInput
+    _avg?: WizardFrameworkAvgOrderByAggregateInput
+    _max?: WizardFrameworkMaxOrderByAggregateInput
+    _min?: WizardFrameworkMinOrderByAggregateInput
+    _sum?: WizardFrameworkSumOrderByAggregateInput
+  }
+
+  export type WizardFrameworkScalarWhereWithAggregatesInput = {
+    AND?: WizardFrameworkScalarWhereWithAggregatesInput | WizardFrameworkScalarWhereWithAggregatesInput[]
+    OR?: WizardFrameworkScalarWhereWithAggregatesInput[]
+    NOT?: WizardFrameworkScalarWhereWithAggregatesInput | WizardFrameworkScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"WizardFramework"> | string
+    categoryId?: StringWithAggregatesFilter<"WizardFramework"> | string
+    label?: StringWithAggregatesFilter<"WizardFramework"> | string
+    description?: StringWithAggregatesFilter<"WizardFramework"> | string
+    badge?: StringNullableWithAggregatesFilter<"WizardFramework"> | string | null
+    tags?: StringNullableListFilter<"WizardFramework">
+    popularity?: StringNullableWithAggregatesFilter<"WizardFramework"> | string | null
+    icon?: StringNullableWithAggregatesFilter<"WizardFramework"> | string | null
+    accentClass?: StringNullableWithAggregatesFilter<"WizardFramework"> | string | null
+    displayOrder?: IntWithAggregatesFilter<"WizardFramework"> | number
+    isActive?: BoolWithAggregatesFilter<"WizardFramework"> | boolean
+    createdAt?: DateTimeWithAggregatesFilter<"WizardFramework"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"WizardFramework"> | Date | string
+  }
+
+  export type WizardOptionWhereInput = {
+    AND?: WizardOptionWhereInput | WizardOptionWhereInput[]
+    OR?: WizardOptionWhereInput[]
+    NOT?: WizardOptionWhereInput | WizardOptionWhereInput[]
+    id?: StringFilter<"WizardOption"> | string
+    label?: StringFilter<"WizardOption"> | string
+    description?: StringFilter<"WizardOption"> | string
+    tier?: EnumWizardOptionTierFilter<"WizardOption"> | $Enums.WizardOptionTier
+    icon?: StringNullableFilter<"WizardOption"> | string | null
+    displayOrder?: IntFilter<"WizardOption"> | number
+    isActive?: BoolFilter<"WizardOption"> | boolean
+    createdAt?: DateTimeFilter<"WizardOption"> | Date | string
+    updatedAt?: DateTimeFilter<"WizardOption"> | Date | string
+    frameworks?: WizardFrameworkOptionListRelationFilter
+  }
+
+  export type WizardOptionOrderByWithRelationInput = {
+    id?: SortOrder
+    label?: SortOrder
+    description?: SortOrder
+    tier?: SortOrder
+    icon?: SortOrderInput | SortOrder
+    displayOrder?: SortOrder
+    isActive?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    frameworks?: WizardFrameworkOptionOrderByRelationAggregateInput
+  }
+
+  export type WizardOptionWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: WizardOptionWhereInput | WizardOptionWhereInput[]
+    OR?: WizardOptionWhereInput[]
+    NOT?: WizardOptionWhereInput | WizardOptionWhereInput[]
+    label?: StringFilter<"WizardOption"> | string
+    description?: StringFilter<"WizardOption"> | string
+    tier?: EnumWizardOptionTierFilter<"WizardOption"> | $Enums.WizardOptionTier
+    icon?: StringNullableFilter<"WizardOption"> | string | null
+    displayOrder?: IntFilter<"WizardOption"> | number
+    isActive?: BoolFilter<"WizardOption"> | boolean
+    createdAt?: DateTimeFilter<"WizardOption"> | Date | string
+    updatedAt?: DateTimeFilter<"WizardOption"> | Date | string
+    frameworks?: WizardFrameworkOptionListRelationFilter
+  }, "id">
+
+  export type WizardOptionOrderByWithAggregationInput = {
+    id?: SortOrder
+    label?: SortOrder
+    description?: SortOrder
+    tier?: SortOrder
+    icon?: SortOrderInput | SortOrder
+    displayOrder?: SortOrder
+    isActive?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: WizardOptionCountOrderByAggregateInput
+    _avg?: WizardOptionAvgOrderByAggregateInput
+    _max?: WizardOptionMaxOrderByAggregateInput
+    _min?: WizardOptionMinOrderByAggregateInput
+    _sum?: WizardOptionSumOrderByAggregateInput
+  }
+
+  export type WizardOptionScalarWhereWithAggregatesInput = {
+    AND?: WizardOptionScalarWhereWithAggregatesInput | WizardOptionScalarWhereWithAggregatesInput[]
+    OR?: WizardOptionScalarWhereWithAggregatesInput[]
+    NOT?: WizardOptionScalarWhereWithAggregatesInput | WizardOptionScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"WizardOption"> | string
+    label?: StringWithAggregatesFilter<"WizardOption"> | string
+    description?: StringWithAggregatesFilter<"WizardOption"> | string
+    tier?: EnumWizardOptionTierWithAggregatesFilter<"WizardOption"> | $Enums.WizardOptionTier
+    icon?: StringNullableWithAggregatesFilter<"WizardOption"> | string | null
+    displayOrder?: IntWithAggregatesFilter<"WizardOption"> | number
+    isActive?: BoolWithAggregatesFilter<"WizardOption"> | boolean
+    createdAt?: DateTimeWithAggregatesFilter<"WizardOption"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"WizardOption"> | Date | string
+  }
+
+  export type WizardFrameworkOptionWhereInput = {
+    AND?: WizardFrameworkOptionWhereInput | WizardFrameworkOptionWhereInput[]
+    OR?: WizardFrameworkOptionWhereInput[]
+    NOT?: WizardFrameworkOptionWhereInput | WizardFrameworkOptionWhereInput[]
+    id?: StringFilter<"WizardFrameworkOption"> | string
+    frameworkId?: StringFilter<"WizardFrameworkOption"> | string
+    optionId?: StringFilter<"WizardFrameworkOption"> | string
+    defaultEnabled?: BoolFilter<"WizardFrameworkOption"> | boolean
+    displayOrder?: IntFilter<"WizardFrameworkOption"> | number
+    createdAt?: DateTimeFilter<"WizardFrameworkOption"> | Date | string
+    updatedAt?: DateTimeFilter<"WizardFrameworkOption"> | Date | string
+    framework?: XOR<WizardFrameworkScalarRelationFilter, WizardFrameworkWhereInput>
+    option?: XOR<WizardOptionScalarRelationFilter, WizardOptionWhereInput>
+  }
+
+  export type WizardFrameworkOptionOrderByWithRelationInput = {
+    id?: SortOrder
+    frameworkId?: SortOrder
+    optionId?: SortOrder
+    defaultEnabled?: SortOrder
+    displayOrder?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    framework?: WizardFrameworkOrderByWithRelationInput
+    option?: WizardOptionOrderByWithRelationInput
+  }
+
+  export type WizardFrameworkOptionWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    frameworkId_optionId?: WizardFrameworkOptionFrameworkIdOptionIdCompoundUniqueInput
+    AND?: WizardFrameworkOptionWhereInput | WizardFrameworkOptionWhereInput[]
+    OR?: WizardFrameworkOptionWhereInput[]
+    NOT?: WizardFrameworkOptionWhereInput | WizardFrameworkOptionWhereInput[]
+    frameworkId?: StringFilter<"WizardFrameworkOption"> | string
+    optionId?: StringFilter<"WizardFrameworkOption"> | string
+    defaultEnabled?: BoolFilter<"WizardFrameworkOption"> | boolean
+    displayOrder?: IntFilter<"WizardFrameworkOption"> | number
+    createdAt?: DateTimeFilter<"WizardFrameworkOption"> | Date | string
+    updatedAt?: DateTimeFilter<"WizardFrameworkOption"> | Date | string
+    framework?: XOR<WizardFrameworkScalarRelationFilter, WizardFrameworkWhereInput>
+    option?: XOR<WizardOptionScalarRelationFilter, WizardOptionWhereInput>
+  }, "id" | "frameworkId_optionId">
+
+  export type WizardFrameworkOptionOrderByWithAggregationInput = {
+    id?: SortOrder
+    frameworkId?: SortOrder
+    optionId?: SortOrder
+    defaultEnabled?: SortOrder
+    displayOrder?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: WizardFrameworkOptionCountOrderByAggregateInput
+    _avg?: WizardFrameworkOptionAvgOrderByAggregateInput
+    _max?: WizardFrameworkOptionMaxOrderByAggregateInput
+    _min?: WizardFrameworkOptionMinOrderByAggregateInput
+    _sum?: WizardFrameworkOptionSumOrderByAggregateInput
+  }
+
+  export type WizardFrameworkOptionScalarWhereWithAggregatesInput = {
+    AND?: WizardFrameworkOptionScalarWhereWithAggregatesInput | WizardFrameworkOptionScalarWhereWithAggregatesInput[]
+    OR?: WizardFrameworkOptionScalarWhereWithAggregatesInput[]
+    NOT?: WizardFrameworkOptionScalarWhereWithAggregatesInput | WizardFrameworkOptionScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"WizardFrameworkOption"> | string
+    frameworkId?: StringWithAggregatesFilter<"WizardFrameworkOption"> | string
+    optionId?: StringWithAggregatesFilter<"WizardFrameworkOption"> | string
+    defaultEnabled?: BoolWithAggregatesFilter<"WizardFrameworkOption"> | boolean
+    displayOrder?: IntWithAggregatesFilter<"WizardFrameworkOption"> | number
+    createdAt?: DateTimeWithAggregatesFilter<"WizardFrameworkOption"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"WizardFrameworkOption"> | Date | string
+  }
+
+  export type TemplateRevisionWhereInput = {
+    AND?: TemplateRevisionWhereInput | TemplateRevisionWhereInput[]
+    OR?: TemplateRevisionWhereInput[]
+    NOT?: TemplateRevisionWhereInput | TemplateRevisionWhereInput[]
+    id?: StringFilter<"TemplateRevision"> | string
+    templateId?: IntFilter<"TemplateRevision"> | number
+    frameworkId?: StringNullableFilter<"TemplateRevision"> | string | null
+    selectedOptionIds?: StringNullableListFilter<"TemplateRevision">
+    source?: JsonNullableFilter<"TemplateRevision">
+    compiledYaml?: StringFilter<"TemplateRevision"> | string
+    version?: IntFilter<"TemplateRevision"> | number
+    isActive?: BoolFilter<"TemplateRevision"> | boolean
+    createdBy?: StringNullableFilter<"TemplateRevision"> | string | null
+    notes?: StringNullableFilter<"TemplateRevision"> | string | null
+    createdAt?: DateTimeFilter<"TemplateRevision"> | Date | string
+    template?: XOR<TemplateScalarRelationFilter, TemplateWhereInput>
+    framework?: XOR<WizardFrameworkNullableScalarRelationFilter, WizardFrameworkWhereInput> | null
+  }
+
+  export type TemplateRevisionOrderByWithRelationInput = {
+    id?: SortOrder
+    templateId?: SortOrder
+    frameworkId?: SortOrderInput | SortOrder
+    selectedOptionIds?: SortOrder
+    source?: SortOrderInput | SortOrder
+    compiledYaml?: SortOrder
+    version?: SortOrder
+    isActive?: SortOrder
+    createdBy?: SortOrderInput | SortOrder
+    notes?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    template?: TemplateOrderByWithRelationInput
+    framework?: WizardFrameworkOrderByWithRelationInput
+  }
+
+  export type TemplateRevisionWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    templateId_version?: TemplateRevisionTemplateIdVersionCompoundUniqueInput
+    AND?: TemplateRevisionWhereInput | TemplateRevisionWhereInput[]
+    OR?: TemplateRevisionWhereInput[]
+    NOT?: TemplateRevisionWhereInput | TemplateRevisionWhereInput[]
+    templateId?: IntFilter<"TemplateRevision"> | number
+    frameworkId?: StringNullableFilter<"TemplateRevision"> | string | null
+    selectedOptionIds?: StringNullableListFilter<"TemplateRevision">
+    source?: JsonNullableFilter<"TemplateRevision">
+    compiledYaml?: StringFilter<"TemplateRevision"> | string
+    version?: IntFilter<"TemplateRevision"> | number
+    isActive?: BoolFilter<"TemplateRevision"> | boolean
+    createdBy?: StringNullableFilter<"TemplateRevision"> | string | null
+    notes?: StringNullableFilter<"TemplateRevision"> | string | null
+    createdAt?: DateTimeFilter<"TemplateRevision"> | Date | string
+    template?: XOR<TemplateScalarRelationFilter, TemplateWhereInput>
+    framework?: XOR<WizardFrameworkNullableScalarRelationFilter, WizardFrameworkWhereInput> | null
+  }, "id" | "templateId_version">
+
+  export type TemplateRevisionOrderByWithAggregationInput = {
+    id?: SortOrder
+    templateId?: SortOrder
+    frameworkId?: SortOrderInput | SortOrder
+    selectedOptionIds?: SortOrder
+    source?: SortOrderInput | SortOrder
+    compiledYaml?: SortOrder
+    version?: SortOrder
+    isActive?: SortOrder
+    createdBy?: SortOrderInput | SortOrder
+    notes?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    _count?: TemplateRevisionCountOrderByAggregateInput
+    _avg?: TemplateRevisionAvgOrderByAggregateInput
+    _max?: TemplateRevisionMaxOrderByAggregateInput
+    _min?: TemplateRevisionMinOrderByAggregateInput
+    _sum?: TemplateRevisionSumOrderByAggregateInput
+  }
+
+  export type TemplateRevisionScalarWhereWithAggregatesInput = {
+    AND?: TemplateRevisionScalarWhereWithAggregatesInput | TemplateRevisionScalarWhereWithAggregatesInput[]
+    OR?: TemplateRevisionScalarWhereWithAggregatesInput[]
+    NOT?: TemplateRevisionScalarWhereWithAggregatesInput | TemplateRevisionScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"TemplateRevision"> | string
+    templateId?: IntWithAggregatesFilter<"TemplateRevision"> | number
+    frameworkId?: StringNullableWithAggregatesFilter<"TemplateRevision"> | string | null
+    selectedOptionIds?: StringNullableListFilter<"TemplateRevision">
+    source?: JsonNullableWithAggregatesFilter<"TemplateRevision">
+    compiledYaml?: StringWithAggregatesFilter<"TemplateRevision"> | string
+    version?: IntWithAggregatesFilter<"TemplateRevision"> | number
+    isActive?: BoolWithAggregatesFilter<"TemplateRevision"> | boolean
+    createdBy?: StringNullableWithAggregatesFilter<"TemplateRevision"> | string | null
+    notes?: StringNullableWithAggregatesFilter<"TemplateRevision"> | string | null
+    createdAt?: DateTimeWithAggregatesFilter<"TemplateRevision"> | Date | string
+  }
+
   export type ProjectCreateInput = {
     name: string
     createdAt?: Date | string
@@ -19889,45 +26917,49 @@ export namespace Prisma {
 
   export type TemplateCreateInput = {
     title: string
-    description: string
+    description?: string | null
     yaml: string
     createdAt?: Date | string
     updatedAt?: Date | string
     category: CategoryCreateNestedOneWithoutTemplatesInput
+    revisions?: TemplateRevisionCreateNestedManyWithoutTemplateInput
   }
 
   export type TemplateUncheckedCreateInput = {
     title: string
-    description: string
+    description?: string | null
     categoryName: string
     yaml: string
     createdAt?: Date | string
     updatedAt?: Date | string
     id?: number
+    revisions?: TemplateRevisionUncheckedCreateNestedManyWithoutTemplateInput
   }
 
   export type TemplateUpdateInput = {
     title?: StringFieldUpdateOperationsInput | string
-    description?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
     yaml?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     category?: CategoryUpdateOneRequiredWithoutTemplatesNestedInput
+    revisions?: TemplateRevisionUpdateManyWithoutTemplateNestedInput
   }
 
   export type TemplateUncheckedUpdateInput = {
     title?: StringFieldUpdateOperationsInput | string
-    description?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
     categoryName?: StringFieldUpdateOperationsInput | string
     yaml?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     id?: IntFieldUpdateOperationsInput | number
+    revisions?: TemplateRevisionUncheckedUpdateManyWithoutTemplateNestedInput
   }
 
   export type TemplateCreateManyInput = {
     title: string
-    description: string
+    description?: string | null
     categoryName: string
     yaml: string
     createdAt?: Date | string
@@ -19937,7 +26969,7 @@ export namespace Prisma {
 
   export type TemplateUpdateManyMutationInput = {
     title?: StringFieldUpdateOperationsInput | string
-    description?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
     yaml?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -19945,7 +26977,7 @@ export namespace Prisma {
 
   export type TemplateUncheckedUpdateManyInput = {
     title?: StringFieldUpdateOperationsInput | string
-    description?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
     categoryName?: StringFieldUpdateOperationsInput | string
     yaml?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -21148,6 +28180,465 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type WizardCatalogCategoryCreateInput = {
+    id: string
+    label: string
+    description?: string | null
+    icon?: string | null
+    accentClass?: string | null
+    displayOrder?: number
+    isActive?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    frameworks?: WizardFrameworkCreateNestedManyWithoutCategoryInput
+  }
+
+  export type WizardCatalogCategoryUncheckedCreateInput = {
+    id: string
+    label: string
+    description?: string | null
+    icon?: string | null
+    accentClass?: string | null
+    displayOrder?: number
+    isActive?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    frameworks?: WizardFrameworkUncheckedCreateNestedManyWithoutCategoryInput
+  }
+
+  export type WizardCatalogCategoryUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    label?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    icon?: NullableStringFieldUpdateOperationsInput | string | null
+    accentClass?: NullableStringFieldUpdateOperationsInput | string | null
+    displayOrder?: IntFieldUpdateOperationsInput | number
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    frameworks?: WizardFrameworkUpdateManyWithoutCategoryNestedInput
+  }
+
+  export type WizardCatalogCategoryUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    label?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    icon?: NullableStringFieldUpdateOperationsInput | string | null
+    accentClass?: NullableStringFieldUpdateOperationsInput | string | null
+    displayOrder?: IntFieldUpdateOperationsInput | number
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    frameworks?: WizardFrameworkUncheckedUpdateManyWithoutCategoryNestedInput
+  }
+
+  export type WizardCatalogCategoryCreateManyInput = {
+    id: string
+    label: string
+    description?: string | null
+    icon?: string | null
+    accentClass?: string | null
+    displayOrder?: number
+    isActive?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type WizardCatalogCategoryUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    label?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    icon?: NullableStringFieldUpdateOperationsInput | string | null
+    accentClass?: NullableStringFieldUpdateOperationsInput | string | null
+    displayOrder?: IntFieldUpdateOperationsInput | number
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type WizardCatalogCategoryUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    label?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    icon?: NullableStringFieldUpdateOperationsInput | string | null
+    accentClass?: NullableStringFieldUpdateOperationsInput | string | null
+    displayOrder?: IntFieldUpdateOperationsInput | number
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type WizardFrameworkCreateInput = {
+    id: string
+    label: string
+    description: string
+    badge?: string | null
+    tags?: WizardFrameworkCreatetagsInput | string[]
+    popularity?: string | null
+    icon?: string | null
+    accentClass?: string | null
+    displayOrder?: number
+    isActive?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    category: WizardCatalogCategoryCreateNestedOneWithoutFrameworksInput
+    options?: WizardFrameworkOptionCreateNestedManyWithoutFrameworkInput
+    revisions?: TemplateRevisionCreateNestedManyWithoutFrameworkInput
+  }
+
+  export type WizardFrameworkUncheckedCreateInput = {
+    id: string
+    categoryId: string
+    label: string
+    description: string
+    badge?: string | null
+    tags?: WizardFrameworkCreatetagsInput | string[]
+    popularity?: string | null
+    icon?: string | null
+    accentClass?: string | null
+    displayOrder?: number
+    isActive?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    options?: WizardFrameworkOptionUncheckedCreateNestedManyWithoutFrameworkInput
+    revisions?: TemplateRevisionUncheckedCreateNestedManyWithoutFrameworkInput
+  }
+
+  export type WizardFrameworkUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    label?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    badge?: NullableStringFieldUpdateOperationsInput | string | null
+    tags?: WizardFrameworkUpdatetagsInput | string[]
+    popularity?: NullableStringFieldUpdateOperationsInput | string | null
+    icon?: NullableStringFieldUpdateOperationsInput | string | null
+    accentClass?: NullableStringFieldUpdateOperationsInput | string | null
+    displayOrder?: IntFieldUpdateOperationsInput | number
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    category?: WizardCatalogCategoryUpdateOneRequiredWithoutFrameworksNestedInput
+    options?: WizardFrameworkOptionUpdateManyWithoutFrameworkNestedInput
+    revisions?: TemplateRevisionUpdateManyWithoutFrameworkNestedInput
+  }
+
+  export type WizardFrameworkUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    categoryId?: StringFieldUpdateOperationsInput | string
+    label?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    badge?: NullableStringFieldUpdateOperationsInput | string | null
+    tags?: WizardFrameworkUpdatetagsInput | string[]
+    popularity?: NullableStringFieldUpdateOperationsInput | string | null
+    icon?: NullableStringFieldUpdateOperationsInput | string | null
+    accentClass?: NullableStringFieldUpdateOperationsInput | string | null
+    displayOrder?: IntFieldUpdateOperationsInput | number
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    options?: WizardFrameworkOptionUncheckedUpdateManyWithoutFrameworkNestedInput
+    revisions?: TemplateRevisionUncheckedUpdateManyWithoutFrameworkNestedInput
+  }
+
+  export type WizardFrameworkCreateManyInput = {
+    id: string
+    categoryId: string
+    label: string
+    description: string
+    badge?: string | null
+    tags?: WizardFrameworkCreatetagsInput | string[]
+    popularity?: string | null
+    icon?: string | null
+    accentClass?: string | null
+    displayOrder?: number
+    isActive?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type WizardFrameworkUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    label?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    badge?: NullableStringFieldUpdateOperationsInput | string | null
+    tags?: WizardFrameworkUpdatetagsInput | string[]
+    popularity?: NullableStringFieldUpdateOperationsInput | string | null
+    icon?: NullableStringFieldUpdateOperationsInput | string | null
+    accentClass?: NullableStringFieldUpdateOperationsInput | string | null
+    displayOrder?: IntFieldUpdateOperationsInput | number
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type WizardFrameworkUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    categoryId?: StringFieldUpdateOperationsInput | string
+    label?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    badge?: NullableStringFieldUpdateOperationsInput | string | null
+    tags?: WizardFrameworkUpdatetagsInput | string[]
+    popularity?: NullableStringFieldUpdateOperationsInput | string | null
+    icon?: NullableStringFieldUpdateOperationsInput | string | null
+    accentClass?: NullableStringFieldUpdateOperationsInput | string | null
+    displayOrder?: IntFieldUpdateOperationsInput | number
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type WizardOptionCreateInput = {
+    id: string
+    label: string
+    description: string
+    tier: $Enums.WizardOptionTier
+    icon?: string | null
+    displayOrder?: number
+    isActive?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    frameworks?: WizardFrameworkOptionCreateNestedManyWithoutOptionInput
+  }
+
+  export type WizardOptionUncheckedCreateInput = {
+    id: string
+    label: string
+    description: string
+    tier: $Enums.WizardOptionTier
+    icon?: string | null
+    displayOrder?: number
+    isActive?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    frameworks?: WizardFrameworkOptionUncheckedCreateNestedManyWithoutOptionInput
+  }
+
+  export type WizardOptionUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    label?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    tier?: EnumWizardOptionTierFieldUpdateOperationsInput | $Enums.WizardOptionTier
+    icon?: NullableStringFieldUpdateOperationsInput | string | null
+    displayOrder?: IntFieldUpdateOperationsInput | number
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    frameworks?: WizardFrameworkOptionUpdateManyWithoutOptionNestedInput
+  }
+
+  export type WizardOptionUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    label?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    tier?: EnumWizardOptionTierFieldUpdateOperationsInput | $Enums.WizardOptionTier
+    icon?: NullableStringFieldUpdateOperationsInput | string | null
+    displayOrder?: IntFieldUpdateOperationsInput | number
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    frameworks?: WizardFrameworkOptionUncheckedUpdateManyWithoutOptionNestedInput
+  }
+
+  export type WizardOptionCreateManyInput = {
+    id: string
+    label: string
+    description: string
+    tier: $Enums.WizardOptionTier
+    icon?: string | null
+    displayOrder?: number
+    isActive?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type WizardOptionUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    label?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    tier?: EnumWizardOptionTierFieldUpdateOperationsInput | $Enums.WizardOptionTier
+    icon?: NullableStringFieldUpdateOperationsInput | string | null
+    displayOrder?: IntFieldUpdateOperationsInput | number
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type WizardOptionUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    label?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    tier?: EnumWizardOptionTierFieldUpdateOperationsInput | $Enums.WizardOptionTier
+    icon?: NullableStringFieldUpdateOperationsInput | string | null
+    displayOrder?: IntFieldUpdateOperationsInput | number
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type WizardFrameworkOptionCreateInput = {
+    id?: string
+    defaultEnabled?: boolean
+    displayOrder?: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    framework: WizardFrameworkCreateNestedOneWithoutOptionsInput
+    option: WizardOptionCreateNestedOneWithoutFrameworksInput
+  }
+
+  export type WizardFrameworkOptionUncheckedCreateInput = {
+    id?: string
+    frameworkId: string
+    optionId: string
+    defaultEnabled?: boolean
+    displayOrder?: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type WizardFrameworkOptionUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    defaultEnabled?: BoolFieldUpdateOperationsInput | boolean
+    displayOrder?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    framework?: WizardFrameworkUpdateOneRequiredWithoutOptionsNestedInput
+    option?: WizardOptionUpdateOneRequiredWithoutFrameworksNestedInput
+  }
+
+  export type WizardFrameworkOptionUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    frameworkId?: StringFieldUpdateOperationsInput | string
+    optionId?: StringFieldUpdateOperationsInput | string
+    defaultEnabled?: BoolFieldUpdateOperationsInput | boolean
+    displayOrder?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type WizardFrameworkOptionCreateManyInput = {
+    id?: string
+    frameworkId: string
+    optionId: string
+    defaultEnabled?: boolean
+    displayOrder?: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type WizardFrameworkOptionUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    defaultEnabled?: BoolFieldUpdateOperationsInput | boolean
+    displayOrder?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type WizardFrameworkOptionUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    frameworkId?: StringFieldUpdateOperationsInput | string
+    optionId?: StringFieldUpdateOperationsInput | string
+    defaultEnabled?: BoolFieldUpdateOperationsInput | boolean
+    displayOrder?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type TemplateRevisionCreateInput = {
+    id?: string
+    selectedOptionIds?: TemplateRevisionCreateselectedOptionIdsInput | string[]
+    source?: NullableJsonNullValueInput | InputJsonValue
+    compiledYaml: string
+    version: number
+    isActive?: boolean
+    createdBy?: string | null
+    notes?: string | null
+    createdAt?: Date | string
+    template: TemplateCreateNestedOneWithoutRevisionsInput
+    framework?: WizardFrameworkCreateNestedOneWithoutRevisionsInput
+  }
+
+  export type TemplateRevisionUncheckedCreateInput = {
+    id?: string
+    templateId: number
+    frameworkId?: string | null
+    selectedOptionIds?: TemplateRevisionCreateselectedOptionIdsInput | string[]
+    source?: NullableJsonNullValueInput | InputJsonValue
+    compiledYaml: string
+    version: number
+    isActive?: boolean
+    createdBy?: string | null
+    notes?: string | null
+    createdAt?: Date | string
+  }
+
+  export type TemplateRevisionUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    selectedOptionIds?: TemplateRevisionUpdateselectedOptionIdsInput | string[]
+    source?: NullableJsonNullValueInput | InputJsonValue
+    compiledYaml?: StringFieldUpdateOperationsInput | string
+    version?: IntFieldUpdateOperationsInput | number
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    createdBy?: NullableStringFieldUpdateOperationsInput | string | null
+    notes?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    template?: TemplateUpdateOneRequiredWithoutRevisionsNestedInput
+    framework?: WizardFrameworkUpdateOneWithoutRevisionsNestedInput
+  }
+
+  export type TemplateRevisionUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    templateId?: IntFieldUpdateOperationsInput | number
+    frameworkId?: NullableStringFieldUpdateOperationsInput | string | null
+    selectedOptionIds?: TemplateRevisionUpdateselectedOptionIdsInput | string[]
+    source?: NullableJsonNullValueInput | InputJsonValue
+    compiledYaml?: StringFieldUpdateOperationsInput | string
+    version?: IntFieldUpdateOperationsInput | number
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    createdBy?: NullableStringFieldUpdateOperationsInput | string | null
+    notes?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type TemplateRevisionCreateManyInput = {
+    id?: string
+    templateId: number
+    frameworkId?: string | null
+    selectedOptionIds?: TemplateRevisionCreateselectedOptionIdsInput | string[]
+    source?: NullableJsonNullValueInput | InputJsonValue
+    compiledYaml: string
+    version: number
+    isActive?: boolean
+    createdBy?: string | null
+    notes?: string | null
+    createdAt?: Date | string
+  }
+
+  export type TemplateRevisionUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    selectedOptionIds?: TemplateRevisionUpdateselectedOptionIdsInput | string[]
+    source?: NullableJsonNullValueInput | InputJsonValue
+    compiledYaml?: StringFieldUpdateOperationsInput | string
+    version?: IntFieldUpdateOperationsInput | number
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    createdBy?: NullableStringFieldUpdateOperationsInput | string | null
+    notes?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type TemplateRevisionUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    templateId?: IntFieldUpdateOperationsInput | number
+    frameworkId?: NullableStringFieldUpdateOperationsInput | string | null
+    selectedOptionIds?: TemplateRevisionUpdateselectedOptionIdsInput | string[]
+    source?: NullableJsonNullValueInput | InputJsonValue
+    compiledYaml?: StringFieldUpdateOperationsInput | string
+    version?: IntFieldUpdateOperationsInput | number
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    createdBy?: NullableStringFieldUpdateOperationsInput | string | null
+    notes?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type StringFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel>
     in?: string[] | ListStringFieldRefInput<$PrismaModel>
@@ -21259,9 +28750,39 @@ export namespace Prisma {
     _max?: NestedIntFilter<$PrismaModel>
   }
 
+  export type StringNullableFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel> | null
+    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    contains?: string | StringFieldRefInput<$PrismaModel>
+    startsWith?: string | StringFieldRefInput<$PrismaModel>
+    endsWith?: string | StringFieldRefInput<$PrismaModel>
+    mode?: QueryMode
+    not?: NestedStringNullableFilter<$PrismaModel> | string | null
+  }
+
   export type CategoryScalarRelationFilter = {
     is?: CategoryWhereInput
     isNot?: CategoryWhereInput
+  }
+
+  export type TemplateRevisionListRelationFilter = {
+    every?: TemplateRevisionWhereInput
+    some?: TemplateRevisionWhereInput
+    none?: TemplateRevisionWhereInput
+  }
+
+  export type SortOrderInput = {
+    sort: SortOrder
+    nulls?: NullsOrder
+  }
+
+  export type TemplateRevisionOrderByRelationAggregateInput = {
+    _count?: SortOrder
   }
 
   export type TemplateCountOrderByAggregateInput = {
@@ -21302,6 +28823,24 @@ export namespace Prisma {
     id?: SortOrder
   }
 
+  export type StringNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel> | null
+    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    contains?: string | StringFieldRefInput<$PrismaModel>
+    startsWith?: string | StringFieldRefInput<$PrismaModel>
+    endsWith?: string | StringFieldRefInput<$PrismaModel>
+    mode?: QueryMode
+    not?: NestedStringNullableWithAggregatesFilter<$PrismaModel> | string | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedStringNullableFilter<$PrismaModel>
+    _max?: NestedStringNullableFilter<$PrismaModel>
+  }
+
   export type TemplateListRelationFilter = {
     every?: TemplateWhereInput
     some?: TemplateWhereInput
@@ -21333,21 +28872,6 @@ export namespace Prisma {
 
   export type CategorySumOrderByAggregateInput = {
     id?: SortOrder
-  }
-
-  export type StringNullableFilter<$PrismaModel = never> = {
-    equals?: string | StringFieldRefInput<$PrismaModel> | null
-    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
-    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
-    lt?: string | StringFieldRefInput<$PrismaModel>
-    lte?: string | StringFieldRefInput<$PrismaModel>
-    gt?: string | StringFieldRefInput<$PrismaModel>
-    gte?: string | StringFieldRefInput<$PrismaModel>
-    contains?: string | StringFieldRefInput<$PrismaModel>
-    startsWith?: string | StringFieldRefInput<$PrismaModel>
-    endsWith?: string | StringFieldRefInput<$PrismaModel>
-    mode?: QueryMode
-    not?: NestedStringNullableFilter<$PrismaModel> | string | null
   }
 
   export type BoolFilter<$PrismaModel = never> = {
@@ -21388,11 +28912,6 @@ export namespace Prisma {
     every?: ProviderIntegrationWhereInput
     some?: ProviderIntegrationWhereInput
     none?: ProviderIntegrationWhereInput
-  }
-
-  export type SortOrderInput = {
-    sort: SortOrder
-    nulls?: NullsOrder
   }
 
   export type AuthTokenOrderByRelationAggregateInput = {
@@ -21441,24 +28960,6 @@ export namespace Prisma {
     role?: SortOrder
     status?: SortOrder
     createdAt?: SortOrder
-  }
-
-  export type StringNullableWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: string | StringFieldRefInput<$PrismaModel> | null
-    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
-    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
-    lt?: string | StringFieldRefInput<$PrismaModel>
-    lte?: string | StringFieldRefInput<$PrismaModel>
-    gt?: string | StringFieldRefInput<$PrismaModel>
-    gte?: string | StringFieldRefInput<$PrismaModel>
-    contains?: string | StringFieldRefInput<$PrismaModel>
-    startsWith?: string | StringFieldRefInput<$PrismaModel>
-    endsWith?: string | StringFieldRefInput<$PrismaModel>
-    mode?: QueryMode
-    not?: NestedStringNullableWithAggregatesFilter<$PrismaModel> | string | null
-    _count?: NestedIntNullableFilter<$PrismaModel>
-    _min?: NestedStringNullableFilter<$PrismaModel>
-    _max?: NestedStringNullableFilter<$PrismaModel>
   }
 
   export type BoolWithAggregatesFilter<$PrismaModel = never> = {
@@ -22230,6 +29731,306 @@ export namespace Prisma {
     createdAt?: SortOrder
   }
 
+  export type WizardFrameworkListRelationFilter = {
+    every?: WizardFrameworkWhereInput
+    some?: WizardFrameworkWhereInput
+    none?: WizardFrameworkWhereInput
+  }
+
+  export type WizardFrameworkOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type WizardCatalogCategoryCountOrderByAggregateInput = {
+    id?: SortOrder
+    label?: SortOrder
+    description?: SortOrder
+    icon?: SortOrder
+    accentClass?: SortOrder
+    displayOrder?: SortOrder
+    isActive?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type WizardCatalogCategoryAvgOrderByAggregateInput = {
+    displayOrder?: SortOrder
+  }
+
+  export type WizardCatalogCategoryMaxOrderByAggregateInput = {
+    id?: SortOrder
+    label?: SortOrder
+    description?: SortOrder
+    icon?: SortOrder
+    accentClass?: SortOrder
+    displayOrder?: SortOrder
+    isActive?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type WizardCatalogCategoryMinOrderByAggregateInput = {
+    id?: SortOrder
+    label?: SortOrder
+    description?: SortOrder
+    icon?: SortOrder
+    accentClass?: SortOrder
+    displayOrder?: SortOrder
+    isActive?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type WizardCatalogCategorySumOrderByAggregateInput = {
+    displayOrder?: SortOrder
+  }
+
+  export type WizardCatalogCategoryScalarRelationFilter = {
+    is?: WizardCatalogCategoryWhereInput
+    isNot?: WizardCatalogCategoryWhereInput
+  }
+
+  export type WizardFrameworkOptionListRelationFilter = {
+    every?: WizardFrameworkOptionWhereInput
+    some?: WizardFrameworkOptionWhereInput
+    none?: WizardFrameworkOptionWhereInput
+  }
+
+  export type WizardFrameworkOptionOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type WizardFrameworkCountOrderByAggregateInput = {
+    id?: SortOrder
+    categoryId?: SortOrder
+    label?: SortOrder
+    description?: SortOrder
+    badge?: SortOrder
+    tags?: SortOrder
+    popularity?: SortOrder
+    icon?: SortOrder
+    accentClass?: SortOrder
+    displayOrder?: SortOrder
+    isActive?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type WizardFrameworkAvgOrderByAggregateInput = {
+    displayOrder?: SortOrder
+  }
+
+  export type WizardFrameworkMaxOrderByAggregateInput = {
+    id?: SortOrder
+    categoryId?: SortOrder
+    label?: SortOrder
+    description?: SortOrder
+    badge?: SortOrder
+    popularity?: SortOrder
+    icon?: SortOrder
+    accentClass?: SortOrder
+    displayOrder?: SortOrder
+    isActive?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type WizardFrameworkMinOrderByAggregateInput = {
+    id?: SortOrder
+    categoryId?: SortOrder
+    label?: SortOrder
+    description?: SortOrder
+    badge?: SortOrder
+    popularity?: SortOrder
+    icon?: SortOrder
+    accentClass?: SortOrder
+    displayOrder?: SortOrder
+    isActive?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type WizardFrameworkSumOrderByAggregateInput = {
+    displayOrder?: SortOrder
+  }
+
+  export type EnumWizardOptionTierFilter<$PrismaModel = never> = {
+    equals?: $Enums.WizardOptionTier | EnumWizardOptionTierFieldRefInput<$PrismaModel>
+    in?: $Enums.WizardOptionTier[] | ListEnumWizardOptionTierFieldRefInput<$PrismaModel>
+    notIn?: $Enums.WizardOptionTier[] | ListEnumWizardOptionTierFieldRefInput<$PrismaModel>
+    not?: NestedEnumWizardOptionTierFilter<$PrismaModel> | $Enums.WizardOptionTier
+  }
+
+  export type WizardOptionCountOrderByAggregateInput = {
+    id?: SortOrder
+    label?: SortOrder
+    description?: SortOrder
+    tier?: SortOrder
+    icon?: SortOrder
+    displayOrder?: SortOrder
+    isActive?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type WizardOptionAvgOrderByAggregateInput = {
+    displayOrder?: SortOrder
+  }
+
+  export type WizardOptionMaxOrderByAggregateInput = {
+    id?: SortOrder
+    label?: SortOrder
+    description?: SortOrder
+    tier?: SortOrder
+    icon?: SortOrder
+    displayOrder?: SortOrder
+    isActive?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type WizardOptionMinOrderByAggregateInput = {
+    id?: SortOrder
+    label?: SortOrder
+    description?: SortOrder
+    tier?: SortOrder
+    icon?: SortOrder
+    displayOrder?: SortOrder
+    isActive?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type WizardOptionSumOrderByAggregateInput = {
+    displayOrder?: SortOrder
+  }
+
+  export type EnumWizardOptionTierWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.WizardOptionTier | EnumWizardOptionTierFieldRefInput<$PrismaModel>
+    in?: $Enums.WizardOptionTier[] | ListEnumWizardOptionTierFieldRefInput<$PrismaModel>
+    notIn?: $Enums.WizardOptionTier[] | ListEnumWizardOptionTierFieldRefInput<$PrismaModel>
+    not?: NestedEnumWizardOptionTierWithAggregatesFilter<$PrismaModel> | $Enums.WizardOptionTier
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumWizardOptionTierFilter<$PrismaModel>
+    _max?: NestedEnumWizardOptionTierFilter<$PrismaModel>
+  }
+
+  export type WizardFrameworkScalarRelationFilter = {
+    is?: WizardFrameworkWhereInput
+    isNot?: WizardFrameworkWhereInput
+  }
+
+  export type WizardOptionScalarRelationFilter = {
+    is?: WizardOptionWhereInput
+    isNot?: WizardOptionWhereInput
+  }
+
+  export type WizardFrameworkOptionFrameworkIdOptionIdCompoundUniqueInput = {
+    frameworkId: string
+    optionId: string
+  }
+
+  export type WizardFrameworkOptionCountOrderByAggregateInput = {
+    id?: SortOrder
+    frameworkId?: SortOrder
+    optionId?: SortOrder
+    defaultEnabled?: SortOrder
+    displayOrder?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type WizardFrameworkOptionAvgOrderByAggregateInput = {
+    displayOrder?: SortOrder
+  }
+
+  export type WizardFrameworkOptionMaxOrderByAggregateInput = {
+    id?: SortOrder
+    frameworkId?: SortOrder
+    optionId?: SortOrder
+    defaultEnabled?: SortOrder
+    displayOrder?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type WizardFrameworkOptionMinOrderByAggregateInput = {
+    id?: SortOrder
+    frameworkId?: SortOrder
+    optionId?: SortOrder
+    defaultEnabled?: SortOrder
+    displayOrder?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type WizardFrameworkOptionSumOrderByAggregateInput = {
+    displayOrder?: SortOrder
+  }
+
+  export type TemplateScalarRelationFilter = {
+    is?: TemplateWhereInput
+    isNot?: TemplateWhereInput
+  }
+
+  export type WizardFrameworkNullableScalarRelationFilter = {
+    is?: WizardFrameworkWhereInput | null
+    isNot?: WizardFrameworkWhereInput | null
+  }
+
+  export type TemplateRevisionTemplateIdVersionCompoundUniqueInput = {
+    templateId: number
+    version: number
+  }
+
+  export type TemplateRevisionCountOrderByAggregateInput = {
+    id?: SortOrder
+    templateId?: SortOrder
+    frameworkId?: SortOrder
+    selectedOptionIds?: SortOrder
+    source?: SortOrder
+    compiledYaml?: SortOrder
+    version?: SortOrder
+    isActive?: SortOrder
+    createdBy?: SortOrder
+    notes?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type TemplateRevisionAvgOrderByAggregateInput = {
+    templateId?: SortOrder
+    version?: SortOrder
+  }
+
+  export type TemplateRevisionMaxOrderByAggregateInput = {
+    id?: SortOrder
+    templateId?: SortOrder
+    frameworkId?: SortOrder
+    compiledYaml?: SortOrder
+    version?: SortOrder
+    isActive?: SortOrder
+    createdBy?: SortOrder
+    notes?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type TemplateRevisionMinOrderByAggregateInput = {
+    id?: SortOrder
+    templateId?: SortOrder
+    frameworkId?: SortOrder
+    compiledYaml?: SortOrder
+    version?: SortOrder
+    isActive?: SortOrder
+    createdBy?: SortOrder
+    notes?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type TemplateRevisionSumOrderByAggregateInput = {
+    templateId?: SortOrder
+    version?: SortOrder
+  }
+
   export type StringFieldUpdateOperationsInput = {
     set?: string
   }
@@ -22252,12 +30053,58 @@ export namespace Prisma {
     connect?: CategoryWhereUniqueInput
   }
 
+  export type TemplateRevisionCreateNestedManyWithoutTemplateInput = {
+    create?: XOR<TemplateRevisionCreateWithoutTemplateInput, TemplateRevisionUncheckedCreateWithoutTemplateInput> | TemplateRevisionCreateWithoutTemplateInput[] | TemplateRevisionUncheckedCreateWithoutTemplateInput[]
+    connectOrCreate?: TemplateRevisionCreateOrConnectWithoutTemplateInput | TemplateRevisionCreateOrConnectWithoutTemplateInput[]
+    createMany?: TemplateRevisionCreateManyTemplateInputEnvelope
+    connect?: TemplateRevisionWhereUniqueInput | TemplateRevisionWhereUniqueInput[]
+  }
+
+  export type TemplateRevisionUncheckedCreateNestedManyWithoutTemplateInput = {
+    create?: XOR<TemplateRevisionCreateWithoutTemplateInput, TemplateRevisionUncheckedCreateWithoutTemplateInput> | TemplateRevisionCreateWithoutTemplateInput[] | TemplateRevisionUncheckedCreateWithoutTemplateInput[]
+    connectOrCreate?: TemplateRevisionCreateOrConnectWithoutTemplateInput | TemplateRevisionCreateOrConnectWithoutTemplateInput[]
+    createMany?: TemplateRevisionCreateManyTemplateInputEnvelope
+    connect?: TemplateRevisionWhereUniqueInput | TemplateRevisionWhereUniqueInput[]
+  }
+
+  export type NullableStringFieldUpdateOperationsInput = {
+    set?: string | null
+  }
+
   export type CategoryUpdateOneRequiredWithoutTemplatesNestedInput = {
     create?: XOR<CategoryCreateWithoutTemplatesInput, CategoryUncheckedCreateWithoutTemplatesInput>
     connectOrCreate?: CategoryCreateOrConnectWithoutTemplatesInput
     upsert?: CategoryUpsertWithoutTemplatesInput
     connect?: CategoryWhereUniqueInput
     update?: XOR<XOR<CategoryUpdateToOneWithWhereWithoutTemplatesInput, CategoryUpdateWithoutTemplatesInput>, CategoryUncheckedUpdateWithoutTemplatesInput>
+  }
+
+  export type TemplateRevisionUpdateManyWithoutTemplateNestedInput = {
+    create?: XOR<TemplateRevisionCreateWithoutTemplateInput, TemplateRevisionUncheckedCreateWithoutTemplateInput> | TemplateRevisionCreateWithoutTemplateInput[] | TemplateRevisionUncheckedCreateWithoutTemplateInput[]
+    connectOrCreate?: TemplateRevisionCreateOrConnectWithoutTemplateInput | TemplateRevisionCreateOrConnectWithoutTemplateInput[]
+    upsert?: TemplateRevisionUpsertWithWhereUniqueWithoutTemplateInput | TemplateRevisionUpsertWithWhereUniqueWithoutTemplateInput[]
+    createMany?: TemplateRevisionCreateManyTemplateInputEnvelope
+    set?: TemplateRevisionWhereUniqueInput | TemplateRevisionWhereUniqueInput[]
+    disconnect?: TemplateRevisionWhereUniqueInput | TemplateRevisionWhereUniqueInput[]
+    delete?: TemplateRevisionWhereUniqueInput | TemplateRevisionWhereUniqueInput[]
+    connect?: TemplateRevisionWhereUniqueInput | TemplateRevisionWhereUniqueInput[]
+    update?: TemplateRevisionUpdateWithWhereUniqueWithoutTemplateInput | TemplateRevisionUpdateWithWhereUniqueWithoutTemplateInput[]
+    updateMany?: TemplateRevisionUpdateManyWithWhereWithoutTemplateInput | TemplateRevisionUpdateManyWithWhereWithoutTemplateInput[]
+    deleteMany?: TemplateRevisionScalarWhereInput | TemplateRevisionScalarWhereInput[]
+  }
+
+  export type TemplateRevisionUncheckedUpdateManyWithoutTemplateNestedInput = {
+    create?: XOR<TemplateRevisionCreateWithoutTemplateInput, TemplateRevisionUncheckedCreateWithoutTemplateInput> | TemplateRevisionCreateWithoutTemplateInput[] | TemplateRevisionUncheckedCreateWithoutTemplateInput[]
+    connectOrCreate?: TemplateRevisionCreateOrConnectWithoutTemplateInput | TemplateRevisionCreateOrConnectWithoutTemplateInput[]
+    upsert?: TemplateRevisionUpsertWithWhereUniqueWithoutTemplateInput | TemplateRevisionUpsertWithWhereUniqueWithoutTemplateInput[]
+    createMany?: TemplateRevisionCreateManyTemplateInputEnvelope
+    set?: TemplateRevisionWhereUniqueInput | TemplateRevisionWhereUniqueInput[]
+    disconnect?: TemplateRevisionWhereUniqueInput | TemplateRevisionWhereUniqueInput[]
+    delete?: TemplateRevisionWhereUniqueInput | TemplateRevisionWhereUniqueInput[]
+    connect?: TemplateRevisionWhereUniqueInput | TemplateRevisionWhereUniqueInput[]
+    update?: TemplateRevisionUpdateWithWhereUniqueWithoutTemplateInput | TemplateRevisionUpdateWithWhereUniqueWithoutTemplateInput[]
+    updateMany?: TemplateRevisionUpdateManyWithWhereWithoutTemplateInput | TemplateRevisionUpdateManyWithWhereWithoutTemplateInput[]
+    deleteMany?: TemplateRevisionScalarWhereInput | TemplateRevisionScalarWhereInput[]
   }
 
   export type TemplateCreateNestedManyWithoutCategoryInput = {
@@ -22328,10 +30175,6 @@ export namespace Prisma {
     connectOrCreate?: ProviderIntegrationCreateOrConnectWithoutUserInput | ProviderIntegrationCreateOrConnectWithoutUserInput[]
     createMany?: ProviderIntegrationCreateManyUserInputEnvelope
     connect?: ProviderIntegrationWhereUniqueInput | ProviderIntegrationWhereUniqueInput[]
-  }
-
-  export type NullableStringFieldUpdateOperationsInput = {
-    set?: string | null
   }
 
   export type BoolFieldUpdateOperationsInput = {
@@ -22813,6 +30656,268 @@ export namespace Prisma {
     update?: XOR<XOR<DeploymentUpdateToOneWithWhereWithoutApprovalsInput, DeploymentUpdateWithoutApprovalsInput>, DeploymentUncheckedUpdateWithoutApprovalsInput>
   }
 
+  export type WizardFrameworkCreateNestedManyWithoutCategoryInput = {
+    create?: XOR<WizardFrameworkCreateWithoutCategoryInput, WizardFrameworkUncheckedCreateWithoutCategoryInput> | WizardFrameworkCreateWithoutCategoryInput[] | WizardFrameworkUncheckedCreateWithoutCategoryInput[]
+    connectOrCreate?: WizardFrameworkCreateOrConnectWithoutCategoryInput | WizardFrameworkCreateOrConnectWithoutCategoryInput[]
+    createMany?: WizardFrameworkCreateManyCategoryInputEnvelope
+    connect?: WizardFrameworkWhereUniqueInput | WizardFrameworkWhereUniqueInput[]
+  }
+
+  export type WizardFrameworkUncheckedCreateNestedManyWithoutCategoryInput = {
+    create?: XOR<WizardFrameworkCreateWithoutCategoryInput, WizardFrameworkUncheckedCreateWithoutCategoryInput> | WizardFrameworkCreateWithoutCategoryInput[] | WizardFrameworkUncheckedCreateWithoutCategoryInput[]
+    connectOrCreate?: WizardFrameworkCreateOrConnectWithoutCategoryInput | WizardFrameworkCreateOrConnectWithoutCategoryInput[]
+    createMany?: WizardFrameworkCreateManyCategoryInputEnvelope
+    connect?: WizardFrameworkWhereUniqueInput | WizardFrameworkWhereUniqueInput[]
+  }
+
+  export type WizardFrameworkUpdateManyWithoutCategoryNestedInput = {
+    create?: XOR<WizardFrameworkCreateWithoutCategoryInput, WizardFrameworkUncheckedCreateWithoutCategoryInput> | WizardFrameworkCreateWithoutCategoryInput[] | WizardFrameworkUncheckedCreateWithoutCategoryInput[]
+    connectOrCreate?: WizardFrameworkCreateOrConnectWithoutCategoryInput | WizardFrameworkCreateOrConnectWithoutCategoryInput[]
+    upsert?: WizardFrameworkUpsertWithWhereUniqueWithoutCategoryInput | WizardFrameworkUpsertWithWhereUniqueWithoutCategoryInput[]
+    createMany?: WizardFrameworkCreateManyCategoryInputEnvelope
+    set?: WizardFrameworkWhereUniqueInput | WizardFrameworkWhereUniqueInput[]
+    disconnect?: WizardFrameworkWhereUniqueInput | WizardFrameworkWhereUniqueInput[]
+    delete?: WizardFrameworkWhereUniqueInput | WizardFrameworkWhereUniqueInput[]
+    connect?: WizardFrameworkWhereUniqueInput | WizardFrameworkWhereUniqueInput[]
+    update?: WizardFrameworkUpdateWithWhereUniqueWithoutCategoryInput | WizardFrameworkUpdateWithWhereUniqueWithoutCategoryInput[]
+    updateMany?: WizardFrameworkUpdateManyWithWhereWithoutCategoryInput | WizardFrameworkUpdateManyWithWhereWithoutCategoryInput[]
+    deleteMany?: WizardFrameworkScalarWhereInput | WizardFrameworkScalarWhereInput[]
+  }
+
+  export type WizardFrameworkUncheckedUpdateManyWithoutCategoryNestedInput = {
+    create?: XOR<WizardFrameworkCreateWithoutCategoryInput, WizardFrameworkUncheckedCreateWithoutCategoryInput> | WizardFrameworkCreateWithoutCategoryInput[] | WizardFrameworkUncheckedCreateWithoutCategoryInput[]
+    connectOrCreate?: WizardFrameworkCreateOrConnectWithoutCategoryInput | WizardFrameworkCreateOrConnectWithoutCategoryInput[]
+    upsert?: WizardFrameworkUpsertWithWhereUniqueWithoutCategoryInput | WizardFrameworkUpsertWithWhereUniqueWithoutCategoryInput[]
+    createMany?: WizardFrameworkCreateManyCategoryInputEnvelope
+    set?: WizardFrameworkWhereUniqueInput | WizardFrameworkWhereUniqueInput[]
+    disconnect?: WizardFrameworkWhereUniqueInput | WizardFrameworkWhereUniqueInput[]
+    delete?: WizardFrameworkWhereUniqueInput | WizardFrameworkWhereUniqueInput[]
+    connect?: WizardFrameworkWhereUniqueInput | WizardFrameworkWhereUniqueInput[]
+    update?: WizardFrameworkUpdateWithWhereUniqueWithoutCategoryInput | WizardFrameworkUpdateWithWhereUniqueWithoutCategoryInput[]
+    updateMany?: WizardFrameworkUpdateManyWithWhereWithoutCategoryInput | WizardFrameworkUpdateManyWithWhereWithoutCategoryInput[]
+    deleteMany?: WizardFrameworkScalarWhereInput | WizardFrameworkScalarWhereInput[]
+  }
+
+  export type WizardFrameworkCreatetagsInput = {
+    set: string[]
+  }
+
+  export type WizardCatalogCategoryCreateNestedOneWithoutFrameworksInput = {
+    create?: XOR<WizardCatalogCategoryCreateWithoutFrameworksInput, WizardCatalogCategoryUncheckedCreateWithoutFrameworksInput>
+    connectOrCreate?: WizardCatalogCategoryCreateOrConnectWithoutFrameworksInput
+    connect?: WizardCatalogCategoryWhereUniqueInput
+  }
+
+  export type WizardFrameworkOptionCreateNestedManyWithoutFrameworkInput = {
+    create?: XOR<WizardFrameworkOptionCreateWithoutFrameworkInput, WizardFrameworkOptionUncheckedCreateWithoutFrameworkInput> | WizardFrameworkOptionCreateWithoutFrameworkInput[] | WizardFrameworkOptionUncheckedCreateWithoutFrameworkInput[]
+    connectOrCreate?: WizardFrameworkOptionCreateOrConnectWithoutFrameworkInput | WizardFrameworkOptionCreateOrConnectWithoutFrameworkInput[]
+    createMany?: WizardFrameworkOptionCreateManyFrameworkInputEnvelope
+    connect?: WizardFrameworkOptionWhereUniqueInput | WizardFrameworkOptionWhereUniqueInput[]
+  }
+
+  export type TemplateRevisionCreateNestedManyWithoutFrameworkInput = {
+    create?: XOR<TemplateRevisionCreateWithoutFrameworkInput, TemplateRevisionUncheckedCreateWithoutFrameworkInput> | TemplateRevisionCreateWithoutFrameworkInput[] | TemplateRevisionUncheckedCreateWithoutFrameworkInput[]
+    connectOrCreate?: TemplateRevisionCreateOrConnectWithoutFrameworkInput | TemplateRevisionCreateOrConnectWithoutFrameworkInput[]
+    createMany?: TemplateRevisionCreateManyFrameworkInputEnvelope
+    connect?: TemplateRevisionWhereUniqueInput | TemplateRevisionWhereUniqueInput[]
+  }
+
+  export type WizardFrameworkOptionUncheckedCreateNestedManyWithoutFrameworkInput = {
+    create?: XOR<WizardFrameworkOptionCreateWithoutFrameworkInput, WizardFrameworkOptionUncheckedCreateWithoutFrameworkInput> | WizardFrameworkOptionCreateWithoutFrameworkInput[] | WizardFrameworkOptionUncheckedCreateWithoutFrameworkInput[]
+    connectOrCreate?: WizardFrameworkOptionCreateOrConnectWithoutFrameworkInput | WizardFrameworkOptionCreateOrConnectWithoutFrameworkInput[]
+    createMany?: WizardFrameworkOptionCreateManyFrameworkInputEnvelope
+    connect?: WizardFrameworkOptionWhereUniqueInput | WizardFrameworkOptionWhereUniqueInput[]
+  }
+
+  export type TemplateRevisionUncheckedCreateNestedManyWithoutFrameworkInput = {
+    create?: XOR<TemplateRevisionCreateWithoutFrameworkInput, TemplateRevisionUncheckedCreateWithoutFrameworkInput> | TemplateRevisionCreateWithoutFrameworkInput[] | TemplateRevisionUncheckedCreateWithoutFrameworkInput[]
+    connectOrCreate?: TemplateRevisionCreateOrConnectWithoutFrameworkInput | TemplateRevisionCreateOrConnectWithoutFrameworkInput[]
+    createMany?: TemplateRevisionCreateManyFrameworkInputEnvelope
+    connect?: TemplateRevisionWhereUniqueInput | TemplateRevisionWhereUniqueInput[]
+  }
+
+  export type WizardFrameworkUpdatetagsInput = {
+    set?: string[]
+    push?: string | string[]
+  }
+
+  export type WizardCatalogCategoryUpdateOneRequiredWithoutFrameworksNestedInput = {
+    create?: XOR<WizardCatalogCategoryCreateWithoutFrameworksInput, WizardCatalogCategoryUncheckedCreateWithoutFrameworksInput>
+    connectOrCreate?: WizardCatalogCategoryCreateOrConnectWithoutFrameworksInput
+    upsert?: WizardCatalogCategoryUpsertWithoutFrameworksInput
+    connect?: WizardCatalogCategoryWhereUniqueInput
+    update?: XOR<XOR<WizardCatalogCategoryUpdateToOneWithWhereWithoutFrameworksInput, WizardCatalogCategoryUpdateWithoutFrameworksInput>, WizardCatalogCategoryUncheckedUpdateWithoutFrameworksInput>
+  }
+
+  export type WizardFrameworkOptionUpdateManyWithoutFrameworkNestedInput = {
+    create?: XOR<WizardFrameworkOptionCreateWithoutFrameworkInput, WizardFrameworkOptionUncheckedCreateWithoutFrameworkInput> | WizardFrameworkOptionCreateWithoutFrameworkInput[] | WizardFrameworkOptionUncheckedCreateWithoutFrameworkInput[]
+    connectOrCreate?: WizardFrameworkOptionCreateOrConnectWithoutFrameworkInput | WizardFrameworkOptionCreateOrConnectWithoutFrameworkInput[]
+    upsert?: WizardFrameworkOptionUpsertWithWhereUniqueWithoutFrameworkInput | WizardFrameworkOptionUpsertWithWhereUniqueWithoutFrameworkInput[]
+    createMany?: WizardFrameworkOptionCreateManyFrameworkInputEnvelope
+    set?: WizardFrameworkOptionWhereUniqueInput | WizardFrameworkOptionWhereUniqueInput[]
+    disconnect?: WizardFrameworkOptionWhereUniqueInput | WizardFrameworkOptionWhereUniqueInput[]
+    delete?: WizardFrameworkOptionWhereUniqueInput | WizardFrameworkOptionWhereUniqueInput[]
+    connect?: WizardFrameworkOptionWhereUniqueInput | WizardFrameworkOptionWhereUniqueInput[]
+    update?: WizardFrameworkOptionUpdateWithWhereUniqueWithoutFrameworkInput | WizardFrameworkOptionUpdateWithWhereUniqueWithoutFrameworkInput[]
+    updateMany?: WizardFrameworkOptionUpdateManyWithWhereWithoutFrameworkInput | WizardFrameworkOptionUpdateManyWithWhereWithoutFrameworkInput[]
+    deleteMany?: WizardFrameworkOptionScalarWhereInput | WizardFrameworkOptionScalarWhereInput[]
+  }
+
+  export type TemplateRevisionUpdateManyWithoutFrameworkNestedInput = {
+    create?: XOR<TemplateRevisionCreateWithoutFrameworkInput, TemplateRevisionUncheckedCreateWithoutFrameworkInput> | TemplateRevisionCreateWithoutFrameworkInput[] | TemplateRevisionUncheckedCreateWithoutFrameworkInput[]
+    connectOrCreate?: TemplateRevisionCreateOrConnectWithoutFrameworkInput | TemplateRevisionCreateOrConnectWithoutFrameworkInput[]
+    upsert?: TemplateRevisionUpsertWithWhereUniqueWithoutFrameworkInput | TemplateRevisionUpsertWithWhereUniqueWithoutFrameworkInput[]
+    createMany?: TemplateRevisionCreateManyFrameworkInputEnvelope
+    set?: TemplateRevisionWhereUniqueInput | TemplateRevisionWhereUniqueInput[]
+    disconnect?: TemplateRevisionWhereUniqueInput | TemplateRevisionWhereUniqueInput[]
+    delete?: TemplateRevisionWhereUniqueInput | TemplateRevisionWhereUniqueInput[]
+    connect?: TemplateRevisionWhereUniqueInput | TemplateRevisionWhereUniqueInput[]
+    update?: TemplateRevisionUpdateWithWhereUniqueWithoutFrameworkInput | TemplateRevisionUpdateWithWhereUniqueWithoutFrameworkInput[]
+    updateMany?: TemplateRevisionUpdateManyWithWhereWithoutFrameworkInput | TemplateRevisionUpdateManyWithWhereWithoutFrameworkInput[]
+    deleteMany?: TemplateRevisionScalarWhereInput | TemplateRevisionScalarWhereInput[]
+  }
+
+  export type WizardFrameworkOptionUncheckedUpdateManyWithoutFrameworkNestedInput = {
+    create?: XOR<WizardFrameworkOptionCreateWithoutFrameworkInput, WizardFrameworkOptionUncheckedCreateWithoutFrameworkInput> | WizardFrameworkOptionCreateWithoutFrameworkInput[] | WizardFrameworkOptionUncheckedCreateWithoutFrameworkInput[]
+    connectOrCreate?: WizardFrameworkOptionCreateOrConnectWithoutFrameworkInput | WizardFrameworkOptionCreateOrConnectWithoutFrameworkInput[]
+    upsert?: WizardFrameworkOptionUpsertWithWhereUniqueWithoutFrameworkInput | WizardFrameworkOptionUpsertWithWhereUniqueWithoutFrameworkInput[]
+    createMany?: WizardFrameworkOptionCreateManyFrameworkInputEnvelope
+    set?: WizardFrameworkOptionWhereUniqueInput | WizardFrameworkOptionWhereUniqueInput[]
+    disconnect?: WizardFrameworkOptionWhereUniqueInput | WizardFrameworkOptionWhereUniqueInput[]
+    delete?: WizardFrameworkOptionWhereUniqueInput | WizardFrameworkOptionWhereUniqueInput[]
+    connect?: WizardFrameworkOptionWhereUniqueInput | WizardFrameworkOptionWhereUniqueInput[]
+    update?: WizardFrameworkOptionUpdateWithWhereUniqueWithoutFrameworkInput | WizardFrameworkOptionUpdateWithWhereUniqueWithoutFrameworkInput[]
+    updateMany?: WizardFrameworkOptionUpdateManyWithWhereWithoutFrameworkInput | WizardFrameworkOptionUpdateManyWithWhereWithoutFrameworkInput[]
+    deleteMany?: WizardFrameworkOptionScalarWhereInput | WizardFrameworkOptionScalarWhereInput[]
+  }
+
+  export type TemplateRevisionUncheckedUpdateManyWithoutFrameworkNestedInput = {
+    create?: XOR<TemplateRevisionCreateWithoutFrameworkInput, TemplateRevisionUncheckedCreateWithoutFrameworkInput> | TemplateRevisionCreateWithoutFrameworkInput[] | TemplateRevisionUncheckedCreateWithoutFrameworkInput[]
+    connectOrCreate?: TemplateRevisionCreateOrConnectWithoutFrameworkInput | TemplateRevisionCreateOrConnectWithoutFrameworkInput[]
+    upsert?: TemplateRevisionUpsertWithWhereUniqueWithoutFrameworkInput | TemplateRevisionUpsertWithWhereUniqueWithoutFrameworkInput[]
+    createMany?: TemplateRevisionCreateManyFrameworkInputEnvelope
+    set?: TemplateRevisionWhereUniqueInput | TemplateRevisionWhereUniqueInput[]
+    disconnect?: TemplateRevisionWhereUniqueInput | TemplateRevisionWhereUniqueInput[]
+    delete?: TemplateRevisionWhereUniqueInput | TemplateRevisionWhereUniqueInput[]
+    connect?: TemplateRevisionWhereUniqueInput | TemplateRevisionWhereUniqueInput[]
+    update?: TemplateRevisionUpdateWithWhereUniqueWithoutFrameworkInput | TemplateRevisionUpdateWithWhereUniqueWithoutFrameworkInput[]
+    updateMany?: TemplateRevisionUpdateManyWithWhereWithoutFrameworkInput | TemplateRevisionUpdateManyWithWhereWithoutFrameworkInput[]
+    deleteMany?: TemplateRevisionScalarWhereInput | TemplateRevisionScalarWhereInput[]
+  }
+
+  export type WizardFrameworkOptionCreateNestedManyWithoutOptionInput = {
+    create?: XOR<WizardFrameworkOptionCreateWithoutOptionInput, WizardFrameworkOptionUncheckedCreateWithoutOptionInput> | WizardFrameworkOptionCreateWithoutOptionInput[] | WizardFrameworkOptionUncheckedCreateWithoutOptionInput[]
+    connectOrCreate?: WizardFrameworkOptionCreateOrConnectWithoutOptionInput | WizardFrameworkOptionCreateOrConnectWithoutOptionInput[]
+    createMany?: WizardFrameworkOptionCreateManyOptionInputEnvelope
+    connect?: WizardFrameworkOptionWhereUniqueInput | WizardFrameworkOptionWhereUniqueInput[]
+  }
+
+  export type WizardFrameworkOptionUncheckedCreateNestedManyWithoutOptionInput = {
+    create?: XOR<WizardFrameworkOptionCreateWithoutOptionInput, WizardFrameworkOptionUncheckedCreateWithoutOptionInput> | WizardFrameworkOptionCreateWithoutOptionInput[] | WizardFrameworkOptionUncheckedCreateWithoutOptionInput[]
+    connectOrCreate?: WizardFrameworkOptionCreateOrConnectWithoutOptionInput | WizardFrameworkOptionCreateOrConnectWithoutOptionInput[]
+    createMany?: WizardFrameworkOptionCreateManyOptionInputEnvelope
+    connect?: WizardFrameworkOptionWhereUniqueInput | WizardFrameworkOptionWhereUniqueInput[]
+  }
+
+  export type EnumWizardOptionTierFieldUpdateOperationsInput = {
+    set?: $Enums.WizardOptionTier
+  }
+
+  export type WizardFrameworkOptionUpdateManyWithoutOptionNestedInput = {
+    create?: XOR<WizardFrameworkOptionCreateWithoutOptionInput, WizardFrameworkOptionUncheckedCreateWithoutOptionInput> | WizardFrameworkOptionCreateWithoutOptionInput[] | WizardFrameworkOptionUncheckedCreateWithoutOptionInput[]
+    connectOrCreate?: WizardFrameworkOptionCreateOrConnectWithoutOptionInput | WizardFrameworkOptionCreateOrConnectWithoutOptionInput[]
+    upsert?: WizardFrameworkOptionUpsertWithWhereUniqueWithoutOptionInput | WizardFrameworkOptionUpsertWithWhereUniqueWithoutOptionInput[]
+    createMany?: WizardFrameworkOptionCreateManyOptionInputEnvelope
+    set?: WizardFrameworkOptionWhereUniqueInput | WizardFrameworkOptionWhereUniqueInput[]
+    disconnect?: WizardFrameworkOptionWhereUniqueInput | WizardFrameworkOptionWhereUniqueInput[]
+    delete?: WizardFrameworkOptionWhereUniqueInput | WizardFrameworkOptionWhereUniqueInput[]
+    connect?: WizardFrameworkOptionWhereUniqueInput | WizardFrameworkOptionWhereUniqueInput[]
+    update?: WizardFrameworkOptionUpdateWithWhereUniqueWithoutOptionInput | WizardFrameworkOptionUpdateWithWhereUniqueWithoutOptionInput[]
+    updateMany?: WizardFrameworkOptionUpdateManyWithWhereWithoutOptionInput | WizardFrameworkOptionUpdateManyWithWhereWithoutOptionInput[]
+    deleteMany?: WizardFrameworkOptionScalarWhereInput | WizardFrameworkOptionScalarWhereInput[]
+  }
+
+  export type WizardFrameworkOptionUncheckedUpdateManyWithoutOptionNestedInput = {
+    create?: XOR<WizardFrameworkOptionCreateWithoutOptionInput, WizardFrameworkOptionUncheckedCreateWithoutOptionInput> | WizardFrameworkOptionCreateWithoutOptionInput[] | WizardFrameworkOptionUncheckedCreateWithoutOptionInput[]
+    connectOrCreate?: WizardFrameworkOptionCreateOrConnectWithoutOptionInput | WizardFrameworkOptionCreateOrConnectWithoutOptionInput[]
+    upsert?: WizardFrameworkOptionUpsertWithWhereUniqueWithoutOptionInput | WizardFrameworkOptionUpsertWithWhereUniqueWithoutOptionInput[]
+    createMany?: WizardFrameworkOptionCreateManyOptionInputEnvelope
+    set?: WizardFrameworkOptionWhereUniqueInput | WizardFrameworkOptionWhereUniqueInput[]
+    disconnect?: WizardFrameworkOptionWhereUniqueInput | WizardFrameworkOptionWhereUniqueInput[]
+    delete?: WizardFrameworkOptionWhereUniqueInput | WizardFrameworkOptionWhereUniqueInput[]
+    connect?: WizardFrameworkOptionWhereUniqueInput | WizardFrameworkOptionWhereUniqueInput[]
+    update?: WizardFrameworkOptionUpdateWithWhereUniqueWithoutOptionInput | WizardFrameworkOptionUpdateWithWhereUniqueWithoutOptionInput[]
+    updateMany?: WizardFrameworkOptionUpdateManyWithWhereWithoutOptionInput | WizardFrameworkOptionUpdateManyWithWhereWithoutOptionInput[]
+    deleteMany?: WizardFrameworkOptionScalarWhereInput | WizardFrameworkOptionScalarWhereInput[]
+  }
+
+  export type WizardFrameworkCreateNestedOneWithoutOptionsInput = {
+    create?: XOR<WizardFrameworkCreateWithoutOptionsInput, WizardFrameworkUncheckedCreateWithoutOptionsInput>
+    connectOrCreate?: WizardFrameworkCreateOrConnectWithoutOptionsInput
+    connect?: WizardFrameworkWhereUniqueInput
+  }
+
+  export type WizardOptionCreateNestedOneWithoutFrameworksInput = {
+    create?: XOR<WizardOptionCreateWithoutFrameworksInput, WizardOptionUncheckedCreateWithoutFrameworksInput>
+    connectOrCreate?: WizardOptionCreateOrConnectWithoutFrameworksInput
+    connect?: WizardOptionWhereUniqueInput
+  }
+
+  export type WizardFrameworkUpdateOneRequiredWithoutOptionsNestedInput = {
+    create?: XOR<WizardFrameworkCreateWithoutOptionsInput, WizardFrameworkUncheckedCreateWithoutOptionsInput>
+    connectOrCreate?: WizardFrameworkCreateOrConnectWithoutOptionsInput
+    upsert?: WizardFrameworkUpsertWithoutOptionsInput
+    connect?: WizardFrameworkWhereUniqueInput
+    update?: XOR<XOR<WizardFrameworkUpdateToOneWithWhereWithoutOptionsInput, WizardFrameworkUpdateWithoutOptionsInput>, WizardFrameworkUncheckedUpdateWithoutOptionsInput>
+  }
+
+  export type WizardOptionUpdateOneRequiredWithoutFrameworksNestedInput = {
+    create?: XOR<WizardOptionCreateWithoutFrameworksInput, WizardOptionUncheckedCreateWithoutFrameworksInput>
+    connectOrCreate?: WizardOptionCreateOrConnectWithoutFrameworksInput
+    upsert?: WizardOptionUpsertWithoutFrameworksInput
+    connect?: WizardOptionWhereUniqueInput
+    update?: XOR<XOR<WizardOptionUpdateToOneWithWhereWithoutFrameworksInput, WizardOptionUpdateWithoutFrameworksInput>, WizardOptionUncheckedUpdateWithoutFrameworksInput>
+  }
+
+  export type TemplateRevisionCreateselectedOptionIdsInput = {
+    set: string[]
+  }
+
+  export type TemplateCreateNestedOneWithoutRevisionsInput = {
+    create?: XOR<TemplateCreateWithoutRevisionsInput, TemplateUncheckedCreateWithoutRevisionsInput>
+    connectOrCreate?: TemplateCreateOrConnectWithoutRevisionsInput
+    connect?: TemplateWhereUniqueInput
+  }
+
+  export type WizardFrameworkCreateNestedOneWithoutRevisionsInput = {
+    create?: XOR<WizardFrameworkCreateWithoutRevisionsInput, WizardFrameworkUncheckedCreateWithoutRevisionsInput>
+    connectOrCreate?: WizardFrameworkCreateOrConnectWithoutRevisionsInput
+    connect?: WizardFrameworkWhereUniqueInput
+  }
+
+  export type TemplateRevisionUpdateselectedOptionIdsInput = {
+    set?: string[]
+    push?: string | string[]
+  }
+
+  export type TemplateUpdateOneRequiredWithoutRevisionsNestedInput = {
+    create?: XOR<TemplateCreateWithoutRevisionsInput, TemplateUncheckedCreateWithoutRevisionsInput>
+    connectOrCreate?: TemplateCreateOrConnectWithoutRevisionsInput
+    upsert?: TemplateUpsertWithoutRevisionsInput
+    connect?: TemplateWhereUniqueInput
+    update?: XOR<XOR<TemplateUpdateToOneWithWhereWithoutRevisionsInput, TemplateUpdateWithoutRevisionsInput>, TemplateUncheckedUpdateWithoutRevisionsInput>
+  }
+
+  export type WizardFrameworkUpdateOneWithoutRevisionsNestedInput = {
+    create?: XOR<WizardFrameworkCreateWithoutRevisionsInput, WizardFrameworkUncheckedCreateWithoutRevisionsInput>
+    connectOrCreate?: WizardFrameworkCreateOrConnectWithoutRevisionsInput
+    upsert?: WizardFrameworkUpsertWithoutRevisionsInput
+    disconnect?: WizardFrameworkWhereInput | boolean
+    delete?: WizardFrameworkWhereInput | boolean
+    connect?: WizardFrameworkWhereUniqueInput
+    update?: XOR<XOR<WizardFrameworkUpdateToOneWithWhereWithoutRevisionsInput, WizardFrameworkUpdateWithoutRevisionsInput>, WizardFrameworkUncheckedUpdateWithoutRevisionsInput>
+  }
+
   export type NestedStringFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel>
     in?: string[] | ListStringFieldRefInput<$PrismaModel>
@@ -22921,11 +31026,6 @@ export namespace Prisma {
     not?: NestedStringNullableFilter<$PrismaModel> | string | null
   }
 
-  export type NestedBoolFilter<$PrismaModel = never> = {
-    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
-    not?: NestedBoolFilter<$PrismaModel> | boolean
-  }
-
   export type NestedStringNullableWithAggregatesFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel> | null
     in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
@@ -22952,6 +31052,11 @@ export namespace Prisma {
     gt?: number | IntFieldRefInput<$PrismaModel>
     gte?: number | IntFieldRefInput<$PrismaModel>
     not?: NestedIntNullableFilter<$PrismaModel> | number | null
+  }
+
+  export type NestedBoolFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolFilter<$PrismaModel> | boolean
   }
 
   export type NestedBoolWithAggregatesFilter<$PrismaModel = never> = {
@@ -23106,6 +31211,23 @@ export namespace Prisma {
     _max?: NestedIntNullableFilter<$PrismaModel>
   }
 
+  export type NestedEnumWizardOptionTierFilter<$PrismaModel = never> = {
+    equals?: $Enums.WizardOptionTier | EnumWizardOptionTierFieldRefInput<$PrismaModel>
+    in?: $Enums.WizardOptionTier[] | ListEnumWizardOptionTierFieldRefInput<$PrismaModel>
+    notIn?: $Enums.WizardOptionTier[] | ListEnumWizardOptionTierFieldRefInput<$PrismaModel>
+    not?: NestedEnumWizardOptionTierFilter<$PrismaModel> | $Enums.WizardOptionTier
+  }
+
+  export type NestedEnumWizardOptionTierWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.WizardOptionTier | EnumWizardOptionTierFieldRefInput<$PrismaModel>
+    in?: $Enums.WizardOptionTier[] | ListEnumWizardOptionTierFieldRefInput<$PrismaModel>
+    notIn?: $Enums.WizardOptionTier[] | ListEnumWizardOptionTierFieldRefInput<$PrismaModel>
+    not?: NestedEnumWizardOptionTierWithAggregatesFilter<$PrismaModel> | $Enums.WizardOptionTier
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumWizardOptionTierFilter<$PrismaModel>
+    _max?: NestedEnumWizardOptionTierFilter<$PrismaModel>
+  }
+
   export type CategoryCreateWithoutTemplatesInput = {
     name: string
   }
@@ -23118,6 +31240,42 @@ export namespace Prisma {
   export type CategoryCreateOrConnectWithoutTemplatesInput = {
     where: CategoryWhereUniqueInput
     create: XOR<CategoryCreateWithoutTemplatesInput, CategoryUncheckedCreateWithoutTemplatesInput>
+  }
+
+  export type TemplateRevisionCreateWithoutTemplateInput = {
+    id?: string
+    selectedOptionIds?: TemplateRevisionCreateselectedOptionIdsInput | string[]
+    source?: NullableJsonNullValueInput | InputJsonValue
+    compiledYaml: string
+    version: number
+    isActive?: boolean
+    createdBy?: string | null
+    notes?: string | null
+    createdAt?: Date | string
+    framework?: WizardFrameworkCreateNestedOneWithoutRevisionsInput
+  }
+
+  export type TemplateRevisionUncheckedCreateWithoutTemplateInput = {
+    id?: string
+    frameworkId?: string | null
+    selectedOptionIds?: TemplateRevisionCreateselectedOptionIdsInput | string[]
+    source?: NullableJsonNullValueInput | InputJsonValue
+    compiledYaml: string
+    version: number
+    isActive?: boolean
+    createdBy?: string | null
+    notes?: string | null
+    createdAt?: Date | string
+  }
+
+  export type TemplateRevisionCreateOrConnectWithoutTemplateInput = {
+    where: TemplateRevisionWhereUniqueInput
+    create: XOR<TemplateRevisionCreateWithoutTemplateInput, TemplateRevisionUncheckedCreateWithoutTemplateInput>
+  }
+
+  export type TemplateRevisionCreateManyTemplateInputEnvelope = {
+    data: TemplateRevisionCreateManyTemplateInput | TemplateRevisionCreateManyTemplateInput[]
+    skipDuplicates?: boolean
   }
 
   export type CategoryUpsertWithoutTemplatesInput = {
@@ -23140,21 +31298,56 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
   }
 
+  export type TemplateRevisionUpsertWithWhereUniqueWithoutTemplateInput = {
+    where: TemplateRevisionWhereUniqueInput
+    update: XOR<TemplateRevisionUpdateWithoutTemplateInput, TemplateRevisionUncheckedUpdateWithoutTemplateInput>
+    create: XOR<TemplateRevisionCreateWithoutTemplateInput, TemplateRevisionUncheckedCreateWithoutTemplateInput>
+  }
+
+  export type TemplateRevisionUpdateWithWhereUniqueWithoutTemplateInput = {
+    where: TemplateRevisionWhereUniqueInput
+    data: XOR<TemplateRevisionUpdateWithoutTemplateInput, TemplateRevisionUncheckedUpdateWithoutTemplateInput>
+  }
+
+  export type TemplateRevisionUpdateManyWithWhereWithoutTemplateInput = {
+    where: TemplateRevisionScalarWhereInput
+    data: XOR<TemplateRevisionUpdateManyMutationInput, TemplateRevisionUncheckedUpdateManyWithoutTemplateInput>
+  }
+
+  export type TemplateRevisionScalarWhereInput = {
+    AND?: TemplateRevisionScalarWhereInput | TemplateRevisionScalarWhereInput[]
+    OR?: TemplateRevisionScalarWhereInput[]
+    NOT?: TemplateRevisionScalarWhereInput | TemplateRevisionScalarWhereInput[]
+    id?: StringFilter<"TemplateRevision"> | string
+    templateId?: IntFilter<"TemplateRevision"> | number
+    frameworkId?: StringNullableFilter<"TemplateRevision"> | string | null
+    selectedOptionIds?: StringNullableListFilter<"TemplateRevision">
+    source?: JsonNullableFilter<"TemplateRevision">
+    compiledYaml?: StringFilter<"TemplateRevision"> | string
+    version?: IntFilter<"TemplateRevision"> | number
+    isActive?: BoolFilter<"TemplateRevision"> | boolean
+    createdBy?: StringNullableFilter<"TemplateRevision"> | string | null
+    notes?: StringNullableFilter<"TemplateRevision"> | string | null
+    createdAt?: DateTimeFilter<"TemplateRevision"> | Date | string
+  }
+
   export type TemplateCreateWithoutCategoryInput = {
     title: string
-    description: string
+    description?: string | null
     yaml: string
     createdAt?: Date | string
     updatedAt?: Date | string
+    revisions?: TemplateRevisionCreateNestedManyWithoutTemplateInput
   }
 
   export type TemplateUncheckedCreateWithoutCategoryInput = {
     title: string
-    description: string
+    description?: string | null
     yaml: string
     createdAt?: Date | string
     updatedAt?: Date | string
     id?: number
+    revisions?: TemplateRevisionUncheckedCreateNestedManyWithoutTemplateInput
   }
 
   export type TemplateCreateOrConnectWithoutCategoryInput = {
@@ -23188,7 +31381,7 @@ export namespace Prisma {
     OR?: TemplateScalarWhereInput[]
     NOT?: TemplateScalarWhereInput | TemplateScalarWhereInput[]
     title?: StringFilter<"Template"> | string
-    description?: StringFilter<"Template"> | string
+    description?: StringNullableFilter<"Template"> | string | null
     categoryName?: StringFilter<"Template"> | string
     yaml?: StringFilter<"Template"> | string
     createdAt?: DateTimeFilter<"Template"> | Date | string
@@ -24637,9 +32830,643 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type WizardFrameworkCreateWithoutCategoryInput = {
+    id: string
+    label: string
+    description: string
+    badge?: string | null
+    tags?: WizardFrameworkCreatetagsInput | string[]
+    popularity?: string | null
+    icon?: string | null
+    accentClass?: string | null
+    displayOrder?: number
+    isActive?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    options?: WizardFrameworkOptionCreateNestedManyWithoutFrameworkInput
+    revisions?: TemplateRevisionCreateNestedManyWithoutFrameworkInput
+  }
+
+  export type WizardFrameworkUncheckedCreateWithoutCategoryInput = {
+    id: string
+    label: string
+    description: string
+    badge?: string | null
+    tags?: WizardFrameworkCreatetagsInput | string[]
+    popularity?: string | null
+    icon?: string | null
+    accentClass?: string | null
+    displayOrder?: number
+    isActive?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    options?: WizardFrameworkOptionUncheckedCreateNestedManyWithoutFrameworkInput
+    revisions?: TemplateRevisionUncheckedCreateNestedManyWithoutFrameworkInput
+  }
+
+  export type WizardFrameworkCreateOrConnectWithoutCategoryInput = {
+    where: WizardFrameworkWhereUniqueInput
+    create: XOR<WizardFrameworkCreateWithoutCategoryInput, WizardFrameworkUncheckedCreateWithoutCategoryInput>
+  }
+
+  export type WizardFrameworkCreateManyCategoryInputEnvelope = {
+    data: WizardFrameworkCreateManyCategoryInput | WizardFrameworkCreateManyCategoryInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type WizardFrameworkUpsertWithWhereUniqueWithoutCategoryInput = {
+    where: WizardFrameworkWhereUniqueInput
+    update: XOR<WizardFrameworkUpdateWithoutCategoryInput, WizardFrameworkUncheckedUpdateWithoutCategoryInput>
+    create: XOR<WizardFrameworkCreateWithoutCategoryInput, WizardFrameworkUncheckedCreateWithoutCategoryInput>
+  }
+
+  export type WizardFrameworkUpdateWithWhereUniqueWithoutCategoryInput = {
+    where: WizardFrameworkWhereUniqueInput
+    data: XOR<WizardFrameworkUpdateWithoutCategoryInput, WizardFrameworkUncheckedUpdateWithoutCategoryInput>
+  }
+
+  export type WizardFrameworkUpdateManyWithWhereWithoutCategoryInput = {
+    where: WizardFrameworkScalarWhereInput
+    data: XOR<WizardFrameworkUpdateManyMutationInput, WizardFrameworkUncheckedUpdateManyWithoutCategoryInput>
+  }
+
+  export type WizardFrameworkScalarWhereInput = {
+    AND?: WizardFrameworkScalarWhereInput | WizardFrameworkScalarWhereInput[]
+    OR?: WizardFrameworkScalarWhereInput[]
+    NOT?: WizardFrameworkScalarWhereInput | WizardFrameworkScalarWhereInput[]
+    id?: StringFilter<"WizardFramework"> | string
+    categoryId?: StringFilter<"WizardFramework"> | string
+    label?: StringFilter<"WizardFramework"> | string
+    description?: StringFilter<"WizardFramework"> | string
+    badge?: StringNullableFilter<"WizardFramework"> | string | null
+    tags?: StringNullableListFilter<"WizardFramework">
+    popularity?: StringNullableFilter<"WizardFramework"> | string | null
+    icon?: StringNullableFilter<"WizardFramework"> | string | null
+    accentClass?: StringNullableFilter<"WizardFramework"> | string | null
+    displayOrder?: IntFilter<"WizardFramework"> | number
+    isActive?: BoolFilter<"WizardFramework"> | boolean
+    createdAt?: DateTimeFilter<"WizardFramework"> | Date | string
+    updatedAt?: DateTimeFilter<"WizardFramework"> | Date | string
+  }
+
+  export type WizardCatalogCategoryCreateWithoutFrameworksInput = {
+    id: string
+    label: string
+    description?: string | null
+    icon?: string | null
+    accentClass?: string | null
+    displayOrder?: number
+    isActive?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type WizardCatalogCategoryUncheckedCreateWithoutFrameworksInput = {
+    id: string
+    label: string
+    description?: string | null
+    icon?: string | null
+    accentClass?: string | null
+    displayOrder?: number
+    isActive?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type WizardCatalogCategoryCreateOrConnectWithoutFrameworksInput = {
+    where: WizardCatalogCategoryWhereUniqueInput
+    create: XOR<WizardCatalogCategoryCreateWithoutFrameworksInput, WizardCatalogCategoryUncheckedCreateWithoutFrameworksInput>
+  }
+
+  export type WizardFrameworkOptionCreateWithoutFrameworkInput = {
+    id?: string
+    defaultEnabled?: boolean
+    displayOrder?: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    option: WizardOptionCreateNestedOneWithoutFrameworksInput
+  }
+
+  export type WizardFrameworkOptionUncheckedCreateWithoutFrameworkInput = {
+    id?: string
+    optionId: string
+    defaultEnabled?: boolean
+    displayOrder?: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type WizardFrameworkOptionCreateOrConnectWithoutFrameworkInput = {
+    where: WizardFrameworkOptionWhereUniqueInput
+    create: XOR<WizardFrameworkOptionCreateWithoutFrameworkInput, WizardFrameworkOptionUncheckedCreateWithoutFrameworkInput>
+  }
+
+  export type WizardFrameworkOptionCreateManyFrameworkInputEnvelope = {
+    data: WizardFrameworkOptionCreateManyFrameworkInput | WizardFrameworkOptionCreateManyFrameworkInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type TemplateRevisionCreateWithoutFrameworkInput = {
+    id?: string
+    selectedOptionIds?: TemplateRevisionCreateselectedOptionIdsInput | string[]
+    source?: NullableJsonNullValueInput | InputJsonValue
+    compiledYaml: string
+    version: number
+    isActive?: boolean
+    createdBy?: string | null
+    notes?: string | null
+    createdAt?: Date | string
+    template: TemplateCreateNestedOneWithoutRevisionsInput
+  }
+
+  export type TemplateRevisionUncheckedCreateWithoutFrameworkInput = {
+    id?: string
+    templateId: number
+    selectedOptionIds?: TemplateRevisionCreateselectedOptionIdsInput | string[]
+    source?: NullableJsonNullValueInput | InputJsonValue
+    compiledYaml: string
+    version: number
+    isActive?: boolean
+    createdBy?: string | null
+    notes?: string | null
+    createdAt?: Date | string
+  }
+
+  export type TemplateRevisionCreateOrConnectWithoutFrameworkInput = {
+    where: TemplateRevisionWhereUniqueInput
+    create: XOR<TemplateRevisionCreateWithoutFrameworkInput, TemplateRevisionUncheckedCreateWithoutFrameworkInput>
+  }
+
+  export type TemplateRevisionCreateManyFrameworkInputEnvelope = {
+    data: TemplateRevisionCreateManyFrameworkInput | TemplateRevisionCreateManyFrameworkInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type WizardCatalogCategoryUpsertWithoutFrameworksInput = {
+    update: XOR<WizardCatalogCategoryUpdateWithoutFrameworksInput, WizardCatalogCategoryUncheckedUpdateWithoutFrameworksInput>
+    create: XOR<WizardCatalogCategoryCreateWithoutFrameworksInput, WizardCatalogCategoryUncheckedCreateWithoutFrameworksInput>
+    where?: WizardCatalogCategoryWhereInput
+  }
+
+  export type WizardCatalogCategoryUpdateToOneWithWhereWithoutFrameworksInput = {
+    where?: WizardCatalogCategoryWhereInput
+    data: XOR<WizardCatalogCategoryUpdateWithoutFrameworksInput, WizardCatalogCategoryUncheckedUpdateWithoutFrameworksInput>
+  }
+
+  export type WizardCatalogCategoryUpdateWithoutFrameworksInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    label?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    icon?: NullableStringFieldUpdateOperationsInput | string | null
+    accentClass?: NullableStringFieldUpdateOperationsInput | string | null
+    displayOrder?: IntFieldUpdateOperationsInput | number
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type WizardCatalogCategoryUncheckedUpdateWithoutFrameworksInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    label?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    icon?: NullableStringFieldUpdateOperationsInput | string | null
+    accentClass?: NullableStringFieldUpdateOperationsInput | string | null
+    displayOrder?: IntFieldUpdateOperationsInput | number
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type WizardFrameworkOptionUpsertWithWhereUniqueWithoutFrameworkInput = {
+    where: WizardFrameworkOptionWhereUniqueInput
+    update: XOR<WizardFrameworkOptionUpdateWithoutFrameworkInput, WizardFrameworkOptionUncheckedUpdateWithoutFrameworkInput>
+    create: XOR<WizardFrameworkOptionCreateWithoutFrameworkInput, WizardFrameworkOptionUncheckedCreateWithoutFrameworkInput>
+  }
+
+  export type WizardFrameworkOptionUpdateWithWhereUniqueWithoutFrameworkInput = {
+    where: WizardFrameworkOptionWhereUniqueInput
+    data: XOR<WizardFrameworkOptionUpdateWithoutFrameworkInput, WizardFrameworkOptionUncheckedUpdateWithoutFrameworkInput>
+  }
+
+  export type WizardFrameworkOptionUpdateManyWithWhereWithoutFrameworkInput = {
+    where: WizardFrameworkOptionScalarWhereInput
+    data: XOR<WizardFrameworkOptionUpdateManyMutationInput, WizardFrameworkOptionUncheckedUpdateManyWithoutFrameworkInput>
+  }
+
+  export type WizardFrameworkOptionScalarWhereInput = {
+    AND?: WizardFrameworkOptionScalarWhereInput | WizardFrameworkOptionScalarWhereInput[]
+    OR?: WizardFrameworkOptionScalarWhereInput[]
+    NOT?: WizardFrameworkOptionScalarWhereInput | WizardFrameworkOptionScalarWhereInput[]
+    id?: StringFilter<"WizardFrameworkOption"> | string
+    frameworkId?: StringFilter<"WizardFrameworkOption"> | string
+    optionId?: StringFilter<"WizardFrameworkOption"> | string
+    defaultEnabled?: BoolFilter<"WizardFrameworkOption"> | boolean
+    displayOrder?: IntFilter<"WizardFrameworkOption"> | number
+    createdAt?: DateTimeFilter<"WizardFrameworkOption"> | Date | string
+    updatedAt?: DateTimeFilter<"WizardFrameworkOption"> | Date | string
+  }
+
+  export type TemplateRevisionUpsertWithWhereUniqueWithoutFrameworkInput = {
+    where: TemplateRevisionWhereUniqueInput
+    update: XOR<TemplateRevisionUpdateWithoutFrameworkInput, TemplateRevisionUncheckedUpdateWithoutFrameworkInput>
+    create: XOR<TemplateRevisionCreateWithoutFrameworkInput, TemplateRevisionUncheckedCreateWithoutFrameworkInput>
+  }
+
+  export type TemplateRevisionUpdateWithWhereUniqueWithoutFrameworkInput = {
+    where: TemplateRevisionWhereUniqueInput
+    data: XOR<TemplateRevisionUpdateWithoutFrameworkInput, TemplateRevisionUncheckedUpdateWithoutFrameworkInput>
+  }
+
+  export type TemplateRevisionUpdateManyWithWhereWithoutFrameworkInput = {
+    where: TemplateRevisionScalarWhereInput
+    data: XOR<TemplateRevisionUpdateManyMutationInput, TemplateRevisionUncheckedUpdateManyWithoutFrameworkInput>
+  }
+
+  export type WizardFrameworkOptionCreateWithoutOptionInput = {
+    id?: string
+    defaultEnabled?: boolean
+    displayOrder?: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    framework: WizardFrameworkCreateNestedOneWithoutOptionsInput
+  }
+
+  export type WizardFrameworkOptionUncheckedCreateWithoutOptionInput = {
+    id?: string
+    frameworkId: string
+    defaultEnabled?: boolean
+    displayOrder?: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type WizardFrameworkOptionCreateOrConnectWithoutOptionInput = {
+    where: WizardFrameworkOptionWhereUniqueInput
+    create: XOR<WizardFrameworkOptionCreateWithoutOptionInput, WizardFrameworkOptionUncheckedCreateWithoutOptionInput>
+  }
+
+  export type WizardFrameworkOptionCreateManyOptionInputEnvelope = {
+    data: WizardFrameworkOptionCreateManyOptionInput | WizardFrameworkOptionCreateManyOptionInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type WizardFrameworkOptionUpsertWithWhereUniqueWithoutOptionInput = {
+    where: WizardFrameworkOptionWhereUniqueInput
+    update: XOR<WizardFrameworkOptionUpdateWithoutOptionInput, WizardFrameworkOptionUncheckedUpdateWithoutOptionInput>
+    create: XOR<WizardFrameworkOptionCreateWithoutOptionInput, WizardFrameworkOptionUncheckedCreateWithoutOptionInput>
+  }
+
+  export type WizardFrameworkOptionUpdateWithWhereUniqueWithoutOptionInput = {
+    where: WizardFrameworkOptionWhereUniqueInput
+    data: XOR<WizardFrameworkOptionUpdateWithoutOptionInput, WizardFrameworkOptionUncheckedUpdateWithoutOptionInput>
+  }
+
+  export type WizardFrameworkOptionUpdateManyWithWhereWithoutOptionInput = {
+    where: WizardFrameworkOptionScalarWhereInput
+    data: XOR<WizardFrameworkOptionUpdateManyMutationInput, WizardFrameworkOptionUncheckedUpdateManyWithoutOptionInput>
+  }
+
+  export type WizardFrameworkCreateWithoutOptionsInput = {
+    id: string
+    label: string
+    description: string
+    badge?: string | null
+    tags?: WizardFrameworkCreatetagsInput | string[]
+    popularity?: string | null
+    icon?: string | null
+    accentClass?: string | null
+    displayOrder?: number
+    isActive?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    category: WizardCatalogCategoryCreateNestedOneWithoutFrameworksInput
+    revisions?: TemplateRevisionCreateNestedManyWithoutFrameworkInput
+  }
+
+  export type WizardFrameworkUncheckedCreateWithoutOptionsInput = {
+    id: string
+    categoryId: string
+    label: string
+    description: string
+    badge?: string | null
+    tags?: WizardFrameworkCreatetagsInput | string[]
+    popularity?: string | null
+    icon?: string | null
+    accentClass?: string | null
+    displayOrder?: number
+    isActive?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    revisions?: TemplateRevisionUncheckedCreateNestedManyWithoutFrameworkInput
+  }
+
+  export type WizardFrameworkCreateOrConnectWithoutOptionsInput = {
+    where: WizardFrameworkWhereUniqueInput
+    create: XOR<WizardFrameworkCreateWithoutOptionsInput, WizardFrameworkUncheckedCreateWithoutOptionsInput>
+  }
+
+  export type WizardOptionCreateWithoutFrameworksInput = {
+    id: string
+    label: string
+    description: string
+    tier: $Enums.WizardOptionTier
+    icon?: string | null
+    displayOrder?: number
+    isActive?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type WizardOptionUncheckedCreateWithoutFrameworksInput = {
+    id: string
+    label: string
+    description: string
+    tier: $Enums.WizardOptionTier
+    icon?: string | null
+    displayOrder?: number
+    isActive?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type WizardOptionCreateOrConnectWithoutFrameworksInput = {
+    where: WizardOptionWhereUniqueInput
+    create: XOR<WizardOptionCreateWithoutFrameworksInput, WizardOptionUncheckedCreateWithoutFrameworksInput>
+  }
+
+  export type WizardFrameworkUpsertWithoutOptionsInput = {
+    update: XOR<WizardFrameworkUpdateWithoutOptionsInput, WizardFrameworkUncheckedUpdateWithoutOptionsInput>
+    create: XOR<WizardFrameworkCreateWithoutOptionsInput, WizardFrameworkUncheckedCreateWithoutOptionsInput>
+    where?: WizardFrameworkWhereInput
+  }
+
+  export type WizardFrameworkUpdateToOneWithWhereWithoutOptionsInput = {
+    where?: WizardFrameworkWhereInput
+    data: XOR<WizardFrameworkUpdateWithoutOptionsInput, WizardFrameworkUncheckedUpdateWithoutOptionsInput>
+  }
+
+  export type WizardFrameworkUpdateWithoutOptionsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    label?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    badge?: NullableStringFieldUpdateOperationsInput | string | null
+    tags?: WizardFrameworkUpdatetagsInput | string[]
+    popularity?: NullableStringFieldUpdateOperationsInput | string | null
+    icon?: NullableStringFieldUpdateOperationsInput | string | null
+    accentClass?: NullableStringFieldUpdateOperationsInput | string | null
+    displayOrder?: IntFieldUpdateOperationsInput | number
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    category?: WizardCatalogCategoryUpdateOneRequiredWithoutFrameworksNestedInput
+    revisions?: TemplateRevisionUpdateManyWithoutFrameworkNestedInput
+  }
+
+  export type WizardFrameworkUncheckedUpdateWithoutOptionsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    categoryId?: StringFieldUpdateOperationsInput | string
+    label?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    badge?: NullableStringFieldUpdateOperationsInput | string | null
+    tags?: WizardFrameworkUpdatetagsInput | string[]
+    popularity?: NullableStringFieldUpdateOperationsInput | string | null
+    icon?: NullableStringFieldUpdateOperationsInput | string | null
+    accentClass?: NullableStringFieldUpdateOperationsInput | string | null
+    displayOrder?: IntFieldUpdateOperationsInput | number
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    revisions?: TemplateRevisionUncheckedUpdateManyWithoutFrameworkNestedInput
+  }
+
+  export type WizardOptionUpsertWithoutFrameworksInput = {
+    update: XOR<WizardOptionUpdateWithoutFrameworksInput, WizardOptionUncheckedUpdateWithoutFrameworksInput>
+    create: XOR<WizardOptionCreateWithoutFrameworksInput, WizardOptionUncheckedCreateWithoutFrameworksInput>
+    where?: WizardOptionWhereInput
+  }
+
+  export type WizardOptionUpdateToOneWithWhereWithoutFrameworksInput = {
+    where?: WizardOptionWhereInput
+    data: XOR<WizardOptionUpdateWithoutFrameworksInput, WizardOptionUncheckedUpdateWithoutFrameworksInput>
+  }
+
+  export type WizardOptionUpdateWithoutFrameworksInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    label?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    tier?: EnumWizardOptionTierFieldUpdateOperationsInput | $Enums.WizardOptionTier
+    icon?: NullableStringFieldUpdateOperationsInput | string | null
+    displayOrder?: IntFieldUpdateOperationsInput | number
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type WizardOptionUncheckedUpdateWithoutFrameworksInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    label?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    tier?: EnumWizardOptionTierFieldUpdateOperationsInput | $Enums.WizardOptionTier
+    icon?: NullableStringFieldUpdateOperationsInput | string | null
+    displayOrder?: IntFieldUpdateOperationsInput | number
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type TemplateCreateWithoutRevisionsInput = {
+    title: string
+    description?: string | null
+    yaml: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    category: CategoryCreateNestedOneWithoutTemplatesInput
+  }
+
+  export type TemplateUncheckedCreateWithoutRevisionsInput = {
+    title: string
+    description?: string | null
+    categoryName: string
+    yaml: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    id?: number
+  }
+
+  export type TemplateCreateOrConnectWithoutRevisionsInput = {
+    where: TemplateWhereUniqueInput
+    create: XOR<TemplateCreateWithoutRevisionsInput, TemplateUncheckedCreateWithoutRevisionsInput>
+  }
+
+  export type WizardFrameworkCreateWithoutRevisionsInput = {
+    id: string
+    label: string
+    description: string
+    badge?: string | null
+    tags?: WizardFrameworkCreatetagsInput | string[]
+    popularity?: string | null
+    icon?: string | null
+    accentClass?: string | null
+    displayOrder?: number
+    isActive?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    category: WizardCatalogCategoryCreateNestedOneWithoutFrameworksInput
+    options?: WizardFrameworkOptionCreateNestedManyWithoutFrameworkInput
+  }
+
+  export type WizardFrameworkUncheckedCreateWithoutRevisionsInput = {
+    id: string
+    categoryId: string
+    label: string
+    description: string
+    badge?: string | null
+    tags?: WizardFrameworkCreatetagsInput | string[]
+    popularity?: string | null
+    icon?: string | null
+    accentClass?: string | null
+    displayOrder?: number
+    isActive?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    options?: WizardFrameworkOptionUncheckedCreateNestedManyWithoutFrameworkInput
+  }
+
+  export type WizardFrameworkCreateOrConnectWithoutRevisionsInput = {
+    where: WizardFrameworkWhereUniqueInput
+    create: XOR<WizardFrameworkCreateWithoutRevisionsInput, WizardFrameworkUncheckedCreateWithoutRevisionsInput>
+  }
+
+  export type TemplateUpsertWithoutRevisionsInput = {
+    update: XOR<TemplateUpdateWithoutRevisionsInput, TemplateUncheckedUpdateWithoutRevisionsInput>
+    create: XOR<TemplateCreateWithoutRevisionsInput, TemplateUncheckedCreateWithoutRevisionsInput>
+    where?: TemplateWhereInput
+  }
+
+  export type TemplateUpdateToOneWithWhereWithoutRevisionsInput = {
+    where?: TemplateWhereInput
+    data: XOR<TemplateUpdateWithoutRevisionsInput, TemplateUncheckedUpdateWithoutRevisionsInput>
+  }
+
+  export type TemplateUpdateWithoutRevisionsInput = {
+    title?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    yaml?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    category?: CategoryUpdateOneRequiredWithoutTemplatesNestedInput
+  }
+
+  export type TemplateUncheckedUpdateWithoutRevisionsInput = {
+    title?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    categoryName?: StringFieldUpdateOperationsInput | string
+    yaml?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    id?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type WizardFrameworkUpsertWithoutRevisionsInput = {
+    update: XOR<WizardFrameworkUpdateWithoutRevisionsInput, WizardFrameworkUncheckedUpdateWithoutRevisionsInput>
+    create: XOR<WizardFrameworkCreateWithoutRevisionsInput, WizardFrameworkUncheckedCreateWithoutRevisionsInput>
+    where?: WizardFrameworkWhereInput
+  }
+
+  export type WizardFrameworkUpdateToOneWithWhereWithoutRevisionsInput = {
+    where?: WizardFrameworkWhereInput
+    data: XOR<WizardFrameworkUpdateWithoutRevisionsInput, WizardFrameworkUncheckedUpdateWithoutRevisionsInput>
+  }
+
+  export type WizardFrameworkUpdateWithoutRevisionsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    label?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    badge?: NullableStringFieldUpdateOperationsInput | string | null
+    tags?: WizardFrameworkUpdatetagsInput | string[]
+    popularity?: NullableStringFieldUpdateOperationsInput | string | null
+    icon?: NullableStringFieldUpdateOperationsInput | string | null
+    accentClass?: NullableStringFieldUpdateOperationsInput | string | null
+    displayOrder?: IntFieldUpdateOperationsInput | number
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    category?: WizardCatalogCategoryUpdateOneRequiredWithoutFrameworksNestedInput
+    options?: WizardFrameworkOptionUpdateManyWithoutFrameworkNestedInput
+  }
+
+  export type WizardFrameworkUncheckedUpdateWithoutRevisionsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    categoryId?: StringFieldUpdateOperationsInput | string
+    label?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    badge?: NullableStringFieldUpdateOperationsInput | string | null
+    tags?: WizardFrameworkUpdatetagsInput | string[]
+    popularity?: NullableStringFieldUpdateOperationsInput | string | null
+    icon?: NullableStringFieldUpdateOperationsInput | string | null
+    accentClass?: NullableStringFieldUpdateOperationsInput | string | null
+    displayOrder?: IntFieldUpdateOperationsInput | number
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    options?: WizardFrameworkOptionUncheckedUpdateManyWithoutFrameworkNestedInput
+  }
+
+  export type TemplateRevisionCreateManyTemplateInput = {
+    id?: string
+    frameworkId?: string | null
+    selectedOptionIds?: TemplateRevisionCreateselectedOptionIdsInput | string[]
+    source?: NullableJsonNullValueInput | InputJsonValue
+    compiledYaml: string
+    version: number
+    isActive?: boolean
+    createdBy?: string | null
+    notes?: string | null
+    createdAt?: Date | string
+  }
+
+  export type TemplateRevisionUpdateWithoutTemplateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    selectedOptionIds?: TemplateRevisionUpdateselectedOptionIdsInput | string[]
+    source?: NullableJsonNullValueInput | InputJsonValue
+    compiledYaml?: StringFieldUpdateOperationsInput | string
+    version?: IntFieldUpdateOperationsInput | number
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    createdBy?: NullableStringFieldUpdateOperationsInput | string | null
+    notes?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    framework?: WizardFrameworkUpdateOneWithoutRevisionsNestedInput
+  }
+
+  export type TemplateRevisionUncheckedUpdateWithoutTemplateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    frameworkId?: NullableStringFieldUpdateOperationsInput | string | null
+    selectedOptionIds?: TemplateRevisionUpdateselectedOptionIdsInput | string[]
+    source?: NullableJsonNullValueInput | InputJsonValue
+    compiledYaml?: StringFieldUpdateOperationsInput | string
+    version?: IntFieldUpdateOperationsInput | number
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    createdBy?: NullableStringFieldUpdateOperationsInput | string | null
+    notes?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type TemplateRevisionUncheckedUpdateManyWithoutTemplateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    frameworkId?: NullableStringFieldUpdateOperationsInput | string | null
+    selectedOptionIds?: TemplateRevisionUpdateselectedOptionIdsInput | string[]
+    source?: NullableJsonNullValueInput | InputJsonValue
+    compiledYaml?: StringFieldUpdateOperationsInput | string
+    version?: IntFieldUpdateOperationsInput | number
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    createdBy?: NullableStringFieldUpdateOperationsInput | string | null
+    notes?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type TemplateCreateManyCategoryInput = {
     title: string
-    description: string
+    description?: string | null
     yaml: string
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -24648,24 +33475,26 @@ export namespace Prisma {
 
   export type TemplateUpdateWithoutCategoryInput = {
     title?: StringFieldUpdateOperationsInput | string
-    description?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
     yaml?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    revisions?: TemplateRevisionUpdateManyWithoutTemplateNestedInput
   }
 
   export type TemplateUncheckedUpdateWithoutCategoryInput = {
     title?: StringFieldUpdateOperationsInput | string
-    description?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
     yaml?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     id?: IntFieldUpdateOperationsInput | number
+    revisions?: TemplateRevisionUncheckedUpdateManyWithoutTemplateNestedInput
   }
 
   export type TemplateUncheckedUpdateManyWithoutCategoryInput = {
     title?: StringFieldUpdateOperationsInput | string
-    description?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
     yaml?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -25183,6 +34012,194 @@ export namespace Prisma {
     comment?: NullableStringFieldUpdateOperationsInput | string | null
     respondedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type WizardFrameworkCreateManyCategoryInput = {
+    id: string
+    label: string
+    description: string
+    badge?: string | null
+    tags?: WizardFrameworkCreatetagsInput | string[]
+    popularity?: string | null
+    icon?: string | null
+    accentClass?: string | null
+    displayOrder?: number
+    isActive?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type WizardFrameworkUpdateWithoutCategoryInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    label?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    badge?: NullableStringFieldUpdateOperationsInput | string | null
+    tags?: WizardFrameworkUpdatetagsInput | string[]
+    popularity?: NullableStringFieldUpdateOperationsInput | string | null
+    icon?: NullableStringFieldUpdateOperationsInput | string | null
+    accentClass?: NullableStringFieldUpdateOperationsInput | string | null
+    displayOrder?: IntFieldUpdateOperationsInput | number
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    options?: WizardFrameworkOptionUpdateManyWithoutFrameworkNestedInput
+    revisions?: TemplateRevisionUpdateManyWithoutFrameworkNestedInput
+  }
+
+  export type WizardFrameworkUncheckedUpdateWithoutCategoryInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    label?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    badge?: NullableStringFieldUpdateOperationsInput | string | null
+    tags?: WizardFrameworkUpdatetagsInput | string[]
+    popularity?: NullableStringFieldUpdateOperationsInput | string | null
+    icon?: NullableStringFieldUpdateOperationsInput | string | null
+    accentClass?: NullableStringFieldUpdateOperationsInput | string | null
+    displayOrder?: IntFieldUpdateOperationsInput | number
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    options?: WizardFrameworkOptionUncheckedUpdateManyWithoutFrameworkNestedInput
+    revisions?: TemplateRevisionUncheckedUpdateManyWithoutFrameworkNestedInput
+  }
+
+  export type WizardFrameworkUncheckedUpdateManyWithoutCategoryInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    label?: StringFieldUpdateOperationsInput | string
+    description?: StringFieldUpdateOperationsInput | string
+    badge?: NullableStringFieldUpdateOperationsInput | string | null
+    tags?: WizardFrameworkUpdatetagsInput | string[]
+    popularity?: NullableStringFieldUpdateOperationsInput | string | null
+    icon?: NullableStringFieldUpdateOperationsInput | string | null
+    accentClass?: NullableStringFieldUpdateOperationsInput | string | null
+    displayOrder?: IntFieldUpdateOperationsInput | number
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type WizardFrameworkOptionCreateManyFrameworkInput = {
+    id?: string
+    optionId: string
+    defaultEnabled?: boolean
+    displayOrder?: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type TemplateRevisionCreateManyFrameworkInput = {
+    id?: string
+    templateId: number
+    selectedOptionIds?: TemplateRevisionCreateselectedOptionIdsInput | string[]
+    source?: NullableJsonNullValueInput | InputJsonValue
+    compiledYaml: string
+    version: number
+    isActive?: boolean
+    createdBy?: string | null
+    notes?: string | null
+    createdAt?: Date | string
+  }
+
+  export type WizardFrameworkOptionUpdateWithoutFrameworkInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    defaultEnabled?: BoolFieldUpdateOperationsInput | boolean
+    displayOrder?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    option?: WizardOptionUpdateOneRequiredWithoutFrameworksNestedInput
+  }
+
+  export type WizardFrameworkOptionUncheckedUpdateWithoutFrameworkInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    optionId?: StringFieldUpdateOperationsInput | string
+    defaultEnabled?: BoolFieldUpdateOperationsInput | boolean
+    displayOrder?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type WizardFrameworkOptionUncheckedUpdateManyWithoutFrameworkInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    optionId?: StringFieldUpdateOperationsInput | string
+    defaultEnabled?: BoolFieldUpdateOperationsInput | boolean
+    displayOrder?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type TemplateRevisionUpdateWithoutFrameworkInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    selectedOptionIds?: TemplateRevisionUpdateselectedOptionIdsInput | string[]
+    source?: NullableJsonNullValueInput | InputJsonValue
+    compiledYaml?: StringFieldUpdateOperationsInput | string
+    version?: IntFieldUpdateOperationsInput | number
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    createdBy?: NullableStringFieldUpdateOperationsInput | string | null
+    notes?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    template?: TemplateUpdateOneRequiredWithoutRevisionsNestedInput
+  }
+
+  export type TemplateRevisionUncheckedUpdateWithoutFrameworkInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    templateId?: IntFieldUpdateOperationsInput | number
+    selectedOptionIds?: TemplateRevisionUpdateselectedOptionIdsInput | string[]
+    source?: NullableJsonNullValueInput | InputJsonValue
+    compiledYaml?: StringFieldUpdateOperationsInput | string
+    version?: IntFieldUpdateOperationsInput | number
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    createdBy?: NullableStringFieldUpdateOperationsInput | string | null
+    notes?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type TemplateRevisionUncheckedUpdateManyWithoutFrameworkInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    templateId?: IntFieldUpdateOperationsInput | number
+    selectedOptionIds?: TemplateRevisionUpdateselectedOptionIdsInput | string[]
+    source?: NullableJsonNullValueInput | InputJsonValue
+    compiledYaml?: StringFieldUpdateOperationsInput | string
+    version?: IntFieldUpdateOperationsInput | number
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    createdBy?: NullableStringFieldUpdateOperationsInput | string | null
+    notes?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type WizardFrameworkOptionCreateManyOptionInput = {
+    id?: string
+    frameworkId: string
+    defaultEnabled?: boolean
+    displayOrder?: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type WizardFrameworkOptionUpdateWithoutOptionInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    defaultEnabled?: BoolFieldUpdateOperationsInput | boolean
+    displayOrder?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    framework?: WizardFrameworkUpdateOneRequiredWithoutOptionsNestedInput
+  }
+
+  export type WizardFrameworkOptionUncheckedUpdateWithoutOptionInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    frameworkId?: StringFieldUpdateOperationsInput | string
+    defaultEnabled?: BoolFieldUpdateOperationsInput | boolean
+    displayOrder?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type WizardFrameworkOptionUncheckedUpdateManyWithoutOptionInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    frameworkId?: StringFieldUpdateOperationsInput | string
+    defaultEnabled?: BoolFieldUpdateOperationsInput | boolean
+    displayOrder?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
 
