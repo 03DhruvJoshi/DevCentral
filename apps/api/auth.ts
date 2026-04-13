@@ -203,6 +203,39 @@ function envValue(key: string): string | undefined {
   return (process.env as Record<string, string | undefined>)[key];
 }
 
+function getProfileAddress(preferences: unknown): string | null {
+  if (!preferences || typeof preferences !== "object") {
+    return null;
+  }
+
+  const profile = (preferences as Record<string, unknown>).profile;
+  if (!profile || typeof profile !== "object") {
+    return null;
+  }
+
+  const address = (profile as Record<string, unknown>).address;
+  return typeof address === "string" ? address : null;
+}
+
+function withProfileAddress(preferences: unknown, address: string): object {
+  const base =
+    preferences && typeof preferences === "object"
+      ? (preferences as Record<string, unknown>)
+      : {};
+  const baseProfile =
+    base.profile && typeof base.profile === "object"
+      ? (base.profile as Record<string, unknown>)
+      : {};
+
+  return {
+    ...base,
+    profile: {
+      ...baseProfile,
+      address,
+    },
+  };
+}
+
 router.use(cors());
 router.use(express.json());
 
@@ -270,8 +303,10 @@ router.post("/api/auth/login", async (req, res) => {
       res.json({
         token,
         user: {
+          id: user.id,
           name: user.name,
           email: user.email,
+          address: getProfileAddress(user.dashboardPreferences),
           githubUsername: user.githubUsername,
           role: user.role,
         },
@@ -299,8 +334,10 @@ router.post("/api/auth/login", async (req, res) => {
     res.json({
       token,
       user: {
+        id: user.id,
         name: user.name,
         email: user.email,
+        address: getProfileAddress(user.dashboardPreferences),
         githubUsername: user.githubUsername,
         role: user.role,
       },
@@ -574,10 +611,89 @@ router.delete(
 
     await prisma.user.update({
       where: { id: userId },
-      data: { githubAccessToken: null },
+      data: {
+        githubAccessToken: null,
+        githubUsername: null,
+      },
     });
 
     res.json({ message: "GitHub account disconnected." });
+  },
+);
+
+router.patch(
+  "/api/auth/profile",
+  authenticateToken,
+  async (req: AuthenticatedRequest, res) => {
+    const userId = req.user?.id;
+    if (!userId) {
+      return res.status(401).json({ error: "Unauthorized" });
+    }
+
+    const nameRaw = req.body?.name;
+    const addressRaw = req.body?.address;
+
+    const name = typeof nameRaw === "string" ? nameRaw.trim() : "";
+    const address =
+      typeof addressRaw === "string" ? addressRaw.trim().slice(0, 240) : "";
+
+    if (!name) {
+      return res.status(400).json({ error: "Name is required." });
+    }
+
+    try {
+      const existing = await prisma.user.findUnique({
+        where: { id: userId },
+        select: {
+          id: true,
+          email: true,
+          name: true,
+          role: true,
+          githubUsername: true,
+          dashboardPreferences: true,
+        },
+      });
+
+      if (!existing) {
+        return res.status(404).json({ error: "User not found." });
+      }
+
+      const updated = await prisma.user.update({
+        where: { id: userId },
+        data: {
+          name,
+          dashboardPreferences: withProfileAddress(
+            existing.dashboardPreferences,
+            address,
+          ),
+        },
+        select: {
+          id: true,
+          email: true,
+          name: true,
+          role: true,
+          githubUsername: true,
+          createdAt: true,
+          dashboardPreferences: true,
+        },
+      });
+
+      return res.json({
+        message: "Profile updated successfully.",
+        user: {
+          id: updated.id,
+          email: updated.email,
+          name: updated.name,
+          role: updated.role,
+          githubUsername: updated.githubUsername,
+          createdAt: updated.createdAt,
+          address: getProfileAddress(updated.dashboardPreferences),
+        },
+      });
+    } catch (error) {
+      console.error("Failed to update profile", error);
+      return res.status(500).json({ error: "Failed to update profile." });
+    }
   },
 );
 
@@ -599,6 +715,8 @@ router.post(
         name: true,
         githubUsername: true,
         role: true,
+        createdAt: true,
+        dashboardPreferences: true,
       },
     });
     if (!user) return res.status(404).json({ error: "User not found" });
@@ -607,8 +725,11 @@ router.post(
     res.json({
       token,
       user: {
+        id: user.id,
         name: user.name,
         email: user.email,
+        createdAt: user.createdAt,
+        address: getProfileAddress(user.dashboardPreferences),
         githubUsername: user.githubUsername,
         role: user.role,
       },
