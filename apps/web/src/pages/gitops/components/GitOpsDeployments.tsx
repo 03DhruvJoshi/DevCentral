@@ -25,30 +25,15 @@ import {
   CardHeader,
   CardTitle,
 } from "../../../components/ui/card.js";
-import { Badge } from "../../../components/ui/badge.js";
 import { Button } from "../../../components/ui/button.js";
 import { Input } from "../../../components/ui/input.js";
 import { Label } from "../../../components/ui/label.js";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "../../../components/ui/table.js";
 import {
   Avatar,
   AvatarFallback,
   AvatarImage,
 } from "../../../components/ui/avatar.js";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "../../../components/ui/select.js";
+
 import {
   Dialog,
   DialogContent,
@@ -56,7 +41,6 @@ import {
   DialogHeader,
   DialogTitle,
 } from "../../../components/ui/dialog.js";
-import { Separator } from "../../../components/ui/separator.js";
 import { TableControls, PaginationControls } from "./TableControls.js";
 import {
   type Repository,
@@ -72,12 +56,21 @@ import {
 
 function deploymentStatusBadge(env: string, deployments: GitHubDeployment[]) {
   const latest = deployments.find((d) => d.environment === env);
-  if (!latest) return <Badge variant="outline">No deployments</Badge>;
+  if (!latest)
+    return (
+      <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-[11px] font-semibold bg-slate-100 text-slate-500 border border-slate-200">
+        <span className="h-1.5 w-1.5 rounded-full bg-slate-400" />
+        <span>Never deployed</span>
+      </span>
+    );
   return (
-    <Badge variant="secondary" className="bg-blue-100 text-blue-800">
-      <CheckCircle2 className="h-3 w-3 mr-1" />
-      Deployed
-    </Badge>
+    <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-[11px] font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200">
+      <span className="relative flex h-1.5 w-1.5">
+        <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
+        <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-emerald-500" />
+      </span>
+      <span>Live</span>
+    </span>
   );
 }
 
@@ -200,7 +193,7 @@ function ServiceCard({
 }) {
   const Icon = service.icon;
   return (
-    <Card className="flex flex-col">
+    <Card className="flex flex-col border-slate-200 bg-white/95 shadow-sm hover:shadow-md transition-all duration-200">
       <CardHeader className="pb-2">
         <div className="flex items-start justify-between gap-2">
           <div className="flex items-center gap-2">
@@ -212,27 +205,33 @@ function ServiceCard({
             </CardTitle>
           </div>
           {service.status === "connected" ? (
-            <Badge className="bg-green-600 text-xs shrink-0">Connected</Badge>
+            <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-[11px] font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200 shrink-0">
+              <span className="relative flex h-1.5 w-1.5">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
+                <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-emerald-500" />
+              </span>
+              <span>Connected</span>
+            </span>
           ) : service.status === "coming_soon" ? (
-            <Badge variant="outline" className="text-xs shrink-0">
+            <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[11px] font-semibold bg-slate-100 text-slate-500 border border-slate-200 shrink-0">
               Soon
-            </Badge>
+            </span>
           ) : (
-            <Badge variant="secondary" className="text-xs shrink-0">
+            <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[11px] font-semibold bg-blue-50 text-blue-600 border border-blue-200 shrink-0">
               Available
-            </Badge>
+            </span>
           )}
         </div>
       </CardHeader>
       <CardContent className="flex-1 flex flex-col gap-3">
-        <p className="text-xs text-muted-foreground leading-relaxed">
+        <p className="text-xs text-slate-600 leading-relaxed">
           {service.description}
         </p>
         {service.status === "available" && service.guideTitle && (
           <Button
             size="sm"
             variant="outline"
-            className="w-fit text-xs"
+            className="w-fit text-xs border-slate-200 bg-white hover:bg-slate-50"
             onClick={() => onGuide(service)}
           >
             <Settings className="h-3 w-3 mr-1.5" />
@@ -247,42 +246,66 @@ function ServiceCard({
 function EnvironmentCard({
   env,
   deployments,
+  index,
+  total,
 }: {
   env: GitHubEnvironment;
   deployments: GitHubDeployment[];
+  index: number;
+  total: number;
 }) {
   const latest = deployments.find((d) => d.environment === env.name);
+  const isLast = index === total - 1;
+
+  // Give each stage a distinct accent — first = dev/staging, last = production
+  const stageColor =
+    index === 0
+      ? "border-l-sky-300"
+      : isLast
+        ? "border-l-emerald-400"
+        : "border-l-violet-300";
+
   return (
-    <Card className="border-l-4 border-l-blue-500">
+    <Card
+      className={`w-full border-l-4 ${stageColor} border-slate-200 bg-white/95 shadow-sm hover:shadow-md transition-all duration-200`}
+    >
       <CardContent className="pt-4">
         <div className="flex items-start justify-between gap-2 mb-3">
           <div>
-            <p className="font-semibold text-sm capitalize">{env.name}</p>
+            <p className="font-semibold text-sm capitalize text-slate-900">
+              {env.name}
+            </p>
             {env.protection_rules && env.protection_rules.length > 0 && (
-              <p className="text-xs text-muted-foreground">
-                Protected ({env.protection_rules.length} rule
-                {env.protection_rules.length > 1 ? "s" : ""})
+              <p className="text-xs text-slate-500">
+                Protected · {env.protection_rules.length} rule
+                {env.protection_rules.length > 1 ? "s" : ""}
               </p>
             )}
           </div>
           {latest ? (
-            <Badge className="bg-green-600 text-xs">Active</Badge>
+            <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-[11px] font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200">
+              <span className="relative flex h-1.5 w-1.5">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
+                <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-emerald-500" />
+              </span>
+              <span>Live</span>
+            </span>
           ) : (
-            <Badge variant="outline" className="text-xs">
-              Never deployed
-            </Badge>
+            <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-[11px] font-semibold bg-slate-100 text-slate-500 border border-slate-200">
+              <span>Idle</span>
+            </span>
           )}
         </div>
 
         {latest ? (
-          <div className="space-y-1.5 text-xs text-muted-foreground">
+          <div className="space-y-1.5 text-xs text-slate-500">
             <div className="flex items-center gap-1.5">
               <GitBranch className="h-3 w-3" />
-              <code className="font-mono">{latest.ref}</code>
+              <code className="font-mono text-slate-700">{latest.ref}</code>
             </div>
             {latest.creator && (
               <div className="flex items-center gap-1.5">
-                <Avatar className="h-4 w-4">
+                <Avatar className="h-4 w-4 ring-1 ring-slate-200">
                   <AvatarImage src={latest.creator.avatar_url} />
                   <AvatarFallback>{latest.creator.login[0]}</AvatarFallback>
                 </Avatar>
@@ -295,9 +318,7 @@ function EnvironmentCard({
             </div>
           </div>
         ) : (
-          <p className="text-xs text-muted-foreground">
-            No deployment history yet.
-          </p>
+          <p className="text-xs text-slate-400 italic">No deployments yet</p>
         )}
       </CardContent>
     </Card>
@@ -343,8 +364,8 @@ function DeployTargetPicker({
               onClick={() => setDeployMode(value)}
               className={`px-3 py-1.5 rounded-md border text-sm transition-colors ${
                 deployMode === value
-                  ? "bg-primary text-primary-foreground border-primary"
-                  : "bg-background text-muted-foreground border-border hover:bg-muted"
+                  ? "bg-gradient-to-br from-slate-900 via-indigo-950 to-slate-800 p-6 rounded-2xl text-white border-blue-600"
+                  : "bg-white text-slate-600 border-slate-200 hover:bg-slate-50"
               }`}
             >
               {label}
@@ -357,19 +378,17 @@ function DeployTargetPicker({
         <div className="space-y-2">
           <Label>Branch</Label>
           {branches.length > 0 ? (
-            <Select value={deployBranch} onValueChange={setDeployBranch}>
-              <SelectTrigger>
-                <GitBranch className="h-3.5 w-3.5 mr-2 text-muted-foreground" />
-                <SelectValue placeholder="Select a branch..." />
-              </SelectTrigger>
-              <SelectContent className="bg-white">
-                {branches.map((b) => (
-                  <SelectItem key={b} value={b}>
-                    {b}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
+            <select
+              value={deployBranch}
+              onChange={(e) => setDeployBranch(e.target.value)}
+              className="h-9 rounded-lg border border-slate-300 bg-white px-2.5 text-sm text-slate-700 focus:outline-none focus:ring-2 focus:ring-slate-300 hover:border-slate-400 transition-colors cursor-pointer"
+            >
+              {branches.map((b) => (
+                <option key={b} value={b}>
+                  {b}
+                </option>
+              ))}
+            </select>
           ) : (
             <div className="relative">
               <GitBranch className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
@@ -389,23 +408,17 @@ function DeployTargetPicker({
         <div className="space-y-2">
           <Label>Commit</Label>
           {recentCommits.length > 0 ? (
-            <Select value={deployCommitSha} onValueChange={setDeployCommitSha}>
-              <SelectTrigger className="h-auto">
-                <SelectValue placeholder="Select a commit..." />
-              </SelectTrigger>
-              <SelectContent className="bg-white">
-                {recentCommits.map((c) => (
-                  <SelectItem key={c.sha} value={c.sha}>
-                    <div className="flex flex-col gap-0.5 py-0.5">
-                      <span className="text-xs leading-snug">{c.message}</span>
-                      <span className="font-mono text-[10px] text-muted-foreground">
-                        {c.sha.slice(0, 7)} · {c.author}
-                      </span>
-                    </div>
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
+            <select
+              value={deployCommitSha}
+              onChange={(e) => setDeployCommitSha(e.target.value)}
+              className="h-9 rounded-lg border border-slate-300 bg-white px-2.5 text-sm text-slate-700 focus:outline-none focus:ring-2 focus:ring-slate-300 hover:border-slate-400 transition-colors cursor-pointer"
+            >
+              {recentCommits.map((c) => (
+                <option key={c.sha} value={c.sha}>
+                  {c.message.split("\n")[0]} ({c.sha.slice(0, 7)}) by {c.author}
+                </option>
+              ))}
+            </select>
           ) : (
             <Input
               className="font-mono"
@@ -449,7 +462,7 @@ function WorkflowSetupGuide({
 }) {
   const label = service === "vercel" ? "Vercel" : "Render";
   return (
-    <div className="rounded-lg border border-dashed p-4 space-y-4">
+    <div className="rounded-xl border border-dashed border-slate-300 bg-slate-50 p-4 space-y-4">
       <div className="space-y-1">
         <p className="font-medium text-sm">
           Connect {label} via GitHub Actions
@@ -486,7 +499,12 @@ function WorkflowSetupGuide({
             </div>
           ))}
         </div>
-        <Button size="sm" variant="outline" className="w-fit text-xs" asChild>
+        <Button
+          size="sm"
+          variant="outline"
+          className="bg-white w-fit text-xs"
+          asChild
+        >
           <a
             href={`https://github.com/${owner}/${repo}/settings/secrets/actions`}
             target="_blank"
@@ -504,7 +522,7 @@ function WorkflowSetupGuide({
           onClick={onCreatePr}
           disabled={isCreatingPr}
           size="sm"
-          className="gap-1.5"
+          className="gap-1.5 bg-gradient-to-br from-slate-900 via-indigo-950 to-slate-800 p-6 rounded-2xl hover:bg-blue-700 text-white"
         >
           {isCreatingPr ? (
             <Loader2 className="h-3.5 w-3.5 animate-spin" />
@@ -647,16 +665,22 @@ export default function GitOpsDeployments(props: { selectedRepo: Repository }) {
         if (branchRes.ok) setBranches(await branchRes.json());
         if (commitRes.ok) {
           const rawCommits: Array<{
-            sha: string;
-            commit: { message: string; author: { name: string } };
-            author: { login: string } | null;
+            sha?: string;
+            commit?: { message?: string; author?: { name?: string } };
+            author?: { login?: string } | null;
           }> = await commitRes.json();
           setRecentCommits(
-            rawCommits.map((c) => ({
-              sha: c.sha,
-              message: c.commit.message.split("\n")[0].slice(0, 72),
-              author: c.author?.login ?? c.commit.author.name,
-            })),
+            rawCommits.map((c) => {
+              const [firstLine = "No commit message"] = (
+                c.commit?.message ?? "No commit message"
+              ).split("\n");
+
+              return {
+                sha: c.sha ?? "",
+                message: firstLine.slice(0, 72),
+                author: c.author?.login ?? c.commit?.author?.name ?? "unknown",
+              };
+            }),
           );
         }
         if (svcRes.ok) {
@@ -804,9 +828,9 @@ export default function GitOpsDeployments(props: { selectedRepo: Repository }) {
   return (
     <div className="space-y-6">
       {/* ── Environment Overview ── */}
-      <div>
+      <section className="rounded-2xl border border-slate-200 bg-gradient-to-br from-white via-slate-50 to-blue-50/40 p-4 sm:p-5 shadow-sm">
         <div className="flex items-center justify-between mb-3">
-          <h3 className="font-semibold text-base flex items-center gap-2">
+          <h3 className="font-semibold text-base flex items-center gap-2 text-slate-900">
             <Layers className="h-4 w-4 text-muted-foreground" />
             Environments
           </h3>
@@ -847,24 +871,27 @@ export default function GitOpsDeployments(props: { selectedRepo: Repository }) {
             </CardContent>
           </Card>
         ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
-            {environments.map((env) => (
-              <EnvironmentCard
-                key={env.id}
-                env={env}
-                deployments={deployments}
-              />
+          <div className="flex grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2 w-full h-full">
+            {environments.map((env, idx) => (
+              <div key={env.id} className="flex items-center flex-1 ">
+                <div className="flex-1">
+                  <EnvironmentCard
+                    env={env}
+                    deployments={deployments}
+                    index={idx}
+                    total={environments.length}
+                  />
+                </div>
+              </div>
             ))}
           </div>
         )}
-      </div>
-
-      <Separator />
+      </section>
 
       {/* ── Manual Deploy Card ── */}
-      <Card>
+      <Card className="border-slate-200 bg-white/95 shadow-sm">
         <CardHeader>
-          <CardTitle className="flex items-center gap-2 text-base">
+          <CardTitle className="flex items-center gap-2 text-base text-slate-900">
             <Rocket className="h-4 w-4 text-violet-600" />
             Manual Deployment
           </CardTitle>
@@ -897,8 +924,8 @@ export default function GitOpsDeployments(props: { selectedRepo: Repository }) {
                   }}
                   className={`flex items-center gap-1.5 px-3 py-1.5 rounded-md border text-sm font-medium transition-colors ${
                     deployService === id
-                      ? "bg-primary text-primary-foreground border-primary"
-                      : "bg-background text-muted-foreground border-border hover:bg-muted"
+                      ? "bg-gradient-to-br from-slate-900 via-indigo-950 to-slate-800 p-6 rounded-2xl text-white "
+                      : "bg-white text-slate-600 border-slate-200 hover:bg-slate-50"
                   }`}
                 >
                   <Icon className="h-3.5 w-3.5" />
@@ -920,21 +947,18 @@ export default function GitOpsDeployments(props: { selectedRepo: Repository }) {
                     deployments.
                   </p>
                 ) : (
-                  <Select
+                  <select
                     value={selectedWorkflow}
-                    onValueChange={setSelectedWorkflow}
+                    onChange={(e) => setSelectedWorkflow(e.target.value)}
+                    className="h-9 rounded-lg border border-slate-300 bg-white px-2.5 text-sm text-slate-700 focus:outline-none focus:ring-2 focus:ring-slate-300 hover:border-slate-400 transition-colors cursor-pointer"
                   >
-                    <SelectTrigger>
-                      <SelectValue placeholder="Select a workflow..." />
-                    </SelectTrigger>
-                    <SelectContent className="bg-white">
-                      {workflows.map((wf) => (
-                        <SelectItem key={wf.id} value={String(wf.id)}>
-                          {wf.name}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
+                    <option value="">Select a workflow</option>
+                    {workflows.map((w) => (
+                      <option key={w.id} value={w.id}>
+                        {w.name}
+                      </option>
+                    ))}
+                  </select>
                 )}
               </div>
 
@@ -964,7 +988,7 @@ export default function GitOpsDeployments(props: { selectedRepo: Repository }) {
                   <Button
                     size="sm"
                     variant="ghost"
-                    className="ml-auto h-6 px-2 text-xs"
+                    className="ml-auto h-6 px-2 text-xs "
                     asChild
                   >
                     <a
@@ -1067,45 +1091,48 @@ export default function GitOpsDeployments(props: { selectedRepo: Repository }) {
             (deployService === "vercel" && !!vercelWorkflow) ||
             (deployService === "render" && !!renderWorkflow)) && (
             <>
-              <div className="flex items-start gap-2 text-xs text-amber-700 bg-amber-50 border border-amber-200 p-2.5 rounded-lg">
-                <AlertTriangle className="h-3.5 w-3.5 mt-0.5 shrink-0" />
-                This will trigger a live deployment of{" "}
-                <strong>{selectedRepo.name}</strong>. Confirm the target is
-                correct before proceeding.
+              {/* Danger zone warning */}
+              <div className="flex items-start gap-2.5 text-xs text-amber-800 bg-amber-50/80 border border-amber-300 p-3 rounded-lg">
+                <AlertTriangle className="h-4 w-4 mt-0.5 shrink-0 text-amber-500" />
+                <span>
+                  <strong>Live deployment:</strong> This will push{" "}
+                  <strong>{selectedRepo.name}</strong> to production
+                  infrastructure. Confirm the branch and target are correct
+                  before proceeding.
+                </span>
               </div>
 
               {dispatchMsg && (
                 <div
-                  className={`flex items-start gap-2 text-sm p-3 rounded-lg ${
+                  className={`flex items-start gap-2 text-sm p-3 rounded-lg border ${
                     dispatchMsg.type === "success"
-                      ? "bg-green-50 text-green-800 border border-green-200"
-                      : "bg-red-50 text-red-800 border border-red-200"
+                      ? "bg-emerald-50 text-emerald-800 border-emerald-200"
+                      : "bg-rose-50 text-rose-800 border-rose-200"
                   }`}
                 >
                   {dispatchMsg.type === "success" ? (
-                    <div className="flex items-center gap-1">
-                      <CheckCircle2 className="h-4 w-4 mt-0.5 shrink-0" />
-                      Deployment triggered successfully! Check your GitHub
-                      Actions or the target service dashboard for progress.
+                    <div className="flex items-center gap-1.5">
+                      <CheckCircle2 className="h-4 w-4 shrink-0" />
+                      Deployment triggered — monitor progress in GitHub Actions.
                     </div>
                   ) : (
-                    <div className="flex items-center gap-1">
-                      <XCircle className="h-4 w-4 mt-0.5 shrink-0" />
-                      Failed to trigger deployment: {dispatchMsg.text}
+                    <div className="flex items-center gap-1.5">
+                      <XCircle className="h-4 w-4 shrink-0" />
+                      Failed: {dispatchMsg.text}
                     </div>
                   )}
                 </div>
               )}
 
               <Button
-                className="w-full"
+                className="w-full bg-gradient-to-br from-slate-900 via-indigo-950 to-slate-800 p-6 rounded-2xl hover:bg-blue-700 text-white border border-blue-600 shadow-sm"
                 disabled={isDispatching}
                 onClick={handleDeploy}
               >
                 {isDispatching ? (
                   <>
                     <Loader2 className="h-4 w-4 mr-2 animate-spin" />
-                    Deploying...
+                    Dispatching…
                   </>
                 ) : (
                   <>
@@ -1119,11 +1146,9 @@ export default function GitOpsDeployments(props: { selectedRepo: Repository }) {
         </CardContent>
       </Card>
 
-      <Separator />
-
-      <div>
+      <section className="rounded-2xl border border-slate-200 bg-gradient-to-br from-white via-slate-50 to-indigo-50/30 p-4 sm:p-5 shadow-sm">
         <div className="flex items-center justify-between mb-3">
-          <h3 className="font-semibold text-base flex items-center gap-2">
+          <h3 className="font-semibold text-base flex items-center gap-2 text-slate-900">
             <CircleDot className="h-4 w-4 text-muted-foreground" />
             Deployment Services
           </h3>
@@ -1138,18 +1163,16 @@ export default function GitOpsDeployments(props: { selectedRepo: Repository }) {
             />
           ))}
         </div>
-      </div>
-
-      <Separator />
+      </section>
 
       {/* ── Deployment History ── */}
-      <div>
-        <h3 className="font-semibold text-base flex items-center gap-2 mb-3">
+      <section>
+        <h3 className="font-semibold text-base flex items-center gap-2 mb-3 text-slate-900">
           <Clock className="h-4 w-4 text-muted-foreground" />
           Deployment History
         </h3>
 
-        <Card>
+        <Card className="border-slate-200 bg-white/95 shadow-sm">
           <CardContent className="pt-4">
             <TableControls
               search={search}
@@ -1162,119 +1185,133 @@ export default function GitOpsDeployments(props: { selectedRepo: Repository }) {
               onRowsPerPageChange={setRowsPerPage}
               onPageChange={setPage}
               extraFilters={
-                <Select
+                <select
                   value={envFilter}
-                  onValueChange={(v) => {
-                    setEnvFilter(v);
+                  onChange={(e) => {
+                    setEnvFilter(e.target.value);
                     setPage(1);
                   }}
+                  className="h-9 rounded-lg border border-slate-300 bg-white px-2.5 text-sm text-slate-700 focus:outline-none focus:ring-2 focus:ring-slate-300 hover:border-slate-400 transition-colors cursor-pointer"
                 >
-                  <SelectTrigger className="w-[160px]">
-                    <SelectValue placeholder="Environment" />
-                  </SelectTrigger>
-                  <SelectContent className="bg-white">
-                    <SelectItem value="all">All Environments</SelectItem>
-                    {uniqueEnvironments.map((e) => (
-                      <SelectItem key={e} value={e}>
-                        {e}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
+                  <option value="all">All Environments</option>
+                  {uniqueEnvironments.map((env) => (
+                    <option key={env} value={env}>
+                      {env}
+                    </option>
+                  ))}
+                </select>
               }
             />
 
             {isEnvLoading ? (
-              <div className="flex justify-center py-10 text-muted-foreground">
-                <Loader2 className="h-6 w-6 animate-spin mr-2" />
-                Loading deployments...
+              <div className="flex items-center gap-2 justify-center py-10 text-muted-foreground">
+                <Loader2 className="h-5 w-5 animate-spin" />
+                Loading deployments…
               </div>
             ) : paginated.length === 0 ? (
-              <div className="text-center py-10 text-muted-foreground border-2 border-dashed rounded-lg">
-                <Rocket className="h-10 w-10 mx-auto mb-2 opacity-20" />
-                {deployments.length === 0
-                  ? "No deployments found. Connect Vercel or Render to see deployments here, or trigger one above."
-                  : "No results match your filters."}
+              <div className="flex flex-col items-center gap-3 py-10 text-muted-foreground rounded-lg bg-slate-50 border border-dashed border-slate-200">
+                <Rocket className="h-8 w-8 opacity-30" />
+                <p className="text-sm">
+                  {deployments.length === 0
+                    ? "No deployments found. Connect Vercel or Render, or trigger one above."
+                    : "No results match your filters."}
+                </p>
               </div>
             ) : (
-              <Table>
-                <TableHeader>
-                  <TableRow>
-                    <TableHead>Environment</TableHead>
-                    <TableHead>Ref / SHA</TableHead>
-                    <TableHead>Deployed By</TableHead>
-                    <TableHead>Task</TableHead>
-                    <TableHead>Date</TableHead>
-                    <TableHead className="text-right">Link</TableHead>
-                  </TableRow>
-                </TableHeader>
-                <TableBody>
-                  {paginated.map((dep) => (
-                    <TableRow key={dep.id}>
-                      <TableCell>
-                        <Badge variant="outline" className="capitalize text-xs">
-                          {dep.environment}
-                        </Badge>
-                      </TableCell>
-                      <TableCell>
-                        <div className="flex flex-col gap-0.5">
-                          <div className="flex items-center gap-1 text-sm">
-                            <GitBranch className="h-3 w-3 text-muted-foreground" />
-                            <code className="text-xs">{dep.ref}</code>
-                          </div>
-                          <span className="font-mono text-[10px] text-muted-foreground">
-                            {dep.sha.slice(0, 7)}
+              <div className="max-h-[420px] overflow-auto rounded-md border border-slate-200 bg-white">
+                <table className="w-full text-sm">
+                  <thead className="bg-slate-50 sticky top-0 z-10">
+                    <tr>
+                      <th className="text-left px-3 py-2 font-semibold text-slate-600">
+                        Environment
+                      </th>
+                      <th className="text-left px-3 py-2 font-semibold text-slate-600">
+                        Ref / SHA
+                      </th>
+                      <th className="text-left px-3 py-2 font-semibold text-slate-600">
+                        Deployed By
+                      </th>
+                      <th className="text-left px-3 py-2 font-semibold text-slate-600">
+                        Date
+                      </th>
+                      <th className="text-right px-3 py-2 font-semibold text-slate-600">
+                        Action
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {paginated.map((dep) => (
+                      <tr
+                        key={dep.id}
+                        className="border-t border-slate-100 align-top hover:bg-slate-50/60 transition-colors"
+                      >
+                        <td className="px-3 py-2">
+                          <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-[11px] font-semibold bg-slate-100 text-slate-600 border border-slate-200 capitalize">
+                            {dep.environment}
                           </span>
-                        </div>
-                      </TableCell>
-                      <TableCell>
-                        {dep.creator ? (
-                          <div className="flex items-center gap-2">
-                            <Avatar className="h-5 w-5">
-                              <AvatarImage src={dep.creator.avatar_url} />
-                              <AvatarFallback>
-                                {dep.creator.login[0]?.toUpperCase()}
-                              </AvatarFallback>
-                            </Avatar>
-                            <span className="text-sm text-muted-foreground">
-                              {dep.creator.login}
+                        </td>
+                        <td className="px-3 py-2">
+                          <div className="flex flex-col gap-0.5">
+                            <div className="flex items-center gap-1">
+                              <GitBranch className="h-3 w-3 text-muted-foreground" />
+                              <code className="text-xs text-slate-700">
+                                {dep.ref}
+                              </code>
+                            </div>
+                            <span className="font-mono text-[10px] text-slate-400">
+                              {dep.sha.slice(0, 7)}
                             </span>
                           </div>
-                        ) : (
-                          <span className="text-xs text-muted-foreground">
-                            —
-                          </span>
-                        )}
-                      </TableCell>
-                      <TableCell>
-                        <span className="text-xs text-muted-foreground capitalize">
-                          {dep.task?.replace("-", " ") ?? "deploy"}
-                        </span>
-                      </TableCell>
-                      <TableCell className="text-sm text-muted-foreground">
-                        <div className="flex items-center gap-1">
-                          <Calendar className="h-3 w-3" />
-                          {new Date(dep.created_at).toLocaleDateString()}
-                        </div>
-                      </TableCell>
-                      <TableCell className="text-right">
-                        <Button variant="ghost" size="sm" asChild>
-                          <a
-                            href={dep.url
-                              .replace("api.github.com/repos", "github.com")
-                              .replace("/deployments/", "/deployments#")}
-                            target="_blank"
-                            rel="noreferrer"
+                        </td>
+                        <td className="px-3 py-2">
+                          {dep.creator ? (
+                            <div className="flex items-center gap-1.5">
+                              <Avatar className="h-5 w-5 ring-1 ring-slate-200">
+                                <AvatarImage src={dep.creator.avatar_url} />
+                                <AvatarFallback className="text-[9px]">
+                                  {dep.creator.login[0]?.toUpperCase()}
+                                </AvatarFallback>
+                              </Avatar>
+                              <span className="text-xs text-muted-foreground">
+                                {dep.creator.login}
+                              </span>
+                            </div>
+                          ) : (
+                            <span className="text-xs text-slate-400">—</span>
+                          )}
+                        </td>
+                        <td className="px-3 py-2 text-xs text-muted-foreground">
+                          <div className="flex items-center gap-1">
+                            <Calendar className="h-3 w-3" />
+                            {new Date(dep.created_at).toLocaleDateString()}
+                          </div>
+                        </td>
+                        <td className="px-3 py-2 text-right">
+                          <Button
+                            variant="ghost"
+                            size="sm"
+                            className="h-7 hover:bg-slate-100"
+                            asChild
                           >
-                            <ExternalLink className="h-3.5 w-3.5" />
-                          </a>
-                        </Button>
-                      </TableCell>
-                    </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
+                            <a
+                              href={dep.url
+                                .replace("api.github.com/repos", "github.com")
+                                .replace("/deployments/", "/deployments#")}
+                              target="_blank"
+                              rel="noreferrer"
+                            >
+                              <ExternalLink className="h-3.5 w-3.5" />
+                              View
+                            </a>
+                          </Button>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
             )}
+
             <PaginationControls
               rowsPerPage={rowsPerPage}
               page={page}
@@ -1284,7 +1321,7 @@ export default function GitOpsDeployments(props: { selectedRepo: Repository }) {
             />
           </CardContent>
         </Card>
-      </div>
+      </section>
 
       {/* ── Setup Guide Dialog ── */}
       <Dialog
@@ -1307,7 +1344,7 @@ export default function GitOpsDeployments(props: { selectedRepo: Repository }) {
             </DialogHeader>
             <div className="space-y-3 mt-2">
               {guideService.guideSteps?.map((step, i) => (
-                <div key={i} className="flex items-start gap-3">
+                <div key={step} className="flex items-start gap-3">
                   <div className="shrink-0 h-6 w-6 rounded-full bg-primary/10 text-primary text-xs flex items-center justify-center font-semibold">
                     {i + 1}
                   </div>

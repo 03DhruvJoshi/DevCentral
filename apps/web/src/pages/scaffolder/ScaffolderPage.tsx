@@ -236,8 +236,8 @@ export function ScaffolderPage() {
   ].filter(Boolean).length;
 
   return (
-    <div className="flex flex-col gap-6 max-w-7xl mx-auto pb-12 px-1">
-      <div className="rounded-2xl border border-slate-200 bg-gradient-to-br from-white via-indigo-50/40 to-sky-50/60 p-6 shadow-sm">
+    <div className="flex flex-col gap-6  pb-12 ">
+      <div className="rounded-2xl border border-slate-200 bg-gradient-to-br from-white via-indigo-50/40 to-sky-50/60 p-4 shadow-sm">
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
           <div>
             <div className="flex items-center gap-3 mb-2">
@@ -487,7 +487,7 @@ export function ScaffolderPage() {
                   {processedTemplates.map((template) => (
                     <Card
                       key={template.id}
-                      className="flex flex-col h-full hover:shadow-md transition-all duration-200 border-slate-200 overflow-hidden group bg-white"
+                      className="w-[95%] h-full hover:shadow-md transition-all duration-200 border-slate-200 overflow-hidden group bg-white"
                     >
                       <div className="h-1.5 w-full bg-gradient-to-r from-blue-500 via-indigo-500 to-violet-500" />
                       <CardHeader className="pb-3 pt-4">
@@ -616,7 +616,7 @@ export function ScaffolderPage() {
                   {processedTemplates.map((template) => (
                     <Card
                       key={template.id}
-                      className="border-slate-200 hover:shadow-sm transition-all duration-150 bg-white overflow-hidden"
+                      className="w-[97.5%] border-slate-200 hover:shadow-sm transition-all duration-150 bg-white overflow-hidden"
                     >
                       <div className="h-1 w-full bg-gradient-to-r from-blue-500 via-indigo-500 to-violet-500" />
                       <CardContent className="pt-4 pb-4">
