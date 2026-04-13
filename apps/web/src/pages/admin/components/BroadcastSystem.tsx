@@ -6,6 +6,8 @@ import {
   StopCircle,
   Info,
   Zap,
+  CheckCircle,
+  X,
 } from "lucide-react";
 import {
   Card,
@@ -197,7 +199,7 @@ export function BroadcastSystem() {
   if (isLoading) {
     return (
       <div className="flex justify-center py-20">
-        <Loader2 className="animate-spin h-8 w-8 text-primary" />
+        <Loader2 className="animate-spin h-8 w-8 text-slate-400" />
       </div>
     );
   }
@@ -211,45 +213,59 @@ export function BroadcastSystem() {
       {actionAlert && (
         <div
           role="alert"
-          className={`flex items-center justify-between rounded-md border px-4 py-3 text-sm ${
+          className={`flex items-center justify-between rounded-xl border px-4 py-3 text-sm shadow-sm ${
             actionAlert.type === "success"
-              ? "border-green-300 bg-green-50 text-green-800"
-              : "border-red-300 bg-red-50 text-red-800"
+              ? "border-emerald-200 bg-emerald-50 text-emerald-800"
+              : "border-rose-200 bg-rose-50 text-rose-800"
           }`}
         >
-          <span>{actionAlert.message}</span>
+          <div className="flex items-center gap-2.5">
+            {actionAlert.type === "success" ? (
+              <CheckCircle className="h-4 w-4 shrink-0" />
+            ) : (
+              <AlertTriangle className="h-4 w-4 shrink-0" />
+            )}
+            <span className="font-medium">{actionAlert.message}</span>
+          </div>
           <Button
             variant="ghost"
             size="sm"
-            className="h-7 px-2"
+            className="h-7 w-7 p-0 hover:bg-transparent opacity-60 hover:opacity-100"
             onClick={() => setActionAlert(null)}
           >
-            Dismiss
+            <X className="h-4 w-4" />
           </Button>
         </div>
       )}
 
       {/* Current Status card */}
-      <Card className={activeBroadcast ? "border-2 border-orange-300" : ""}>
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2">
-            <Radio className="h-5 w-5" />
-            Current Broadcast Status
-          </CardTitle>
+      <Card className={`border-slate-200 shadow-sm overflow-hidden ${activeBroadcast ? "border-orange-300" : ""}`}>
+        <CardHeader className="px-6 py-4 border-b border-slate-100 bg-white">
+          <div className="flex items-center gap-2.5">
+            <div className={`w-7 h-7 rounded-lg flex items-center justify-center ${activeBroadcast ? "bg-orange-100" : "bg-slate-100"}`}>
+              <Radio className={`h-3.5 w-3.5 ${activeBroadcast ? "text-orange-600" : "text-slate-500"}`} />
+            </div>
+            <div>
+              <CardTitle className="text-sm font-semibold text-slate-900">Current Broadcast Status</CardTitle>
+              <CardDescription className="text-xs mt-0.5">
+                {activeBroadcast ? "Active platform-wide banner" : "No active broadcast — banner hidden for all users"}
+              </CardDescription>
+            </div>
+          </div>
         </CardHeader>
-        <CardContent>
+        <CardContent className="px-6 py-4">
           {activeBroadcast ? (
             <div
-              className={`flex items-center gap-3 rounded-md px-4 py-3 ${activeStyle.preview}`}
+              className={`flex items-center gap-3 rounded-xl px-4 py-3 text-sm ${activeStyle.preview}`}
             >
               <span className="shrink-0">{activeStyle.icon}</span>
               <div className="flex-1">
-                <span className="font-semibold mr-2">{activeSeverity}:</span>
+                <span className="font-bold mr-2">{activeSeverity}:</span>
                 {activeBroadcast.value}
               </div>
             </div>
           ) : (
-            <p className="text-sm text-muted-foreground">
+            <p className="text-sm text-slate-400 italic">
               No active broadcast. The platform banner is hidden for all users.
             </p>
           )}
@@ -257,17 +273,24 @@ export function BroadcastSystem() {
       </Card>
 
       {/* Compose section */}
-      <Card className="border-orange-200">
-        <CardHeader className="bg-orange-50/50">
-          <CardTitle className="text-orange-800">Compose Broadcast</CardTitle>
-          <CardDescription>
-            Push an alert banner to all active developers on the platform.
-          </CardDescription>
+      <Card className="border-slate-200 shadow-sm overflow-hidden">
+        <CardHeader className="px-6 py-4 border-b border-slate-100 bg-white">
+          <div className="flex items-center gap-2.5">
+            <div className="w-7 h-7 rounded-lg bg-blue-100 flex items-center justify-center">
+              <Radio className="h-3.5 w-3.5 text-blue-600" />
+            </div>
+            <div>
+              <CardTitle className="text-sm font-semibold text-slate-900">Compose Broadcast</CardTitle>
+              <CardDescription className="text-xs mt-0.5">
+                Push an alert banner to all active developers on the platform.
+              </CardDescription>
+            </div>
+          </div>
         </CardHeader>
-        <CardContent className="pt-6 space-y-6">
+        <CardContent className="px-6 pt-6 pb-6 space-y-6">
           {/* Severity selector */}
           <div className="space-y-2">
-            <Label>Severity Level</Label>
+            <Label className="text-xs font-semibold uppercase tracking-wider text-slate-500">Severity Level</Label>
             <div className="flex gap-2 flex-wrap">
               {(["INFO", "WARNING", "CRITICAL"] as Severity[]).map((sev) => {
                 const style = SEVERITY_STYLES[sev];
@@ -296,22 +319,23 @@ export function BroadcastSystem() {
 
           {/* Message input */}
           <div className="space-y-2">
-            <Label htmlFor="broadcast-message">Message</Label>
+            <Label htmlFor="broadcast-message" className="text-xs font-semibold uppercase tracking-wider text-slate-500">Message</Label>
             <Textarea
               id="broadcast-message"
               placeholder="e.g., GitHub Actions API is currently experiencing delays. Our team is investigating."
               value={broadcastInput}
               onChange={(e) => setBroadcastInput(e.target.value)}
               rows={3}
+              className="bg-slate-50 border-slate-200 text-sm resize-none focus-visible:border-blue-500 focus-visible:ring-blue-500/25 focus-visible:ring-[3px]"
             />
           </div>
 
           {/* Preview */}
           {broadcastInput.trim() && (
             <div className="space-y-1.5">
-              <Label className="text-xs text-muted-foreground">Preview</Label>
+              <Label className="text-xs font-semibold uppercase tracking-wider text-slate-500">Preview</Label>
               <div
-                className={`flex items-center gap-3 rounded-md px-4 py-3 text-sm ${severityStyle.preview}`}
+                className={`flex items-center gap-3 rounded-xl px-4 py-3 text-sm ${severityStyle.preview}`}
               >
                 <span className="shrink-0">{severityStyle.icon}</span>
                 <p>
@@ -327,7 +351,7 @@ export function BroadcastSystem() {
             <Button
               onClick={publishBroadcast}
               disabled={isSaving || !broadcastInput.trim()}
-              className="bg-blue-200 hover:bg-blue-300"
+              className="bg-blue-600 hover:bg-blue-700 text-white shadow-sm shadow-blue-200"
             >
               {isSaving ? (
                 <Loader2 className="animate-spin h-4 w-4 mr-2" />
@@ -339,10 +363,10 @@ export function BroadcastSystem() {
 
             {activeBroadcast && (
               <Button
-                variant="destructive"
+                variant="outline"
                 onClick={stopBroadcast}
                 disabled={isSaving}
-                className="bg-red-600 hover:bg-red-800"
+                className="border-rose-200 text-rose-700 hover:bg-rose-50"
               >
                 <StopCircle className="h-4 w-4 mr-2" />
                 Stop Broadcast
@@ -350,9 +374,8 @@ export function BroadcastSystem() {
             )}
           </div>
 
-          <p className="text-xs text-muted-foreground">
-            Broadcasts are stored in Platform Config. They are polled every 60
-            seconds by connected clients.
+          <p className="text-xs text-slate-400">
+            Broadcasts are stored in Platform Config and polled every 60 seconds by connected clients.
           </p>
         </CardContent>
       </Card>

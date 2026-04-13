@@ -20,6 +20,13 @@ import {
 import { Badge } from "../../../components/ui/badge.js";
 import { Button } from "../../../components/ui/button.js";
 import { Input } from "../../../components/ui/input.js";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "../../../components/ui/select.js";
 
 import { API_BASE_URL } from "../types.js";
 import { Label } from "../../../components/ui/label.js";
@@ -184,15 +191,15 @@ function parseDetails(details: unknown): Record<string, unknown> | null {
 }
 
 function statusBadgeClass(status: PolicyCheck["status"]): string {
-  if (status === "pass") return "bg-green-100 text-green-800";
-  if (status === "watch") return "bg-amber-100 text-amber-800";
-  return "bg-red-100 text-red-800";
+  if (status === "pass") return "bg-emerald-100 text-emerald-700 border border-emerald-200";
+  if (status === "watch") return "bg-amber-100 text-amber-700 border border-amber-200";
+  return "bg-rose-100 text-rose-700 border border-rose-200";
 }
 
 function severityBadgeClass(severity: AlertItem["severity"]): string {
-  if (severity === "critical") return "bg-red-100 text-red-800";
-  if (severity === "high") return "bg-orange-100 text-orange-800";
-  return "bg-amber-100 text-amber-800";
+  if (severity === "critical") return "bg-rose-100 text-rose-700 border border-rose-200";
+  if (severity === "high") return "bg-orange-100 text-orange-700 border border-orange-200";
+  return "bg-amber-100 text-amber-700 border border-amber-200";
 }
 
 function ratioPolicyStatus(
@@ -436,12 +443,12 @@ function computeSecurityData(input: {
 
 function riskLevel(logsLast24h: number): { label: string; className: string } {
   if (logsLast24h < 15) {
-    return { label: "Low", className: "bg-green-100 text-green-800" };
+    return { label: "Low", className: "bg-emerald-100 text-emerald-700 border border-emerald-200" };
   }
   if (logsLast24h < 60) {
-    return { label: "Moderate", className: "bg-amber-100 text-amber-800" };
+    return { label: "Moderate", className: "bg-amber-100 text-amber-700 border border-amber-200" };
   }
-  return { label: "High", className: "bg-red-100 text-red-800" };
+  return { label: "High", className: "bg-rose-100 text-rose-700 border border-rose-200" };
 }
 
 function activityLevel(per24h: number): { label: string; color: string } {
@@ -548,14 +555,15 @@ export default function SecurityTab({ onOpenTab }: Readonly<SecurityTabProps>) {
   if (isLoading) {
     return (
       <div className="flex justify-center py-20">
-        <Loader2 className="h-8 w-8 animate-spin text-primary" />
+        <Loader2 className="h-8 w-8 animate-spin text-slate-400" />
       </div>
     );
   }
 
   if (errorMessage) {
     return (
-      <div className="rounded-md border border-red-300 bg-red-50 px-4 py-3 text-sm text-red-800">
+      <div className="rounded-xl border border-rose-200 bg-rose-50 px-4 py-3 text-sm text-rose-800 flex items-center gap-2.5">
+        <AlertTriangle className="h-4 w-4 shrink-0" />
         {errorMessage}
       </div>
     );
@@ -565,53 +573,64 @@ export default function SecurityTab({ onOpenTab }: Readonly<SecurityTabProps>) {
     <div className="space-y-6">
       <div className="flex flex-wrap items-center justify-between gap-3">
         <div>
-          <h2 className="text-xl font-semibold">Security Control Tower</h2>
-          <p className="text-sm text-muted-foreground">
-            Policy health, privileged activity, and response priorities for the
-            platform.
+          <h2 className="text-lg font-semibold text-slate-900">Security Control Tower</h2>
+          <p className="text-sm text-slate-500 mt-0.5">
+            Policy health, privileged activity, and response priorities for the platform.
           </p>
         </div>
-        <div className="inline-flex rounded-md border p-1">
-          <Button
-            size="sm"
-            variant={windowHours === 24 ? "default" : "secondary"}
+        <div className="inline-flex items-center rounded-lg border border-slate-200 bg-white p-1 gap-0.5 shadow-sm">
+          <button
+            type="button"
             onClick={() => setWindowHours(24)}
-            className="hover:bg-green-100 text-green-800 border-green-200 "
+            className={`px-3 py-1.5 rounded-md text-xs font-medium transition-all ${
+              windowHours === 24
+                ? "bg-slate-900 text-white shadow-sm"
+                : "text-slate-600 hover:bg-slate-50"
+            }`}
           >
             Last 24h
-          </Button>
-          <Button
-            size="sm"
-            variant={windowHours === 168 ? "default" : "secondary"}
+          </button>
+          <button
+            type="button"
             onClick={() => setWindowHours(168)}
-            className="hover:bg-green-100 text-green-800 border-green-200"
+            className={`px-3 py-1.5 rounded-md text-xs font-medium transition-all ${
+              windowHours === 168
+                ? "bg-slate-900 text-white shadow-sm"
+                : "text-slate-600 hover:bg-slate-50"
+            }`}
           >
             Last 7d
-          </Button>
+          </button>
         </div>
       </div>
 
       <div className="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-4">
-        <Card className="border-l-4 border-l-emerald-500">
+        <Card className="border-slate-200 shadow-sm border-l-4 border-l-emerald-500">
           <CardHeader className="pb-2">
-            <CardTitle className="flex items-center gap-2 text-sm font-medium text-muted-foreground">
-              <ShieldCheck className="h-4 w-4" />
+            <CardTitle className="flex items-center gap-2 text-xs font-semibold text-slate-500 uppercase tracking-wider">
+              <ShieldCheck className="h-3.5 w-3.5" />
               Security Posture Score
             </CardTitle>
           </CardHeader>
           <CardContent className="space-y-2">
-            <div className="text-3xl font-bold">{computed.postureScore}</div>
-            <Badge className="bg-slate-100 text-slate-700">
+            <div className="text-3xl font-bold text-slate-900">{computed.postureScore}</div>
+            <Badge className={`text-xs font-medium border hover:bg-transparent ${
+              computed.postureScore >= 80
+                ? "bg-emerald-100 text-emerald-700 border-emerald-200"
+                : computed.postureScore >= 60
+                  ? "bg-amber-100 text-amber-700 border-amber-200"
+                  : "bg-rose-100 text-rose-700 border-rose-200"
+            }`}>
               {computed.postureLabel}
             </Badge>
-            <Progress value={computed.postureScore} className="h-2" />
+            <Progress value={computed.postureScore} className="h-1.5" />
           </CardContent>
         </Card>
 
-        <Card className="border-l-4 border-l-purple-500">
+        <Card className="border-slate-200 shadow-sm border-l-4 border-l-purple-500">
           <CardHeader className="pb-2">
-            <CardTitle className="flex items-center gap-2 text-sm font-medium text-muted-foreground">
-              <UserCog className="h-4 w-4" />
+            <CardTitle className="flex items-center gap-2 text-xs font-semibold text-slate-500 uppercase tracking-wider">
+              <UserCog className="h-3.5 w-3.5" />
               Privileged Accounts
             </CardTitle>
           </CardHeader>
@@ -619,16 +638,16 @@ export default function SecurityTab({ onOpenTab }: Readonly<SecurityTabProps>) {
             <div className="text-3xl font-bold text-purple-700">
               {computed.adminUsers}
             </div>
-            <p className="text-xs text-muted-foreground mt-1">
+            <p className="text-xs text-slate-400 mt-1">
               {computed.adminRatio}% of {computed.totalUsers} total users
             </p>
           </CardContent>
         </Card>
 
-        <Card className="border-l-4 border-l-amber-500">
+        <Card className="border-slate-200 shadow-sm border-l-4 border-l-amber-500">
           <CardHeader className="pb-2">
-            <CardTitle className="flex items-center gap-2 text-sm font-medium text-muted-foreground">
-              <Activity className="h-4 w-4" />
+            <CardTitle className="flex items-center gap-2 text-xs font-semibold text-slate-500 uppercase tracking-wider">
+              <Activity className="h-3.5 w-3.5" />
               Privileged Actions
             </CardTitle>
           </CardHeader>
@@ -636,25 +655,24 @@ export default function SecurityTab({ onOpenTab }: Readonly<SecurityTabProps>) {
             <div className="text-3xl font-bold text-amber-700">
               {computed.privilegedActionsInWindow}
             </div>
-            <p className="text-xs text-muted-foreground mt-1">
-              {computed.offHoursPrivilegedCount} off-hours events in selected
-              window
+            <p className="text-xs text-slate-400 mt-1">
+              {computed.offHoursPrivilegedCount} off-hours events in selected window
             </p>
           </CardContent>
         </Card>
 
-        <Card className="border-l-4 border-l-red-500">
+        <Card className="border-slate-200 shadow-sm border-l-4 border-l-rose-500">
           <CardHeader className="pb-2">
-            <CardTitle className="flex items-center gap-2 text-sm font-medium text-muted-foreground">
-              <ShieldAlert className="h-4 w-4" />
+            <CardTitle className="flex items-center gap-2 text-xs font-semibold text-slate-500 uppercase tracking-wider">
+              <ShieldAlert className="h-3.5 w-3.5" />
               Active Alerts
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="text-3xl font-bold text-red-700">
+            <div className="text-3xl font-bold text-rose-700">
               {computed.alerts.length}
             </div>
-            <p className="text-xs text-muted-foreground mt-1">
+            <p className="text-xs text-slate-400 mt-1">
               {computed.adminPromotions7d} admin promotions in last 7 days
             </p>
           </CardContent>
@@ -662,212 +680,227 @@ export default function SecurityTab({ onOpenTab }: Readonly<SecurityTabProps>) {
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-        <Card>
-          <CardHeader>
-            <CardTitle className="text-base">Audit Activity</CardTitle>
-            <CardDescription>
-              {as_?.total ?? 0} total log entries &nbsp;|&nbsp;{" "}
-              <span className="font-medium">{as_?.last24h ?? 0}</span> in last
-              24h &nbsp;|&nbsp;{" "}
-              <span className="font-medium">{as_?.last7days ?? 0}</span> in last
-              7 days
+        <Card className="border-slate-200 shadow-sm">
+          <CardHeader className="px-5 py-4 border-b border-slate-100">
+            <CardTitle className="text-sm font-semibold text-slate-900">Audit Activity</CardTitle>
+            <CardDescription className="text-xs mt-0.5">
+              <span className="font-medium text-slate-600">{as_?.total ?? 0}</span> total entries ·{" "}
+              <span className="font-medium text-slate-600">{as_?.last24h ?? 0}</span> in last 24h ·{" "}
+              <span className="font-medium text-slate-600">{as_?.last7days ?? 0}</span> in last 7 days
             </CardDescription>
           </CardHeader>
-          <CardContent className="space-y-3">
+          <CardContent className="px-5 py-4 space-y-4">
             <div className="flex items-center gap-2">
-              <span className="text-sm text-muted-foreground">
-                Activity level:
-              </span>
+              <span className="text-sm text-slate-500">Activity level:</span>
               <span className={`text-sm font-semibold ${level.color}`}>
                 {level.label}
               </span>
             </div>
-            <div className="space-y-1">
-              <div className="flex justify-between text-xs text-muted-foreground">
+            <div className="space-y-1.5">
+              <div className="flex justify-between text-xs text-slate-400">
                 <span>Last 24h vs Last 7 days</span>
-                <span>{progressValue}%</span>
+                <span className="font-medium text-slate-600">{progressValue}%</span>
               </div>
-              <Progress value={progressValue} className="h-2" />
+              <Progress value={progressValue} className="h-1.5" />
             </div>
           </CardContent>
         </Card>
 
-        <Card>
-          <CardHeader>
-            <CardTitle>Current Identity Snapshot</CardTitle>
-            <CardDescription>
+        <Card className="border-slate-200 shadow-sm">
+          <CardHeader className="px-5 py-4 border-b border-slate-100">
+            <CardTitle className="text-sm font-semibold text-slate-900">Current Identity Snapshot</CardTitle>
+            <CardDescription className="text-xs mt-0.5">
               Fast visibility into account distribution and access pressure.
             </CardDescription>
           </CardHeader>
-          <CardContent className="space-y-3">
-            <div className="flex items-center justify-between rounded-md border px-3 py-2">
-              <span className="text-sm text-muted-foreground">
-                Total accounts
-              </span>
-              <span className="font-semibold">{computed.totalUsers}</span>
+          <CardContent className="p-0">
+            <div className="divide-y divide-slate-100">
+              <div className="flex items-center justify-between px-5 py-3">
+                <span className="text-sm text-slate-500">Total accounts</span>
+                <span className="text-sm font-semibold text-slate-900">{computed.totalUsers}</span>
+              </div>
+              <div className="flex items-center justify-between px-5 py-3">
+                <span className="text-sm text-slate-500">Active accounts</span>
+                <span className="text-sm font-semibold text-emerald-700">{computed.activeUsers}</span>
+              </div>
+              <div className="flex items-center justify-between px-5 py-3">
+                <span className="text-sm text-slate-500">Suspended accounts</span>
+                <span className="text-sm font-semibold text-rose-700">{computed.suspendedUsers}</span>
+              </div>
+              <div className="flex items-center justify-between px-5 py-3">
+                <span className="text-sm text-slate-500">Maintenance mode</span>
+                <Badge
+                  className={`text-xs font-medium border hover:bg-transparent ${
+                    computed.maintenanceMode
+                      ? "bg-rose-100 text-rose-700 border-rose-200"
+                      : "bg-emerald-100 text-emerald-700 border-emerald-200"
+                  }`}
+                >
+                  {computed.maintenanceMode ? "ENABLED" : "DISABLED"}
+                </Badge>
+              </div>
+              <div className="px-5 py-3">
+                <Button
+                  className="w-full h-9 border-slate-200 text-slate-600 hover:bg-slate-50"
+                  variant="outline"
+                  size="sm"
+                  onClick={() => onOpenTab?.("directory")}
+                >
+                  <Users className="mr-2 h-3.5 w-3.5" />
+                  Open User Directory
+                </Button>
+              </div>
             </div>
-            <div className="flex items-center justify-between rounded-md border px-3 py-2">
-              <span className="text-sm text-muted-foreground">
-                Active accounts
-              </span>
-              <span className="font-semibold text-blue-700">
-                {computed.activeUsers}
-              </span>
-            </div>
-            <div className="flex items-center justify-between rounded-md border px-3 py-2">
-              <span className="text-sm text-muted-foreground">
-                Suspended accounts
-              </span>
-              <span className="font-semibold text-red-700">
-                {computed.suspendedUsers}
-              </span>
-            </div>
-            <div className="flex items-center justify-between rounded-md border px-3 py-2">
-              <span className="text-sm text-muted-foreground">
-                Maintenance mode
-              </span>
-              <Badge
-                className={
-                  computed.maintenanceMode
-                    ? "bg-red-100 text-red-800"
-                    : "bg-green-100 text-green-800"
-                }
-              >
-                {computed.maintenanceMode ? "ENABLED" : "DISABLED"}
-              </Badge>
-            </div>
-            <Button
-              className="w-full"
-              variant="outline"
-              onClick={() => onOpenTab?.("directory")}
-            >
-              <Users className="mr-2 h-4 w-4" />
-              Open User Directory
-            </Button>
           </CardContent>
         </Card>
       </div>
 
-      <Card className="xl:col-span-2">
-        <CardHeader>
-          <CardTitle>Actionable Alerts</CardTitle>
-          <CardDescription>
-            Prioritized findings generated from identity, config, and audit
-            telemetry.
-          </CardDescription>
-        </CardHeader>
-        <CardContent className="space-y-3">
-          {computed.alerts.map((alert) => (
-            <div
-              key={alert.id}
-              className="flex items-start justify-between gap-4 rounded-md border p-3"
-            >
-              <div>
-                <div className="flex items-center gap-2">
-                  <Badge className={severityBadgeClass(alert.severity)}>
-                    {alert.severity.toUpperCase()}
-                  </Badge>
-                  <p className="text-sm font-semibold">{alert.title}</p>
-                </div>
-                <p className="mt-1 text-sm text-muted-foreground">
-                  {alert.description}
-                </p>
-              </div>
-              <Button
-                size="sm"
-                variant="outline"
-                onClick={() => onOpenTab?.(alert.actionTab)}
-              >
-                {alert.actionLabel}
-                <ChevronRight className="ml-1 h-4 w-4" />
-              </Button>
+      <Card className="border-slate-200 shadow-sm">
+        <CardHeader className="px-6 py-4 border-b border-slate-100">
+          <div className="flex items-center gap-2.5">
+            <div className="w-7 h-7 rounded-lg bg-slate-100 flex items-center justify-center">
+              <ShieldAlert className="w-3.5 h-3.5 text-slate-500" />
             </div>
-          ))}
+            <div>
+              <CardTitle className="text-sm font-semibold text-slate-900">Actionable Alerts</CardTitle>
+              <CardDescription className="text-xs mt-0.5">
+                Prioritized findings from identity, config, and audit telemetry.
+              </CardDescription>
+            </div>
+          </div>
+        </CardHeader>
+        <CardContent className="p-0">
+          <div className="divide-y divide-slate-100">
+            {computed.alerts.map((alert) => (
+              <div
+                key={alert.id}
+                className="flex items-start justify-between gap-4 px-6 py-4 hover:bg-slate-50/70 transition-colors"
+              >
+                <div className="min-w-0">
+                  <div className="flex items-center gap-2 flex-wrap">
+                    <span className={`inline-flex items-center px-2 py-0.5 rounded-md text-xs font-medium ${severityBadgeClass(alert.severity)}`}>
+                      {alert.severity.toUpperCase()}
+                    </span>
+                    <p className="text-sm font-semibold text-slate-800">{alert.title}</p>
+                  </div>
+                  <p className="mt-1 text-sm text-slate-500">
+                    {alert.description}
+                  </p>
+                </div>
+                <Button
+                  size="sm"
+                  variant="outline"
+                  className="h-8 shrink-0 border-slate-200 text-slate-600 hover:bg-slate-50 text-xs"
+                  onClick={() => onOpenTab?.(alert.actionTab)}
+                >
+                  {alert.actionLabel}
+                  <ChevronRight className="ml-1 h-3.5 w-3.5" />
+                </Button>
+              </div>
+            ))}
+          </div>
         </CardContent>
       </Card>
 
-      <Card>
-        <CardHeader>
-          <CardTitle className="text-base">Recent Signups</CardTitle>
-        </CardHeader>
-        <CardContent className="space-y-3">
-          <div className="flex flex-wrap gap-2  justify-between">
-            <div className="w-72">
-              <Label className="text-xs text-muted-foreground mb-1 block">
+      <Card className="border-slate-200 shadow-sm overflow-hidden">
+        <CardHeader className="px-6 py-4 border-b border-slate-100 bg-white">
+          <div className="flex items-center justify-between gap-4 flex-wrap">
+            <div className="flex items-center gap-2.5">
+              <div className="w-7 h-7 rounded-lg bg-slate-100 flex items-center justify-center">
+                <Users className="w-3.5 h-3.5 text-slate-500" />
+              </div>
+              <CardTitle className="text-sm font-semibold text-slate-900">Recent Signups</CardTitle>
+            </div>
+          </div>
+          <div className="flex flex-wrap gap-3 mt-4">
+            <div className="flex-1 min-w-[200px]">
+              <Label className="text-xs font-semibold uppercase tracking-wider text-slate-500 mb-1.5 block">
                 Search User
               </Label>
-              <div className="min-w-[100px] flex-1 ">
-                <Input
-                  placeholder="Filter by name or email..."
-                  value={signupSearchQuery}
-                  onChange={(e) => {
-                    setSignupSearchQuery(e.target.value);
-                    setSignupPage(1);
-                  }}
-                />
-              </div>
-            </div>
-            <div className="w-36">
-              <Label className="text-xs text-muted-foreground mb-1 block">
-                Rows per page
-              </Label>
-              <select
-                className="w-full border rounded-md p-2 text-sm bg-background"
-                value={signupRowsPerPage}
+              <Input
+                placeholder="Filter by name or email..."
+                className="h-9 bg-slate-50 border-slate-200 text-sm"
+                value={signupSearchQuery}
                 onChange={(e) => {
-                  setSignupRowsPerPage(Number(e.target.value));
+                  setSignupSearchQuery(e.target.value);
+                  setSignupPage(1);
+                }}
+              />
+            </div>
+            <div className="w-32">
+              <Label className="text-xs font-semibold uppercase tracking-wider text-slate-500 mb-1.5 block">
+                Rows
+              </Label>
+              <Select
+                value={String(signupRowsPerPage)}
+                onValueChange={(v) => {
+                  setSignupRowsPerPage(Number(v));
                   setSignupPage(1);
                 }}
               >
-                <option value={5}>5</option>
-                <option value={10}>10</option>
-                <option value={20}>20</option>
-                <option value={50}>50</option>
-                <option value={100}>100</option>
-              </select>
+                <SelectTrigger className="h-9 bg-slate-50 border-slate-200 text-sm">
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  {[5, 10, 20, 50, 100].map((n) => (
+                    <SelectItem key={n} value={String(n)}>{n} rows</SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
             </div>
           </div>
+        </CardHeader>
 
+        <CardContent className="p-0">
           {filteredSignups.length === 0 ? (
-            <p className="text-sm text-muted-foreground">No recent signups.</p>
+            <div className="text-center py-12 text-slate-400">
+              <Users className="h-7 w-7 mx-auto mb-2 opacity-30" />
+              <p className="text-sm">No recent signups.</p>
+            </div>
           ) : (
-            paginatedSignups.map((u, i) => (
-              <div
-                key={`${u.name ?? "user"}-${signupStartIndex + i}`}
-                className="flex items-center gap-3 border-b pb-2 last:border-0 last:pb-0"
-              >
-                <div className="h-7 w-7 rounded-full bg-primary/10 flex items-center justify-center text-xs font-bold text-primary">
-                  {u.name?.charAt(0) ?? "?"}
-                </div>
-                <div>
-                  <p className="text-sm font-medium leading-none">
-                    {u.name ?? "Unknown"}
-                  </p>
-                  {u.email && (
-                    <p className="text-xs text-muted-foreground mt-0.5">
-                      {u.email}
+            <div className="divide-y divide-slate-50">
+              {paginatedSignups.map((u, i) => (
+                <div
+                  key={`${u.name ?? "user"}-${signupStartIndex + i}`}
+                  className="flex items-center gap-3 px-6 py-3 hover:bg-slate-50/70 transition-colors"
+                >
+                  <div className="h-8 w-8 rounded-full bg-slate-100 flex items-center justify-center text-xs font-bold text-slate-600 shrink-0">
+                    {u.name?.charAt(0) ?? "?"}
+                  </div>
+                  <div className="min-w-0 flex-1">
+                    <p className="text-sm font-medium text-slate-800 leading-none">
+                      {u.name ?? "Unknown"}
                     </p>
-                  )}
-                  <p className="text-xs text-muted-foreground mt-0.5">
+                    {u.email && (
+                      <p className="text-xs text-slate-400 mt-0.5 font-mono truncate">
+                        {u.email}
+                      </p>
+                    )}
+                  </div>
+                  <p className="text-xs text-slate-400 shrink-0">
                     {new Date(u.createdAt).toLocaleDateString()}
                   </p>
                 </div>
-              </div>
-            ))
+              ))}
+            </div>
           )}
 
-          <div className="flex items-center justify-between pt-1">
-            <p className="text-xs text-muted-foreground">
+          <div className="flex items-center justify-between px-6 py-3 border-t border-slate-100 bg-slate-50/50">
+            <p className="text-xs text-slate-400">
               Showing{" "}
-              {filteredSignups.length > 0
-                ? `${signupStartIndex + 1}-${Math.min(signupStartIndex + signupRowsPerPage, filteredSignups.length)}`
-                : "0"}{" "}
-              of {filteredSignups.length}
+              <span className="font-medium text-slate-600">
+                {filteredSignups.length > 0
+                  ? `${signupStartIndex + 1}–${Math.min(signupStartIndex + signupRowsPerPage, filteredSignups.length)}`
+                  : "0"}
+              </span>{" "}
+              of{" "}
+              <span className="font-medium text-slate-600">{filteredSignups.length}</span>
             </p>
             <div className="flex gap-2">
               <Button
                 size="sm"
                 variant="outline"
+                className="h-8 border-slate-200 text-slate-600"
                 disabled={safeSignupPage <= 1}
                 onClick={() => setSignupPage((prev) => Math.max(prev - 1, 1))}
               >
@@ -876,6 +909,7 @@ export default function SecurityTab({ onOpenTab }: Readonly<SecurityTabProps>) {
               <Button
                 size="sm"
                 variant="outline"
+                className="h-8 border-slate-200 text-slate-600"
                 disabled={safeSignupPage >= signupTotalPages}
                 onClick={() =>
                   setSignupPage((prev) => Math.min(prev + 1, signupTotalPages))
@@ -888,9 +922,9 @@ export default function SecurityTab({ onOpenTab }: Readonly<SecurityTabProps>) {
         </CardContent>
       </Card>
 
-      <div className="rounded-md border border-amber-200 bg-amber-50 px-4 py-3 text-sm text-amber-900 mb-6">
-        <div className="flex items-start gap-2">
-          <AlertTriangle className="mt-0.5 h-4 w-4 shrink-0" />
+      <div className="rounded-xl border border-amber-200 bg-amber-50 px-4 py-3 text-sm text-amber-800">
+        <div className="flex items-start gap-2.5">
+          <AlertTriangle className="mt-0.5 h-4 w-4 shrink-0 text-amber-600" />
           <p>
             This page provides operational risk signals from platform telemetry.
             For critical findings, validate in Audit Logs and execute

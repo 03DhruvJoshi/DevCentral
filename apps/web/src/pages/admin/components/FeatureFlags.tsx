@@ -1,5 +1,14 @@
 import { useState, useEffect } from "react";
-import { Loader2, Wrench, AlertTriangle, Plus, Trash2 } from "lucide-react";
+import {
+  Loader2,
+  Wrench,
+  AlertTriangle,
+  Plus,
+  Trash2,
+  Settings2,
+  ToggleLeft,
+  Clock,
+} from "lucide-react";
 import {
   Card,
   CardContent,
@@ -7,14 +16,6 @@ import {
   CardTitle,
   CardDescription,
 } from "../../../components/ui/card.js";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "../../../components/ui/table.js";
 import {
   Dialog,
   DialogClose,
@@ -49,6 +50,16 @@ function formatKeyName(key: string): string {
 const KEY_PATTERN = /^[A-Z][A-Z0-9_]*$/;
 const MAINTENANCE_BROADCAST_MESSAGE =
   "Platform maintenance is currently in progress. Some features may be temporarily unavailable.";
+
+function formatRelativeTime(iso: string): string {
+  const diff = Date.now() - new Date(iso).getTime();
+  const mins = Math.floor(diff / 60_000);
+  if (mins < 1) return "just now";
+  if (mins < 60) return `${mins}m ago`;
+  const hrs = Math.floor(mins / 60);
+  if (hrs < 24) return `${hrs}h ago`;
+  return `${Math.floor(hrs / 24)}d ago`;
+}
 
 export function FeatureFlags() {
   const [configs, setConfigs] = useState<PlatformConfig[]>([]);
@@ -91,31 +102,18 @@ export function FeatureFlags() {
         const [maintenanceRes, messageRes, severityRes] = await Promise.all([
           fetch(`${API_BASE_URL}/api/admin/config/MAINTENANCE_MODE`, {
             method: "PUT",
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${token}`,
-            },
+            headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
             body: JSON.stringify({ value: newValue }),
           }),
           fetch(`${API_BASE_URL}/api/admin/config/BROADCAST_MESSAGE`, {
             method: "PUT",
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${token}`,
-            },
-            body: JSON.stringify({
-              value: newValue === "true" ? MAINTENANCE_BROADCAST_MESSAGE : "",
-            }),
+            headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
+            body: JSON.stringify({ value: newValue === "true" ? MAINTENANCE_BROADCAST_MESSAGE : "" }),
           }),
           fetch(`${API_BASE_URL}/api/admin/config/BROADCAST_SEVERITY`, {
             method: "PUT",
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${token}`,
-            },
-            body: JSON.stringify({
-              value: newValue === "true" ? "WARNING" : "INFO",
-            }),
+            headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
+            body: JSON.stringify({ value: newValue === "true" ? "WARNING" : "INFO" }),
           }),
         ]);
 
@@ -125,15 +123,10 @@ export function FeatureFlags() {
       } else {
         const res = await fetch(`${API_BASE_URL}/api/admin/config/${key}`, {
           method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
+          headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
           body: JSON.stringify({ value: newValue }),
         });
-        if (!res.ok) {
-          throw new Error(`Failed to update config for ${key}`);
-        }
+        if (!res.ok) throw new Error(`Failed to update config for ${key}`);
       }
 
       await fetchConfigs();
@@ -150,19 +143,14 @@ export function FeatureFlags() {
 
   const deleteConfig = async (key: string) => {
     if (pendingToggles.has(key)) return;
-
     setPendingToggles((prev) => new Set(prev).add(key));
     try {
       const token = localStorage.getItem("devcentral_token");
       const res = await fetch(`${API_BASE_URL}/api/admin/config/${key}`, {
         method: "DELETE",
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
+        headers: { Authorization: `Bearer ${token}` },
       });
-      if (!res.ok) {
-        throw new Error(`Failed to delete config for ${key}`);
-      }
+      if (!res.ok) throw new Error(`Failed to delete config for ${key}`);
       await fetchConfigs();
     } catch (err) {
       console.error("Delete config failed", err);
@@ -179,14 +167,9 @@ export function FeatureFlags() {
     setKeyError("");
     const trimmedKey = newKey.trim().toUpperCase();
 
-    if (!trimmedKey) {
-      setKeyError("Key is required.");
-      return;
-    }
+    if (!trimmedKey) { setKeyError("Key is required."); return; }
     if (!KEY_PATTERN.test(trimmedKey)) {
-      setKeyError(
-        "Key must be uppercase letters, digits, and underscores only.",
-      );
+      setKeyError("Key must be uppercase letters, digits, and underscores only.");
       return;
     }
     if (configs.some((c) => c.key === trimmedKey)) {
@@ -199,10 +182,7 @@ export function FeatureFlags() {
       const token = localStorage.getItem("devcentral_token");
       await fetch(`${API_BASE_URL}/api/admin/config/${trimmedKey}`, {
         method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
+        headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
         body: JSON.stringify({
           value: "false",
           description: newDescription.trim() || "Custom feature flag",
@@ -221,7 +201,7 @@ export function FeatureFlags() {
   if (isLoading) {
     return (
       <div className="flex justify-center py-20">
-        <Loader2 className="animate-spin h-8 w-8 text-primary" />
+        <Loader2 className="animate-spin h-8 w-8 text-slate-400" />
       </div>
     );
   }
@@ -238,201 +218,253 @@ export function FeatureFlags() {
 
   return (
     <div className="space-y-6 mb-12">
-      {/* Maintenance Mode card */}
+
+      {/* ── Maintenance Mode — Danger Zone ── */}
       {maintenanceConfig && (
-        <Card
-          className={`border-2 ${isMaintenanceActive ? "border-red-400" : "border-slate-200"}`}
-        >
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2">
-              <Wrench className="h-5 w-5" />
-              Maintenance Mode
-            </CardTitle>
-            <CardDescription>
-              When enabled, all users will see a maintenance notice.
-            </CardDescription>
-          </CardHeader>
-          <CardContent className="space-y-4">
-            {isMaintenanceActive && (
-              <div className="flex items-center gap-2 rounded-md bg-red-50 border border-red-200 px-4 py-3 text-sm text-red-800">
-                <AlertTriangle className="h-4 w-4 shrink-0" />
-                <span className="font-medium">
-                  Platform is currently in maintenance mode
-                </span>
+        <Card className={`border-2 shadow-sm ${isMaintenanceActive ? "border-rose-300 bg-rose-50/30" : "border-slate-200"}`}>
+          <CardHeader className="pb-3">
+            <div className="flex items-start justify-between gap-4">
+              <div className="flex items-center gap-3">
+                <div className={`w-9 h-9 rounded-xl flex items-center justify-center ${isMaintenanceActive ? "bg-rose-100" : "bg-slate-100"}`}>
+                  <Wrench className={`h-4 w-4 ${isMaintenanceActive ? "text-rose-600" : "text-slate-500"}`} />
+                </div>
+                <div>
+                  <CardTitle className="text-sm font-semibold text-slate-900 flex items-center gap-2">
+                    Maintenance Mode
+                    {isMaintenanceActive && (
+                      <Badge className="bg-rose-100 text-rose-700 border-rose-200 hover:bg-rose-100 text-xs font-semibold animate-pulse">
+                        ACTIVE
+                      </Badge>
+                    )}
+                  </CardTitle>
+                  <CardDescription className="text-xs mt-0.5">
+                    When enabled, all users see a platform-wide maintenance notice and a broadcast warning banner.
+                  </CardDescription>
+                </div>
               </div>
-            )}
-            <Button
-              className={`w-full text-sm font-semibold ${
-                isMaintenanceActive
-                  ? "bg-red-600 hover:bg-red-700 text-white"
-                  : "bg-green-600 hover:bg-green-700 text-white"
-              }`}
-              disabled={pendingToggles.has("MAINTENANCE_MODE")}
-              onClick={() =>
-                toggleConfig("MAINTENANCE_MODE", maintenanceConfig.value)
-              }
-            >
-              {pendingToggles.has("MAINTENANCE_MODE") ? (
-                <Loader2 className="animate-spin h-4 w-4 mr-2" />
-              ) : null}
-              {isMaintenanceActive
-                ? "ACTIVE — Click to Disable"
-                : "INACTIVE — Click to Enable"}
-            </Button>
-          </CardContent>
+              <div className="flex items-center gap-3 shrink-0">
+                {pendingToggles.has("MAINTENANCE_MODE") && (
+                  <Loader2 className="animate-spin h-4 w-4 text-slate-400" />
+                )}
+                <Switch
+                  checked={isMaintenanceActive}
+                  disabled={pendingToggles.has("MAINTENANCE_MODE")}
+                  onCheckedChange={() => toggleConfig("MAINTENANCE_MODE", maintenanceConfig.value)}
+                  className="data-[state=checked]:bg-rose-600"
+                  aria-label="Toggle maintenance mode"
+                />
+              </div>
+            </div>
+          </CardHeader>
+
+          {isMaintenanceActive && (
+            <CardContent className="pt-0">
+              <div className="flex items-start gap-2.5 rounded-xl border border-rose-200 bg-rose-50 px-4 py-3 text-sm text-rose-800">
+                <AlertTriangle className="h-4 w-4 shrink-0 mt-0.5 text-rose-600" />
+                <div>
+                  <p className="font-semibold">Platform is in maintenance mode</p>
+                  <p className="text-xs text-rose-600 mt-0.5">
+                    All users are seeing a maintenance warning. Disable this when the platform is operational.
+                  </p>
+                </div>
+              </div>
+            </CardContent>
+          )}
         </Card>
       )}
 
-      {/* Feature flags table */}
-      <Card>
-        <CardHeader>
-          <CardTitle>Platform Feature Flags</CardTitle>
-          <CardDescription>
-            Instantly toggle platform capabilities without redeploying code.
-          </CardDescription>
+      {/* ── Platform Feature Flags ── */}
+      <Card className="border-slate-200 shadow-sm overflow-hidden">
+        <CardHeader className="px-6 py-4 border-b border-slate-100">
+          <div className="flex items-center gap-2.5">
+            <div className="w-8 h-8 rounded-lg bg-slate-100 flex items-center justify-center">
+              <ToggleLeft className="w-4 h-4 text-slate-500" />
+            </div>
+            <div>
+              <CardTitle className="text-sm font-semibold text-slate-900">
+                Platform Feature Flags
+              </CardTitle>
+              <CardDescription className="text-xs mt-0.5">
+                Toggle platform capabilities without redeploying code.{" "}
+                {otherConfigs.length} flag{otherConfigs.length !== 1 ? "s" : ""} configured.
+              </CardDescription>
+            </div>
+          </div>
         </CardHeader>
+
         <CardContent className="p-0">
           {otherConfigs.length === 0 ? (
-            <p className="text-sm text-muted-foreground text-center py-8">
-              No feature flags configured.
-            </p>
+            <div className="flex flex-col items-center justify-center py-16 text-slate-400">
+              <Settings2 className="h-8 w-8 mb-3 opacity-30" />
+              <p className="text-sm">No feature flags configured.</p>
+              <p className="text-xs mt-1 text-slate-300">Use the form below to add your first flag.</p>
+            </div>
           ) : (
-            <Table>
-              <TableHeader className="bg-muted/50">
-                <TableRow>
-                  <TableHead>Flag</TableHead>
-                  <TableHead>Description</TableHead>
-                  <TableHead className="text-center">Status</TableHead>
-                  <TableHead className="text-right">Toggle</TableHead>
-                  <TableHead className="text-right">Delete</TableHead>
-                </TableRow>
-              </TableHeader>
-              <TableBody>
-                {otherConfigs.map((config) => {
-                  const isEnabled = config.value === "true";
-                  const isPending = pendingToggles.has(config.key);
-                  return (
-                    <TableRow key={config.key}>
-                      <TableCell className="font-mono text-sm font-medium">
-                        {config.key}
-                      </TableCell>
-                      <TableCell className="text-sm text-muted-foreground">
-                        {config.description ?? formatKeyName(config.key)}
-                      </TableCell>
-                      <TableCell className="text-center">
+            <div className="divide-y divide-slate-100">
+              {otherConfigs.map((config) => {
+                const isEnabled = config.value === "true";
+                const isPending = pendingToggles.has(config.key);
+                return (
+                  <div
+                    key={config.key}
+                    className={`flex items-center justify-between gap-6 px-6 py-4 transition-colors ${isEnabled ? "hover:bg-slate-50/50" : "hover:bg-slate-50/50 opacity-80"}`}
+                  >
+                    {/* Left: Flag info */}
+                    <div className="flex-1 min-w-0">
+                      <div className="flex items-center gap-2.5 flex-wrap">
+                        <code className="text-sm font-mono font-semibold text-slate-800 bg-slate-100 px-2 py-0.5 rounded">
+                          {config.key}
+                        </code>
                         {isEnabled ? (
-                          <Badge className="bg-green-100 text-green-800 border-green-200 hover:bg-green-100">
+                          <Badge className="bg-emerald-100 text-emerald-700 border-emerald-200 hover:bg-emerald-100 text-xs">
                             Enabled
                           </Badge>
                         ) : (
-                          <Badge variant="secondary">Disabled</Badge>
+                          <Badge className="bg-slate-100 text-slate-500 border-slate-200 hover:bg-slate-100 text-xs">
+                            Disabled
+                          </Badge>
                         )}
-                      </TableCell>
-                      <TableCell className="text-right">
-                        <div className="flex items-center justify-end gap-2">
-                          {isPending && (
-                            <Loader2 className="animate-spin h-3.5 w-3.5 text-muted-foreground" />
-                          )}
-                          <Switch
-                            checked={isEnabled}
-                            disabled={isPending}
-                            onCheckedChange={() =>
-                              toggleConfig(config.key, config.value)
-                            }
-                            className="bg-green-100 text-green-800 border-green-200 hover:bg-green-100 data-[state=checked]:bg-green-600 data-[state=checked]:border-green-700 data-[state=checked]:hover:bg-green-700"
-                            aria-label={`Toggle ${config.key}`}
-                          />
-                        </div>
-                      </TableCell>
-                      <TableCell className="text-right">
-                        <Dialog>
-                          <DialogTrigger asChild>
-                            <Button variant="ghost" size="icon">
-                              <Trash2 className="h-auto w-auto" />
+                      </div>
+                      <p className="text-xs text-slate-500 mt-1.5 leading-relaxed">
+                        {config.description ?? formatKeyName(config.key)}
+                      </p>
+                      <p className="text-xs text-slate-400 mt-1 flex items-center gap-1">
+                        <Clock className="w-3 h-3" />
+                        Updated {formatRelativeTime(config.updatedAt)}
+                      </p>
+                    </div>
+
+                    {/* Right: Toggle + Delete */}
+                    <div className="flex items-center gap-3 shrink-0">
+                      {isPending && (
+                        <Loader2 className="animate-spin h-3.5 w-3.5 text-slate-400" />
+                      )}
+                      <Switch
+                        checked={isEnabled}
+                        disabled={isPending}
+                        onCheckedChange={() => toggleConfig(config.key, config.value)}
+                        className="data-[state=checked]:bg-blue-600"
+                        aria-label={`Toggle ${config.key}`}
+                      />
+                      <Dialog>
+                        <DialogTrigger asChild>
+                          <Button
+                            variant="ghost"
+                            size="icon"
+                            className="h-7 w-7 text-slate-300 hover:text-rose-500 hover:bg-rose-50"
+                          >
+                            <Trash2 className="h-3.5 w-3.5" />
+                          </Button>
+                        </DialogTrigger>
+                        <DialogContent className="sm:max-w-sm bg-white">
+                          <DialogHeader>
+                            <div className="flex items-center gap-2 mb-1">
+                              <div className="w-8 h-8 rounded-lg bg-rose-100 flex items-center justify-center">
+                                <AlertTriangle className="h-4 w-4 text-rose-600" />
+                              </div>
+                              <DialogTitle className="text-base">Delete Feature Flag</DialogTitle>
+                            </div>
+                            <DialogDescription>
+                              Delete flag{" "}
+                              <code className="font-mono font-semibold text-slate-800 bg-slate-100 px-1 rounded">
+                                {config.key}
+                              </code>
+                              ? This action cannot be undone.
+                            </DialogDescription>
+                          </DialogHeader>
+                          <div className="rounded-xl border border-rose-200 bg-rose-50 px-4 py-3 text-sm text-rose-700 font-medium">
+                            ⚠ Danger Zone — this flag will be permanently removed
+                          </div>
+                          <DialogFooter>
+                            <DialogClose asChild>
+                              <Button variant="outline">Cancel</Button>
+                            </DialogClose>
+                            <Button
+                              className="bg-rose-600 hover:bg-rose-700 text-white"
+                              onClick={async () => { await deleteConfig(config.key); }}
+                            >
+                              Delete Flag
                             </Button>
-                          </DialogTrigger>
-                          <DialogContent className="sm:max-w-sm bg-white">
-                            <DialogHeader>
-                              <DialogTitle>Delete Feature Flag</DialogTitle>
-                              <DialogDescription>
-                                Are you sure you want to delete this feature
-                                flag? This action cannot be undone.
-                              </DialogDescription>
-                            </DialogHeader>
-                            <DialogFooter>
-                              <DialogClose asChild>
-                                <Button variant="outline" onClick={() => {}}>
-                                  Cancel
-                                </Button>
-                              </DialogClose>
-                              <Button
-                                type="submit"
-                                className="bg-black hover:bg-red-700 border-white-600 hover:border-red-700 text-white"
-                                onClick={async () => {
-                                  await deleteConfig(config.key);
-                                }}
-                              >
-                                Delete
-                              </Button>
-                            </DialogFooter>
-                          </DialogContent>
-                        </Dialog>
-                      </TableCell>
-                    </TableRow>
-                  );
-                })}
-              </TableBody>
-            </Table>
+                          </DialogFooter>
+                        </DialogContent>
+                      </Dialog>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
           )}
         </CardContent>
       </Card>
 
-      {/* Add custom flag section */}
-      <Card>
-        <CardHeader>
-          <CardTitle className="text-base">Add Custom Flag</CardTitle>
-          <CardDescription>
-            Create a new feature flag. New flags are created in a disabled
-            state.
-          </CardDescription>
+      {/* ── Add Custom Flag ── */}
+      <Card className="border-slate-200 shadow-sm">
+        <CardHeader className="px-6 py-4 border-b border-slate-100">
+          <div className="flex items-center gap-2.5">
+            <div className="w-8 h-8 rounded-lg bg-blue-100 flex items-center justify-center">
+              <Plus className="w-4 h-4 text-blue-600" />
+            </div>
+            <div>
+              <CardTitle className="text-sm font-semibold text-slate-900">
+                Add Custom Flag
+              </CardTitle>
+              <CardDescription className="text-xs mt-0.5">
+                New flags are created in a{" "}
+                <span className="font-medium">disabled</span> state by default.
+              </CardDescription>
+            </div>
+          </div>
         </CardHeader>
-        <CardContent className="space-y-4">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+        <CardContent className="px-6 py-5">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="space-y-1.5">
-              <Label htmlFor="new-flag-key">Flag Key</Label>
+              <Label
+                htmlFor="new-flag-key"
+                className="text-xs font-semibold uppercase tracking-wider text-slate-500"
+              >
+                Flag Key
+              </Label>
               <Input
                 id="new-flag-key"
                 placeholder="MY_CUSTOM_FLAG"
                 value={newKey}
-                onChange={(e) => {
-                  setNewKey(e.target.value.toUpperCase());
-                  setKeyError("");
-                }}
+                onChange={(e) => { setNewKey(e.target.value.toUpperCase()); setKeyError(""); }}
+                className="font-mono bg-slate-50 border-slate-200 focus-visible:ring-blue-500/25 focus-visible:border-blue-500"
               />
-              {keyError && <p className="text-xs text-red-600">{keyError}</p>}
-              <p className="text-xs text-muted-foreground">
+              {keyError && (
+                <p className="text-xs text-rose-600 flex items-center gap-1">
+                  <AlertTriangle className="h-3 w-3" /> {keyError}
+                </p>
+              )}
+              <p className="text-xs text-slate-400">
                 Uppercase letters, digits, and underscores only.
               </p>
             </div>
             <div className="space-y-1.5">
-              <Label htmlFor="new-flag-desc">Description</Label>
+              <Label
+                htmlFor="new-flag-desc"
+                className="text-xs font-semibold uppercase tracking-wider text-slate-500"
+              >
+                Description
+              </Label>
               <Input
                 id="new-flag-desc"
                 placeholder="Brief description of this flag..."
                 value={newDescription}
                 onChange={(e) => setNewDescription(e.target.value)}
+                className="bg-slate-50 border-slate-200 focus-visible:ring-blue-500/25 focus-visible:border-blue-500"
               />
             </div>
           </div>
           <Button
-            variant="outline"
+            className="mt-5 bg-blue-600 hover:bg-blue-700 text-white gap-2"
             onClick={addCustomFlag}
             disabled={isSavingNew || !newKey.trim()}
           >
             {isSavingNew ? (
-              <Loader2 className="animate-spin h-4 w-4 mr-2" />
+              <Loader2 className="animate-spin h-4 w-4" />
             ) : (
-              <Plus className="h-4 w-4 mr-2" />
+              <Plus className="h-4 w-4" />
             )}
             Add Flag
           </Button>
