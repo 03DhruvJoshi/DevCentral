@@ -15,13 +15,14 @@ model Project {
 
 model Template {
   title       String
-  description String
+  description String?
   categoryName String
   yaml        String
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
   id          Int      @id @default(autoincrement())
   category Category @relation(fields: [categoryName], references: [name])
+  revisions TemplateRevision[]
 }
 
 model Category {
@@ -288,4 +289,107 @@ model DeploymentApproval {
   @@unique([deploymentId, approverEmail])
   @@index([deploymentId])
   @@index([status])
+}
+
+// ===== Scaffolder Wizard Catalog Models =====
+
+enum WizardOptionTier {
+  INFRASTRUCTURE
+  QUALITY
+  SECURITY
+  FEATURES
+}
+
+model WizardCatalogCategory {
+  id          String   @id
+  label       String
+  description String?
+  icon        String?
+  accentClass String?
+  displayOrder Int     @default(0)
+  isActive    Boolean  @default(true)
+  frameworks  WizardFramework[]
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([displayOrder])
+  @@index([isActive])
+}
+
+model WizardFramework {
+  id            String   @id
+  categoryId    String
+  label         String
+  description   String
+  badge         String?
+  tags          String[] @default([])
+  popularity    String?
+  icon          String?
+  accentClass   String?
+  displayOrder  Int      @default(0)
+  isActive      Boolean  @default(true)
+  category      WizardCatalogCategory @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+  options       WizardFrameworkOption[]
+  revisions     TemplateRevision[]
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  @@index([categoryId])
+  @@index([displayOrder])
+  @@index([isActive])
+}
+
+model WizardOption {
+  id            String   @id
+  label         String
+  description   String
+  tier          WizardOptionTier
+  icon          String?
+  displayOrder  Int      @default(0)
+  isActive      Boolean  @default(true)
+  frameworks    WizardFrameworkOption[]
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  @@index([tier])
+  @@index([displayOrder])
+  @@index([isActive])
+}
+
+model WizardFrameworkOption {
+  id             String   @id @default(cuid())
+  frameworkId    String
+  optionId       String
+  defaultEnabled Boolean  @default(false)
+  displayOrder   Int      @default(0)
+  framework      WizardFramework @relation(fields: [frameworkId], references: [id], onDelete: Cascade)
+  option         WizardOption @relation(fields: [optionId], references: [id], onDelete: Cascade)
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  @@unique([frameworkId, optionId])
+  @@index([frameworkId])
+  @@index([optionId])
+  @@index([displayOrder])
+}
+
+model TemplateRevision {
+  id                String   @id @default(cuid())
+  templateId        Int
+  frameworkId       String?
+  selectedOptionIds String[] @default([])
+  source            Json?
+  compiledYaml      String
+  version           Int
+  isActive          Boolean  @default(true)
+  createdBy         String?
+  notes             String?
+  template          Template @relation(fields: [templateId], references: [id], onDelete: Cascade)
+  framework         WizardFramework? @relation(fields: [frameworkId], references: [id], onDelete: SetNull)
+  createdAt         DateTime @default(now())
+
+  @@unique([templateId, version])
+  @@index([templateId, isActive])
+  @@index([frameworkId])
+  @@index([createdAt])
 }

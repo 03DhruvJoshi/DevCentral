@@ -2,6 +2,11 @@
 import { PrismaClient } from "./prisma/generated/client";
 import { PrismaPg } from "@prisma/adapter-pg";
 import bcrypt from "bcrypt";
+import seedWizardCatalog from "./prisma/seed/scaffolder/seedWizardCatalog";
+import {
+  INITIAL_TEMPLATES,
+  CATEGORIES,
+} from "./prisma/seed/scaffolder/yamlgenerate";
 
 const connectionString =
   process.env.DIRECT_DATABASE_URL ?? process.env.DATABASE_URL;
@@ -18,31 +23,9 @@ const adapter = new PrismaPg({
 
 const prisma = new PrismaClient({ adapter });
 
-const INITIAL_TEMPLATES = [
-  {
-    title: "Node.js Express Microservice",
-    description:
-      "A lightweight REST API starter with TypeScript and Docker support.",
-    categoryName: "Application/Project Root",
-    yaml: "apiVersion: v1\nkind: Template\nmetadata:\n  name: node-express-v1",
-  },
-  {
-    title: "React Dashboard Component",
-    description: "Scaffolds a standard React component with Shadcn UI imports.",
-    categoryName: "Component/Feature Structure",
-    yaml: "apiVersion: v1\nkind: Template\nmetadata:\n  name: react-component",
-  },
-];
-
-const CATEGORIES = [
-  {
-    name: "Application/Project Root",
-  },
-  { name: "Component/Feature Structure" },
-  { name: "Configuration & Build Tools" },
-];
-
 async function main() {
+  await seedWizardCatalog(prisma);
+
   await prisma.template.deleteMany();
   await prisma.category.deleteMany();
 
@@ -66,7 +49,9 @@ async function main() {
     where: { email: adminEmail },
   });
 
-  if (!existingAdmin) {
+  if (existingAdmin) {
+    console.log("⚠️ Admin account already exists. Skipping seed.");
+  } else {
     const salt = await bcrypt.genSalt(10);
     const passwordHash = await bcrypt.hash("SecureAdmin123!", salt);
 
@@ -80,8 +65,6 @@ async function main() {
       },
     });
     console.log("✅ Super Admin account created successfully.");
-  } else {
-    console.log("⚠️ Admin account already exists. Skipping seed.");
   }
 
   console.log("Seeding complete.");
