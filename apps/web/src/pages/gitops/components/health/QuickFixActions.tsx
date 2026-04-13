@@ -1,22 +1,20 @@
 import { useState } from "react";
-import { Loader2, CheckCircle2, AlertCircle, Zap } from "lucide-react";
+import { Loader2, CheckCircle2, Zap } from "lucide-react";
 
 import {
   Card,
   CardContent,
-  CardDescription,
   CardHeader,
   CardTitle,
-} from "../../../components/ui/card.js";
+} from "../../../../components/ui/card.js";
 
-import { Badge } from "../../../components/ui/badge.js";
-import { Button } from "../../../components/ui/button.js";
+import { Button } from "../../../../components/ui/button.js";
 import {
   type Repository,
   type HealthCheckResult,
   API_BASE_URL,
   token,
-} from "./types.js";
+} from "../types.js";
 
 interface FixActionItem {
   type: string;
@@ -56,8 +54,9 @@ const QUICK_FIX_ACTIONS: FixActionItem[] = [
 export default function QuickFixActions(props: {
   selectedRepo: Repository;
   health: HealthCheckResult | null;
+  isLoading?: boolean;
 }) {
-  const { selectedRepo, health } = props;
+  const { selectedRepo, health, isLoading = false } = props;
   const [executing, setExecuting] = useState<string | null>(null);
   const [results, setResults] = useState<Record<string, any>>({});
 
@@ -91,6 +90,30 @@ export default function QuickFixActions(props: {
     }
   }
 
+  if (isLoading) {
+    return (
+      <Card className="border border-slate-200 bg-white shadow-sm">
+        <CardHeader className="pb-1">
+          <CardTitle className="flex items-center gap-2">
+            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-slate-100 ring-1 ring-slate-200">
+              <Zap className="h-4 w-4 text-slate-700" />
+            </div>
+            <div>
+              <span className="text-base">Quick Fixes</span>
+              <p className="mt-0.5 text-xs font-normal text-muted-foreground">
+                One-click automated remediation for detected issues
+              </p>
+            </div>
+          </CardTitle>
+        </CardHeader>
+        <CardContent className="flex items-center gap-2 py-6 text-sm text-slate-600">
+          <Loader2 className="h-4 w-4 animate-spin" />
+          Loading available fixes...
+        </CardContent>
+      </Card>
+    );
+  }
+
   if (!health) {
     return null;
   }
@@ -119,39 +142,40 @@ export default function QuickFixActions(props: {
   }
 
   return (
-    <Card>
-      <CardHeader>
+    <Card className="border border-slate-200 bg-white shadow-sm">
+      <CardHeader className="pb-1">
         <CardTitle className="flex items-center gap-2">
-          <Zap className="h-5 w-5 text-yellow-600" />
-          Quick Fixes
+          <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-slate-100 ring-1 ring-slate-200">
+            <Zap className="h-4 w-4 text-slate-700" />
+          </div>
+          <div>
+            <span className="text-base">Quick Fixes</span>
+            <p className="text-xs font-normal text-muted-foreground mt-0.5">
+              One-click automated remediation for detected issues
+            </p>
+          </div>
         </CardTitle>
-        <CardDescription>
-          One-click actions to resolve detected issues
-        </CardDescription>
       </CardHeader>
       <CardContent className="space-y-4">
         {/* Executed Actions */}
         {executedActions.length > 0 && (
           <div className="space-y-2">
-            <h4 className="text-sm font-semibold text-muted-foreground">
-              Completed
-            </h4>
+            <h4 className="text-sm text-muted-foreground">Applied</h4>
             {executedActions.map((action) => {
               const result = results[action.type];
               return (
                 <div
                   key={action.type}
-                  className="p-3 rounded-lg border bg-green-50 border-green-200"
+                  className="rounded-lg border border-emerald-200 bg-emerald-50/60 p-3"
                 >
                   <div className="flex items-start gap-3">
-                    <CheckCircle2 className="h-5 w-5 text-green-600 flex-shrink-0 mt-0.5" />
+                    <CheckCircle2 className="h-4 w-4 text-emerald-500 flex-shrink-0 mt-0.5" />
                     <div className="flex-1 min-w-0">
-                      <div className="font-semibold text-sm">
+                      <div className="font-semibold text-sm text-slate-800">
                         {action.label}
                       </div>
-                      <div className="text-xs text-green-700 mt-1">
-                        {result.result?.message ||
-                          "✅ Fix applied successfully"}
+                      <div className="text-xs text-emerald-700 mt-1">
+                        {result.result?.message || "Fix applied successfully"}
                       </div>
                     </div>
                   </div>
@@ -164,35 +188,39 @@ export default function QuickFixActions(props: {
         {/* Available Actions */}
         {availableActions.length > 0 && (
           <div className="space-y-2">
-            <h4 className="text-sm font-semibold text-muted-foreground">
-              Available Fixes
+            <h4 className="text-sm text-muted-foreground">
+              Available Fixes ({availableActions.length})
             </h4>
             {availableActions.map((action) => (
               <div
                 key={action.type}
-                className="p-3 rounded-lg border bg-blue-50 border-blue-200 flex items-start gap-3"
+                className="flex items-start gap-3 rounded-lg border border-slate-200 bg-slate-100 p-3 transition-colors hover:bg-slate-200"
               >
-                <div className="text-xl flex-shrink-0">{action.icon}</div>
+                <div className="flex h-8 w-8 items-center justify-center rounded-md bg-slate-100 text-base flex-shrink-0">
+                  {action.icon}
+                </div>
                 <div className="flex-1 min-w-0">
-                  <div className="font-semibold text-sm">{action.label}</div>
-                  <p className="text-xs text-muted-foreground mt-1">
+                  <div className="font-semibold text-sm text-slate-800">
+                    {action.label}
+                  </div>
+                  <p className="text-xs text-muted-foreground mt-0.5">
                     {action.description}
                   </p>
                   <Button
                     size="sm"
                     variant="outline"
-                    className="mt-2"
+                    className="mt-2 h-7 border-blue-300 text-xs text-blue-700 hover:bg-blue-100 hover:border-blue-400"
                     onClick={() => executeFixAction(action.type)}
                     disabled={executing === action.type}
                   >
                     {executing === action.type ? (
                       <>
-                        <Loader2 className="mr-2 h-3 w-3 animate-spin" />
-                        Executing...
+                        <Loader2 className="mr-1.5 h-3 w-3 animate-spin" />
+                        Applying…
                       </>
                     ) : (
                       <>
-                        <Zap className="mr-2 h-3 w-3" />
+                        <Zap className="mr-1.5 h-3 w-3" />
                         Apply Fix
                       </>
                     )}
@@ -204,10 +232,10 @@ export default function QuickFixActions(props: {
         )}
 
         {availableActions.length === 0 && executedActions.length === 0 && (
-          <div className="text-center py-6 text-muted-foreground">
-            <CheckCircle2 className="h-10 w-10 mx-auto mb-2 text-green-600" />
-            <p className="text-sm">
-              All issues are either resolved or require manual intervention.
+          <div className="flex items-center gap-2 py-4 text-sm text-emerald-700">
+            <CheckCircle2 className="h-5 w-5 text-emerald-500" />
+            <p className="font-medium">
+              No automated fixes required — all issues need manual review.
             </p>
           </div>
         )}
