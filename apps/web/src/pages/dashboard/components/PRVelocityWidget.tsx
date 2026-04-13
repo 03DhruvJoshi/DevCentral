@@ -8,13 +8,7 @@ import {
 } from "../../../components/ui/card.js";
 import { Badge } from "../../../components/ui/badge.js";
 import { Progress } from "../../../components/ui/progress.js";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "../../../components/ui/select.js";
+
 import { API_BASE_URL } from "../types.js";
 import { useDashboardContext } from "../DashboardContext.js";
 
@@ -128,7 +122,10 @@ export function PRVelocityWidget() {
 
   const sizeTotal = useMemo(() => {
     if (!velocity) return 0;
-    return Object.values(velocity.pr_size_distribution).reduce((a, b) => a + b, 0);
+    return Object.values(velocity.pr_size_distribution).reduce(
+      (a, b) => a + b,
+      0,
+    );
   }, [velocity]);
 
   return (
@@ -144,29 +141,33 @@ export function PRVelocityWidget() {
                 {velocity?.stale_prs.length} stale
               </Badge>
             )}
-            <Badge variant="outline" className="border-violet-300 text-violet-700">
+            <Badge
+              variant="outline"
+              className="border-violet-300 text-violet-700"
+            >
               Live
             </Badge>
           </div>
         </div>
 
-        <Select value={selectedRepo} onValueChange={setSelectedRepo}>
-          <SelectTrigger className="h-9 border-violet-200 text-sm w-full mt-1">
-            <SelectValue placeholder="Select repository" />
-          </SelectTrigger>
-          <SelectContent>
-            {repos.map((repo) => (
-              <SelectItem key={repo.id} value={`${repo.owner}/${repo.name}`}>
-                {repo.owner}/{repo.name}
-              </SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
+        <select
+          value={selectedRepo}
+          onChange={(e) => setSelectedRepo(e.target.value)}
+          className="h-9 rounded-md border border-violet-200 bg-white px-2 text-sm text-slate-800 mt-1"
+        >
+          {repos.map((repo) => (
+            <option key={repo.id} value={`${repo.owner}/${repo.name}`}>
+              {repo.owner}/{repo.name}
+            </option>
+          ))}
+        </select>
       </CardHeader>
 
       <CardContent className="space-y-3">
         {isLoading && (
-          <p className="text-sm text-muted-foreground">Crunching pull request signals...</p>
+          <p className="text-sm text-muted-foreground">
+            Crunching pull request signals...
+          </p>
         )}
 
         {!isLoading && error && (
@@ -179,7 +180,9 @@ export function PRVelocityWidget() {
           <>
             <div className="grid grid-cols-2 gap-2">
               <div className="rounded-lg border border-violet-100 bg-white p-3">
-                <p className="text-xs text-muted-foreground">Avg first review</p>
+                <p className="text-xs text-muted-foreground">
+                  Avg first review
+                </p>
                 <p className="text-xl font-bold text-violet-800 inline-flex items-center gap-1">
                   <Timer className="h-4 w-4" />
                   {velocity.review_time.avg_first_review_h ?? "-"}h
@@ -211,19 +214,26 @@ export function PRVelocityWidget() {
             {/* PR Size distribution mini bar chart */}
             {sizeTotal > 0 && (
               <div className="rounded-lg border border-violet-100 bg-white p-3 space-y-2">
-                <p className="text-xs text-muted-foreground font-medium">PR Size Distribution</p>
+                <p className="text-xs text-muted-foreground font-medium">
+                  PR Size Distribution
+                </p>
                 <div className="flex items-end gap-1 h-8">
                   {(["XS", "S", "M", "L", "XL"] as SizeKey[]).map((size) => {
                     const count = velocity.pr_size_distribution[size];
                     const pct = toPercent(count, sizeTotal);
                     return (
-                      <div key={size} className="flex-1 flex flex-col items-center gap-0.5">
+                      <div
+                        key={size}
+                        className="flex-1 flex flex-col items-center gap-0.5"
+                      >
                         <div
                           className={`w-full rounded-t-sm ${SIZE_COLORS[size]}`}
                           style={{ height: `${Math.max(4, pct * 0.28)}px` }}
                           title={`${size}: ${count} (${pct}%)`}
                         />
-                        <span className="text-[10px] text-muted-foreground">{size}</span>
+                        <span className="text-[10px] text-muted-foreground">
+                          {size}
+                        </span>
                       </div>
                     );
                   })}
@@ -235,7 +245,8 @@ export function PRVelocityWidget() {
               <div className="rounded-lg border border-amber-200 bg-amber-50 p-3 text-xs text-amber-800 inline-flex items-center gap-2 w-full">
                 <ShieldAlert className="h-4 w-4 shrink-0" />
                 {velocity.merge_conflicts.length} active merge conflict
-                {velocity.merge_conflicts.length !== 1 ? "s" : ""} detected in open PRs.
+                {velocity.merge_conflicts.length !== 1 ? "s" : ""} detected in
+                open PRs.
               </div>
             )}
           </>

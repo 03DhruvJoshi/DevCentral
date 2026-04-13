@@ -1,13 +1,15 @@
 import { useMemo, useState } from "react";
+import {
+  Loader2,
+  Layers,
+  AlertCircle,
+  CheckCircle2,
+  ShieldCheck,
+  ArrowLeft,
+  RefreshCw,
+} from "lucide-react";
 import { Button } from "../../components/ui/button.js";
 import { Input } from "../../components/ui/input.js";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "../../components/ui/card.js";
 
 const API_BASE_URL =
   (import.meta as unknown as { env?: Record<string, string> }).env
@@ -57,7 +59,10 @@ export function VerifyEmailPage() {
       // Store the auto-issued JWT so /connect-github can use it immediately
       if (data.token) {
         localStorage.setItem("devcentral_token", data.token);
-        localStorage.setItem("devcentral_user", JSON.stringify(data.user ?? {}));
+        localStorage.setItem(
+          "devcentral_user",
+          JSON.stringify(data.user ?? {}),
+        );
       }
       setSuccess(data.message ?? "Email verified! Setting up your account...");
       setTimeout(() => {
@@ -86,7 +91,9 @@ export function VerifyEmailPage() {
         throw new Error(data.error ?? "Failed to resend code.");
       }
 
-      setResendMessage(data.message ?? "A new code has been sent to your email.");
+      setResendMessage(
+        data.message ?? "A new code has been sent to your email.",
+      );
     } catch (err: unknown) {
       setError(err instanceof Error ? err.message : "Failed to resend code.");
     } finally {
@@ -95,68 +102,159 @@ export function VerifyEmailPage() {
   };
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-muted/20 p-4">
-      <Card className="w-[420px]">
-        <CardHeader>
-          <CardTitle>Verify Your Email</CardTitle>
-          <CardDescription>
-            We sent a 6-digit code to{" "}
-            <span className="font-medium text-foreground">{email || "your email"}</span>.
-            Enter it below to activate your account.
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
-          <form className="space-y-4" onSubmit={handleSubmit}>
-            {error && <p className="text-sm text-red-600">{error}</p>}
-            {success && <p className="text-sm text-emerald-700">{success}</p>}
-            {resendMessage && (
-              <p className="text-sm text-blue-600">{resendMessage}</p>
-            )}
+    <div
+      className="min-h-screen flex items-center justify-center p-4 relative overflow-hidden"
+      style={{ backgroundColor: "#f8fafc" }}
+    >
+      {/* Dot-grid background */}
+      <div
+        className="absolute inset-0 pointer-events-none"
+        style={{
+          backgroundImage:
+            "radial-gradient(circle, #e2e8f0 1.5px, transparent 1.5px)",
+          backgroundSize: "28px 28px",
+        }}
+      />
+      {/* Soft center glow */}
+      <div
+        className="absolute inset-0 pointer-events-none"
+        style={{
+          background:
+            "radial-gradient(ellipse 70% 55% at 50% 50%, rgba(59,130,246,0.07) 0%, transparent 75%)",
+        }}
+      />
 
-            <div className="space-y-2">
-              <label htmlFor="otp-code" className="text-sm font-medium">
-                Verification Code
-              </label>
-              <Input
-                id="otp-code"
-                type="text"
-                inputMode="numeric"
-                maxLength={6}
-                placeholder="123456"
-                value={otp}
-                onChange={(e) => setOtp(e.target.value.replace(/\D/g, ""))}
-                required
-                className="text-center text-2xl tracking-[0.5em] font-mono"
-              />
+      <div className="relative z-10 w-full max-w-md">
+        {/* Logo */}
+        <div className="flex flex-col items-center mb-8">
+          <div className="flex items-center gap-2.5 mb-1">
+            <div className="w-9 h-9 rounded-xl bg-black flex items-center justify-center shadow-sm shadow-blue-200">
+              <Layers className="w-[18px] h-[18px] text-white" />
             </div>
+            <span className="text-xl font-bold tracking-tight text-slate-900">
+              DevCentral
+            </span>
+          </div>
+          <p className="text-xs text-slate-650 mt-1 font-medium tracking-wide uppercase">
+            Internal Developer Platform
+          </p>
+        </div>
 
-            <Button className="w-full" type="submit" disabled={isSubmitting}>
-              {isSubmitting ? "Verifying..." : "Verify Email"}
-            </Button>
+        {/* Card */}
+        <div className="bg-white rounded-2xl border border-slate-200/80 shadow-xl shadow-slate-200/60 overflow-hidden">
+          <div className="px-8 pt-8 pb-2">
+            <div className="flex items-center gap-2.5 mb-1">
+              <div className="w-7 h-7 rounded-lg bg-emerald-100 flex items-center justify-center">
+                <ShieldCheck className="w-3.5 h-3.5 text-emerald-600" />
+              </div>
+              <h1 className="text-xl font-semibold text-slate-900 tracking-tight">
+                Verify your email
+              </h1>
+            </div>
+            <p className="text-sm text-slate-500 mt-1 ml-9">
+              We sent a 6-digit code to{" "}
+              {email ? (
+                <span className="font-semibold text-slate-700">{email}</span>
+              ) : (
+                "your email"
+              )}
+              . Enter it below.
+            </p>
+          </div>
 
-            <div className="text-center space-y-1">
-              <p className="text-sm text-muted-foreground">
-                Didn't receive a code?
-              </p>
+          <div className="px-8 py-6">
+            <form className="space-y-5" onSubmit={handleSubmit}>
+              {error && (
+                <div className="flex items-start gap-2.5 p-3 bg-rose-50 border border-rose-200 rounded-xl text-rose-700 text-sm">
+                  <AlertCircle className="w-4 h-4 shrink-0 mt-0.5" />
+                  <span>{error}</span>
+                </div>
+              )}
+              {success && (
+                <div className="flex items-start gap-2.5 p-3 bg-emerald-50 border border-emerald-200 rounded-xl text-emerald-700 text-sm">
+                  <CheckCircle2 className="w-4 h-4 shrink-0 mt-0.5" />
+                  <span>{success}</span>
+                </div>
+              )}
+              {resendMessage && (
+                <div className="flex items-start gap-2.5 p-3 bg-blue-50 border border-blue-200 rounded-xl text-blue-700 text-sm">
+                  <CheckCircle2 className="w-4 h-4 shrink-0 mt-0.5" />
+                  <span>{resendMessage}</span>
+                </div>
+              )}
+
+              <div className="space-y-1.5">
+                <label
+                  htmlFor="otp-code"
+                  className="block text-xs font-semibold uppercase tracking-wider text-slate-500"
+                >
+                  Verification Code
+                </label>
+                <Input
+                  id="otp-code"
+                  type="text"
+                  inputMode="numeric"
+                  maxLength={6}
+                  placeholder="• • • • • •"
+                  value={otp}
+                  onChange={(e) => setOtp(e.target.value.replace(/\D/g, ""))}
+                  required
+                  className="h-14 text-center text-2xl tracking-[0.6em] font-mono bg-slate-50 border-slate-200 hover:border-slate-300 focus-visible:border-blue-500 focus-visible:ring-blue-500/25 focus-visible:ring-[3px] transition-colors"
+                />
+                <p className="text-xs text-slate-650 text-center">
+                  Enter the 6-digit code from your inbox
+                </p>
+              </div>
+
               <Button
-                type="button"
-                variant="link"
-                className="text-sm h-auto p-0"
-                onClick={handleResend}
-                disabled={isResending}
+                className="w-full h-11 bg-blue-600 hover:bg-blue-700 text-white font-medium shadow-sm shadow-blue-200 transition-all"
+                type="submit"
+                disabled={isSubmitting}
               >
-                {isResending ? "Sending..." : "Resend code"}
+                {isSubmitting ? (
+                  <>
+                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                    Verifying...
+                  </>
+                ) : (
+                  "Verify Email"
+                )}
               </Button>
-            </div>
 
-            <div className="text-center">
-              <a href="/login" className="text-sm text-primary hover:underline">
-                Back to login
-              </a>
-            </div>
-          </form>
-        </CardContent>
-      </Card>
+              {/* Resend */}
+              <div className="flex items-center justify-center gap-2 pt-1">
+                <span className="text-sm text-slate-650">
+                  Didn&apos;t receive a code?
+                </span>
+                <Button
+                  type="button"
+                  variant="ghost"
+                  className="h-auto p-0 text-sm font-semibold text-blue-600 hover:text-blue-700 hover:bg-transparent gap-1.5"
+                  onClick={handleResend}
+                  disabled={isResending}
+                >
+                  {isResending ? (
+                    <Loader2 className="w-3.5 h-3.5 animate-spin" />
+                  ) : (
+                    <RefreshCw className="w-3.5 h-3.5" />
+                  )}
+                  {isResending ? "Sending..." : "Resend code"}
+                </Button>
+              </div>
+            </form>
+          </div>
+
+          <div className="px-8 py-5 bg-slate-50/70 border-t border-slate-100 flex items-center justify-center">
+            <a
+              href="/login"
+              className="flex items-center gap-1.5 text-sm font-medium text-slate-500 hover:text-blue-600 transition-colors"
+            >
+              <ArrowLeft className="w-3.5 h-3.5" />
+              Back to sign in
+            </a>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }

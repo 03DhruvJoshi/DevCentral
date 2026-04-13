@@ -12,8 +12,10 @@ import {
   Users,
   Download,
   X,
+  AlertTriangle,
+  UserCheck,
 } from "lucide-react";
-import { Card, CardContent } from "../../../components/ui/card.js";
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "../../../components/ui/card.js";
 import {
   Table,
   TableBody,
@@ -31,6 +33,13 @@ import {
   DialogHeader,
   DialogTitle,
 } from "../../../components/ui/dialog.js";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "../../../components/ui/select.js";
 import { Badge } from "../../../components/ui/badge.js";
 import { Button } from "../../../components/ui/button.js";
 import { Input } from "../../../components/ui/input.js";
@@ -302,164 +311,170 @@ export function UserDirectory({ onAlert }: Readonly<Props>) {
   if (isLoading) {
     return (
       <div className="flex justify-center py-20">
-        <Loader2 className="animate-spin h-8 w-8 text-primary" />
+        <Loader2 className="animate-spin h-8 w-8 text-slate-400" />
       </div>
     );
   }
 
   return (
-    <div className="space-y-4 border rounded-lg bg-white p-6">
-      {/* Stat chips */}
-      <div className="flex flex-wrap gap-2  justify-between">
-        <span className="inline-flex items-center gap-1 rounded-full border px-3 py-1 text-sm font-medium bg-background">
-          <Users className="h-3.5 w-3.5 text-blue-500" />
-          {totalUsers} Total
-        </span>
-        <span className="inline-flex items-center gap-1 rounded-full border px-3 py-1 text-sm font-medium bg-green-50 text-green-800 border-green-200">
-          <CheckCircle className="h-3.5 w-3.5" />
-          {activeUsers} Active
-        </span>
-        <span className="inline-flex items-center gap-1 rounded-full border px-3 py-1 text-sm font-medium bg-red-50 text-red-800 border-red-200">
-          <Ban className="h-3.5 w-3.5" />
-          {suspendedUsers} Suspended
-        </span>
-        <span className="inline-flex items-center gap-1 rounded-full border px-3 py-1 text-sm font-medium bg-purple-50 text-purple-800 border-purple-200">
-          <Shield className="h-3.5 w-3.5" />
-          {adminUsers} Admins
-        </span>
-
-        <div className="ml-auto">
-          <Button variant="outline" size="sm" onClick={exportCSV}>
-            <Download className="h-4 w-4 mr-2" />
-            Export CSV
-          </Button>
-        </div>
-      </div>
-
-      {/* Filters row */}
-      <div className="flex flex-wrap items-end gap-4">
-        <div className="w-72">
-          <Label className="text-xs text-muted-foreground mb-1 block">
-            Search Developer
-          </Label>
-          <div className="relative">
-            <Search className="absolute left-2 top-2.5 h-4 w-4 text-muted-foreground" />
-            <Input
-              placeholder="Search name, email, or GitHub..."
-              className="pl-8"
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-            />
+    <div className="space-y-5">
+      {/* ── Stat strip ── */}
+      <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+        {[
+          { icon: <Users className="h-4 w-4 text-blue-500" />, label: "Total Users", value: totalUsers, cls: "bg-blue-50 border-blue-100 text-blue-700" },
+          { icon: <UserCheck className="h-4 w-4 text-emerald-500" />, label: "Active", value: activeUsers, cls: "bg-emerald-50 border-emerald-100 text-emerald-700" },
+          { icon: <Ban className="h-4 w-4 text-rose-500" />, label: "Suspended", value: suspendedUsers, cls: "bg-rose-50 border-rose-100 text-rose-700" },
+          { icon: <Shield className="h-4 w-4 text-purple-500" />, label: "Admins", value: adminUsers, cls: "bg-purple-50 border-purple-100 text-purple-700" },
+        ].map(({ icon, label, value, cls }) => (
+          <div key={label} className={`flex items-center gap-3 rounded-xl border px-4 py-3 ${cls}`}>
+            {icon}
+            <div>
+              <p className="text-xl font-bold leading-none">{value}</p>
+              <p className="text-xs font-medium opacity-80 mt-0.5">{label}</p>
+            </div>
           </div>
-        </div>
-
-        <div className="w-40">
-          <Label className="text-xs text-muted-foreground mb-1 block">
-            Role
-          </Label>
-          <select
-            className="w-full border rounded-md p-2 text-sm bg-background"
-            value={roleFilter}
-            onChange={(e) => {
-              setRoleFilter(e.target.value);
-              setCurrentPage(1);
-            }}
-          >
-            <option value="">All Roles</option>
-            <option value="ADMIN">ADMIN only</option>
-            <option value="DEV">DEV only</option>
-          </select>
-        </div>
-
-        <div className="w-40">
-          <Label className="text-xs text-muted-foreground mb-1 block">
-            Status
-          </Label>
-          <select
-            className="w-full border rounded-md p-2 text-sm bg-background"
-            value={statusFilter}
-            onChange={(e) => {
-              setStatusFilter(e.target.value);
-              setCurrentPage(1);
-            }}
-          >
-            <option value="">All Statuses</option>
-            <option value="ACTIVE">ACTIVE only</option>
-            <option value="SUSPENDED">SUSPENDED only</option>
-          </select>
-        </div>
-
-        <div className="w-36">
-          <Label className="text-xs text-muted-foreground mb-1 block">
-            Rows per page
-          </Label>
-          <select
-            className="w-full border rounded-md p-2 text-sm bg-background"
-            value={rowsPerPage}
-            onChange={(e) => {
-              setRowsPerPage(Number(e.target.value));
-              setCurrentPage(1);
-            }}
-          >
-            <option value={20}>20 rows</option>
-            <option value={50}>50 rows</option>
-            <option value={100}>100 rows</option>
-          </select>
-        </div>
+        ))}
       </div>
 
-      {/* Confirm delete dialog */}
+      {/* ── Filters + Export ── */}
+      <Card className="border-slate-200 shadow-sm">
+        <CardContent className="p-4">
+          <div className="flex flex-wrap items-end gap-3">
+            <div className="flex-1 min-w-[220px]">
+              <Label className="text-xs font-semibold uppercase tracking-wider text-slate-500 mb-1.5 block">
+                Search
+              </Label>
+              <div className="relative">
+                <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-slate-400" />
+                <Input
+                  placeholder="Name, email, or GitHub..."
+                  className="pl-9 h-9 bg-slate-50 border-slate-200"
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                />
+              </div>
+            </div>
+
+            <div className="w-36">
+              <Label className="text-xs font-semibold uppercase tracking-wider text-slate-500 mb-1.5 block">
+                Role
+              </Label>
+              <Select
+                value={roleFilter || "ALL"}
+                onValueChange={(v) => { setRoleFilter(v === "ALL" ? "" : v); setCurrentPage(1); }}
+              >
+                <SelectTrigger className="h-9 bg-slate-50 border-slate-200 text-sm">
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="ALL">All Roles</SelectItem>
+                  <SelectItem value="ADMIN">Admin only</SelectItem>
+                  <SelectItem value="DEV">Dev only</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+
+            <div className="w-40">
+              <Label className="text-xs font-semibold uppercase tracking-wider text-slate-500 mb-1.5 block">
+                Status
+              </Label>
+              <Select
+                value={statusFilter || "ALL"}
+                onValueChange={(v) => { setStatusFilter(v === "ALL" ? "" : v); setCurrentPage(1); }}
+              >
+                <SelectTrigger className="h-9 bg-slate-50 border-slate-200 text-sm">
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="ALL">All Statuses</SelectItem>
+                  <SelectItem value="ACTIVE">Active only</SelectItem>
+                  <SelectItem value="SUSPENDED">Suspended only</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+
+            <div className="w-32">
+              <Label className="text-xs font-semibold uppercase tracking-wider text-slate-500 mb-1.5 block">
+                Rows
+              </Label>
+              <Select
+                value={String(rowsPerPage)}
+                onValueChange={(v) => { setRowsPerPage(Number(v)); setCurrentPage(1); }}
+              >
+                <SelectTrigger className="h-9 bg-slate-50 border-slate-200 text-sm">
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="20">20 rows</SelectItem>
+                  <SelectItem value="50">50 rows</SelectItem>
+                  <SelectItem value="100">100 rows</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+
+            <Button
+              variant="outline"
+              size="sm"
+              className="h-9 ml-auto border-slate-200 text-slate-600 hover:bg-slate-50"
+              onClick={exportCSV}
+            >
+              <Download className="h-3.5 w-3.5 mr-1.5" />
+              Export CSV
+            </Button>
+          </div>
+        </CardContent>
+      </Card>
+
+      {/* ── Confirm delete single user dialog ── */}
       <Dialog
         open={confirmDeleteId !== null}
-        onOpenChange={(open) => {
-          if (!open) setConfirmDeleteId(null);
-        }}
+        onOpenChange={(open) => { if (!open) setConfirmDeleteId(null); }}
       >
         <DialogContent className="sm:max-w-sm bg-white">
           <DialogHeader>
-            <DialogTitle>Delete User</DialogTitle>
+            <div className="flex items-center gap-2 mb-1">
+              <div className="w-8 h-8 rounded-lg bg-rose-100 flex items-center justify-center">
+                <AlertTriangle className="h-4 w-4 text-rose-600" />
+              </div>
+              <DialogTitle className="text-base">Delete User</DialogTitle>
+            </div>
             <DialogDescription>
-              Are you sure you want to permanently delete this user? This action
-              cannot be undone.
+              This will permanently remove the user and all associated data. This
+              action{" "}
+              <span className="font-semibold text-rose-700">cannot be undone</span>.
             </DialogDescription>
           </DialogHeader>
+          <div className="rounded-xl border border-rose-200 bg-rose-50 px-4 py-3 text-sm text-rose-700 font-medium">
+            ⚠ Danger Zone — irreversible operation
+          </div>
           <DialogFooter>
             <DialogClose asChild>
-              <Button
-                variant="outline"
-                onClick={() => setConfirmDeleteId(null)}
-              >
+              <Button variant="outline" onClick={() => setConfirmDeleteId(null)}>
                 Cancel
               </Button>
             </DialogClose>
             <Button
-              type="submit"
-              className="bg-black hover:bg-red-700 border-white-600 hover:border-red-700 text-white"
-              onClick={() => {
-                if (confirmDeleteId) {
-                  void deleteUser(confirmDeleteId);
-                }
-              }}
+              className="bg-rose-600 hover:bg-rose-700 text-white"
+              onClick={() => { if (confirmDeleteId) void deleteUser(confirmDeleteId); }}
             >
-              Delete
+              Delete User
             </Button>
           </DialogFooter>
         </DialogContent>
       </Dialog>
 
-      {/* Confirm bulk delete dialog */}
+      {/* ── Confirm bulk delete banner ── */}
       {confirmBulkDelete && (
-        <div className="rounded-md border border-red-200 bg-red-50 px-4 py-3 flex items-center justify-between">
-          <p className="text-sm text-red-800 font-medium">
-            Permanently delete {selectedIds.size} selected user(s)? This cannot
-            be undone.
-          </p>
-          <div className="flex gap-2 ml-4">
-            <Button
-              variant="destructive"
-              size="sm"
-              onClick={bulkDeleteSelected}
-            >
+        <div className="rounded-xl border-2 border-rose-200 bg-rose-50 px-5 py-4 flex items-center justify-between gap-4">
+          <div className="flex items-center gap-2.5">
+            <AlertTriangle className="h-4 w-4 text-rose-600 shrink-0" />
+            <p className="text-sm text-rose-800 font-semibold">
+              Permanently delete {selectedIds.size} selected user(s)? This
+              cannot be undone.
+            </p>
+          </div>
+          <div className="flex gap-2 shrink-0">
+            <Button variant="destructive" size="sm" onClick={bulkDeleteSelected}>
               Yes, Delete All
             </Button>
             <Button
@@ -473,15 +488,29 @@ export function UserDirectory({ onAlert }: Readonly<Props>) {
         </div>
       )}
 
-      <Card>
+      {/* ── Users table ── */}
+      <Card className="border-slate-200 shadow-sm overflow-hidden">
+        <CardHeader className="px-6 py-4 border-b border-slate-100 bg-white">
+          <div className="flex items-center justify-between">
+            <div>
+              <CardTitle className="text-sm font-semibold text-slate-900">
+                User Directory
+              </CardTitle>
+              <CardDescription className="text-xs mt-0.5">
+                {totalFilteredUsers} user{totalFilteredUsers !== 1 ? "s" : ""}{" "}
+                {roleFilter || statusFilter ? "matching filters" : "registered"}
+              </CardDescription>
+            </div>
+          </div>
+        </CardHeader>
         <CardContent className="p-0">
           <Table>
-            <TableHeader className="bg-muted/50">
-              <TableRow>
-                <TableHead className="w-10">
+            <TableHeader>
+              <TableRow className="hover:bg-transparent border-b border-slate-100">
+                <TableHead className="w-10 pl-6">
                   <input
                     type="checkbox"
-                    className="rounded border-gray-300"
+                    className="rounded border-slate-300 accent-blue-600"
                     checked={
                       paginatedUsers.length > 0 &&
                       paginatedUsers.every((u) => selectedIds.has(u.id))
@@ -490,13 +519,14 @@ export function UserDirectory({ onAlert }: Readonly<Props>) {
                     aria-label="Select all users"
                   />
                 </TableHead>
-                <TableHead>Developer</TableHead>
-                <TableHead>Contact</TableHead>
-                <TableHead>GitHub</TableHead>
-                <TableHead>Status</TableHead>
-                <TableHead>Role</TableHead>
-                <TableHead>Joined</TableHead>
-                <TableHead className="text-right">Actions</TableHead>
+                {["Developer", "Email", "GitHub", "Status", "Role", "Joined", ""].map((h) => (
+                  <TableHead
+                    key={h}
+                    className="text-xs font-semibold text-slate-500 uppercase tracking-wider py-3"
+                  >
+                    {h}
+                  </TableHead>
+                ))}
               </TableRow>
             </TableHeader>
             <TableBody>
@@ -507,105 +537,111 @@ export function UserDirectory({ onAlert }: Readonly<Props>) {
                   <TableRow
                     key={user.id}
                     className={[
-                      isSelected ? "bg-blue-50" : "",
-                      user.status === "SUSPENDED" ? "opacity-60" : "",
-                    ]
-                      .filter(Boolean)
-                      .join(" ")}
+                      "border-b border-slate-50 transition-colors",
+                      isSelected ? "bg-blue-50/60" : "hover:bg-slate-50/70",
+                      user.status === "SUSPENDED" ? "opacity-55" : "",
+                    ].filter(Boolean).join(" ")}
                   >
-                    <TableCell>
+                    <TableCell className="pl-6">
                       <input
                         type="checkbox"
-                        className="rounded border-gray-300"
+                        className="rounded border-slate-300 accent-blue-600"
                         checked={isSelected}
                         onChange={() => toggleSelect(user.id)}
                         aria-label={`Select ${user.name ?? user.email}`}
                       />
                     </TableCell>
-                    <TableCell className="font-medium">
-                      {user.name ?? "(no name)"}
+                    <TableCell className="font-medium text-sm text-slate-900">
+                      {user.name ?? (
+                        <span className="text-slate-400 italic">No name</span>
+                      )}
                       {isOwnAccount && (
-                        <span className="ml-2 text-xs text-muted-foreground">
-                          (you)
-                        </span>
+                        <Badge className="ml-2 bg-blue-100 text-blue-700 border-blue-200 hover:bg-blue-100 text-xs">
+                          you
+                        </Badge>
                       )}
                     </TableCell>
-                    <TableCell>{user.email}</TableCell>
-                    <TableCell>
-                      {user.githubUsername ? `@${user.githubUsername}` : "—"}
+                    <TableCell className="text-sm text-slate-600">
+                      {user.email}
+                    </TableCell>
+                    <TableCell className="text-sm text-slate-500 font-mono">
+                      {user.githubUsername ? `@${user.githubUsername}` : (
+                        <span className="text-slate-300">—</span>
+                      )}
                     </TableCell>
                     <TableCell>
                       {user.status === "ACTIVE" ? (
-                        <Badge className="bg-green-100 text-green-800 border-green-200 hover:bg-green-100">
-                          ACTIVE
+                        <Badge className="bg-emerald-100 text-emerald-700 border-emerald-200 hover:bg-emerald-100 font-medium text-xs">
+                          Active
                         </Badge>
                       ) : (
-                        <Badge variant="destructive">SUSPENDED</Badge>
+                        <Badge className="bg-rose-100 text-rose-700 border-rose-200 hover:bg-rose-100 font-medium text-xs">
+                          Suspended
+                        </Badge>
                       )}
                     </TableCell>
                     <TableCell>
                       {user.role === "ADMIN" ? (
-                        <Badge
-                          variant="outline"
-                          className="border-purple-300 text-purple-700"
-                        >
-                          ADMIN
+                        <Badge className="bg-purple-100 text-purple-700 border-purple-200 hover:bg-purple-100 font-medium text-xs">
+                          Admin
                         </Badge>
                       ) : (
-                        <Badge variant="secondary">DEV</Badge>
+                        <Badge className="bg-slate-100 text-slate-600 border-slate-200 hover:bg-slate-100 font-medium text-xs">
+                          Dev
+                        </Badge>
                       )}
                     </TableCell>
-                    <TableCell className="text-sm text-muted-foreground whitespace-nowrap">
+                    <TableCell className="text-xs text-slate-400 whitespace-nowrap">
                       {new Date(user.createdAt).toLocaleDateString()}
                     </TableCell>
-                    <TableCell className="text-right">
+                    <TableCell className="text-right pr-4">
                       <DropdownMenu>
                         <DropdownMenuTrigger asChild>
                           <Button
                             variant="ghost"
                             size="icon"
                             disabled={isOwnAccount}
+                            className="h-7 w-7 text-slate-400 hover:text-slate-600"
                           >
                             <MoreVertical className="h-4 w-4" />
                           </Button>
                         </DropdownMenuTrigger>
-                        <DropdownMenuContent align="end" className="bg-white">
-                          <DropdownMenuLabel>Account Status</DropdownMenuLabel>
+                        <DropdownMenuContent align="end" className="bg-white w-48">
+                          <DropdownMenuLabel className="text-xs text-slate-500 uppercase tracking-wider">
+                            Account Status
+                          </DropdownMenuLabel>
                           {user.status === "ACTIVE" ? (
                             <DropdownMenuItem
-                              onClick={() =>
-                                updateUser(user.id, { status: "SUSPENDED" })
-                              }
+                              className="text-rose-600 focus:text-rose-700 focus:bg-rose-50"
+                              onClick={() => updateUser(user.id, { status: "SUSPENDED" })}
                             >
-                              <Ban className="mr-2 h-4 w-4 text-red-500" />
+                              <Ban className="mr-2 h-4 w-4" />
                               Suspend Account
                             </DropdownMenuItem>
                           ) : (
                             <DropdownMenuItem
-                              onClick={() =>
-                                updateUser(user.id, { status: "ACTIVE" })
-                              }
+                              className="text-emerald-600 focus:text-emerald-700 focus:bg-emerald-50"
+                              onClick={() => updateUser(user.id, { status: "ACTIVE" })}
                             >
-                              <CheckCircle className="mr-2 h-4 w-4 text-green-500" />
+                              <CheckCircle className="mr-2 h-4 w-4" />
                               Reactivate Account
                             </DropdownMenuItem>
                           )}
                           <DropdownMenuSeparator />
-                          <DropdownMenuLabel>Access Control</DropdownMenuLabel>
+                          <DropdownMenuLabel className="text-xs text-slate-500 uppercase tracking-wider">
+                            Access Control
+                          </DropdownMenuLabel>
                           {user.role === "DEV" ? (
                             <DropdownMenuItem
-                              onClick={() =>
-                                updateUser(user.id, { role: "ADMIN" })
-                              }
+                              className="text-purple-600 focus:text-purple-700 focus:bg-purple-50"
+                              onClick={() => updateUser(user.id, { role: "ADMIN" })}
                             >
-                              <Shield className="mr-2 h-4 w-4 text-purple-500" />
+                              <Shield className="mr-2 h-4 w-4" />
                               Promote to Admin
                             </DropdownMenuItem>
                           ) : (
                             <DropdownMenuItem
-                              onClick={() =>
-                                updateUser(user.id, { role: "DEV" })
-                              }
+                              onClick={() => updateUser(user.id, { role: "DEV" })}
                             >
                               <Users className="mr-2 h-4 w-4" />
                               Demote to Developer
@@ -613,7 +649,7 @@ export function UserDirectory({ onAlert }: Readonly<Props>) {
                           )}
                           <DropdownMenuSeparator />
                           <DropdownMenuItem
-                            className="text-red-600 font-bold"
+                            className="text-rose-600 focus:text-rose-700 focus:bg-rose-50 font-semibold"
                             onClick={() => setConfirmDeleteId(user.id)}
                           >
                             <Trash2 className="mr-2 h-4 w-4" />
@@ -629,9 +665,10 @@ export function UserDirectory({ onAlert }: Readonly<Props>) {
                 <TableRow>
                   <TableCell
                     colSpan={8}
-                    className="text-center py-12 text-muted-foreground"
+                    className="text-center py-16 text-slate-400"
                   >
-                    No users match your search criteria.
+                    <Users className="h-8 w-8 mx-auto mb-3 opacity-30" />
+                    <p className="text-sm">No users match your search criteria.</p>
                   </TableCell>
                 </TableRow>
               )}
@@ -640,79 +677,84 @@ export function UserDirectory({ onAlert }: Readonly<Props>) {
         </CardContent>
       </Card>
 
-      {/* Pagination */}
+      {/* ── Pagination ── */}
       <div className="flex items-center justify-between">
-        <p className="text-sm text-muted-foreground">
+        <p className="text-xs text-slate-400">
           Showing{" "}
-          {totalFilteredUsers > 0
-            ? `${startIndex + 1}-${Math.min(startIndex + rowsPerPage, totalFilteredUsers)}`
-            : "0"}{" "}
-          of {totalFilteredUsers} filtered users &nbsp;&middot;&nbsp; Page{" "}
-          {safeCurrentPage} of {totalPages}
+          <span className="font-medium text-slate-600">
+            {totalFilteredUsers > 0
+              ? `${startIndex + 1}–${Math.min(endIndex, totalFilteredUsers)}`
+              : "0"}
+          </span>{" "}
+          of{" "}
+          <span className="font-medium text-slate-600">{totalFilteredUsers}</span>{" "}
+          users · Page {safeCurrentPage} of {totalPages}
         </p>
         <div className="flex gap-2">
           <Button
             variant="outline"
             size="sm"
+            className="h-8 border-slate-200 text-slate-600"
             disabled={safeCurrentPage <= 1}
             onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
           >
-            <ChevronLeft className="h-4 w-4 mr-1" />
+            <ChevronLeft className="h-3.5 w-3.5 mr-1" />
             Previous
           </Button>
           <Button
             variant="outline"
             size="sm"
+            className="h-8 border-slate-200 text-slate-600"
             disabled={safeCurrentPage >= totalPages}
-            onClick={() =>
-              setCurrentPage((prev) => Math.min(prev + 1, totalPages))
-            }
+            onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}
           >
             Next
-            <ChevronRight className="h-4 w-4 ml-1" />
+            <ChevronRight className="h-3.5 w-3.5 ml-1" />
           </Button>
         </div>
       </div>
 
-      {/* Bulk action bar */}
+      {/* ── Floating bulk action bar ── */}
       {selectedIds.size > 0 && (
-        <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 flex items-center gap-3 rounded-xl border bg-white shadow-lg px-5 py-3">
-          <span className="text-sm font-medium text-slate-700">
-            {selectedIds.size} user{selectedIds.size === 1 ? "" : "s"} selected
+        <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 flex items-center gap-2.5 rounded-2xl border border-slate-200 bg-white shadow-xl shadow-slate-200/80 px-5 py-3">
+          <span className="text-sm font-semibold text-slate-800 mr-1">
+            {selectedIds.size} selected
           </span>
           <div className="h-4 w-px bg-slate-200" />
           <Button
             size="sm"
             variant="outline"
-            className="border-red-200 text-red-700 hover:bg-red-50"
+            className="h-8 border-rose-200 text-rose-700 hover:bg-rose-50 gap-1.5"
             onClick={() => bulkAction("SUSPEND")}
           >
-            <Ban className="h-3.5 w-3.5 mr-1" />
-            Suspend All
+            <Ban className="h-3.5 w-3.5" />
+            Suspend
           </Button>
           <Button
             size="sm"
             variant="outline"
-            className="border-green-200 text-green-700 hover:bg-green-50"
+            className="h-8 border-emerald-200 text-emerald-700 hover:bg-emerald-50 gap-1.5"
             onClick={() => bulkAction("ACTIVATE")}
           >
-            <CheckCircle className="h-3.5 w-3.5 mr-1" />
-            Activate All
+            <CheckCircle className="h-3.5 w-3.5" />
+            Activate
           </Button>
           <Button
             size="sm"
-            variant="destructive"
+            className="h-8 bg-rose-600 hover:bg-rose-700 text-white gap-1.5"
             onClick={() => setConfirmBulkDelete(true)}
           >
-            <Trash2 className="h-3.5 w-3.5 mr-1" />
-            Delete Selected
+            <Trash2 className="h-3.5 w-3.5" />
+            Delete
           </Button>
+          <div className="h-4 w-px bg-slate-200" />
           <Button
             size="sm"
             variant="ghost"
+            className="h-8 text-slate-400 hover:text-slate-600 gap-1"
             onClick={() => setSelectedIds(new Set())}
           >
-            <X className="h-3.5 w-3.5 mr-1" />
+            <X className="h-3.5 w-3.5" />
             Clear
           </Button>
         </div>

@@ -62,22 +62,22 @@ export function GlobalBroadcast() {
 
   return (
     <div
-      className={`${bgClass} text-white px-4 py-3 shadow-md flex items-center justify-between z-50 relative`}
+      className={`${bgClass} text-white px-4 py-2.5 shadow-sm flex items-center justify-between z-50 relative`}
     >
       <div className="flex items-center gap-3 w-full justify-center max-w-7xl mx-auto">
         <SeverityIcon severity={severity} />
         <p className="text-sm font-medium">
-          <strong className="font-bold mr-2">PLATFORM ALERT:</strong>
+          <strong className="font-bold mr-1.5 tracking-wide">PLATFORM ALERT:</strong>
           {message}
         </p>
       </div>
       <button
         type="button"
         onClick={() => setIsVisible(false)}
-        className="text-white/80 hover:text-white transition-colors ml-4 shrink-0"
+        className="text-white/70 hover:text-white transition-colors ml-4 shrink-0 rounded-md p-0.5 hover:bg-white/10"
         aria-label="Dismiss broadcast"
       >
-        <X className="h-5 w-5" />
+        <X className="h-4 w-4" />
       </button>
     </div>
   );

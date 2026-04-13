@@ -49,12 +49,20 @@ type StatCardProps = {
   trendColor?: string;
 };
 
-function StatCard({ icon, label, value, trend, trendColor = "text-slate-400" }: StatCardProps) {
+function StatCard({
+  icon,
+  label,
+  value,
+  trend,
+  trendColor = "text-slate-650",
+}: StatCardProps) {
   return (
     <div className="rounded-xl border border-indigo-100 bg-white p-3 flex flex-col gap-1 shadow-sm hover:shadow-md hover:border-indigo-200 transition-all">
       <div className="flex items-center gap-1.5">
         <span className="text-indigo-500">{icon}</span>
-        <span className="text-xs text-muted-foreground font-medium">{label}</span>
+        <span className="text-xs text-muted-foreground font-medium">
+          {label}
+        </span>
       </div>
       <p className="text-2xl font-bold text-slate-800 leading-none">{value}</p>
       <p className={`text-xs ${trendColor}`}>{trend}</p>
@@ -81,7 +89,9 @@ export function PlatformSummaryWidget() {
         const token = localStorage.getItem("devcentral_token");
         const headers = { Authorization: `Bearer ${token}` };
 
-        const reposRes = await fetch(`${API_BASE_URL}/api/github/repos`, { headers });
+        const reposRes = await fetch(`${API_BASE_URL}/api/github/repos`, {
+          headers,
+        });
         if (!reposRes.ok) throw new Error("Failed to load repositories");
         const repos = (await reposRes.json()) as Repo[];
         setRepoCount(repos.length);
@@ -109,7 +119,9 @@ export function PlatformSummaryWidget() {
 
         if (issuesRes.status === "fulfilled" && issuesRes.value.ok) {
           const issuesData = (await issuesRes.value.json()) as GitHubIssue[];
-          const issues = issuesData.filter((i) => !i.pull_request && i.state === "open");
+          const issues = issuesData.filter(
+            (i) => !i.pull_request && i.state === "open",
+          );
           setOpenIssues(issues.length);
         }
 
@@ -125,7 +137,7 @@ export function PlatformSummaryWidget() {
           const raw = await deploymentsRes.value.json();
           const deploys: Deployment[] = Array.isArray(raw)
             ? raw
-            : (raw as { deployments?: Deployment[] }).deployments ?? [];
+            : ((raw as { deployments?: Deployment[] }).deployments ?? []);
           const now = Date.now();
           const last24h = deploys.filter(
             (d) => now - new Date(d.created_at).getTime() < 86_400_000,
@@ -149,7 +161,10 @@ export function PlatformSummaryWidget() {
           <CardTitle className="text-lg text-indigo-800 flex items-center gap-2">
             <LayoutDashboard className="h-5 w-5" /> Platform Overview
           </CardTitle>
-          <Badge variant="outline" className="border-indigo-300 text-indigo-700">
+          <Badge
+            variant="outline"
+            className="border-indigo-300 text-indigo-700"
+          >
             Last {days}d
           </Badge>
         </div>
@@ -182,7 +197,9 @@ export function PlatformSummaryWidget() {
               label="Open Issues"
               value={openIssues}
               trend={openIssues > 10 ? "Needs attention" : "Looking healthy"}
-              trendColor={openIssues > 10 ? "text-amber-500" : "text-emerald-500"}
+              trendColor={
+                openIssues > 10 ? "text-amber-500" : "text-emerald-500"
+              }
             />
             <StatCard
               icon={<GitPullRequest className="h-4 w-4" />}
@@ -195,8 +212,12 @@ export function PlatformSummaryWidget() {
               icon={<Rocket className="h-4 w-4" />}
               label="Deploys Today"
               value={deploymentsToday}
-              trend={deploymentsToday > 0 ? "Active deployment" : "No deploys yet"}
-              trendColor={deploymentsToday > 0 ? "text-sky-500" : "text-slate-400"}
+              trend={
+                deploymentsToday > 0 ? "Active deployment" : "No deploys yet"
+              }
+              trendColor={
+                deploymentsToday > 0 ? "text-sky-500" : "text-slate-650"
+              }
             />
           </div>
         )}
