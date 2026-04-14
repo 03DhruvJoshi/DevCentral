@@ -2,14 +2,14 @@ import express from "express";
 
 import cors from "cors";
 
-import gitops from "./gitops.js";
-import scaffolder from "./scaffolder.js";
-import devanalytics from "./devanalytics.js";
-import auth from "./auth.js";
-import dashboard from "./dashboard.js";
-import admin from "./admin.js";
-import { auditMiddleware } from "./auditMiddleware.js";
-import deployment from "./deployment.js";
+import gitops from "./components/gitops/gitops.js";
+import scaffolder from "./components/scaffolder/scaffolder.js";
+import devanalytics from "./components/devanalytics/devanalytics.js";
+import auth from "./components/auth/auth.js";
+import dashboard from "./components/dashboard/dashboard.js";
+import admin from "./components/admin/admin.js";
+import { auditMiddleware } from "./components/auth/auditMiddleware.js";
+import deployment from "./components/deployment/deployment.js";
 
 const app = express();
 
