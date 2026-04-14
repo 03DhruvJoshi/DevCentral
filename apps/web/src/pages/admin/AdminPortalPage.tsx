@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import {
   ShieldAlert,
   Users,
@@ -8,6 +9,7 @@ import {
   Lock,
   CheckCircle,
   Layers,
+  LayoutDashboard,
   X,
 } from "lucide-react";
 import {
@@ -43,10 +45,10 @@ export function AdminPortalPage() {
   }, [actionAlert]);
 
   return (
-    <div className="min-h-screen bg-slate-50/50">
+    <div className="  bg-slate-50/50">
       {/* ── Top navigation bar ── */}
       <header className="sticky top-0 z-30 bg-white border-b border-slate-200 shadow-sm">
-        <div className="max-w-7xl mx-auto px-6 h-14 flex items-center justify-between gap-4">
+        <div className="  px-6   mx-auto flex h-16 w-full max-w-[1440px] flex items-center justify-between gap-4">
           {/* Left: Logo + breadcrumb */}
           <div className="flex items-center gap-3">
             <div className="flex items-center gap-2">
@@ -68,12 +70,24 @@ export function AdminPortalPage() {
             </div>
           </div>
 
-          {/* Right: User profile */}
-          <UserProfile />
+          {/* Right: quick navigation + user profile */}
+          <div className="flex items-center gap-2">
+            <Link to="/dashboard">
+              <Button
+                variant="outline"
+                size="sm"
+                className="h-9 border-slate-200 text-slate-700 hover:bg-slate-100"
+              >
+                <LayoutDashboard className="mr-1.5 h-4 w-4" />
+                Dashboard
+              </Button>
+            </Link>
+            <UserProfile />
+          </div>
         </div>
       </header>
 
-      <div className="max-w-7xl mx-auto px-6 py-6 flex flex-col gap-6">
+      <div className="w-full max-w-[1440px] mx-auto px-6 py-6 flex flex-col gap-6">
         {/* ── Page Banner ── */}
         <div className="relative overflow-hidden rounded-xl border border-slate-200 bg-gradient-to-r from-white via-slate-50 to-white px-6 py-5 shadow-sm">
           <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_90%_50%_at_50%_-30%,rgba(244,63,94,0.07),transparent)]" />
@@ -87,7 +101,8 @@ export function AdminPortalPage() {
                   Platform Administration
                 </h1>
                 <p className="text-slate-500 text-sm mt-0.5">
-                  Enterprise control plane · manage users, configuration, and platform health
+                  Enterprise control plane · manage users, configuration, and
+                  platform health
                 </p>
               </div>
             </div>
