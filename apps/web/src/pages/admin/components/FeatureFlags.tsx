@@ -30,7 +30,6 @@ import { Badge } from "../../../components/ui/badge.js";
 import { Button } from "../../../components/ui/button.js";
 import { Input } from "../../../components/ui/input.js";
 import { Label } from "../../../components/ui/label.js";
-import { Switch } from "../../../components/ui/switch.js";
 import { API_BASE_URL } from "../types.js";
 
 interface PlatformConfig {
@@ -38,6 +37,54 @@ interface PlatformConfig {
   value: string;
   description: string | null;
   updatedAt: string;
+}
+
+function OnOffToggle({
+  checked,
+  disabled,
+  onToggle,
+  onClassName,
+  ariaLabel,
+}: {
+  checked: boolean;
+  disabled?: boolean;
+  onToggle: () => void;
+  onClassName: string;
+  ariaLabel: string;
+}) {
+  const isOn = checked;
+  const isOff = checked === false;
+
+  return (
+    <div className="inline-flex items-center rounded-md border border-slate-200 bg-white p-0.5">
+      <button
+        type="button"
+        disabled={disabled || isOff}
+        onClick={onToggle}
+        aria-label={`${ariaLabel} on`}
+        className={`h-6 px-2.5 rounded text-[11px] font-semibold transition-colors ${
+          isOff
+            ? "bg-slate-200 text-slate-700"
+            : "text-slate-400 hover:text-slate-600"
+        } ${disabled ? "cursor-not-allowed opacity-60" : ""}`}
+      >
+        OFF
+      </button>
+      <button
+        type="button"
+        disabled={disabled || isOn}
+        aria-label={`${ariaLabel} off`}
+        onClick={onToggle}
+        className={`h-6 px-2.5 rounded text-[11px] font-semibold transition-colors ${
+          isOn
+            ? `${onClassName} text-white`
+            : "text-slate-400 hover:text-slate-600"
+        } ${disabled ? "cursor-not-allowed opacity-60" : ""}`}
+      >
+        ON
+      </button>
+    </div>
+  );
 }
 
 function formatKeyName(key: string): string {
@@ -102,18 +149,31 @@ export function FeatureFlags() {
         const [maintenanceRes, messageRes, severityRes] = await Promise.all([
           fetch(`${API_BASE_URL}/api/admin/config/MAINTENANCE_MODE`, {
             method: "PUT",
-            headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`,
+            },
             body: JSON.stringify({ value: newValue }),
           }),
           fetch(`${API_BASE_URL}/api/admin/config/BROADCAST_MESSAGE`, {
             method: "PUT",
-            headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
-            body: JSON.stringify({ value: newValue === "true" ? MAINTENANCE_BROADCAST_MESSAGE : "" }),
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`,
+            },
+            body: JSON.stringify({
+              value: newValue === "true" ? MAINTENANCE_BROADCAST_MESSAGE : "",
+            }),
           }),
           fetch(`${API_BASE_URL}/api/admin/config/BROADCAST_SEVERITY`, {
             method: "PUT",
-            headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
-            body: JSON.stringify({ value: newValue === "true" ? "WARNING" : "INFO" }),
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`,
+            },
+            body: JSON.stringify({
+              value: newValue === "true" ? "WARNING" : "INFO",
+            }),
           }),
         ]);
 
@@ -123,7 +183,10 @@ export function FeatureFlags() {
       } else {
         const res = await fetch(`${API_BASE_URL}/api/admin/config/${key}`, {
           method: "PUT",
-          headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
           body: JSON.stringify({ value: newValue }),
         });
         if (!res.ok) throw new Error(`Failed to update config for ${key}`);
@@ -167,9 +230,14 @@ export function FeatureFlags() {
     setKeyError("");
     const trimmedKey = newKey.trim().toUpperCase();
 
-    if (!trimmedKey) { setKeyError("Key is required."); return; }
+    if (!trimmedKey) {
+      setKeyError("Key is required.");
+      return;
+    }
     if (!KEY_PATTERN.test(trimmedKey)) {
-      setKeyError("Key must be uppercase letters, digits, and underscores only.");
+      setKeyError(
+        "Key must be uppercase letters, digits, and underscores only.",
+      );
       return;
     }
     if (configs.some((c) => c.key === trimmedKey)) {
@@ -182,7 +250,10 @@ export function FeatureFlags() {
       const token = localStorage.getItem("devcentral_token");
       await fetch(`${API_BASE_URL}/api/admin/config/${trimmedKey}`, {
         method: "PUT",
-        headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
         body: JSON.stringify({
           value: "false",
           description: newDescription.trim() || "Custom feature flag",
@@ -218,15 +289,20 @@ export function FeatureFlags() {
 
   return (
     <div className="space-y-6 mb-12">
-
       {/* ── Maintenance Mode — Danger Zone ── */}
       {maintenanceConfig && (
-        <Card className={`border-2 shadow-sm ${isMaintenanceActive ? "border-rose-300 bg-rose-50/30" : "border-slate-200"}`}>
-          <CardHeader className="pb-3">
+        <Card
+          className={`border-2 bg-white shadow-sm ${isMaintenanceActive ? "border-rose-300 bg-rose-50/30" : "border-slate-200"}`}
+        >
+          <CardHeader  >
             <div className="flex items-start justify-between gap-4">
               <div className="flex items-center gap-3">
-                <div className={`w-9 h-9 rounded-xl flex items-center justify-center ${isMaintenanceActive ? "bg-rose-100" : "bg-slate-100"}`}>
-                  <Wrench className={`h-4 w-4 ${isMaintenanceActive ? "text-rose-600" : "text-slate-500"}`} />
+                <div
+                  className={`w-9 h-9 rounded-xl flex items-center justify-center ${isMaintenanceActive ? "bg-rose-100" : "bg-slate-100"}`}
+                >
+                  <Wrench
+                    className={`h-4 w-4 ${isMaintenanceActive ? "text-rose-600" : "text-slate-500"}`}
+                  />
                 </div>
                 <div>
                   <CardTitle className="text-sm font-semibold text-slate-900 flex items-center gap-2">
@@ -238,20 +314,23 @@ export function FeatureFlags() {
                     )}
                   </CardTitle>
                   <CardDescription className="text-xs mt-0.5">
-                    When enabled, all users see a platform-wide maintenance notice and a broadcast warning banner.
+                    When enabled, all users see a platform-wide maintenance
+                    notice and a broadcast warning banner.
                   </CardDescription>
                 </div>
               </div>
               <div className="flex items-center gap-3 shrink-0">
-                {pendingToggles.has("MAINTENANCE_MODE") && (
+                {pendingToggles.has("MAINTENANCE_MODE") ? (
                   <Loader2 className="animate-spin h-4 w-4 text-slate-400" />
-                )}
-                <Switch
+                ) : null}
+                <OnOffToggle
                   checked={isMaintenanceActive}
                   disabled={pendingToggles.has("MAINTENANCE_MODE")}
-                  onCheckedChange={() => toggleConfig("MAINTENANCE_MODE", maintenanceConfig.value)}
-                  className="data-[state=checked]:bg-rose-600"
-                  aria-label="Toggle maintenance mode"
+                  onToggle={() =>
+                    toggleConfig("MAINTENANCE_MODE", maintenanceConfig.value)
+                  }
+                  onClassName="bg-rose-600"
+                  ariaLabel="Toggle maintenance mode"
                 />
               </div>
             </div>
@@ -262,9 +341,12 @@ export function FeatureFlags() {
               <div className="flex items-start gap-2.5 rounded-xl border border-rose-200 bg-rose-50 px-4 py-3 text-sm text-rose-800">
                 <AlertTriangle className="h-4 w-4 shrink-0 mt-0.5 text-rose-600" />
                 <div>
-                  <p className="font-semibold">Platform is in maintenance mode</p>
+                  <p className="font-semibold">
+                    Platform is in maintenance mode
+                  </p>
                   <p className="text-xs text-rose-600 mt-0.5">
-                    All users are seeing a maintenance warning. Disable this when the platform is operational.
+                    All users are seeing a maintenance warning. Disable this
+                    when the platform is operational.
                   </p>
                 </div>
               </div>
@@ -274,7 +356,7 @@ export function FeatureFlags() {
       )}
 
       {/* ── Platform Feature Flags ── */}
-      <Card className="border-slate-200 shadow-sm overflow-hidden">
+      <Card className="border-slate-200 shadow-sm overflow-hidden bg-white">
         <CardHeader className="px-6 py-4 border-b border-slate-100">
           <div className="flex items-center gap-2.5">
             <div className="w-8 h-8 rounded-lg bg-slate-100 flex items-center justify-center">
@@ -286,18 +368,21 @@ export function FeatureFlags() {
               </CardTitle>
               <CardDescription className="text-xs mt-0.5">
                 Toggle platform capabilities without redeploying code.{" "}
-                {otherConfigs.length} flag{otherConfigs.length !== 1 ? "s" : ""} configured.
+                {otherConfigs.length} flag{otherConfigs.length === 1 ? "" : "s"}{" "}
+                configured.
               </CardDescription>
             </div>
           </div>
         </CardHeader>
 
-        <CardContent className="p-0">
+        <CardContent className="p-0 bg-white">
           {otherConfigs.length === 0 ? (
             <div className="flex flex-col items-center justify-center py-16 text-slate-400">
               <Settings2 className="h-8 w-8 mb-3 opacity-30" />
               <p className="text-sm">No feature flags configured.</p>
-              <p className="text-xs mt-1 text-slate-300">Use the form below to add your first flag.</p>
+              <p className="text-xs mt-1 text-slate-300">
+                Use the form below to add your first flag.
+              </p>
             </div>
           ) : (
             <div className="divide-y divide-slate-100">
@@ -326,7 +411,9 @@ export function FeatureFlags() {
                         )}
                       </div>
                       <p className="text-xs text-slate-500 mt-1.5 leading-relaxed">
-                        {config.description ?? formatKeyName(config.key)}
+                        <span>
+                          {config.description ?? formatKeyName(config.key)}
+                        </span>
                       </p>
                       <p className="text-xs text-slate-400 mt-1 flex items-center gap-1">
                         <Clock className="w-3 h-3" />
@@ -339,19 +426,19 @@ export function FeatureFlags() {
                       {isPending && (
                         <Loader2 className="animate-spin h-3.5 w-3.5 text-slate-400" />
                       )}
-                      <Switch
+                      <OnOffToggle
                         checked={isEnabled}
                         disabled={isPending}
-                        onCheckedChange={() => toggleConfig(config.key, config.value)}
-                        className="data-[state=checked]:bg-blue-600"
-                        aria-label={`Toggle ${config.key}`}
+                        onToggle={() => toggleConfig(config.key, config.value)}
+                        onClassName="bg-blue-600"
+                        ariaLabel={`Toggle ${config.key}`}
                       />
                       <Dialog>
                         <DialogTrigger asChild>
                           <Button
                             variant="ghost"
                             size="icon"
-                            className="h-7 w-7 text-slate-300 hover:text-rose-500 hover:bg-rose-50"
+                            className="h-7 w-7 text-red-900 hover:text-rose-500 hover:bg-rose-50"
                           >
                             <Trash2 className="h-3.5 w-3.5" />
                           </Button>
@@ -362,18 +449,20 @@ export function FeatureFlags() {
                               <div className="w-8 h-8 rounded-lg bg-rose-100 flex items-center justify-center">
                                 <AlertTriangle className="h-4 w-4 text-rose-600" />
                               </div>
-                              <DialogTitle className="text-base">Delete Feature Flag</DialogTitle>
+                              <DialogTitle className="text-base">
+                                Delete Feature Flag
+                              </DialogTitle>
                             </div>
                             <DialogDescription>
-                              Delete flag{" "}
+                              <span>Delete flag </span>
                               <code className="font-mono font-semibold text-slate-800 bg-slate-100 px-1 rounded">
                                 {config.key}
                               </code>
-                              ? This action cannot be undone.
+                              <span>. This action cannot be undone.</span>
                             </DialogDescription>
                           </DialogHeader>
                           <div className="rounded-xl border border-rose-200 bg-rose-50 px-4 py-3 text-sm text-rose-700 font-medium">
-                            ⚠ Danger Zone — this flag will be permanently removed
+                            ⚠ This flag will be permanently removed
                           </div>
                           <DialogFooter>
                             <DialogClose asChild>
@@ -381,7 +470,9 @@ export function FeatureFlags() {
                             </DialogClose>
                             <Button
                               className="bg-rose-600 hover:bg-rose-700 text-white"
-                              onClick={async () => { await deleteConfig(config.key); }}
+                              onClick={async () => {
+                                await deleteConfig(config.key);
+                              }}
                             >
                               Delete Flag
                             </Button>
@@ -398,7 +489,7 @@ export function FeatureFlags() {
       </Card>
 
       {/* ── Add Custom Flag ── */}
-      <Card className="border-slate-200 shadow-sm">
+      <Card className="border-slate-200 shadow-sm bg-white">
         <CardHeader className="px-6 py-4 border-b border-slate-100">
           <div className="flex items-center gap-2.5">
             <div className="w-8 h-8 rounded-lg bg-blue-100 flex items-center justify-center">
@@ -428,7 +519,10 @@ export function FeatureFlags() {
                 id="new-flag-key"
                 placeholder="MY_CUSTOM_FLAG"
                 value={newKey}
-                onChange={(e) => { setNewKey(e.target.value.toUpperCase()); setKeyError(""); }}
+                onChange={(e) => {
+                  setNewKey(e.target.value.toUpperCase());
+                  setKeyError("");
+                }}
                 className="font-mono bg-slate-50 border-slate-200 focus-visible:ring-blue-500/25 focus-visible:border-blue-500"
               />
               {keyError && (

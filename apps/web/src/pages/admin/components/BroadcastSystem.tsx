@@ -239,16 +239,26 @@ export function BroadcastSystem() {
       )}
 
       {/* Current Status card */}
-      <Card className={`border-slate-200 shadow-sm overflow-hidden ${activeBroadcast ? "border-orange-300" : ""}`}>
-        <CardHeader className="px-6 py-4 border-b border-slate-100 bg-white">
+      <Card
+        className={`border-slate-200 shadow-sm overflow-hidden bg-white ${activeBroadcast ? "border-orange-300" : ""}`}
+      >
+        <CardHeader className="px-6 py-4 border-b border-slate-100  ">
           <div className="flex items-center gap-2.5">
-            <div className={`w-7 h-7 rounded-lg flex items-center justify-center ${activeBroadcast ? "bg-orange-100" : "bg-slate-100"}`}>
-              <Radio className={`h-3.5 w-3.5 ${activeBroadcast ? "text-orange-600" : "text-slate-500"}`} />
+            <div
+              className={`w-7 h-7 rounded-lg flex items-center justify-center ${activeBroadcast ? "bg-orange-100" : "bg-slate-100"}`}
+            >
+              <Radio
+                className={`h-3.5 w-3.5 ${activeBroadcast ? "text-orange-600" : "text-slate-500"}`}
+              />
             </div>
             <div>
-              <CardTitle className="text-sm font-semibold text-slate-900">Current Broadcast Status</CardTitle>
+              <CardTitle className="text-sm font-semibold text-slate-900">
+                Current Broadcast Status
+              </CardTitle>
               <CardDescription className="text-xs mt-0.5">
-                {activeBroadcast ? "Active platform-wide banner" : "No active broadcast — banner hidden for all users"}
+                {activeBroadcast
+                  ? "Active platform-wide banner"
+                  : "No active broadcast — banner hidden for all users"}
               </CardDescription>
             </div>
           </div>
@@ -273,14 +283,16 @@ export function BroadcastSystem() {
       </Card>
 
       {/* Compose section */}
-      <Card className="border-slate-200 shadow-sm overflow-hidden">
-        <CardHeader className="px-6 py-4 border-b border-slate-100 bg-white">
+      <Card className="border-slate-200 shadow-sm overflow-hidden bg-white  ">
+        <CardHeader className="px-6 py-4 border-b border-slate-100 ">
           <div className="flex items-center gap-2.5">
             <div className="w-7 h-7 rounded-lg bg-blue-100 flex items-center justify-center">
               <Radio className="h-3.5 w-3.5 text-blue-600" />
             </div>
             <div>
-              <CardTitle className="text-sm font-semibold text-slate-900">Compose Broadcast</CardTitle>
+              <CardTitle className="text-sm font-semibold text-slate-900">
+                Compose Broadcast
+              </CardTitle>
               <CardDescription className="text-xs mt-0.5">
                 Push an alert banner to all active developers on the platform.
               </CardDescription>
@@ -290,7 +302,9 @@ export function BroadcastSystem() {
         <CardContent className="px-6 pt-6 pb-6 space-y-6">
           {/* Severity selector */}
           <div className="space-y-2">
-            <Label className="text-xs font-semibold uppercase tracking-wider text-slate-500">Severity Level</Label>
+            <Label className="text-xs font-semibold uppercase tracking-wider text-slate-500">
+              Severity Level
+            </Label>
             <div className="flex gap-2 flex-wrap">
               {(["INFO", "WARNING", "CRITICAL"] as Severity[]).map((sev) => {
                 const style = SEVERITY_STYLES[sev];
@@ -319,7 +333,12 @@ export function BroadcastSystem() {
 
           {/* Message input */}
           <div className="space-y-2">
-            <Label htmlFor="broadcast-message" className="text-xs font-semibold uppercase tracking-wider text-slate-500">Message</Label>
+            <Label
+              htmlFor="broadcast-message"
+              className="text-xs font-semibold uppercase tracking-wider text-slate-500"
+            >
+              Message
+            </Label>
             <Textarea
               id="broadcast-message"
               placeholder="e.g., GitHub Actions API is currently experiencing delays. Our team is investigating."
@@ -333,7 +352,9 @@ export function BroadcastSystem() {
           {/* Preview */}
           {broadcastInput.trim() && (
             <div className="space-y-1.5">
-              <Label className="text-xs font-semibold uppercase tracking-wider text-slate-500">Preview</Label>
+              <Label className="text-xs font-semibold uppercase tracking-wider text-slate-500">
+                Preview
+              </Label>
               <div
                 className={`flex items-center gap-3 rounded-xl px-4 py-3 text-sm ${severityStyle.preview}`}
               >
@@ -375,7 +396,8 @@ export function BroadcastSystem() {
           </div>
 
           <p className="text-xs text-slate-400">
-            Broadcasts are stored in Platform Config and polled every 60 seconds by connected clients.
+            Broadcasts are stored in Platform Config and polled every 60 seconds
+            by connected clients.
           </p>
         </CardContent>
       </Card>

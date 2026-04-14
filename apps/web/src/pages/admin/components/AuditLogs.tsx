@@ -1,5 +1,12 @@
 import { useState, useEffect, useCallback } from "react";
-import { Loader2, ChevronLeft, ChevronRight, Download, ScrollText, Search } from "lucide-react";
+import {
+  Loader2,
+  ChevronLeft,
+  ChevronRight,
+  Download,
+  ScrollText,
+  Search,
+} from "lucide-react";
 import {
   Card,
   CardContent,
@@ -15,13 +22,6 @@ import {
   TableHeader,
   TableRow,
 } from "../../../components/ui/table.js";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "../../../components/ui/select.js";
 import { Badge } from "../../../components/ui/badge.js";
 import { Button } from "../../../components/ui/button.js";
 import { Input } from "../../../components/ui/input.js";
@@ -46,13 +46,13 @@ interface LogMeta {
 }
 
 const ACTION_BADGE: Record<string, string> = {
-  CONFIG_UPDATED:    "bg-blue-100 text-blue-700 border-blue-200",
-  USER_UPDATED:      "bg-purple-100 text-purple-700 border-purple-200",
-  BULK_USER_UPDATE:  "bg-purple-100 text-purple-700 border-purple-200",
+  CONFIG_UPDATED: "bg-blue-100 text-blue-700 border-blue-200",
+  USER_UPDATED: "bg-purple-100 text-purple-700 border-purple-200",
+  BULK_USER_UPDATE: "bg-purple-100 text-purple-700 border-purple-200",
   TEMPLATE_DEPLOYED: "bg-emerald-100 text-emerald-700 border-emerald-200",
-  TEMPLATE_CREATED:  "bg-emerald-100 text-emerald-700 border-emerald-200",
-  GITOPS_ACTION:     "bg-orange-100 text-orange-700 border-orange-200",
-  USER_REGISTERED:   "bg-teal-100 text-teal-700 border-teal-200",
+  TEMPLATE_CREATED: "bg-emerald-100 text-emerald-700 border-emerald-200",
+  GITOPS_ACTION: "bg-orange-100 text-orange-700 border-orange-200",
+  USER_REGISTERED: "bg-teal-100 text-teal-700 border-teal-200",
   DASHBOARD_UPDATED: "bg-slate-100 text-slate-600 border-slate-200",
 };
 
@@ -222,8 +222,8 @@ export function AuditLogs() {
         });
 
   return (
-    <Card className="border-slate-200 shadow-sm overflow-hidden">
-      <CardHeader className="px-6 py-4 border-b border-slate-100 bg-white">
+    <Card className="border-slate-200 shadow-sm overflow-hidden bg-white">
+      <CardHeader className="px-6 py-4 border-b border-slate-100 ">
         <div className="flex items-start justify-between gap-4">
           <div className="flex items-center gap-2.5">
             <div className="w-8 h-8 rounded-lg bg-slate-100 flex items-center justify-center">
@@ -271,59 +271,53 @@ export function AuditLogs() {
             <Label className="text-xs font-semibold uppercase tracking-wider text-slate-500 mb-1.5 block">
               Action Type
             </Label>
-            <Select
+            <select
               value={actionFilter || "ALL"}
-              onValueChange={(v) => handleActionFilterChange(v === "ALL" ? "" : v)}
+              onChange={(e) =>
+                handleActionFilterChange(
+                  e.target.value === "ALL" ? "" : e.target.value,
+                )
+              }
+              className="h-9 w-full rounded-md border border-slate-200 bg-slate-50 px-2.5 text-sm text-slate-700 shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-300 cursor-pointer"
             >
-              <SelectTrigger className="h-9 bg-slate-50 border-slate-200 text-sm">
-                <SelectValue />
-              </SelectTrigger>
-              <SelectContent>
-                {ACTION_FILTER_OPTIONS.map((opt) => (
-                  <SelectItem key={opt.value || "ALL"} value={opt.value || "ALL"}>
-                    {opt.label}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
+              {ACTION_FILTER_OPTIONS.map((opt) => (
+                <option key={opt.value || "ALL"} value={opt.value || "ALL"}>
+                  {opt.label}
+                </option>
+              ))}
+            </select>
           </div>
 
           <div className="w-36">
             <Label className="text-xs font-semibold uppercase tracking-wider text-slate-500 mb-1.5 block">
               Role
             </Label>
-            <Select
+            <select
               value={roleFilter || "ALL"}
-              onValueChange={(v) => setRoleFilter(v === "ALL" ? "" : v)}
+              onChange={(e) =>
+                setRoleFilter(e.target.value === "ALL" ? "" : e.target.value)
+              }
+              className="h-9 w-full rounded-md border border-slate-200 bg-slate-50 px-2.5 text-sm text-slate-700 shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-300 cursor-pointer"
             >
-              <SelectTrigger className="h-9 bg-slate-50 border-slate-200 text-sm">
-                <SelectValue />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="ALL">All Roles</SelectItem>
-                <SelectItem value="ADMIN">Admin only</SelectItem>
-                <SelectItem value="DEV">Dev only</SelectItem>
-              </SelectContent>
-            </Select>
+              <option value="ALL">All Roles</option>
+              <option value="ADMIN">Admin only</option>
+              <option value="DEV">Dev only</option>
+            </select>
           </div>
 
           <div className="w-28">
             <Label className="text-xs font-semibold uppercase tracking-wider text-slate-500 mb-1.5 block">
               Rows
             </Label>
-            <Select
+            <select
               value={String(logMeta.limit)}
-              onValueChange={(v) => handleLimitChange(Number(v))}
+              onChange={(e) => handleLimitChange(Number(e.target.value))}
+              className="h-9 w-full rounded-md border border-slate-200 bg-slate-50 px-2.5 text-sm text-slate-700 shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-300 cursor-pointer"
             >
-              <SelectTrigger className="h-9 bg-slate-50 border-slate-200 text-sm">
-                <SelectValue />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="20">20 rows</SelectItem>
-                <SelectItem value="50">50 rows</SelectItem>
-                <SelectItem value="100">100 rows</SelectItem>
-              </SelectContent>
-            </Select>
+              <option value="20">20 rows</option>
+              <option value="50">50 rows</option>
+              <option value="100">100 rows</option>
+            </select>
           </div>
         </div>
       </CardHeader>
@@ -333,7 +327,14 @@ export function AuditLogs() {
         <Table>
           <TableHeader>
             <TableRow className="hover:bg-transparent border-b border-slate-100">
-              {["Timestamp", "Actor", "Role", "Action", "Target", "Details"].map((h) => (
+              {[
+                "Timestamp",
+                "Actor",
+                "Role",
+                "Action",
+                "Target",
+                "Details",
+              ].map((h) => (
                 <TableHead
                   key={h}
                   className="text-xs font-semibold text-slate-500 uppercase tracking-wider py-3 first:pl-6"
@@ -376,17 +377,22 @@ export function AuditLogs() {
                     {log.targetId ?? <span className="text-slate-300">—</span>}
                   </TableCell>
                   <TableCell className="text-xs text-slate-400 max-w-[200px] truncate">
-                    {typeof log.details === "string"
-                      ? log.details
-                      : log.details
-                        ? JSON.stringify(log.details)
-                        : <span className="text-slate-300">—</span>}
+                    {typeof log.details === "string" ? (
+                      log.details
+                    ) : log.details ? (
+                      JSON.stringify(log.details)
+                    ) : (
+                      <span className="text-slate-300">—</span>
+                    )}
                   </TableCell>
                 </TableRow>
               ))
             ) : (
               <TableRow>
-                <TableCell colSpan={6} className="text-center py-16 text-slate-400">
+                <TableCell
+                  colSpan={6}
+                  className="text-center py-16 text-slate-400"
+                >
                   <ScrollText className="h-8 w-8 mx-auto mb-3 opacity-30" />
                   <p className="text-sm">No audit logs match your filters.</p>
                 </TableCell>
@@ -398,37 +404,62 @@ export function AuditLogs() {
         {/* Pagination */}
         <div className="flex items-center justify-between px-6 py-3 border-t border-slate-100 bg-slate-50/50">
           <p className="text-xs text-slate-400">
-            Showing{" "}
-            <span className="font-medium text-slate-600">
-              {logMeta.total > 0
-                ? `${(logMeta.page - 1) * logMeta.limit + 1}–${Math.min(logMeta.page * logMeta.limit, logMeta.total)}`
-                : "0"}
-            </span>{" "}
+            {logMeta.total > 0
+              ? `${(logMeta.page - 1) * logMeta.limit + 1}–${Math.min(logMeta.page * logMeta.limit, logMeta.total)}`
+              : "0"}{" "}
             of{" "}
             <span className="font-medium text-slate-600">{logMeta.total}</span>{" "}
-            entries · Page {logMeta.page} of {logMeta.totalPages}
+            entries · page {logMeta.page} of {logMeta.totalPages}
           </p>
-          <div className="flex gap-2">
-            <Button
-              variant="outline"
-              size="sm"
-              className="h-8 border-slate-200 text-slate-600"
+          <div className="flex items-center gap-1">
+            <button
+              type="button"
+              className="h-7 w-7 flex items-center justify-center rounded-md border border-slate-200 text-slate-600 disabled:opacity-40 hover:bg-slate-50 transition-colors"
               disabled={logMeta.page <= 1}
-              onClick={() => fetchLogs(logMeta.page - 1, logMeta.limit, logUserFilter, actionFilter)}
+              onClick={() =>
+                fetchLogs(
+                  logMeta.page - 1,
+                  logMeta.limit,
+                  logUserFilter,
+                  actionFilter,
+                )
+              }
             >
-              <ChevronLeft className="h-3.5 w-3.5 mr-1" />
-              Previous
-            </Button>
-            <Button
-              variant="outline"
-              size="sm"
-              className="h-8 border-slate-200 text-slate-600"
+              <ChevronLeft className="h-3.5 w-3.5" />
+            </button>
+            {Array.from({ length: logMeta.totalPages }, (_, i) => i + 1)
+              .slice(Math.max(0, logMeta.page - 3), logMeta.page + 2)
+              .map((p) => (
+                <button
+                  key={p}
+                  type="button"
+                  onClick={() =>
+                    fetchLogs(p, logMeta.limit, logUserFilter, actionFilter)
+                  }
+                  className={`h-7 w-7 flex items-center justify-center rounded-md border text-xs transition-colors ${
+                    p === logMeta.page
+                      ? "bg-indigo-600 text-white border-indigo-600"
+                      : "border-slate-200 text-slate-600 hover:bg-slate-50"
+                  }`}
+                >
+                  {p}
+                </button>
+              ))}
+            <button
+              type="button"
+              className="h-7 w-7 flex items-center justify-center rounded-md border border-slate-200 text-slate-600 disabled:opacity-40 hover:bg-slate-50 transition-colors"
               disabled={logMeta.page >= logMeta.totalPages}
-              onClick={() => fetchLogs(logMeta.page + 1, logMeta.limit, logUserFilter, actionFilter)}
+              onClick={() =>
+                fetchLogs(
+                  logMeta.page + 1,
+                  logMeta.limit,
+                  logUserFilter,
+                  actionFilter,
+                )
+              }
             >
-              Next
-              <ChevronRight className="h-3.5 w-3.5 ml-1" />
-            </Button>
+              <ChevronRight className="h-3.5 w-3.5" />
+            </button>
           </div>
         </div>
       </CardContent>

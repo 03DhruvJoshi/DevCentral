@@ -20,13 +20,6 @@ import {
 import { Badge } from "../../../components/ui/badge.js";
 import { Button } from "../../../components/ui/button.js";
 import { Input } from "../../../components/ui/input.js";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "../../../components/ui/select.js";
 
 import { API_BASE_URL } from "../types.js";
 import { Label } from "../../../components/ui/label.js";
@@ -191,14 +184,18 @@ function parseDetails(details: unknown): Record<string, unknown> | null {
 }
 
 function statusBadgeClass(status: PolicyCheck["status"]): string {
-  if (status === "pass") return "bg-emerald-100 text-emerald-700 border border-emerald-200";
-  if (status === "watch") return "bg-amber-100 text-amber-700 border border-amber-200";
+  if (status === "pass")
+    return "bg-emerald-100 text-emerald-700 border border-emerald-200";
+  if (status === "watch")
+    return "bg-amber-100 text-amber-700 border border-amber-200";
   return "bg-rose-100 text-rose-700 border border-rose-200";
 }
 
 function severityBadgeClass(severity: AlertItem["severity"]): string {
-  if (severity === "critical") return "bg-rose-100 text-rose-700 border border-rose-200";
-  if (severity === "high") return "bg-orange-100 text-orange-700 border border-orange-200";
+  if (severity === "critical")
+    return "bg-rose-100 text-rose-700 border border-rose-200";
+  if (severity === "high")
+    return "bg-orange-100 text-orange-700 border border-orange-200";
   return "bg-amber-100 text-amber-700 border border-amber-200";
 }
 
@@ -443,12 +440,21 @@ function computeSecurityData(input: {
 
 function riskLevel(logsLast24h: number): { label: string; className: string } {
   if (logsLast24h < 15) {
-    return { label: "Low", className: "bg-emerald-100 text-emerald-700 border border-emerald-200" };
+    return {
+      label: "Low",
+      className: "bg-emerald-100 text-emerald-700 border border-emerald-200",
+    };
   }
   if (logsLast24h < 60) {
-    return { label: "Moderate", className: "bg-amber-100 text-amber-700 border border-amber-200" };
+    return {
+      label: "Moderate",
+      className: "bg-amber-100 text-amber-700 border border-amber-200",
+    };
   }
-  return { label: "High", className: "bg-rose-100 text-rose-700 border border-rose-200" };
+  return {
+    label: "High",
+    className: "bg-rose-100 text-rose-700 border border-rose-200",
+  };
 }
 
 function activityLevel(per24h: number): { label: string; color: string } {
@@ -570,12 +576,14 @@ export default function SecurityTab({ onOpenTab }: Readonly<SecurityTabProps>) {
   }
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 ">
       <div className="flex flex-wrap items-center justify-between gap-3">
         <div>
-          <h2 className="text-lg font-semibold text-slate-900">Security Control Tower</h2>
-          <p className="text-sm text-slate-500 mt-0.5">
-            Policy health, privileged activity, and response priorities for the platform.
+          <h2 className="text-lg font-semibold text-slate-900">
+            Security Control Tower
+          </h2>
+          <p className="text-xs text-slate-500 mt-0.5">
+            Policy health, privileged activity, and response priorities.
           </p>
         </div>
         <div className="inline-flex items-center rounded-lg border border-slate-200 bg-white p-1 gap-0.5 shadow-sm">
@@ -605,88 +613,95 @@ export default function SecurityTab({ onOpenTab }: Readonly<SecurityTabProps>) {
       </div>
 
       <div className="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-4">
-        <Card className="border-slate-200 shadow-sm border-l-4 border-l-emerald-500">
-          <CardHeader className="pb-2">
-            <CardTitle className="flex items-center gap-2 text-xs font-semibold text-slate-500 uppercase tracking-wider">
-              <ShieldCheck className="h-3.5 w-3.5" />
+        <div className="rounded-xl border border-emerald-100 bg-emerald-50/40 px-4 py-3.5 shadow-sm hover:bg-emerald-50 transition-colors">
+          <div className="flex items-center justify-between mb-2">
+            <p className="text-xs font-semibold text-slate-500 uppercase tracking-wide">
               Security Posture Score
-            </CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-2">
-            <div className="text-3xl font-bold text-slate-900">{computed.postureScore}</div>
-            <Badge className={`text-xs font-medium border hover:bg-transparent ${
+            </p>
+            <ShieldCheck className="h-4 w-4 text-emerald-500" />
+          </div>
+          <div className="text-3xl font-black text-slate-900 tracking-tighter">
+            {computed.postureScore}
+          </div>
+          <Badge
+            className={`mt-1.5 text-xs font-medium border hover:bg-transparent ${
               computed.postureScore >= 80
                 ? "bg-emerald-100 text-emerald-700 border-emerald-200"
                 : computed.postureScore >= 60
                   ? "bg-amber-100 text-amber-700 border-amber-200"
                   : "bg-rose-100 text-rose-700 border-rose-200"
-            }`}>
-              {computed.postureLabel}
-            </Badge>
-            <Progress value={computed.postureScore} className="h-1.5" />
-          </CardContent>
-        </Card>
+            }`}
+          >
+            {computed.postureLabel}
+          </Badge>
+          <Progress value={computed.postureScore} className="h-1.5 mt-2" />
+        </div>
 
-        <Card className="border-slate-200 shadow-sm border-l-4 border-l-purple-500">
-          <CardHeader className="pb-2">
-            <CardTitle className="flex items-center gap-2 text-xs font-semibold text-slate-500 uppercase tracking-wider">
-              <UserCog className="h-3.5 w-3.5" />
+        <div className="rounded-xl border border-purple-100 bg-purple-50/40 px-4 py-3.5 shadow-sm hover:bg-purple-50 transition-colors">
+          <div className="flex items-center justify-between mb-2">
+            <p className="text-xs font-semibold text-slate-500 uppercase tracking-wide">
               Privileged Accounts
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="text-3xl font-bold text-purple-700">
-              {computed.adminUsers}
-            </div>
-            <p className="text-xs text-slate-400 mt-1">
-              {computed.adminRatio}% of {computed.totalUsers} total users
             </p>
-          </CardContent>
-        </Card>
+            <UserCog className="h-4 w-4 text-purple-500" />
+          </div>
+          <div className="text-3xl font-black text-purple-700 tracking-tighter">
+            {computed.adminUsers}
+          </div>
+          <p className="text-xs text-slate-400 mt-1.5 font-medium">
+            {computed.adminRatio}% of {computed.totalUsers} total users
+          </p>
+        </div>
 
-        <Card className="border-slate-200 shadow-sm border-l-4 border-l-amber-500">
-          <CardHeader className="pb-2">
-            <CardTitle className="flex items-center gap-2 text-xs font-semibold text-slate-500 uppercase tracking-wider">
-              <Activity className="h-3.5 w-3.5" />
+        <div className="rounded-xl border border-amber-100 bg-amber-50/40 px-4 py-3.5 shadow-sm hover:bg-amber-50 transition-colors">
+          <div className="flex items-center justify-between mb-2">
+            <p className="text-xs font-semibold text-slate-500 uppercase tracking-wide">
               Privileged Actions
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="text-3xl font-bold text-amber-700">
-              {computed.privilegedActionsInWindow}
-            </div>
-            <p className="text-xs text-slate-400 mt-1">
-              {computed.offHoursPrivilegedCount} off-hours events in selected window
             </p>
-          </CardContent>
-        </Card>
+            <Activity className="h-4 w-4 text-amber-500" />
+          </div>
+          <div className="text-3xl font-black text-amber-700 tracking-tighter">
+            {computed.privilegedActionsInWindow}
+          </div>
+          <p className="text-xs text-slate-400 mt-1.5 font-medium">
+            {computed.offHoursPrivilegedCount} off-hours events in window
+          </p>
+        </div>
 
-        <Card className="border-slate-200 shadow-sm border-l-4 border-l-rose-500">
-          <CardHeader className="pb-2">
-            <CardTitle className="flex items-center gap-2 text-xs font-semibold text-slate-500 uppercase tracking-wider">
-              <ShieldAlert className="h-3.5 w-3.5" />
+        <div className="rounded-xl border border-rose-100 bg-rose-50/40 px-4 py-3.5 shadow-sm hover:bg-rose-50 transition-colors">
+          <div className="flex items-center justify-between mb-2">
+            <p className="text-xs font-semibold text-slate-500 uppercase tracking-wide">
               Active Alerts
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="text-3xl font-bold text-rose-700">
-              {computed.alerts.length}
-            </div>
-            <p className="text-xs text-slate-400 mt-1">
-              {computed.adminPromotions7d} admin promotions in last 7 days
             </p>
-          </CardContent>
-        </Card>
+            <ShieldAlert className="h-4 w-4 text-rose-500" />
+          </div>
+          <div className="text-3xl font-black text-rose-700 tracking-tighter">
+            {computed.alerts.length}
+          </div>
+          <p className="text-xs text-slate-400 mt-1.5 font-medium">
+            {computed.adminPromotions7d} admin promotions last 7 days
+          </p>
+        </div>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-        <Card className="border-slate-200 shadow-sm">
+        <Card className="border-slate-200 shadow-sm bg-white">
           <CardHeader className="px-5 py-4 border-b border-slate-100">
-            <CardTitle className="text-sm font-semibold text-slate-900">Audit Activity</CardTitle>
+            <CardTitle className="text-sm font-semibold text-slate-900">
+              Audit Activity
+            </CardTitle>
             <CardDescription className="text-xs mt-0.5">
-              <span className="font-medium text-slate-600">{as_?.total ?? 0}</span> total entries ·{" "}
-              <span className="font-medium text-slate-600">{as_?.last24h ?? 0}</span> in last 24h ·{" "}
-              <span className="font-medium text-slate-600">{as_?.last7days ?? 0}</span> in last 7 days
+              <span className="font-medium text-slate-600">
+                {as_?.total ?? 0}
+              </span>{" "}
+              total entries ·{" "}
+              <span className="font-medium text-slate-600">
+                {as_?.last24h ?? 0}
+              </span>{" "}
+              in last 24h ·{" "}
+              <span className="font-medium text-slate-600">
+                {as_?.last7days ?? 0}
+              </span>{" "}
+              in last 7 days
             </CardDescription>
           </CardHeader>
           <CardContent className="px-5 py-4 space-y-4">
@@ -699,16 +714,20 @@ export default function SecurityTab({ onOpenTab }: Readonly<SecurityTabProps>) {
             <div className="space-y-1.5">
               <div className="flex justify-between text-xs text-slate-400">
                 <span>Last 24h vs Last 7 days</span>
-                <span className="font-medium text-slate-600">{progressValue}%</span>
+                <span className="font-medium text-slate-600">
+                  {progressValue}%
+                </span>
               </div>
               <Progress value={progressValue} className="h-1.5" />
             </div>
           </CardContent>
         </Card>
 
-        <Card className="border-slate-200 shadow-sm">
+        <Card className="border-slate-200 shadow-sm bg-white">
           <CardHeader className="px-5 py-4 border-b border-slate-100">
-            <CardTitle className="text-sm font-semibold text-slate-900">Current Identity Snapshot</CardTitle>
+            <CardTitle className="text-sm font-semibold text-slate-900">
+              Current Identity Snapshot
+            </CardTitle>
             <CardDescription className="text-xs mt-0.5">
               Fast visibility into account distribution and access pressure.
             </CardDescription>
@@ -717,15 +736,23 @@ export default function SecurityTab({ onOpenTab }: Readonly<SecurityTabProps>) {
             <div className="divide-y divide-slate-100">
               <div className="flex items-center justify-between px-5 py-3">
                 <span className="text-sm text-slate-500">Total accounts</span>
-                <span className="text-sm font-semibold text-slate-900">{computed.totalUsers}</span>
+                <span className="text-sm font-semibold text-slate-900">
+                  {computed.totalUsers}
+                </span>
               </div>
               <div className="flex items-center justify-between px-5 py-3">
                 <span className="text-sm text-slate-500">Active accounts</span>
-                <span className="text-sm font-semibold text-emerald-700">{computed.activeUsers}</span>
+                <span className="text-sm font-semibold text-emerald-700">
+                  {computed.activeUsers}
+                </span>
               </div>
               <div className="flex items-center justify-between px-5 py-3">
-                <span className="text-sm text-slate-500">Suspended accounts</span>
-                <span className="text-sm font-semibold text-rose-700">{computed.suspendedUsers}</span>
+                <span className="text-sm text-slate-500">
+                  Suspended accounts
+                </span>
+                <span className="text-sm font-semibold text-rose-700">
+                  {computed.suspendedUsers}
+                </span>
               </div>
               <div className="flex items-center justify-between px-5 py-3">
                 <span className="text-sm text-slate-500">Maintenance mode</span>
@@ -741,7 +768,7 @@ export default function SecurityTab({ onOpenTab }: Readonly<SecurityTabProps>) {
               </div>
               <div className="px-5 py-3">
                 <Button
-                  className="w-full h-9 border-slate-200 text-slate-600 hover:bg-slate-50"
+                  className="w-full h-9 border-slate-200 text-slate-600 hover:bg-slate-100"
                   variant="outline"
                   size="sm"
                   onClick={() => onOpenTab?.("directory")}
@@ -755,14 +782,16 @@ export default function SecurityTab({ onOpenTab }: Readonly<SecurityTabProps>) {
         </Card>
       </div>
 
-      <Card className="border-slate-200 shadow-sm">
+      <Card className="border-slate-200 shadow-sm bg-white">
         <CardHeader className="px-6 py-4 border-b border-slate-100">
           <div className="flex items-center gap-2.5">
             <div className="w-7 h-7 rounded-lg bg-slate-100 flex items-center justify-center">
               <ShieldAlert className="w-3.5 h-3.5 text-slate-500" />
             </div>
             <div>
-              <CardTitle className="text-sm font-semibold text-slate-900">Actionable Alerts</CardTitle>
+              <CardTitle className="text-sm font-semibold text-slate-900">
+                Actionable Alerts
+              </CardTitle>
               <CardDescription className="text-xs mt-0.5">
                 Prioritized findings from identity, config, and audit telemetry.
               </CardDescription>
@@ -778,10 +807,14 @@ export default function SecurityTab({ onOpenTab }: Readonly<SecurityTabProps>) {
               >
                 <div className="min-w-0">
                   <div className="flex items-center gap-2 flex-wrap">
-                    <span className={`inline-flex items-center px-2 py-0.5 rounded-md text-xs font-medium ${severityBadgeClass(alert.severity)}`}>
+                    <span
+                      className={`inline-flex items-center px-2 py-0.5 rounded-md text-xs font-medium ${severityBadgeClass(alert.severity)}`}
+                    >
                       {alert.severity.toUpperCase()}
                     </span>
-                    <p className="text-sm font-semibold text-slate-800">{alert.title}</p>
+                    <p className="text-sm font-semibold text-slate-800">
+                      {alert.title}
+                    </p>
                   </div>
                   <p className="mt-1 text-sm text-slate-500">
                     {alert.description}
@@ -790,7 +823,7 @@ export default function SecurityTab({ onOpenTab }: Readonly<SecurityTabProps>) {
                 <Button
                   size="sm"
                   variant="outline"
-                  className="h-8 shrink-0 border-slate-200 text-slate-600 hover:bg-slate-50 text-xs"
+                  className="h-8 shrink-0 border-slate-200 text-slate-600 hover:bg-slate-100 text-xs"
                   onClick={() => onOpenTab?.(alert.actionTab)}
                 >
                   {alert.actionLabel}
@@ -802,14 +835,16 @@ export default function SecurityTab({ onOpenTab }: Readonly<SecurityTabProps>) {
         </CardContent>
       </Card>
 
-      <Card className="border-slate-200 shadow-sm overflow-hidden">
+      <Card className="border-slate-200 shadow-sm overflow-hidden bg-white">
         <CardHeader className="px-6 py-4 border-b border-slate-100 bg-white">
           <div className="flex items-center justify-between gap-4 flex-wrap">
             <div className="flex items-center gap-2.5">
               <div className="w-7 h-7 rounded-lg bg-slate-100 flex items-center justify-center">
                 <Users className="w-3.5 h-3.5 text-slate-500" />
               </div>
-              <CardTitle className="text-sm font-semibold text-slate-900">Recent Signups</CardTitle>
+              <CardTitle className="text-sm font-semibold text-slate-900">
+                Recent Signups
+              </CardTitle>
             </div>
           </div>
           <div className="flex flex-wrap gap-3 mt-4">
@@ -831,22 +866,20 @@ export default function SecurityTab({ onOpenTab }: Readonly<SecurityTabProps>) {
               <Label className="text-xs font-semibold uppercase tracking-wider text-slate-500 mb-1.5 block">
                 Rows
               </Label>
-              <Select
+              <select
                 value={String(signupRowsPerPage)}
-                onValueChange={(v) => {
-                  setSignupRowsPerPage(Number(v));
+                onChange={(e) => {
+                  setSignupRowsPerPage(Number(e.target.value));
                   setSignupPage(1);
                 }}
+                className="h-9 w-full rounded-md border border-slate-200 bg-slate-50 px-2.5 text-sm text-slate-700 shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-300 cursor-pointer"
               >
-                <SelectTrigger className="h-9 bg-slate-50 border-slate-200 text-sm">
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent>
-                  {[5, 10, 20, 50, 100].map((n) => (
-                    <SelectItem key={n} value={String(n)}>{n} rows</SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
+                {[5, 10, 20, 50, 100].map((n) => (
+                  <option key={n} value={String(n)}>
+                    {n} rows
+                  </option>
+                ))}
+              </select>
             </div>
           </div>
         </CardHeader>
@@ -894,44 +927,49 @@ export default function SecurityTab({ onOpenTab }: Readonly<SecurityTabProps>) {
                   : "0"}
               </span>{" "}
               of{" "}
-              <span className="font-medium text-slate-600">{filteredSignups.length}</span>
+              <span className="font-medium text-slate-600">
+                {filteredSignups.length}
+              </span>
             </p>
-            <div className="flex gap-2">
-              <Button
-                size="sm"
-                variant="outline"
-                className="h-8 border-slate-200 text-slate-600"
+            <div className="flex items-center gap-1">
+              <button
+                type="button"
+                className="h-7 w-7 flex items-center justify-center rounded-md border border-slate-200 text-slate-600 disabled:opacity-40 hover:bg-slate-50 transition-colors text-xs"
                 disabled={safeSignupPage <= 1}
                 onClick={() => setSignupPage((prev) => Math.max(prev - 1, 1))}
               >
-                Previous
-              </Button>
-              <Button
-                size="sm"
-                variant="outline"
-                className="h-8 border-slate-200 text-slate-600"
+                ‹
+              </button>
+              {Array.from({ length: signupTotalPages }, (_, i) => i + 1)
+                .slice(Math.max(0, safeSignupPage - 3), safeSignupPage + 2)
+                .map((p) => (
+                  <button
+                    key={p}
+                    type="button"
+                    onClick={() => setSignupPage(p)}
+                    className={`h-7 w-7 flex items-center justify-center rounded-md border text-xs transition-colors ${
+                      p === safeSignupPage
+                        ? "bg-indigo-600 text-white border-indigo-600"
+                        : "border-slate-200 text-slate-600 hover:bg-slate-50"
+                    }`}
+                  >
+                    {p}
+                  </button>
+                ))}
+              <button
+                type="button"
+                className="h-7 w-7 flex items-center justify-center rounded-md border border-slate-200 text-slate-600 disabled:opacity-40 hover:bg-slate-50 transition-colors text-xs"
                 disabled={safeSignupPage >= signupTotalPages}
                 onClick={() =>
                   setSignupPage((prev) => Math.min(prev + 1, signupTotalPages))
                 }
               >
-                Next
-              </Button>
+                ›
+              </button>
             </div>
           </div>
         </CardContent>
       </Card>
-
-      <div className="rounded-xl border border-amber-200 bg-amber-50 px-4 py-3 text-sm text-amber-800">
-        <div className="flex items-start gap-2.5">
-          <AlertTriangle className="mt-0.5 h-4 w-4 shrink-0 text-amber-600" />
-          <p>
-            This page provides operational risk signals from platform telemetry.
-            For critical findings, validate in Audit Logs and execute
-            remediation through User Directory and Feature Flags.
-          </p>
-        </div>
-      </div>
     </div>
   );
 }
