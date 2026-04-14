@@ -1,17 +1,17 @@
 import express, { IRouter, Response } from "express";
-import { authenticateToken, requireAdmin } from "./authenticatetoken";
+import { authenticateToken, requireAdmin } from "../auth/authenticatetoken";
 import {
   Prisma,
   PrismaClient,
-} from "../../packages/database/prisma/generated/client";
+} from "../../../../packages/database/prisma/generated/client";
 import { PrismaPg } from "@prisma/adapter-pg";
 import path from "node:path";
 import dotenv from "dotenv";
 import { fileURLToPath } from "node:url";
-import { AuthenticatedRequest } from "./api_types/index.js";
+import { AuthenticatedRequest } from "../../api_types/index.js";
 
 import cors from "cors";
-import { JsonValue } from "../../packages/database/prisma/generated/runtime/client";
+import { JsonValue } from "../../../../packages/database/prisma/generated/runtime/client";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 dotenv.config({ path: path.resolve(__dirname, "../../.env") });
@@ -45,7 +45,7 @@ type AuditLogRecord = {
   action: string;
   targetId: string | null;
   role: string | null;
-details: JsonValue | null;
+  details: JsonValue | null;
 };
 
 router.use(cors());
@@ -129,7 +129,6 @@ router.patch(
       const result = await prisma.user.updateMany({
         data: updateData,
         where: { id: { in: filteredIds } },
-         
       });
 
       await prisma.auditLog.create({

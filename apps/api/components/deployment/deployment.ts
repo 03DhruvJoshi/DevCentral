@@ -3,9 +3,9 @@ import dotenv from "dotenv";
 import express, { IRouter } from "express";
 import { fileURLToPath } from "node:url";
 
-import { authenticateToken } from "./authenticatetoken";
-import prisma from "./prisma.js";
-import type { AuthenticatedRequest } from "./api_types/index.js";
+import { authenticateToken } from "../auth/authenticatetoken";
+import prisma from "../../prisma.js";
+import type { AuthenticatedRequest } from "../../api_types/index.js";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 dotenv.config({ path: path.resolve(__dirname, "../../.env") });
@@ -136,9 +136,13 @@ interface RenderService {
   service: {
     id: string;
     name: string;
-    repo: string;
+    slug?: string;
+    repo?: string | null;
+    branch?: string | null;
+    dashboardUrl?: string | null;
     type: string;
   };
+  cursor?: string;
 }
 
 interface RenderDeploy {
@@ -146,9 +150,11 @@ interface RenderDeploy {
     id: string;
     status: string;
     createdAt: string;
+    startedAt?: string | null;
     finishedAt: string | null;
     commit: { id: string; message: string } | null;
   };
+  cursor?: string;
 }
 
 function mapRenderStatus(status: string): NormalisedDeployment["status"] {
@@ -175,20 +181,52 @@ async function fetchRenderDeployments(
   repo: string,
   since: Date,
 ): Promise<NormalisedDeployment[]> {
-  // Get all services and find those that match the repo
-  const svcRes = await fetch("https://api.render.com/v1/services?limit=20", {
-    headers: {
-      Authorization: `Bearer ${apiToken}`,
-      Accept: "application/json",
-    },
-  });
-  if (!svcRes.ok) throw new Error(`Render services API error ${svcRes.status}`);
-  const services = (await svcRes.json()) as RenderService[];
+  // Render list endpoints are paginated arrays with per-item cursors.
+  const services: RenderService[] = [];
+  let servicesCursor: string | null = null;
 
-  const repoSuffix = `${owner}/${repo}`.toLowerCase();
-  const matchingServices = services.filter((s) =>
-    s.service.repo.toLowerCase().includes(repoSuffix),
-  );
+  while (true) {
+    const svcParams = new URLSearchParams({
+      includePreviews: "true",
+      limit: "100",
+    });
+    if (servicesCursor) svcParams.set("cursor", servicesCursor);
+
+    const svcRes = await fetch(
+      `https://api.render.com/v1/services?${svcParams}`,
+      {
+        headers: {
+          Authorization: `Bearer ${apiToken}`,
+          Accept: "application/json",
+        },
+      },
+    );
+    if (!svcRes.ok)
+      throw new Error(`Render services API error ${svcRes.status}`);
+
+    const page = (await svcRes.json()) as RenderService[];
+    if (!Array.isArray(page) || page.length === 0) break;
+    services.push(...page);
+
+    const nextCursor = page[page.length - 1]?.cursor ?? null;
+    if (!nextCursor || page.length < 100) break;
+    servicesCursor = nextCursor;
+  }
+
+  const normalizedRepoSuffix = `${owner}/${repo}`.toLowerCase();
+  const matchingServices = services.filter((s) => {
+    const serviceRepo = (s.service.repo ?? "").toLowerCase();
+    const serviceSlug = (s.service.slug ?? "").toLowerCase();
+    const serviceName = (s.service.name ?? "").toLowerCase();
+
+    return (
+      serviceRepo.includes(normalizedRepoSuffix) ||
+      serviceRepo.endsWith(`/${repo.toLowerCase()}`) ||
+      serviceRepo.endsWith(`/${repo.toLowerCase()}.git`) ||
+      serviceSlug === repo.toLowerCase() ||
+      serviceName === repo.toLowerCase()
+    );
+  });
 
   if (matchingServices.length === 0) return [];
 
@@ -196,38 +234,60 @@ async function fetchRenderDeployments(
 
   await Promise.all(
     matchingServices.map(async (svc) => {
-      const dRes = await fetch(
-        `https://api.render.com/v1/deploys?serviceId=${svc.service.id}&limit=100`,
-        {
-          headers: {
-            Authorization: `Bearer ${apiToken}`,
-            Accept: "application/json",
-          },
-        },
-      );
-      if (!dRes.ok) return;
-      const deploys = (await dRes.json()) as RenderDeploy[];
+      let deployCursor: string | null = null;
 
-      deploys.forEach(({ deploy: d }) => {
-        if (new Date(d.createdAt) < since) return;
-        const start = new Date(d.createdAt);
-        const end = d.finishedAt ? new Date(d.finishedAt) : null;
-        allDeploys.push({
-          id: d.id,
-          provider: "render",
-          environment: "production", // Render services are typically production
-          status: mapRenderStatus(d.status),
-          branch: "main", // Render doesn't surface branch per-deploy easily
-          commitMessage: d.commit?.message ?? null,
-          commitSha: d.commit?.id ?? null,
-          startedAt: start.toISOString(),
-          finishedAt: end?.toISOString() ?? null,
-          durationSec: end
-            ? Math.round((end.getTime() - start.getTime()) / 1000)
-            : null,
-          url: null,
+      while (true) {
+        const deployParams = new URLSearchParams({
+          limit: "100",
+          createdAfter: since.toISOString(),
         });
-      });
+        if (deployCursor) deployParams.set("cursor", deployCursor);
+
+        const dRes = await fetch(
+          `https://api.render.com/v1/services/${svc.service.id}/deploys?${deployParams}`,
+          {
+            headers: {
+              Authorization: `Bearer ${apiToken}`,
+              Accept: "application/json",
+            },
+          },
+        );
+
+        if (!dRes.ok) {
+          console.warn(
+            `Render deploy list failed for service ${svc.service.id}: ${dRes.status}`,
+          );
+          break;
+        }
+
+        const page = (await dRes.json()) as RenderDeploy[];
+        if (!Array.isArray(page) || page.length === 0) break;
+
+        page.forEach(({ deploy: d }) => {
+          if (new Date(d.createdAt) < since) return;
+          const start = new Date(d.startedAt ?? d.createdAt);
+          const end = d.finishedAt ? new Date(d.finishedAt) : null;
+          allDeploys.push({
+            id: d.id,
+            provider: "render",
+            environment: "production", // Most Render deploys map to production env.
+            status: mapRenderStatus(d.status),
+            branch: svc.service.branch ?? "main",
+            commitMessage: d.commit?.message ?? null,
+            commitSha: d.commit?.id ?? null,
+            startedAt: start.toISOString(),
+            finishedAt: end?.toISOString() ?? null,
+            durationSec: end
+              ? Math.round((end.getTime() - start.getTime()) / 1000)
+              : null,
+            url: svc.service.dashboardUrl ?? null,
+          });
+        });
+
+        const nextCursor = page[page.length - 1]?.cursor ?? null;
+        if (!nextCursor || page.length < 100) break;
+        deployCursor = nextCursor;
+      }
     }),
   );
 

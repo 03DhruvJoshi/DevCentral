@@ -5,13 +5,13 @@ import {
   WizardCatalogCategoryResponse,
   WizardFrameworkResponse,
   WizardOptionResponse,
-} from "./api_types/index";
-import { generateYaml } from "./wizardgenerator.js";
+} from "../../api_types/index";
+import { generateYaml } from "../wizardgenerator/wizardgenerator.js";
 import yaml from "js-yaml";
 import { Octokit } from "octokit";
-import { authenticateToken } from "./authenticatetoken.js";
-import { AuthenticatedRequest } from "./api_types/index.js";
-import { PrismaClient } from "../../packages/database/prisma/generated/client";
+import { authenticateToken } from "../auth/authenticatetoken.js";
+import { AuthenticatedRequest } from "../../api_types/index.js";
+import { PrismaClient } from "../../../../packages/database/prisma/generated/client";
 import { PrismaPg } from "@prisma/adapter-pg";
 import path from "node:path";
 import dotenv from "dotenv";
@@ -322,7 +322,10 @@ router.post("/api/wizard/generate", async (req, res) => {
       return res.status(400).json({ error: "frameworkId is required" });
     }
 
-    const yaml = generateYaml(frameworkId, Array.isArray(optionIds) ? optionIds : []);
+    const yaml = generateYaml(
+      frameworkId,
+      Array.isArray(optionIds) ? optionIds : [],
+    );
     res.json({ yaml });
   } catch (error) {
     console.error("Wizard generate error:", error);

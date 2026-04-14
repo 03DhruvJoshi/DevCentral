@@ -1,10 +1,10 @@
 import express, { IRouter, Response } from "express";
 
-import { authenticateToken } from "./authenticatetoken.js";
-import { AuthenticatedRequest } from "./api_types/index.js";
+import { authenticateToken } from "../auth/authenticatetoken.js";
+import { AuthenticatedRequest } from "../../api_types/index.js";
 
 import cors from "cors";
-import { PrismaClient } from "../../packages/database/prisma/generated/client";
+import { PrismaClient } from "../../../../packages/database/prisma/generated/client.js";
 import { PrismaPg } from "@prisma/adapter-pg";
 import path from "node:path";
 import dotenv from "dotenv";

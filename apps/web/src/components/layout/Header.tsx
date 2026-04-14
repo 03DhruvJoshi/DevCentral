@@ -7,6 +7,7 @@ import {
   LayoutDashboard,
   GitBranch,
   AreaChart,
+  ShieldAlert,
 } from "lucide-react";
 import { Button } from "../ui/button.js";
 
@@ -16,6 +17,7 @@ import { API_BASE_URL } from "../../pages/admin/types.js";
 export function Header() {
   const location = useLocation();
   const [features, setFeatures] = useState<{ [key: string]: string }>({});
+  const [isAdmin, setIsAdmin] = useState(false);
 
   useEffect(() => {
     const fetchFeatures = async () => {
@@ -28,6 +30,21 @@ export function Header() {
       if (res.ok) setFeatures(await res.json());
     };
     fetchFeatures();
+  }, []);
+
+  useEffect(() => {
+    const userStr = localStorage.getItem("devcentral_user");
+    if (!userStr) {
+      setIsAdmin(false);
+      return;
+    }
+
+    try {
+      const user = JSON.parse(userStr) as { role?: string };
+      setIsAdmin(user.role === "ADMIN");
+    } catch {
+      setIsAdmin(false);
+    }
   }, []);
 
   return (
@@ -91,6 +108,18 @@ export function Header() {
               >
                 <AreaChart className="h-4 w-4" />
                 Analytics
+              </Button>
+            </Link>
+          )}
+          {isAdmin && (
+            <Link to="/admin">
+              <Button
+                variant="default"
+                className={`flex items-center gap-2 px-3 text-slate-700 transition-colors duration-200 hover:bg-slate-100 hover:text-slate-900 ${location.pathname === "/admin" ? "text-slate-900 border-b-2 border-slate-900 bg-slate-100" : ""}`}
+                size="sm"
+              >
+                <ShieldAlert className="h-4 w-4" />
+                Admin Portal
               </Button>
             </Link>
           )}

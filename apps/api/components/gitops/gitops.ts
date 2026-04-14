@@ -6,11 +6,11 @@ import { fileURLToPath } from "node:url";
 import { Octokit } from "octokit";
 
 import express, { IRouter, Response } from "express";
-import { authenticateToken } from "./authenticatetoken.js";
-import { AuthenticatedRequest } from "./api_types/index.js";
+import { authenticateToken } from "../auth/authenticatetoken.js";
+import { AuthenticatedRequest } from "../../api_types/index.js";
 import { RequestError } from "@octokit/request-error";
 
-import prisma from "./prisma.js";
+import prisma from "../../prisma.js";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 dotenv.config({ path: path.resolve(__dirname, "../../.env") });

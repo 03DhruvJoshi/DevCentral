@@ -3,9 +3,9 @@ import dotenv from "dotenv";
 import express, { IRouter } from "express";
 import { fileURLToPath } from "node:url";
 import { Octokit } from "octokit";
-import { authenticateToken } from "./authenticatetoken";
-import prisma from "./prisma.js";
-import type { AuthenticatedRequest } from "./api_types/index.js";
+import { authenticateToken } from "../auth/authenticatetoken";
+import prisma from "../../prisma.js";
+import type { AuthenticatedRequest } from "../../api_types/index.js";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 dotenv.config({ path: path.resolve(__dirname, "../../.env") });
@@ -20,7 +20,6 @@ const octokit = new Octokit({
 
 const router: IRouter = express.Router();
 
- 
 // backend: analytics.ts (or wherever your route lives)
 
 router.get(
@@ -876,7 +875,6 @@ router.get(
 );
 
 // CI/CD Quality Signals — pipeline health, flaky runs, slow jobs, queue time
- 
 
 router.get(
   "/api/analytics/cicd/:owner/:repo",
@@ -909,14 +907,13 @@ router.get(
         );
       };
 
-      const { data: runsData } = await octokit.rest.actions.listWorkflowRunsForRepo(
-        {
+      const { data: runsData } =
+        await octokit.rest.actions.listWorkflowRunsForRepo({
           owner,
           repo,
           per_page: 100,
           created: createdFilter,
-        },
-      );
+        });
 
       const runs = runsData.workflow_runs;
 
@@ -1017,8 +1014,12 @@ router.get(
         }));
 
       const completedRuns = runRegister.filter((r) => r.duration_min !== null);
-      const totalSuccess = runs.filter((r) => r.conclusion === "success").length;
-      const totalFailure = runs.filter((r) => r.conclusion === "failure").length;
+      const totalSuccess = runs.filter(
+        (r) => r.conclusion === "success",
+      ).length;
+      const totalFailure = runs.filter(
+        (r) => r.conclusion === "failure",
+      ).length;
 
       const slowestRuns = [...completedRuns]
         .sort((a, b) => (b.duration_min ?? 0) - (a.duration_min ?? 0))
@@ -1123,7 +1124,8 @@ router.get(
           ) {
             acc[key].failure += 1;
           }
-          if (run.duration_min !== null) acc[key].durations.push(run.duration_min);
+          if (run.duration_min !== null)
+            acc[key].durations.push(run.duration_min);
           if (run.queue_min !== null) acc[key].queue.push(run.queue_min);
           if (
             new Date(run.created_at).getTime() >
@@ -1154,7 +1156,12 @@ router.get(
         runRegister.reduce<
           Record<
             string,
-            { total: number; success: number; failure: number; durations: number[] }
+            {
+              total: number;
+              success: number;
+              failure: number;
+              durations: number[];
+            }
           >
         >((acc, run) => {
           const key = run.branch || "unknown";
@@ -1170,7 +1177,8 @@ router.get(
           ) {
             acc[key].failure += 1;
           }
-          if (run.duration_min !== null) acc[key].durations.push(run.duration_min);
+          if (run.duration_min !== null)
+            acc[key].durations.push(run.duration_min);
           return acc;
         }, {}),
       )
@@ -1191,7 +1199,8 @@ router.get(
       const conclusionBreakdown = Object.entries(
         runs.reduce<Record<string, number>>((acc, run) => {
           const bucket =
-            run.conclusion ?? (run.status === "completed" ? "unknown" : "in_progress");
+            run.conclusion ??
+            (run.status === "completed" ? "unknown" : "in_progress");
           acc[bucket] = (acc[bucket] ?? 0) + 1;
           return acc;
         }, {}),
@@ -1200,13 +1209,20 @@ router.get(
         .sort((a, b) => b.count - a.count);
 
       const failureReasons = conclusionBreakdown.filter((entry) =>
-        ["failure", "timed_out", "cancelled", "action_required", "startup_failure"].includes(entry.conclusion),
+        [
+          "failure",
+          "timed_out",
+          "cancelled",
+          "action_required",
+          "startup_failure",
+        ].includes(entry.conclusion),
       );
 
       const { data: repoData } = await octokit.rest.repos.get({ owner, repo });
       const defaultBranch = repoData.default_branch;
       const deployRuns = runs.filter(
-        (run) => run.head_branch === defaultBranch && run.conclusion === "success",
+        (run) =>
+          run.head_branch === defaultBranch && run.conclusion === "success",
       );
       const deployFreq = +(deployRuns.length / days).toFixed(2);
 
@@ -1417,7 +1433,5 @@ router.delete(
     }
   },
 );
-
-
 
 export default router;

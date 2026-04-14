@@ -8,14 +8,17 @@ import cors from "cors";
 import {
   AuthTokenType,
   PrismaClient,
-} from "../../packages/database/prisma/generated/client";
+} from "../../../../packages/database/prisma/generated/client";
 import { PrismaPg } from "@prisma/adapter-pg";
 import path from "node:path";
 import dotenv from "dotenv";
 import { fileURLToPath } from "node:url";
-import { sendPasswordResetEmail, sendVerificationOtpEmail } from "./email.js";
+import {
+  sendPasswordResetEmail,
+  sendVerificationOtpEmail,
+} from "../email/email.js";
 import { authenticateToken } from "./authenticatetoken.js";
-import type { AuthenticatedRequest } from "./api_types/index.js";
+import type { AuthenticatedRequest } from "../../api_types/index.js";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 dotenv.config({ path: path.resolve(__dirname, "../../.env") });

@@ -1,10 +1,10 @@
 import { Response, NextFunction } from "express";
-import { PrismaClient } from "../../packages/database/prisma/generated/client";
+import { PrismaClient } from "../../../../packages/database/prisma/generated/client";
 import { PrismaPg } from "@prisma/adapter-pg";
 import path from "node:path";
 import dotenv from "dotenv";
 import { fileURLToPath } from "node:url";
-import { AuthenticatedRequest } from "./api_types/index.js";
+import { AuthenticatedRequest } from "../../api_types/index.js";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 dotenv.config({ path: path.resolve(__dirname, "../../.env") });

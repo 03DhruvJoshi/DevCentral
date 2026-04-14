@@ -1,6 +1,6 @@
 import jwt from "jsonwebtoken";
 import { Response, NextFunction } from "express";
-import { AuthenticatedRequest } from "./api_types/index.js";
+import { AuthenticatedRequest } from "../../api_types/index.js";
 
 const authenticateToken = (
   req: AuthenticatedRequest,
