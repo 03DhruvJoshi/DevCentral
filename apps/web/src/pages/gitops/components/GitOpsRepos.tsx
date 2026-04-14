@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { GitBranch, ExternalLink, Lock, Search } from "lucide-react";
+import { GitBranch, ExternalLink, Search } from "lucide-react";
 import { Button } from "../../../components/ui/button.js";
 import { type Repository, API_BASE_URL } from "./types.js";
 
