@@ -9,6 +9,7 @@ import auth from "./auth.js";
 import dashboard from "./dashboard.js";
 import admin from "./admin.js";
 import { auditMiddleware } from "./auditMiddleware.js";
+import deployment from "./deployment.js";
 
 const app = express();
 
@@ -24,6 +25,7 @@ app.use(scaffolder);
 app.use(devanalytics);
 app.use(dashboard);
 app.use(admin);
+app.use(deployment);
 
 app.listen(PORT, () => {
   console.log(`🚀 API Server running on http://localhost:${PORT}`);

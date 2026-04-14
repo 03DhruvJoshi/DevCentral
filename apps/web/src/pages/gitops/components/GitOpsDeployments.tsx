@@ -41,6 +41,12 @@ import {
   DialogHeader,
   DialogTitle,
 } from "../../../components/ui/dialog.js";
+import {
+  Tabs,
+  TabsContent,
+  TabsList,
+  TabsTrigger,
+} from "../../../components/ui/tabs.js";
 import { TableControls, PaginationControls } from "./TableControls.js";
 import {
   type Repository,
@@ -827,501 +833,543 @@ export default function GitOpsDeployments(props: { selectedRepo: Repository }) {
   // ── Render ──────────────────────────────────────────────────────────────────
   return (
     <div className="space-y-6">
-      {/* ── Environment Overview ── */}
-      <section className="rounded-2xl border border-slate-200 bg-gradient-to-br from-white via-slate-50 to-blue-50/40 p-4 sm:p-5 shadow-sm">
-        <div className="flex items-center justify-between mb-3">
-          <h3 className="font-semibold text-base flex items-center gap-2 text-slate-900">
-            <Layers className="h-4 w-4 text-muted-foreground" />
-            Environments
-          </h3>
-          <Button
-            variant="ghost"
-            size="sm"
-            onClick={() => {
-              // Re-fetch
-              setIsEnvLoading(true);
-              fetch(
-                `${API_BASE_URL}/api/github/repos/${selectedRepo.owner}/${selectedRepo.name}/environments`,
-                { headers: { Authorization: `Bearer ${token}` } },
-              )
-                .then((r) => r.json())
-                .then(setEnvironments)
-                .finally(() => setIsEnvLoading(false));
-            }}
+      <Tabs defaultValue="environments" className="w-full">
+        <TabsList className="mb-2 flex h-full w-full flex-wrap gap-1 rounded-lg border border-slate-200 bg-slate-50 p-1 shadow-sm">
+          <TabsTrigger
+            value="environments"
+            className="flex items-center gap-1.5 rounded-md text-slate-600 transition-colors data-[state=active]:bg-white data-[state=active]:shadow-sm data-[state=active]:text-slate-900 text-xs"
           >
-            <RefreshCw className="h-3.5 w-3.5 mr-1" />
-            Refresh
-          </Button>
-        </div>
-
-        {isEnvLoading ? (
-          <div className="flex items-center gap-2 py-6 text-muted-foreground">
-            <Loader2 className="h-5 w-5 animate-spin" />
-            Loading environments...
-          </div>
-        ) : environments.length === 0 ? (
-          <Card className="border-dashed">
-            <CardContent className="py-8 text-center text-muted-foreground">
-              <Layers className="h-8 w-8 mx-auto mb-2 opacity-20" />
-              <p className="text-sm">No GitHub Environments configured.</p>
-              <p className="text-xs mt-1">
-                Create environments in your repository Settings → Environments,
-                or connect Vercel/Render to auto-generate them.
-              </p>
-            </CardContent>
-          </Card>
-        ) : (
-          <div className="flex grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2 w-full h-full">
-            {environments.map((env, idx) => (
-              <div key={env.id} className="flex items-center flex-1 ">
-                <div className="flex-1">
-                  <EnvironmentCard
-                    env={env}
-                    deployments={deployments}
-                    index={idx}
-                    total={environments.length}
-                  />
-                </div>
-              </div>
-            ))}
-          </div>
-        )}
-      </section>
-
-      {/* ── Manual Deploy Card ── */}
-      <Card className="border-slate-200 bg-white/95 shadow-sm">
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2 text-base text-slate-900">
-            <Rocket className="h-4 w-4 text-violet-600" />
+            <Layers className="h-3.5 w-3.5" />
+            Environments
+          </TabsTrigger>
+          <TabsTrigger
+            value="manual-deployment"
+            className="flex items-center gap-1.5 rounded-md text-slate-600 transition-colors data-[state=active]:bg-white data-[state=active]:shadow-sm data-[state=active]:text-slate-900 text-xs"
+          >
+            <Rocket className="h-3.5 w-3.5" />
             Manual Deployment
-          </CardTitle>
-          <CardDescription>
-            Deploy <strong>{selectedRepo.name}</strong> to a specific service at
-            the latest commit, a branch, or a specific commit SHA.
-          </CardDescription>
-        </CardHeader>
-        <CardContent className="space-y-5">
-          {/* ── Service selector ── */}
-          <div className="space-y-2">
-            <Label>Deploy via</Label>
-            <div className="flex gap-2 flex-wrap">
-              {(
-                [
-                  {
-                    id: "github-actions",
-                    label: "GitHub Actions",
-                    icon: GitBranch,
-                  },
-                  { id: "vercel", label: "Vercel", icon: Globe },
-                  { id: "render", label: "Render", icon: Server },
-                ] as const
-              ).map(({ id, label, icon: Icon }) => (
-                <button
-                  key={id}
-                  onClick={() => {
-                    setDeployService(id);
-                    setDispatchMsg(null);
-                  }}
-                  className={`flex items-center gap-1.5 px-3 py-1.5 rounded-md border text-sm font-medium transition-colors ${
-                    deployService === id
-                      ? "bg-gradient-to-br from-slate-900 via-indigo-950 to-slate-800 p-6 rounded-2xl text-white "
-                      : "bg-white text-slate-600 border-slate-200 hover:bg-slate-50"
-                  }`}
-                >
-                  <Icon className="h-3.5 w-3.5" />
-                  {label}
-                </button>
+          </TabsTrigger>
+          <TabsTrigger
+            value="deployment-history"
+            className="flex items-center gap-1.5 rounded-md text-slate-600 transition-colors data-[state=active]:bg-white data-[state=active]:shadow-sm data-[state=active]:text-slate-900 text-xs"
+          >
+            <Clock className="h-3.5 w-3.5" />
+            Deployment History
+          </TabsTrigger>
+        </TabsList>
+
+        <TabsContent value="environments" className="mt-4 space-y-6">
+          {/* ── Environment Overview ── */}
+          <section className="rounded-2xl border border-slate-200 bg-gradient-to-br from-white via-slate-50 to-blue-50/40 p-4 sm:p-5 shadow-sm">
+            <div className="flex items-center justify-between mb-3">
+              <h3 className="font-semibold text-base flex items-center gap-2 text-slate-900">
+                <Layers className="h-4 w-4 text-muted-foreground" />
+                Environments
+              </h3>
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => {
+                  // Re-fetch
+                  setIsEnvLoading(true);
+                  fetch(
+                    `${API_BASE_URL}/api/github/repos/${selectedRepo.owner}/${selectedRepo.name}/environments`,
+                    { headers: { Authorization: `Bearer ${token}` } },
+                  )
+                    .then((r) => r.json())
+                    .then(setEnvironments)
+                    .finally(() => setIsEnvLoading(false));
+                }}
+              >
+                <RefreshCw className="h-3.5 w-3.5 mr-1" />
+                Refresh
+              </Button>
+            </div>
+
+            {isEnvLoading ? (
+              <div className="flex items-center gap-2 py-6 text-muted-foreground">
+                <Loader2 className="h-5 w-5 animate-spin" />
+                Loading environments...
+              </div>
+            ) : environments.length === 0 ? (
+              <Card className="border-dashed">
+                <CardContent className="py-8 text-center text-muted-foreground">
+                  <Layers className="h-8 w-8 mx-auto mb-2 opacity-20" />
+                  <p className="text-sm">No GitHub Environments configured.</p>
+                  <p className="text-xs mt-1">
+                    Create environments in your repository Settings →
+                    Environments, or connect Vercel/Render to auto-generate
+                    them.
+                  </p>
+                </CardContent>
+              </Card>
+            ) : (
+              <div className="flex grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2 w-full h-full">
+                {environments.map((env, idx) => (
+                  <div key={env.id} className="flex items-center flex-1 ">
+                    <div className="flex-1">
+                      <EnvironmentCard
+                        env={env}
+                        deployments={deployments}
+                        index={idx}
+                        total={environments.length}
+                      />
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+          </section>
+
+          <section className="rounded-2xl border border-slate-200 bg-gradient-to-br from-white via-slate-50 to-indigo-50/30 p-4 sm:p-5 shadow-sm">
+            <div className="flex items-center justify-between mb-3">
+              <h3 className="font-semibold text-base flex items-center gap-2 text-slate-900">
+                <CircleDot className="h-4 w-4 text-muted-foreground" />
+                Deployment Services
+              </h3>
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+              {services.map((service) => (
+                <ServiceCard
+                  key={service.id}
+                  service={service}
+                  onGuide={setGuideService}
+                />
               ))}
             </div>
-          </div>
+          </section>
+        </TabsContent>
 
-          {/* ── GitHub Actions fields ── */}
-          {deployService === "github-actions" && (
-            <div className="space-y-4">
+        <TabsContent value="manual-deployment" className="mt-4">
+          {/* ── Manual Deploy Card ── */}
+          <Card className="border-slate-200 bg-white/95 shadow-sm">
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2 text-base text-slate-900">
+                <Rocket className="h-4 w-4 text-violet-600" />
+                Manual Deployment
+              </CardTitle>
+              <CardDescription>
+                Deploy <strong>{selectedRepo.name}</strong> to a specific
+                service at the latest commit, a branch, or a specific commit
+                SHA.
+              </CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-5">
+              {/* ── Service selector ── */}
               <div className="space-y-2">
-                <Label>Workflow</Label>
-                {workflows.length === 0 ? (
-                  <p className="text-sm text-muted-foreground">
-                    No active workflows found. Add a workflow with a{" "}
-                    <code>workflow_dispatch</code> trigger to enable manual
-                    deployments.
-                  </p>
-                ) : (
-                  <select
-                    value={selectedWorkflow}
-                    onChange={(e) => setSelectedWorkflow(e.target.value)}
-                    className="h-9 rounded-lg border border-slate-300 bg-white px-2.5 text-sm text-slate-700 focus:outline-none focus:ring-2 focus:ring-slate-300 hover:border-slate-400 transition-colors cursor-pointer"
-                  >
-                    <option value="">Select a workflow</option>
-                    {workflows.map((w) => (
-                      <option key={w.id} value={w.id}>
-                        {w.name}
-                      </option>
-                    ))}
-                  </select>
-                )}
-              </div>
-
-              <DeployTargetPicker
-                deployMode={deployMode}
-                setDeployMode={setDeployMode}
-                deployBranch={deployBranch}
-                setDeployBranch={setDeployBranch}
-                deployCommitSha={deployCommitSha}
-                setDeployCommitSha={setDeployCommitSha}
-                branches={branches}
-                recentCommits={recentCommits}
-              />
-            </div>
-          )}
-
-          {/* ── Vercel via GitHub Actions ── */}
-          {deployService === "vercel" &&
-            (vercelWorkflow ? (
-              /* Workflow detected — show detected badge + branch/commit picker */
-              <div className="space-y-4">
-                <div className="flex items-center gap-2 text-sm text-green-800 bg-green-50 border border-green-200 p-2.5 rounded-lg">
-                  <CheckCircle2 className="h-4 w-4 shrink-0" />
-                  <span>
-                    Workflow detected: <strong>{vercelWorkflow.name}</strong>
-                  </span>
-                  <Button
-                    size="sm"
-                    variant="ghost"
-                    className="ml-auto h-6 px-2 text-xs "
-                    asChild
-                  >
-                    <a
-                      href={vercelWorkflow.html_url}
-                      target="_blank"
-                      rel="noreferrer"
+                <Label>Deploy via</Label>
+                <div className="flex gap-2 flex-wrap">
+                  {(
+                    [
+                      {
+                        id: "github-actions",
+                        label: "GitHub Actions",
+                        icon: GitBranch,
+                      },
+                      { id: "vercel", label: "Vercel", icon: Globe },
+                      { id: "render", label: "Render", icon: Server },
+                    ] as const
+                  ).map(({ id, label, icon: Icon }) => (
+                    <button
+                      key={id}
+                      onClick={() => {
+                        setDeployService(id);
+                        setDispatchMsg(null);
+                      }}
+                      className={`flex items-center gap-1.5 px-3 py-1.5 rounded-md border text-sm font-medium transition-colors ${
+                        deployService === id
+                          ? "bg-gradient-to-br from-slate-900 via-indigo-950 to-slate-800 p-6 rounded-2xl text-white "
+                          : "bg-white text-slate-600 border-slate-200 hover:bg-slate-50"
+                      }`}
                     >
-                      <ExternalLink className="h-3 w-3 mr-1" />
-                      View
-                    </a>
-                  </Button>
+                      <Icon className="h-3.5 w-3.5" />
+                      {label}
+                    </button>
+                  ))}
                 </div>
-                {/* Reuse the same branch/commit UI */}
-                <DeployTargetPicker
-                  deployMode={deployMode}
-                  setDeployMode={setDeployMode}
-                  deployBranch={deployBranch}
-                  setDeployBranch={setDeployBranch}
-                  deployCommitSha={deployCommitSha}
-                  setDeployCommitSha={setDeployCommitSha}
-                  branches={branches}
-                  recentCommits={recentCommits}
-                />
-              </div>
-            ) : (
-              /* No workflow found — show setup guide */
-              <WorkflowSetupGuide
-                service="vercel"
-                owner={selectedRepo.owner}
-                repo={selectedRepo.name}
-                isCreatingPr={isCreatingPr}
-                setupMsg={setupMsg}
-                onCreatePr={() => createWorkflowPr("vercel")}
-                secrets={[
-                  {
-                    name: "VERCEL_DEPLOY_HOOK_URL",
-                    hint: "Vercel → your project → Settings → Git → Deploy Hooks → create a hook and copy the URL",
-                  },
-                ]}
-              />
-            ))}
-
-          {/* ── Render via GitHub Actions ── */}
-          {deployService === "render" &&
-            (renderWorkflow ? (
-              /* Workflow detected — show detected badge + branch/commit picker */
-              <div className="space-y-4">
-                <div className="flex items-center gap-2 text-sm text-green-800 bg-green-50 border border-green-200 p-2.5 rounded-lg">
-                  <CheckCircle2 className="h-4 w-4 shrink-0" />
-                  <span>
-                    Workflow detected: <strong>{renderWorkflow.name}</strong>
-                  </span>
-                  <Button
-                    size="sm"
-                    variant="ghost"
-                    className="ml-auto h-6 px-2 text-xs"
-                    asChild
-                  >
-                    <a
-                      href={renderWorkflow.html_url}
-                      target="_blank"
-                      rel="noreferrer"
-                    >
-                      <ExternalLink className="h-3 w-3 mr-1" />
-                      View
-                    </a>
-                  </Button>
-                </div>
-                <DeployTargetPicker
-                  deployMode={deployMode}
-                  setDeployMode={setDeployMode}
-                  deployBranch={deployBranch}
-                  setDeployBranch={setDeployBranch}
-                  deployCommitSha={deployCommitSha}
-                  setDeployCommitSha={setDeployCommitSha}
-                  branches={branches}
-                  recentCommits={recentCommits}
-                />
-              </div>
-            ) : (
-              /* No workflow found — show setup guide */
-              <WorkflowSetupGuide
-                service="render"
-                owner={selectedRepo.owner}
-                repo={selectedRepo.name}
-                isCreatingPr={isCreatingPr}
-                setupMsg={setupMsg}
-                onCreatePr={() => createWorkflowPr("render")}
-                secrets={[
-                  {
-                    name: "RENDER_DEPLOY_HOOK_URL",
-                    hint: "Render → your service → Settings → Deploy Hook → copy the URL",
-                  },
-                ]}
-              />
-            ))}
-
-          {/* ── Warning + result + Deploy Now (hidden when setup guide is shown) ── */}
-          {(deployService === "github-actions" ||
-            (deployService === "vercel" && !!vercelWorkflow) ||
-            (deployService === "render" && !!renderWorkflow)) && (
-            <>
-              {/* Danger zone warning */}
-              <div className="flex items-start gap-2.5 text-xs text-amber-800 bg-amber-50/80 border border-amber-300 p-3 rounded-lg">
-                <AlertTriangle className="h-4 w-4 mt-0.5 shrink-0 text-amber-500" />
-                <span>
-                  <strong>Live deployment:</strong> This will push{" "}
-                  <strong>{selectedRepo.name}</strong> to production
-                  infrastructure. Confirm the branch and target are correct
-                  before proceeding.
-                </span>
               </div>
 
-              {dispatchMsg && (
-                <div
-                  className={`flex items-start gap-2 text-sm p-3 rounded-lg border ${
-                    dispatchMsg.type === "success"
-                      ? "bg-emerald-50 text-emerald-800 border-emerald-200"
-                      : "bg-rose-50 text-rose-800 border-rose-200"
-                  }`}
-                >
-                  {dispatchMsg.type === "success" ? (
-                    <div className="flex items-center gap-1.5">
-                      <CheckCircle2 className="h-4 w-4 shrink-0" />
-                      Deployment triggered — monitor progress in GitHub Actions.
-                    </div>
-                  ) : (
-                    <div className="flex items-center gap-1.5">
-                      <XCircle className="h-4 w-4 shrink-0" />
-                      Failed: {dispatchMsg.text}
-                    </div>
-                  )}
+              {/* ── GitHub Actions fields ── */}
+              {deployService === "github-actions" && (
+                <div className="space-y-4">
+                  <div className="space-y-2">
+                    <Label>Workflow</Label>
+                    {workflows.length === 0 ? (
+                      <p className="text-sm text-muted-foreground">
+                        No active workflows found. Add a workflow with a{" "}
+                        <code>workflow_dispatch</code> trigger to enable manual
+                        deployments.
+                      </p>
+                    ) : (
+                      <select
+                        value={selectedWorkflow}
+                        onChange={(e) => setSelectedWorkflow(e.target.value)}
+                        className="h-9 rounded-lg border border-slate-300 bg-white px-2.5 text-sm text-slate-700 focus:outline-none focus:ring-2 focus:ring-slate-300 hover:border-slate-400 transition-colors cursor-pointer"
+                      >
+                        <option value="">Select a workflow</option>
+                        {workflows.map((w) => (
+                          <option key={w.id} value={w.id}>
+                            {w.name}
+                          </option>
+                        ))}
+                      </select>
+                    )}
+                  </div>
+
+                  <DeployTargetPicker
+                    deployMode={deployMode}
+                    setDeployMode={setDeployMode}
+                    deployBranch={deployBranch}
+                    setDeployBranch={setDeployBranch}
+                    deployCommitSha={deployCommitSha}
+                    setDeployCommitSha={setDeployCommitSha}
+                    branches={branches}
+                    recentCommits={recentCommits}
+                  />
                 </div>
               )}
 
-              <Button
-                className="w-full bg-gradient-to-br from-slate-900 via-indigo-950 to-slate-800 p-6 rounded-2xl hover:bg-blue-700 text-white border border-blue-600 shadow-sm"
-                disabled={isDispatching}
-                onClick={handleDeploy}
-              >
-                {isDispatching ? (
-                  <>
-                    <Loader2 className="h-4 w-4 mr-2 animate-spin" />
-                    Dispatching…
-                  </>
+              {/* ── Vercel via GitHub Actions ── */}
+              {deployService === "vercel" &&
+                (vercelWorkflow ? (
+                  /* Workflow detected — show detected badge + branch/commit picker */
+                  <div className="space-y-4">
+                    <div className="flex items-center gap-2 text-sm text-green-800 bg-green-50 border border-green-200 p-2.5 rounded-lg">
+                      <CheckCircle2 className="h-4 w-4 shrink-0" />
+                      <span>
+                        Workflow detected:{" "}
+                        <strong>{vercelWorkflow.name}</strong>
+                      </span>
+                      <Button
+                        size="sm"
+                        variant="ghost"
+                        className="ml-auto h-6 px-2 text-xs "
+                        asChild
+                      >
+                        <a
+                          href={vercelWorkflow.html_url}
+                          target="_blank"
+                          rel="noreferrer"
+                        >
+                          <ExternalLink className="h-3 w-3 mr-1" />
+                          View
+                        </a>
+                      </Button>
+                    </div>
+                    {/* Reuse the same branch/commit UI */}
+                    <DeployTargetPicker
+                      deployMode={deployMode}
+                      setDeployMode={setDeployMode}
+                      deployBranch={deployBranch}
+                      setDeployBranch={setDeployBranch}
+                      deployCommitSha={deployCommitSha}
+                      setDeployCommitSha={setDeployCommitSha}
+                      branches={branches}
+                      recentCommits={recentCommits}
+                    />
+                  </div>
                 ) : (
-                  <>
-                    <Rocket className="h-4 w-4 mr-2" />
-                    Deploy Now
-                  </>
-                )}
-              </Button>
-            </>
-          )}
-        </CardContent>
-      </Card>
+                  /* No workflow found — show setup guide */
+                  <WorkflowSetupGuide
+                    service="vercel"
+                    owner={selectedRepo.owner}
+                    repo={selectedRepo.name}
+                    isCreatingPr={isCreatingPr}
+                    setupMsg={setupMsg}
+                    onCreatePr={() => createWorkflowPr("vercel")}
+                    secrets={[
+                      {
+                        name: "VERCEL_DEPLOY_HOOK_URL",
+                        hint: "Vercel → your project → Settings → Git → Deploy Hooks → create a hook and copy the URL",
+                      },
+                    ]}
+                  />
+                ))}
 
-      <section className="rounded-2xl border border-slate-200 bg-gradient-to-br from-white via-slate-50 to-indigo-50/30 p-4 sm:p-5 shadow-sm">
-        <div className="flex items-center justify-between mb-3">
-          <h3 className="font-semibold text-base flex items-center gap-2 text-slate-900">
-            <CircleDot className="h-4 w-4 text-muted-foreground" />
-            Deployment Services
-          </h3>
-        </div>
+              {/* ── Render via GitHub Actions ── */}
+              {deployService === "render" &&
+                (renderWorkflow ? (
+                  /* Workflow detected — show detected badge + branch/commit picker */
+                  <div className="space-y-4">
+                    <div className="flex items-center gap-2 text-sm text-green-800 bg-green-50 border border-green-200 p-2.5 rounded-lg">
+                      <CheckCircle2 className="h-4 w-4 shrink-0" />
+                      <span>
+                        Workflow detected:{" "}
+                        <strong>{renderWorkflow.name}</strong>
+                      </span>
+                      <Button
+                        size="sm"
+                        variant="ghost"
+                        className="ml-auto h-6 px-2 text-xs"
+                        asChild
+                      >
+                        <a
+                          href={renderWorkflow.html_url}
+                          target="_blank"
+                          rel="noreferrer"
+                        >
+                          <ExternalLink className="h-3 w-3 mr-1" />
+                          View
+                        </a>
+                      </Button>
+                    </div>
+                    <DeployTargetPicker
+                      deployMode={deployMode}
+                      setDeployMode={setDeployMode}
+                      deployBranch={deployBranch}
+                      setDeployBranch={setDeployBranch}
+                      deployCommitSha={deployCommitSha}
+                      setDeployCommitSha={setDeployCommitSha}
+                      branches={branches}
+                      recentCommits={recentCommits}
+                    />
+                  </div>
+                ) : (
+                  /* No workflow found — show setup guide */
+                  <WorkflowSetupGuide
+                    service="render"
+                    owner={selectedRepo.owner}
+                    repo={selectedRepo.name}
+                    isCreatingPr={isCreatingPr}
+                    setupMsg={setupMsg}
+                    onCreatePr={() => createWorkflowPr("render")}
+                    secrets={[
+                      {
+                        name: "RENDER_DEPLOY_HOOK_URL",
+                        hint: "Render → your service → Settings → Deploy Hook → copy the URL",
+                      },
+                    ]}
+                  />
+                ))}
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
-          {services.map((service) => (
-            <ServiceCard
-              key={service.id}
-              service={service}
-              onGuide={setGuideService}
-            />
-          ))}
-        </div>
-      </section>
+              {/* ── Warning + result + Deploy Now (hidden when setup guide is shown) ── */}
+              {(deployService === "github-actions" ||
+                (deployService === "vercel" && !!vercelWorkflow) ||
+                (deployService === "render" && !!renderWorkflow)) && (
+                <>
+                  {/* Danger zone warning */}
+                  <div className="flex items-start gap-2.5 text-xs text-amber-800 bg-amber-50/80 border border-amber-300 p-3 rounded-lg">
+                    <AlertTriangle className="h-4 w-4 mt-0.5 shrink-0 text-amber-500" />
+                    <span>
+                      <strong>Live deployment:</strong> This will push{" "}
+                      <strong>{selectedRepo.name}</strong> to production
+                      infrastructure. Confirm the branch and target are correct
+                      before proceeding.
+                    </span>
+                  </div>
 
-      {/* ── Deployment History ── */}
-      <section>
-        <h3 className="font-semibold text-base flex items-center gap-2 mb-3 text-slate-900">
-          <Clock className="h-4 w-4 text-muted-foreground" />
-          Deployment History
-        </h3>
+                  {dispatchMsg && (
+                    <div
+                      className={`flex items-start gap-2 text-sm p-3 rounded-lg border ${
+                        dispatchMsg.type === "success"
+                          ? "bg-emerald-50 text-emerald-800 border-emerald-200"
+                          : "bg-rose-50 text-rose-800 border-rose-200"
+                      }`}
+                    >
+                      {dispatchMsg.type === "success" ? (
+                        <div className="flex items-center gap-1.5">
+                          <CheckCircle2 className="h-4 w-4 shrink-0" />
+                          Deployment triggered — monitor progress in GitHub
+                          Actions.
+                        </div>
+                      ) : (
+                        <div className="flex items-center gap-1.5">
+                          <XCircle className="h-4 w-4 shrink-0" />
+                          Failed: {dispatchMsg.text}
+                        </div>
+                      )}
+                    </div>
+                  )}
 
-        <Card className="border-slate-200 bg-white/95 shadow-sm">
-          <CardContent className="pt-4">
-            <TableControls
-              search={search}
-              onSearchChange={(v) => {
-                setSearch(v);
-                setPage(1);
-              }}
-              searchPlaceholder="Search by environment, ref, or author..."
-              rowsPerPage={rowsPerPage}
-              onRowsPerPageChange={setRowsPerPage}
-              onPageChange={setPage}
-              extraFilters={
-                <select
-                  value={envFilter}
-                  onChange={(e) => {
-                    setEnvFilter(e.target.value);
+                  <Button
+                    className="w-full bg-gradient-to-br from-slate-900 via-indigo-950 to-slate-800 p-6 rounded-2xl hover:bg-blue-700 text-white border border-blue-600 shadow-sm"
+                    disabled={isDispatching}
+                    onClick={handleDeploy}
+                  >
+                    {isDispatching ? (
+                      <>
+                        <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                        Dispatching…
+                      </>
+                    ) : (
+                      <>
+                        <Rocket className="h-4 w-4 mr-2" />
+                        Deploy Now
+                      </>
+                    )}
+                  </Button>
+                </>
+              )}
+            </CardContent>
+          </Card>
+        </TabsContent>
+
+        <TabsContent value="deployment-history" className="mt-4">
+          {/* ── Deployment History ── */}
+          <section>
+            <h3 className="font-semibold text-base flex items-center gap-2 mb-3 text-slate-900">
+              <Clock className="h-4 w-4 text-muted-foreground" />
+              Deployment History
+            </h3>
+
+            <Card className="border-slate-200 bg-white/95 shadow-sm">
+              <CardContent className="pt-4">
+                <TableControls
+                  search={search}
+                  onSearchChange={(v) => {
+                    setSearch(v);
                     setPage(1);
                   }}
-                  className="h-9 rounded-lg border border-slate-300 bg-white px-2.5 text-sm text-slate-700 focus:outline-none focus:ring-2 focus:ring-slate-300 hover:border-slate-400 transition-colors cursor-pointer"
-                >
-                  <option value="all">All Environments</option>
-                  {uniqueEnvironments.map((env) => (
-                    <option key={env} value={env}>
-                      {env}
-                    </option>
-                  ))}
-                </select>
-              }
-            />
+                  searchPlaceholder="Search by environment, ref, or author..."
+                  rowsPerPage={rowsPerPage}
+                  onRowsPerPageChange={setRowsPerPage}
+                  onPageChange={setPage}
+                  extraFilters={
+                    <select
+                      value={envFilter}
+                      onChange={(e) => {
+                        setEnvFilter(e.target.value);
+                        setPage(1);
+                      }}
+                      className="h-9 rounded-lg border border-slate-300 bg-white px-2.5 text-sm text-slate-700 focus:outline-none focus:ring-2 focus:ring-slate-300 hover:border-slate-400 transition-colors cursor-pointer"
+                    >
+                      <option value="all">All Environments</option>
+                      {uniqueEnvironments.map((env) => (
+                        <option key={env} value={env}>
+                          {env}
+                        </option>
+                      ))}
+                    </select>
+                  }
+                />
 
-            {isEnvLoading ? (
-              <div className="flex items-center gap-2 justify-center py-10 text-muted-foreground">
-                <Loader2 className="h-5 w-5 animate-spin" />
-                Loading deployments…
-              </div>
-            ) : paginated.length === 0 ? (
-              <div className="flex flex-col items-center gap-3 py-10 text-muted-foreground rounded-lg bg-slate-50 border border-dashed border-slate-200">
-                <Rocket className="h-8 w-8 opacity-30" />
-                <p className="text-sm">
-                  {deployments.length === 0
-                    ? "No deployments found. Connect Vercel or Render, or trigger one above."
-                    : "No results match your filters."}
-                </p>
-              </div>
-            ) : (
-              <div className="max-h-[420px] overflow-auto rounded-md border border-slate-200 bg-white">
-                <table className="w-full text-sm">
-                  <thead className="bg-slate-50 sticky top-0 z-10">
-                    <tr>
-                      <th className="text-left px-3 py-2 font-semibold text-slate-600">
-                        Environment
-                      </th>
-                      <th className="text-left px-3 py-2 font-semibold text-slate-600">
-                        Ref / SHA
-                      </th>
-                      <th className="text-left px-3 py-2 font-semibold text-slate-600">
-                        Deployed By
-                      </th>
-                      <th className="text-left px-3 py-2 font-semibold text-slate-600">
-                        Date
-                      </th>
-                      <th className="text-right px-3 py-2 font-semibold text-slate-600">
-                        Action
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {paginated.map((dep) => (
-                      <tr
-                        key={dep.id}
-                        className="border-t border-slate-100 align-top hover:bg-slate-50/60 transition-colors"
-                      >
-                        <td className="px-3 py-2">
-                          <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-[11px] font-semibold bg-slate-100 text-slate-600 border border-slate-200 capitalize">
-                            {dep.environment}
-                          </span>
-                        </td>
-                        <td className="px-3 py-2">
-                          <div className="flex flex-col gap-0.5">
-                            <div className="flex items-center gap-1">
-                              <GitBranch className="h-3 w-3 text-muted-foreground" />
-                              <code className="text-xs text-slate-700">
-                                {dep.ref}
-                              </code>
-                            </div>
-                            <span className="font-mono text-[10px] text-slate-400">
-                              {dep.sha.slice(0, 7)}
-                            </span>
-                          </div>
-                        </td>
-                        <td className="px-3 py-2">
-                          {dep.creator ? (
-                            <div className="flex items-center gap-1.5">
-                              <Avatar className="h-5 w-5 ring-1 ring-slate-200">
-                                <AvatarImage src={dep.creator.avatar_url} />
-                                <AvatarFallback className="text-[9px]">
-                                  {dep.creator.login[0]?.toUpperCase()}
-                                </AvatarFallback>
-                              </Avatar>
-                              <span className="text-xs text-muted-foreground">
-                                {dep.creator.login}
-                              </span>
-                            </div>
-                          ) : (
-                            <span className="text-xs text-slate-400">—</span>
-                          )}
-                        </td>
-                        <td className="px-3 py-2 text-xs text-muted-foreground">
-                          <div className="flex items-center gap-1">
-                            <Calendar className="h-3 w-3" />
-                            {new Date(dep.created_at).toLocaleDateString()}
-                          </div>
-                        </td>
-                        <td className="px-3 py-2 text-right">
-                          <Button
-                            variant="ghost"
-                            size="sm"
-                            className="h-7 hover:bg-slate-100"
-                            asChild
+                {isEnvLoading ? (
+                  <div className="flex items-center gap-2 justify-center py-10 text-muted-foreground">
+                    <Loader2 className="h-5 w-5 animate-spin" />
+                    Loading deployments…
+                  </div>
+                ) : paginated.length === 0 ? (
+                  <div className="flex flex-col items-center gap-3 py-10 text-muted-foreground rounded-lg bg-slate-50 border border-dashed border-slate-200">
+                    <Rocket className="h-8 w-8 opacity-30" />
+                    <p className="text-sm">
+                      {deployments.length === 0
+                        ? "No deployments found. Connect Vercel or Render, or trigger one above."
+                        : "No results match your filters."}
+                    </p>
+                  </div>
+                ) : (
+                  <div className="max-h-[420px] overflow-auto rounded-md border border-slate-200 bg-white">
+                    <table className="w-full text-sm">
+                      <thead className="bg-slate-50 sticky top-0 z-10">
+                        <tr>
+                          <th className="text-left px-3 py-2 font-semibold text-slate-600">
+                            Environment
+                          </th>
+                          <th className="text-left px-3 py-2 font-semibold text-slate-600">
+                            Ref / SHA
+                          </th>
+                          <th className="text-left px-3 py-2 font-semibold text-slate-600">
+                            Deployed By
+                          </th>
+                          <th className="text-left px-3 py-2 font-semibold text-slate-600">
+                            Date
+                          </th>
+                          <th className="text-right px-3 py-2 font-semibold text-slate-600">
+                            Action
+                          </th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {paginated.map((dep) => (
+                          <tr
+                            key={dep.id}
+                            className="border-t border-slate-100 align-top hover:bg-slate-50/60 transition-colors"
                           >
-                            <a
-                              href={dep.url
-                                .replace("api.github.com/repos", "github.com")
-                                .replace("/deployments/", "/deployments#")}
-                              target="_blank"
-                              rel="noreferrer"
-                            >
-                              <ExternalLink className="h-3.5 w-3.5" />
-                              View
-                            </a>
-                          </Button>
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-            )}
+                            <td className="px-3 py-2">
+                              <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-[11px] font-semibold bg-slate-100 text-slate-600 border border-slate-200 capitalize">
+                                {dep.environment}
+                              </span>
+                            </td>
+                            <td className="px-3 py-2">
+                              <div className="flex flex-col gap-0.5">
+                                <div className="flex items-center gap-1">
+                                  <GitBranch className="h-3 w-3 text-muted-foreground" />
+                                  <code className="text-xs text-slate-700">
+                                    {dep.ref}
+                                  </code>
+                                </div>
+                                <span className="font-mono text-[10px] text-slate-400">
+                                  {dep.sha.slice(0, 7)}
+                                </span>
+                              </div>
+                            </td>
+                            <td className="px-3 py-2">
+                              {dep.creator ? (
+                                <div className="flex items-center gap-1.5">
+                                  <Avatar className="h-5 w-5 ring-1 ring-slate-200">
+                                    <AvatarImage src={dep.creator.avatar_url} />
+                                    <AvatarFallback className="text-[9px]">
+                                      {dep.creator.login[0]?.toUpperCase()}
+                                    </AvatarFallback>
+                                  </Avatar>
+                                  <span className="text-xs text-muted-foreground">
+                                    {dep.creator.login}
+                                  </span>
+                                </div>
+                              ) : (
+                                <span className="text-xs text-slate-400">
+                                  —
+                                </span>
+                              )}
+                            </td>
+                            <td className="px-3 py-2 text-xs text-muted-foreground">
+                              <div className="flex items-center gap-1">
+                                <Calendar className="h-3 w-3" />
+                                {new Date(dep.created_at).toLocaleDateString()}
+                              </div>
+                            </td>
+                            <td className="px-3 py-2 text-right">
+                              <Button
+                                variant="ghost"
+                                size="sm"
+                                className="h-7 hover:bg-slate-100"
+                                asChild
+                              >
+                                <a
+                                  href={dep.url
+                                    .replace(
+                                      "api.github.com/repos",
+                                      "github.com",
+                                    )
+                                    .replace("/deployments/", "/deployments#")}
+                                  target="_blank"
+                                  rel="noreferrer"
+                                >
+                                  <ExternalLink className="h-3.5 w-3.5" />
+                                  View
+                                </a>
+                              </Button>
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                )}
 
-            <PaginationControls
-              rowsPerPage={rowsPerPage}
-              page={page}
-              totalPages={totalPages}
-              onPageChange={setPage}
-              totalItems={filteredDeployments.length}
-            />
-          </CardContent>
-        </Card>
-      </section>
+                <PaginationControls
+                  rowsPerPage={rowsPerPage}
+                  page={page}
+                  totalPages={totalPages}
+                  onPageChange={setPage}
+                  totalItems={filteredDeployments.length}
+                />
+              </CardContent>
+            </Card>
+          </section>
+        </TabsContent>
+      </Tabs>
 
       {/* ── Setup Guide Dialog ── */}
       <Dialog
