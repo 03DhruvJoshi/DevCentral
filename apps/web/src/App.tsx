@@ -13,6 +13,7 @@ import { VerifyEmailPage } from "./pages/auth/VerifyEmailPage.js";
 import { ConnectGitHubPage } from "./pages/auth/ConnectGitHubPage.js";
 import { AdminRoute } from "./pages/admin/AdminRoute.js";
 import { GlobalBroadcast } from "./pages/admin/components/GlobalBroadcast.js";
+import { SettingsPage } from "./pages/settings/SettingsPage.js";
 import { Analytics } from "@vercel/analytics/react";
 import { isUserLoggedIn } from "./lib/auth.js";
 
@@ -28,7 +29,7 @@ const ProtectedLayout = () => {
 
 function App() {
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-slate-50 text-slate-900">
       <GlobalBroadcast />
       <QueryClientProvider client={queryClient}>
         <BrowserRouter>
@@ -47,6 +48,7 @@ function App() {
               <Route path="/gitops" element={<GitOpsPage />} />
               <Route path="/scaffold" element={<ScaffolderPage />} />
               <Route path="/analytics" element={<AnalyticsPage />} />
+              <Route path="/settings" element={<SettingsPage />} />
             </Route>
             <Route path="/admin" element={<AdminRoute />} />
           </Routes>
