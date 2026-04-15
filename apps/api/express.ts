@@ -27,13 +27,13 @@ app.use(dashboard);
 app.use(admin);
 app.use(deployment);
 
-app.listen(PORT, () => {
+app.listen(PORT, "0.0.0.0", () => {
   console.log(`🚀 API Server running on http://localhost:${PORT}`);
 });
 
 app.get("/api/health", (req, res) => {
   try {
-    res.json({ status: "OK" });
+    res.status(200).send("server is healthy");
   } catch (error) {
     console.error("Health Check Error:", error);
     res.status(500).json({ error: "Failed to perform health check" });
