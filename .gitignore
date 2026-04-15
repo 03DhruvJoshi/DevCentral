@@ -46,3 +46,4 @@ apps/web/stale
 .agents/*
 /generated/prisma
 
+system_design

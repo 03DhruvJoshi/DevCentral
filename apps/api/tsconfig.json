@@ -12,7 +12,8 @@
     "**/*.tsx",
     "next-env.d.ts",
     "next.config.js",
-    ".next/types/**/*.ts"
+    ".next/types/**/*.ts",
+    "../../system_design/gitops.test.ts"
   ],
   "exclude": ["node_modules"]
 }
