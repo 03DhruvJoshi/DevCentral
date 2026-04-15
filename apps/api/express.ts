@@ -33,7 +33,7 @@ app.listen(PORT, () => {
 
 app.get("/api/health", (req, res) => {
   try {
-    res.json({ status: "OK" });
+    res.status(200).send("Server is awake");
   } catch (error) {
     console.error("Health Check Error:", error);
     res.status(500).json({ error: "Failed to perform health check" });

@@ -35,6 +35,12 @@
     "node": ">=18"
   },
   "packageManager": "pnpm@10.28.1",
+  "pnpm": {
+    "overrides": {
+      "@jest/globals": "29.7.0",
+      "ts-jest": "29.2.5"
+    }
+  },
   "workspaces": [
     "apps/*",
     "packages/*"

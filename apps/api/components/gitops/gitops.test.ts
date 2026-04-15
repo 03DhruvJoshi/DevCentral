@@ -16,7 +16,7 @@ import request from "supertest";
 import express from "express";
 import type { NextFunction } from "express";
 
-import type { AuthenticatedRequest } from "../../../api_types/index.js";
+import type { AuthenticatedRequest } from "../../api_types/index.js";
 
 // ── Shared mock instances ─────────────────────────────────────────────────────
 
@@ -120,7 +120,7 @@ jest.unstable_mockModule("@octokit/request-error", () => ({
 
 // ── Dynamic import ────────────────────────────────────────────────────────────
 
-const { default: router } = await import("../gitops.js");
+const { default: router } = await import("./gitops.js");
 
 // ── Test app ──────────────────────────────────────────────────────────────────
 
