@@ -4,8 +4,12 @@ export default defineConfig({
   test: {
     globals: true,
     environment: "node",
-    include: ["apps/api/**/*.test.{ts,tsx}"],
+
     // API package uses Jest; avoid loading those tests in Vitest.
-    exclude: [...configDefaults.exclude, "apps/api/**/jest.config.cjs"],
+    exclude: [
+      ...configDefaults.exclude,
+      "apps/api/**/*.test.ts",
+      "apps/api/**/*.test.tsx",
+    ],
   },
 });
