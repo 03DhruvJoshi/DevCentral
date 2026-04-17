@@ -84,7 +84,7 @@ mockRest.pulls.list = listPullsMock;
 
 // ── ESM module mocks ──────────────────────────────────────────────────────────
 
-jest.unstable_mockModule("../../auth/authenticatetoken", () => ({
+jest.unstable_mockModule("../auth/authenticatetoken", () => ({
   authenticateToken: jest.fn(
     (req: AuthenticatedRequest, _res: unknown, next: NextFunction) => {
       req.user = {
@@ -99,7 +99,7 @@ jest.unstable_mockModule("../../auth/authenticatetoken", () => ({
   ),
 }));
 
-jest.unstable_mockModule("../../../prisma", () => ({
+jest.unstable_mockModule("../../prisma", () => ({
   default: db,
 }));
 

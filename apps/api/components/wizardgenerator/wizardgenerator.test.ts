@@ -5,6 +5,7 @@
  *
  * No HTTP layer or mocking needed — this is a pure deterministic function.
  */
+import { describe, it, expect } from "@jest/globals";
 import { generateYaml } from "./wizardgenerator";
 
 // ── Test suites ───────────────────────────────────────────────────────────────
