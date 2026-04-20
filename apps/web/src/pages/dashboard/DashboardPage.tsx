@@ -22,13 +22,10 @@ import {
   Plus,
   Check,
   LayoutDashboard,
-  Rocket,
-  GitCommit,
   AlertTriangle,
   Box,
   Activity,
   Bug,
-  GitPullRequest,
   GitBranch,
   AreaChart,
   WandSparkles,
@@ -41,11 +38,10 @@ import { ErrorBoundary } from "react-error-boundary";
 import { ActionsWidget } from "./components/ActionsWidget.js";
 import { QuickScaffoldWidget } from "./components/QuickScaffolderWidget.js";
 import { RepoPulseWidget } from "./components/RepoPulseWidget.js";
-import { PRVelocityWidget } from "./components/PRVelocityWidget.js";
+
 import { DeliveryHealthWidget } from "./components/DeliveryHealthWidget.js";
 import { PlatformSummaryWidget } from "./components/PlatformSummaryWidget.js";
-import { DeploymentFeedWidget } from "./components/DeploymentFeedWidget.js";
-import { RecentActivityWidget } from "./components/RecentActivityWidget.js";
+
 import { DashboardProvider, useDashboardContext } from "./DashboardContext.js";
 import { API_BASE_URL } from "./types.js";
 
@@ -98,26 +94,6 @@ const WIDGET_CATALOG: WidgetDefinition[] = [
     component: PlatformSummaryWidget,
   },
   {
-    id: "deployment-feed",
-    label: "Deployment Feed",
-    description: "Recent deployment activity across your repositories.",
-    category: "Platform",
-    icon: Rocket,
-    defaultW: 2,
-    defaultH: 2,
-    component: DeploymentFeedWidget,
-  },
-  {
-    id: "recent-activity",
-    label: "Recent Commits",
-    description: "Latest commits and code changes from your team.",
-    category: "Platform",
-    icon: GitCommit,
-    defaultW: 2,
-    defaultH: 2,
-    component: RecentActivityWidget,
-  },
-  {
     id: "action-center",
     label: "Action Center",
     description: "GitOps actions: workflow runs, PRs needing attention.",
@@ -156,16 +132,6 @@ const WIDGET_CATALOG: WidgetDefinition[] = [
     defaultW: 2,
     defaultH: 2,
     component: RepoPulseWidget,
-  },
-  {
-    id: "pr-velocity",
-    label: "PR Velocity",
-    description: "Pull request review speed, stale PRs, and size distribution.",
-    category: "Analytics",
-    icon: GitPullRequest,
-    defaultW: 2,
-    defaultH: 2,
-    component: PRVelocityWidget,
   },
 ];
 
@@ -398,7 +364,7 @@ type NavItem = {
 };
 
 const NAV_ITEMS: NavItem[] = [
-    { label: "Scaffolder", href: "/scaffold", icon: WandSparkles },
+  { label: "Scaffolder", href: "/scaffold", icon: WandSparkles },
   { label: "GitOps", href: "/gitops", icon: GitBranch },
   { label: "Analytics", href: "/analytics", icon: AreaChart },
 
