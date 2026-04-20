@@ -47,3 +47,5 @@ apps/web/stale
 /generated/prisma
 
 system_design
+
+report
