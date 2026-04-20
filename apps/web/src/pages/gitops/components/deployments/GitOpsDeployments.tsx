@@ -1,5 +1,5 @@
-import { useState, useEffect, useMemo } from "react";
-import { Rocket, Clock, Layers } from "lucide-react";
+import { useState, useEffect } from "react";
+import { Rocket, Layers } from "lucide-react";
 
 import {
   Tabs,
@@ -20,9 +20,8 @@ import {
 
 import { buildServices } from "./utilities.js";
 
-import type { DeploymentSortCol, ServiceDef } from "./types.js";
+import type { ServiceDef } from "./types.js";
 
-import DeploymentHistoryTab from "./tabs/DeploymentHistory.js";
 import EnvironmentsTab from "./tabs/EnvironmentsTab.js";
 import ManualDeploymentTab from "./tabs/ManualDeploymentTab.js";
 import SetupGuideDialog from "./tabs/SetupGuideDialog.js";
@@ -56,14 +55,6 @@ export default function GitOpsDeployments(props: { selectedRepo: Repository }) {
     text: string;
   } | null>(null);
 
-  // History table
-  const [search, setSearch] = useState("");
-  const [envFilter, setEnvFilter] = useState("all");
-  const [rowsPerPage, setRowsPerPage] = useState(10);
-  const [page, setPage] = useState(1);
-  const [sortCol, setSortCol] = useState<DeploymentSortCol>("createdAt");
-  const [sortDir, setSortDir] = useState<"asc" | "desc">("desc");
-
   // Guide dialog
   const [guideService, setGuideService] = useState<ServiceDef | null>(null);
 
@@ -91,8 +82,7 @@ export default function GitOpsDeployments(props: { selectedRepo: Repository }) {
   // ── Fetch data ──────────────────────────────────────────────────────────────
   useEffect(() => {
     if (!selectedRepo) return;
-    setSearch("");
-    setPage(1);
+
     setSelectedWorkflow("");
     setDeployMode("latest");
     setDeployBranch("main");
@@ -260,35 +250,6 @@ export default function GitOpsDeployments(props: { selectedRepo: Repository }) {
     }
   }
 
-  function handleSort(col: DeploymentSortCol) {
-    if (sortCol === col) {
-      setSortDir((dir) => (dir === "asc" ? "desc" : "asc"));
-    } else {
-      setSortCol(col);
-      setSortDir(col === "createdAt" ? "desc" : "asc");
-    }
-    setPage(1);
-  }
-
-  const uniqueEnvironments = Array.from(
-    new Set(deployments.map((d) => d.environment)),
-  );
-
-  // ── Filter deployments based on search and environment filter ────────────────
-  const filteredDeployments = useMemo(() => {
-    return deployments.filter((dep) => {
-      const matchesEnv = envFilter === "all" || dep.environment === envFilter;
-      const searchLower = search.toLowerCase();
-      const matchesSearch =
-        !search ||
-        dep.environment.toLowerCase().includes(searchLower) ||
-        dep.ref?.toLowerCase().includes(searchLower) ||
-        dep.sha?.toLowerCase().includes(searchLower) ||
-        dep.creator?.login?.toLowerCase().includes(searchLower);
-      return matchesEnv && matchesSearch;
-    });
-  }, [deployments, envFilter, search]);
-
   // ── Render ──────────────────────────────────────────────────────────────────
   return (
     <div className="space-y-6">
@@ -307,13 +268,6 @@ export default function GitOpsDeployments(props: { selectedRepo: Repository }) {
           >
             <Rocket className="h-3.5 w-3.5" />
             Manual Deployment
-          </TabsTrigger>
-          <TabsTrigger
-            value="deployment-history"
-            className="flex items-center gap-1.5 rounded-md text-slate-600 transition-colors data-[state=active]:bg-white data-[state=active]:shadow-sm data-[state=active]:text-slate-900 text-xs"
-          >
-            <Clock className="h-3.5 w-3.5" />
-            Deployment History
           </TabsTrigger>
         </TabsList>
 
@@ -355,24 +309,6 @@ export default function GitOpsDeployments(props: { selectedRepo: Repository }) {
             branches={branches}
             recentCommits={recentCommits}
             workflows={workflows}
-          />
-        </TabsContent>
-
-        <TabsContent value="deployment-history" className="mt-4">
-          <DeploymentHistoryTab
-            filteredRecent={filteredDeployments}
-            envFilter={envFilter}
-            sortCol={sortCol}
-            sortDir={sortDir}
-            search={search}
-            setSearch={setSearch}
-            rowsPerPage={rowsPerPage}
-            setRowsPerPage={setRowsPerPage}
-            deployments={deployments}
-            isEnvLoading={isEnvLoading}
-            filteredDeployments={filteredDeployments}
-            uniqueEnvironments={uniqueEnvironments}
-            setEnvFilter={setEnvFilter}
           />
         </TabsContent>
       </Tabs>

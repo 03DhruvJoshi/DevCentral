@@ -34,7 +34,7 @@ import SecurityChecks from "./components/health/SecurityChecks.js";
 import CodeQualityChecks from "./components/health/CodeQualityChecks.js";
 import DeploymentReadinessChecks from "./components/health/DeploymentReadinessChecks.js";
 import TeamOwnershipChecks from "./components/health/TeamOwnershipChecks.js";
-import QuickFixActions from "./components/health/QuickFixActions.js";
+
 import {
   type Repository,
   type HealthCheckResult,
@@ -167,12 +167,6 @@ export function GitOpsPage() {
                 isLoading={isHealthLoading}
               />
             </div>
-
-            <QuickFixActions
-              selectedRepo={selectedRepo}
-              health={health}
-              isLoading={isHealthLoading}
-            />
           </TabsContent>
 
           {/* ══════════ TAB 2 — ACTIVITY ══════════ */}
