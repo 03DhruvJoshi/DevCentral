@@ -5,7 +5,7 @@ import {
   Users,
   ScrollText,
   Settings2,
-  Radio,
+ 
   Lock,
   CheckCircle,
   Layers,
@@ -24,7 +24,7 @@ import UserProfile from "../../components/layout/UserProfile.js";
 import { UserDirectory } from "./components/UserDirectory.js";
 import { AuditLogs } from "./components/AuditLogs.js";
 import { FeatureFlags } from "./components/FeatureFlags.js";
-import { BroadcastSystem } from "./components/BroadcastSystem.js";
+ 
 import SecurityTab from "./components/SecurityMetrics.js";
 
 export function AdminPortalPage() {
@@ -173,13 +173,7 @@ export function AdminPortalPage() {
               <Settings2 className="w-3.5 h-3.5" />
               Feature Flags
             </TabsTrigger>
-            <TabsTrigger
-              value="broadcast"
-              className="flex items-center gap-1.5 rounded-md text-slate-600 transition-colors data-[state=active]:bg-white data-[state=active]:shadow-sm data-[state=active]:text-slate-900 text-xs"
-            >
-              <Radio className="w-3.5 h-3.5" />
-              Broadcast
-            </TabsTrigger>
+ 
           </TabsList>
 
           <TabsContent value="security" className="mt-6">
@@ -198,9 +192,7 @@ export function AdminPortalPage() {
             <FeatureFlags />
           </TabsContent>
 
-          <TabsContent value="broadcast" className="mt-6">
-            <BroadcastSystem />
-          </TabsContent>
+   
         </Tabs>
       </div>
     </div>
