@@ -7,7 +7,7 @@ export default defineConfig([
       semi: "error",
       "prefer-const": "error",
     },
-    excludes: [
+    ignores: [
       "**/dist/**",
       "**/build/**",
       "**/node_modules/**",
