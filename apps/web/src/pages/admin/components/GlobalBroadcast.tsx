@@ -67,7 +67,9 @@ export function GlobalBroadcast() {
       <div className="flex items-center gap-3 w-full justify-center max-w-7xl mx-auto">
         <SeverityIcon severity={severity} />
         <p className="text-sm font-medium">
-          <strong className="font-bold mr-1.5 tracking-wide">PLATFORM ALERT:</strong>
+          <strong className="font-bold mr-1.5 tracking-wide">
+            PLATFORM ALERT:
+          </strong>
           {message}
         </p>
       </div>

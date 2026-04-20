@@ -131,12 +131,6 @@ export default function TeamOwnershipChecks(props: {
                       </span>
                       {getSeverityBadge(issue.severity)}
                     </div>
-                    {issue.autofixable && (
-                      <div className="mt-1 flex items-center gap-1 text-[10px] text-emerald-700">
-                        <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
-                        <span>Quick fix available</span>
-                      </div>
-                    )}
                   </div>
                 </div>
               </div>

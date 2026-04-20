@@ -2,7 +2,6 @@ import {
   GitBranch,
   Github,
   ShieldAlert,
-  Activity,
   Zap,
   Rocket,
   BarChart2,
@@ -18,7 +17,6 @@ import {
 import { Badge } from "../../components/ui/badge.js";
 
 import SecurityAnalytics from "./components/security/SecurityAnalytics.js";
-import VelocityAnalytics from "./components/velocity/VelocityAnalytics.js";
 import CICDAnalytics from "./components/cicd/CICDAnalytics.js";
 import DeploymentAnalytics from "./components/deployment/DeploymentAnalytics.js";
 import RepoAnalytics from "./components/RepoAnalytics.js";
@@ -75,13 +73,6 @@ export function AnalyticsPage() {
               Security Metrics
             </TabsTrigger>
             <TabsTrigger
-              value="velocity"
-              className="flex items-center gap-1.5 rounded-md text-slate-600 transition-colors data-[state=active]:bg-white data-[state=active]:shadow-sm data-[state=active]:text-slate-900 text-xs"
-            >
-              <Activity className="h-3.5 w-3.5" />
-              Quality & Velocity
-            </TabsTrigger>
-            <TabsTrigger
               value="cicd"
               className="flex items-center gap-1.5 rounded-md text-slate-600 transition-colors data-[state=active]:bg-white data-[state=active]:shadow-sm data-[state=active]:text-slate-900 text-xs"
             >
@@ -99,10 +90,6 @@ export function AnalyticsPage() {
 
           <TabsContent value="security" className="mt-4">
             <SecurityAnalytics selectedRepo={selectedRepo} />
-          </TabsContent>
-
-          <TabsContent value="velocity" className="mt-4">
-            <VelocityAnalytics selectedRepo={selectedRepo} />
           </TabsContent>
 
           <TabsContent value="cicd" className="mt-4">
