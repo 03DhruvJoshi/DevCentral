@@ -28,7 +28,7 @@ import GitOpsActions from "./components/activity/GitOpsActions.js";
 import GitOpsReleases from "./components/activity/GitOpsReleases.js";
 import GitOpsCommits from "./components/activity/GitOpsCommits.js";
 import GitOpsIssues from "./components/activity/GitOpsIssues.js";
-import GitOpsDeployments from "./components/GitOpsDeployments.js";
+import GitOpsDeployments from "./components/deployments/GitOpsDeployments.js";
 import RepositoryHealthCard from "./components/health/RepositoryHealthCard.js";
 import SecurityChecks from "./components/health/SecurityChecks.js";
 import CodeQualityChecks from "./components/health/CodeQualityChecks.js";

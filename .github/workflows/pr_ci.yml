@@ -32,8 +32,11 @@ jobs:
       - name: Type check
         run: pnpm check-types
 
-      # - name: Run unit tests
-      #   run: pnpm test
+      - name: Run unit tests
+        run: pnpm test
+
+      - name: Run test coverage
+        run: pnpm test --coverage
 
       - name: Build
         run: pnpm build
