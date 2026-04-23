@@ -63,6 +63,7 @@ interface AISuggestion {
   priority: "critical" | "high" | "medium" | "low";
   description: string;
   autofixable: boolean;
+  length: number;
 }
 
 interface HealthCheckResult {

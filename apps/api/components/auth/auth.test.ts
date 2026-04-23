@@ -191,3 +191,404 @@ describe("POST /api/auth/register", () => {
     expect(res.status).toBe(500);
   });
 });
+
+// ── POST /api/auth/forgot-password ────────────────────────────────────────────
+
+describe("POST /api/auth/forgot-password", () => {
+  it("returns 200 with a generic message even when the user does not exist", async () => {
+    (db.user.findUnique as jest.Mock).mockResolvedValue(null);
+
+    const res = await request(app)
+      .post("/api/auth/forgot-password")
+      .send({ email: "nobody@test.com" });
+
+    expect(res.status).toBe(200);
+    expect(res.body.message).toMatch(/if an account/i);
+  });
+
+  it("returns 200 and issues a reset token when the user exists", async () => {
+    (db.user.findUnique as jest.Mock).mockResolvedValue({
+      id: "u1",
+      email: "alice@test.com",
+    });
+    (db.authToken.updateMany as jest.Mock).mockResolvedValue({ count: 0 });
+    (db.authToken.create as jest.Mock).mockResolvedValue({});
+
+    const res = await request(app)
+      .post("/api/auth/forgot-password")
+      .send({ email: "alice@test.com" });
+
+    expect(res.status).toBe(200);
+    expect(res.body.message).toMatch(/if an account/i);
+  });
+
+  it("returns 400 when email is missing from the request body", async () => {
+    const res = await request(app)
+      .post("/api/auth/forgot-password")
+      .send({});
+
+    expect(res.status).toBe(400);
+    expect(res.body.error).toMatch(/email is required/i);
+  });
+});
+
+// ── POST /api/auth/reset-password ─────────────────────────────────────────────
+
+describe("POST /api/auth/reset-password", () => {
+  it("returns 400 when token or password is missing", async () => {
+    const res = await request(app)
+      .post("/api/auth/reset-password")
+      .send({ token: "tok" }); // no password
+
+    expect(res.status).toBe(400);
+    expect(res.body.error).toMatch(/required/i);
+  });
+
+  it("returns 400 when password is too short (< 6 chars)", async () => {
+    const res = await request(app)
+      .post("/api/auth/reset-password")
+      .send({ token: "tok", password: "abc" });
+
+    expect(res.status).toBe(400);
+    expect(res.body.error).toMatch(/6 characters/i);
+  });
+
+  it("returns 400 when the reset token is invalid or expired", async () => {
+    (db.authToken.findFirst as jest.Mock).mockResolvedValue(null);
+
+    const res = await request(app)
+      .post("/api/auth/reset-password")
+      .send({ token: "bad-token", password: "newpassword123" });
+
+    expect(res.status).toBe(400);
+    expect(res.body.error).toMatch(/invalid or expired/i);
+  });
+
+  it("returns 200 when the reset token is valid and password is updated", async () => {
+    (db.authToken.findFirst as jest.Mock).mockResolvedValue({
+      id: "tok1",
+      userId: "u1",
+    });
+    (db.$transaction as jest.Mock).mockResolvedValue([{}, {}]);
+
+    const res = await request(app)
+      .post("/api/auth/reset-password")
+      .send({ token: "valid-token", password: "newpassword123" });
+
+    expect(res.status).toBe(200);
+    expect(res.body.message).toMatch(/updated/i);
+  });
+});
+
+// ── POST /api/auth/verify-email ───────────────────────────────────────────────
+
+describe("POST /api/auth/verify-email", () => {
+  it("returns 400 when email or otp is missing", async () => {
+    const res = await request(app)
+      .post("/api/auth/verify-email")
+      .send({ email: "alice@test.com" }); // no otp
+
+    expect(res.status).toBe(400);
+    expect(res.body.error).toMatch(/required/i);
+  });
+
+  it("returns 400 when the user does not exist", async () => {
+    (db.user.findUnique as jest.Mock).mockResolvedValue(null);
+
+    const res = await request(app)
+      .post("/api/auth/verify-email")
+      .send({ email: "nobody@test.com", otp: "123456" });
+
+    expect(res.status).toBe(400);
+    expect(res.body.error).toMatch(/invalid verification code/i);
+  });
+
+  it("returns 200 with already-verified message when email is already verified", async () => {
+    (db.user.findUnique as jest.Mock).mockResolvedValue({
+      id: "u1",
+      email: "alice@test.com",
+      emailVerified: true,
+    });
+
+    const res = await request(app)
+      .post("/api/auth/verify-email")
+      .send({ email: "alice@test.com", otp: "123456" });
+
+    expect(res.status).toBe(200);
+    expect(res.body.message).toMatch(/already verified/i);
+  });
+
+  it("returns 400 when the OTP is invalid or expired", async () => {
+    (db.user.findUnique as jest.Mock).mockResolvedValue({
+      id: "u1",
+      email: "alice@test.com",
+      emailVerified: false,
+    });
+    (db.authToken.findFirst as jest.Mock).mockResolvedValue(null);
+
+    const res = await request(app)
+      .post("/api/auth/verify-email")
+      .send({ email: "alice@test.com", otp: "000000" });
+
+    expect(res.status).toBe(400);
+    expect(res.body.error).toMatch(/invalid or expired/i);
+  });
+
+  it("returns 200 and a JWT when OTP verification succeeds", async () => {
+    (db.user.findUnique as jest.Mock).mockResolvedValue({
+      id: "u1",
+      email: "alice@test.com",
+      name: "Alice",
+      emailVerified: false,
+      githubUsername: null,
+      role: "DEV",
+    });
+    (db.authToken.findFirst as jest.Mock).mockResolvedValue({ id: "tok1" });
+    (db.$transaction as jest.Mock).mockResolvedValue([{}, {}]);
+
+    const res = await request(app)
+      .post("/api/auth/verify-email")
+      .send({ email: "alice@test.com", otp: "123456" });
+
+    expect(res.status).toBe(200);
+    expect(res.body.token).toBe("fake-jwt-token");
+    expect(res.body.message).toMatch(/verified/i);
+  });
+});
+
+// ── POST /api/auth/resend-verification ───────────────────────────────────────
+
+describe("POST /api/auth/resend-verification", () => {
+  it("returns 400 when email is missing", async () => {
+    const res = await request(app)
+      .post("/api/auth/resend-verification")
+      .send({});
+
+    expect(res.status).toBe(400);
+    expect(res.body.error).toMatch(/email is required/i);
+  });
+
+  it("returns 200 with generic message even if user does not exist", async () => {
+    (db.user.findUnique as jest.Mock).mockResolvedValue(null);
+
+    const res = await request(app)
+      .post("/api/auth/resend-verification")
+      .send({ email: "nobody@test.com" });
+
+    expect(res.status).toBe(200);
+    expect(res.body.message).toMatch(/if that account/i);
+  });
+
+  it("returns 200 and resends OTP when user is unverified", async () => {
+    (db.user.findUnique as jest.Mock).mockResolvedValue({
+      id: "u1",
+      email: "alice@test.com",
+      emailVerified: false,
+    });
+    (db.authToken.updateMany as jest.Mock).mockResolvedValue({ count: 1 });
+    (db.authToken.create as jest.Mock).mockResolvedValue({});
+
+    const res = await request(app)
+      .post("/api/auth/resend-verification")
+      .send({ email: "alice@test.com" });
+
+    expect(res.status).toBe(200);
+    expect(res.body.message).toMatch(/if that account/i);
+  });
+});
+
+// ── POST /api/auth/login — additional edge cases ──────────────────────────────
+
+describe("POST /api/auth/login — additional edge cases", () => {
+  it("returns 403 when user email is not verified", async () => {
+    (db.user.findUnique as jest.Mock).mockResolvedValue({
+      ...VERIFIED_USER,
+      emailVerified: false,
+      role: "DEV",
+    });
+    (bcryptMock.compare as jest.Mock).mockResolvedValue(true);
+
+    const res = await request(app)
+      .post("/api/auth/login")
+      .send({ email: "alice@test.com", password: "correct-password" });
+
+    expect(res.status).toBe(403);
+    expect(res.body.emailNotVerified).toBe(true);
+  });
+
+  it("returns 403 when user account is suspended", async () => {
+    (db.user.findUnique as jest.Mock).mockResolvedValue({
+      ...VERIFIED_USER,
+      emailVerified: true,
+      status: "SUSPENDED",
+    });
+    (bcryptMock.compare as jest.Mock).mockResolvedValue(true);
+
+    const res = await request(app)
+      .post("/api/auth/login")
+      .send({ email: "alice@test.com", password: "correct-password" });
+
+    expect(res.status).toBe(403);
+    expect(res.body.error).toMatch(/suspended/i);
+  });
+
+  it("returns 200 when admin user logs in (bypasses email verification)", async () => {
+    (db.user.findUnique as jest.Mock).mockResolvedValue({
+      ...VERIFIED_USER,
+      emailVerified: false,
+      role: "ADMIN",
+    });
+    (bcryptMock.compare as jest.Mock).mockResolvedValue(true);
+
+    const res = await request(app)
+      .post("/api/auth/login")
+      .send({ email: "alice@test.com", password: "correct-password" });
+
+    expect(res.status).toBe(200);
+    expect(res.body.token).toBe("fake-jwt-token");
+  });
+
+  it("returns 400 when user is not found", async () => {
+    (db.user.findUnique as jest.Mock).mockResolvedValue(null);
+
+    const res = await request(app)
+      .post("/api/auth/login")
+      .send({ email: "ghost@test.com", password: "any" });
+
+    expect(res.status).toBe(400);
+    expect(res.body.error).toMatch(/invalid credentials/i);
+  });
+});
+
+// ── POST /api/auth/refresh ────────────────────────────────────────────────────
+
+describe("POST /api/auth/refresh", () => {
+  it("returns 200 with a new token for an authenticated user", async () => {
+    (db.user.findUnique as jest.Mock).mockResolvedValue({
+      id: "user-id",
+      email: "user@test.com",
+      name: "Test User",
+      githubUsername: null,
+      role: "DEV",
+      createdAt: new Date(),
+      dashboardPreferences: null,
+    });
+
+    const res = await request(app).post("/api/auth/refresh");
+
+    expect(res.status).toBe(200);
+    expect(res.body.token).toBe("fake-jwt-token");
+  });
+
+  it("returns 404 when the user record is missing from the database", async () => {
+    (db.user.findUnique as jest.Mock).mockResolvedValue(null);
+
+    const res = await request(app).post("/api/auth/refresh");
+
+    expect(res.status).toBe(404);
+  });
+});
+
+// ── PATCH /api/auth/profile ───────────────────────────────────────────────────
+
+describe("PATCH /api/auth/profile", () => {
+  it("returns 400 when name is empty", async () => {
+    const res = await request(app)
+      .patch("/api/auth/profile")
+      .send({ name: "  ", address: "123 Main St" });
+
+    expect(res.status).toBe(400);
+    expect(res.body.error).toMatch(/name is required/i);
+  });
+
+  it("returns 404 when the user does not exist in the database", async () => {
+    (db.user.findUnique as jest.Mock).mockResolvedValue(null);
+
+    const res = await request(app)
+      .patch("/api/auth/profile")
+      .send({ name: "Alice", address: "123 Main St" });
+
+    expect(res.status).toBe(404);
+  });
+
+  it("returns 200 with updated user data on success", async () => {
+    (db.user.findUnique as jest.Mock).mockResolvedValue({
+      id: "user-id",
+      email: "user@test.com",
+      name: "Old Name",
+      role: "DEV",
+      githubUsername: null,
+      dashboardPreferences: null,
+    });
+    (db.user.update as jest.Mock).mockResolvedValue({
+      id: "user-id",
+      email: "user@test.com",
+      name: "Alice",
+      role: "DEV",
+      githubUsername: null,
+      createdAt: new Date(),
+      dashboardPreferences: null,
+    });
+
+    const res = await request(app)
+      .patch("/api/auth/profile")
+      .send({ name: "Alice", address: "456 Oak Ave" });
+
+    expect(res.status).toBe(200);
+    expect(res.body.user.name).toBe("Alice");
+  });
+});
+
+// ── GET /api/auth/github/status ───────────────────────────────────────────────
+
+describe("GET /api/auth/github/status", () => {
+  it("returns 200 with connected:false when user has no GitHub token", async () => {
+    (db.user.findUnique as jest.Mock).mockResolvedValue({
+      githubAccessToken: null,
+      githubUsername: null,
+    });
+
+    const res = await request(app).get("/api/auth/github/status");
+
+    expect(res.status).toBe(200);
+    expect(res.body.connected).toBe(false);
+  });
+
+  it("returns 200 with connected:true when user has a GitHub token", async () => {
+    (db.user.findUnique as jest.Mock).mockResolvedValue({
+      githubAccessToken: "gho_valid_token",
+      githubUsername: "testuser",
+    });
+
+    const res = await request(app).get("/api/auth/github/status");
+
+    expect(res.status).toBe(200);
+    expect(res.body.connected).toBe(true);
+    expect(res.body.githubUsername).toBe("testuser");
+  });
+});
+
+// ── DELETE /api/auth/github/disconnect ────────────────────────────────────────
+
+describe("DELETE /api/auth/github/disconnect", () => {
+  it("returns 200 with disconnect confirmation message", async () => {
+    (db.user.update as jest.Mock).mockResolvedValue({});
+
+    const res = await request(app).delete("/api/auth/github/disconnect");
+
+    expect(res.status).toBe(200);
+    expect(res.body.message).toMatch(/disconnected/i);
+  });
+});
+
+// ── POST /api/auth/github/begin-connect ──────────────────────────────────────
+
+describe("POST /api/auth/github/begin-connect", () => {
+  it("returns 200 with a GitHub auth URL", async () => {
+    const res = await request(app).post("/api/auth/github/begin-connect");
+
+    expect(res.status).toBe(200);
+    expect(res.body.authUrl).toMatch(/github\.com\/login\/oauth\/authorize/i);
+  });
+});
+

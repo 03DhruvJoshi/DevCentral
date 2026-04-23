@@ -156,4 +156,177 @@ describe("GET /api/analytics/deployments/:owner/:repo", () => {
     expect(res.status).toBe(200);
     expect(res.body.summary.totalDeploys).toBe(0);
   });
+
+  it("returns 200 with all Vercel status states mapped correctly (ERROR, CANCELED, BUILDING)", async () => {
+    (db.providerIntegration.findMany as jest.Mock).mockResolvedValue([
+      { provider: "vercel", apiToken: "tok_vercel", teamId: null },
+    ]);
+
+    const now = Date.now();
+    (global.fetch as jest.Mock).mockResolvedValue({
+      ok: true,
+      json: async () => ({
+        deployments: [
+          {
+            uid: "dpl_err",
+            name: "my-repo",
+            url: "my-repo.vercel.app",
+            state: "ERROR",
+            createdAt: now - 300_000,
+            buildingAt: now - 350_000,
+            ready: null,
+            target: "production",
+            meta: { githubCommitRef: "main", githubCommitRepo: "myorg/my-repo", githubCommitSha: "abc", githubCommitMessage: "fix" },
+          },
+          {
+            uid: "dpl_canceled",
+            name: "my-repo",
+            url: "my-repo.vercel.app",
+            state: "CANCELED",
+            createdAt: now - 400_000,
+            buildingAt: null,
+            ready: null,
+            target: null,
+            meta: { githubCommitRepo: "myorg/my-repo" },
+          },
+          {
+            uid: "dpl_building",
+            name: "my-repo",
+            url: "my-repo.vercel.app",
+            state: "INITIALIZING",
+            createdAt: now - 100_000,
+            buildingAt: null,
+            ready: null,
+            target: "staging",
+            meta: { githubCommitRepo: "myorg/my-repo" },
+          },
+        ],
+      }),
+    });
+
+    const res = await request(app).get(
+      "/api/analytics/deployments/myorg/my-repo",
+    );
+
+    expect(res.status).toBe(200);
+    expect(res.body.summary.totalDeploys).toBe(3);
+    expect(res.body.summary.successRate).toBe(0);
+  });
+
+  it("returns 200 with Render integration data when Render API responds successfully", async () => {
+    (db.providerIntegration.findMany as jest.Mock).mockResolvedValue([
+      { provider: "render", apiToken: "rnd_tok_render", teamId: null },
+    ]);
+
+    // First call: list services
+    const servicesResponse = [
+      {
+        service: {
+          id: "svc_123",
+          name: "my-repo",
+          slug: "my-repo",
+          repo: "https://github.com/myorg/my-repo",
+          branch: "main",
+          dashboardUrl: "https://dashboard.render.com/...",
+          type: "web_service",
+        },
+        cursor: null,
+      },
+    ];
+
+    // Second call: list deploys for the service
+    const now = new Date();
+    const deploysResponse = [
+      {
+        deploy: {
+          id: "dep_abc",
+          status: "live",
+          createdAt: now.toISOString(),
+          startedAt: now.toISOString(),
+          finishedAt: new Date(now.getTime() + 60_000).toISOString(),
+          commit: { id: "sha123", message: "fix: render deploy" },
+        },
+        cursor: null,
+      },
+    ];
+
+    (global.fetch as jest.Mock)
+      .mockResolvedValueOnce({
+        ok: true,
+        json: async () => servicesResponse,
+      })
+      .mockResolvedValueOnce({
+        ok: true,
+        json: async () => deploysResponse,
+      });
+
+    const res = await request(app).get(
+      "/api/analytics/deployments/myorg/my-repo",
+    );
+
+    expect(res.status).toBe(200);
+    expect(res.body.summary.totalDeploys).toBe(1);
+  });
+
+  it("returns 200 with teamId query parameter passed to Vercel", async () => {
+    (db.providerIntegration.findMany as jest.Mock).mockResolvedValue([
+      { provider: "vercel", apiToken: "tok_vercel", teamId: "team_abc" },
+    ]);
+
+    (global.fetch as jest.Mock).mockResolvedValue({
+      ok: true,
+      json: async () => ({ deployments: [] }),
+    });
+
+    const res = await request(app).get(
+      "/api/analytics/deployments/myorg/my-repo",
+    );
+
+    expect(res.status).toBe(200);
+    expect(res.body.summary.totalDeploys).toBe(0);
+    // Verify teamId was included in the URL
+    const fetchUrl = (global.fetch as jest.Mock).mock.calls[0][0] as string;
+    expect(fetchUrl).toContain("teamId=team_abc");
+  });
+
+  it("returns 200 with both Vercel and Render when both integrations exist", async () => {
+    (db.providerIntegration.findMany as jest.Mock).mockResolvedValue([
+      { provider: "vercel", apiToken: "tok_vercel", teamId: null },
+      { provider: "render", apiToken: "rnd_tok_render", teamId: null },
+    ]);
+
+    const now = Date.now();
+    // Vercel call
+    (global.fetch as jest.Mock)
+      .mockResolvedValueOnce({
+        ok: true,
+        json: async () => ({
+          deployments: [
+            {
+              uid: "dpl_1",
+              name: "my-repo",
+              url: "my-repo.vercel.app",
+              state: "READY",
+              createdAt: now - 60_000,
+              buildingAt: now - 120_000,
+              ready: now - 30_000,
+              target: "production",
+              meta: { githubCommitRepo: "myorg/my-repo", githubCommitRef: "main", githubCommitSha: "abc", githubCommitMessage: "fix" },
+            },
+          ],
+        }),
+      })
+      // Render services call
+      .mockResolvedValueOnce({
+        ok: true,
+        json: async () => [],
+      });
+
+    const res = await request(app).get(
+      "/api/analytics/deployments/myorg/my-repo",
+    );
+
+    expect(res.status).toBe(200);
+    expect(res.body.providerStats).toHaveLength(2);
+  });
 });

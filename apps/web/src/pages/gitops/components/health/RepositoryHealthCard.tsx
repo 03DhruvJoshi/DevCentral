@@ -283,12 +283,6 @@ export default function RepositoryHealthCard(props: {
                   <div className="font-semibold text-slate-800">
                     {suggestion.description}
                   </div>
-                  {suggestion.autofixable && (
-                    <div className="mt-1 flex items-center gap-1 text-slate-600">
-                      <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
-                      <span>One-click fix available in Quick Fixes below</span>
-                    </div>
-                  )}
                 </div>
               ))}
             </div>
