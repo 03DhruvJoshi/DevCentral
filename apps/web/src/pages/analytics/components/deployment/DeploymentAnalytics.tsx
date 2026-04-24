@@ -12,7 +12,6 @@ import {
   PlugZap,
   GitBranch,
   Timer,
-  BarChart3,
   Activity,
 } from "lucide-react";
 
@@ -29,10 +28,8 @@ import type { Repository } from "../types.js";
 
 import ActivityLogTab from "./tabs/ActivityLogTab.js";
 import OverviewTab from "./tabs/OverviewTab.js";
-import BuildTimesTab from "./tabs/BuildTimesTab.js";
-import EnvironmentsTab from "./tabs/EnvironmentsTab.js";
+
 import PeakTimesTab from "./tabs/PeakTimesTab.js";
-import FailuresTab from "./tabs/FailuresTab.js";
 
 import {
   ConnectModal,
@@ -236,14 +233,10 @@ export default function DeploymentAnalytics({
     building: 0,
     cancelled: 0,
   };
-  const durationDistribution = data.durationDistribution ?? [];
-  const envBreakdown = data.envBreakdown ?? [];
-  const branchActivity = data.branchActivity ?? [];
+
   const peakHours = data.peakHours ?? [];
   const weekdayDist = data.weekdayDist ?? [];
-  const failureRateOverTime = data.failureRateOverTime ?? [];
-  const longestBuilds = data.longestBuilds ?? [];
-  const failedDeployments = data.failedDeployments ?? [];
+
   const velocityTrend = data.velocityTrend ?? {
     recent: 0,
     older: 0,
@@ -321,21 +314,6 @@ export default function DeploymentAnalytics({
       value: "overview",
       icon: <Activity className="h-3.5 w-3.5" />,
       label: "Overview",
-    },
-    {
-      value: "duration",
-      icon: <Clock className="h-3.5 w-3.5" />,
-      label: "Build Times",
-    },
-    {
-      value: "environments",
-      icon: <BarChart3 className="h-3.5 w-3.5" />,
-      label: "Environments",
-    },
-    {
-      value: "failures",
-      icon: <XCircle className="h-3.5 w-3.5" />,
-      label: "Failures",
     },
     {
       value: "peak",
@@ -640,32 +618,6 @@ export default function DeploymentAnalytics({
               velocityTrend={velocityTrend}
               filteredFrequency={filteredFrequency}
               summary={summary}
-            />
-          </TabsContent>
-
-          <TabsContent value="duration">
-            <BuildTimesTab
-              durationDistribution={durationDistribution}
-              longestBuilds={longestBuilds}
-              providerStats={providerStats}
-              connectedRender={connectedRender}
-              connectedVercel={connectedVercel}
-              providerFilter={providerFilter}
-            />
-          </TabsContent>
-
-          <TabsContent value="environments">
-            <EnvironmentsTab
-              envBreakdown={envBreakdown}
-              branchActivity={branchActivity}
-            />
-          </TabsContent>
-
-          <TabsContent value="failures">
-            <FailuresTab
-              summary={summary}
-              failedDeployments={failedDeployments}
-              failureRateOverTime={failureRateOverTime}
             />
           </TabsContent>
 

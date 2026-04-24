@@ -72,8 +72,10 @@ export default function ActivityLogTab({
           bVal = b.durationSec ?? -1;
           break;
         default:
-          aVal = (a as unknown as Record<string, string | number>)[sortCol] ?? "";
-          bVal = (b as unknown as Record<string, string | number>)[sortCol] ?? "";
+          aVal =
+            (a as unknown as Record<string, string | number>)[sortCol] ?? "";
+          bVal =
+            (b as unknown as Record<string, string | number>)[sortCol] ?? "";
       }
       if (aVal < bVal) return sortDir === "asc" ? -1 : 1;
       if (aVal > bVal) return sortDir === "asc" ? 1 : -1;
@@ -294,7 +296,9 @@ export default function ActivityLogTab({
                 {Math.min((page + 1) * PAGE_SIZE, sorted.length)}
               </span>{" "}
               of{" "}
-              <span className="font-medium text-slate-700">{sorted.length}</span>
+              <span className="font-medium text-slate-700">
+                {sorted.length}
+              </span>
             </p>
             <div className="flex items-center gap-1">
               <button
@@ -318,9 +322,7 @@ export default function ActivityLogTab({
                 </button>
               ))}
               <button
-                onClick={() =>
-                  setPage((p) => Math.min(totalPages - 1, p + 1))
-                }
+                onClick={() => setPage((p) => Math.min(totalPages - 1, p + 1))}
                 disabled={page >= totalPages - 1}
                 className="h-7 w-7 flex items-center justify-center rounded-md border border-slate-200 text-slate-600 hover:bg-slate-50 disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
               >

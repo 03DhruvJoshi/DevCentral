@@ -9,18 +9,23 @@
 **** Search & Filter
 **** View YAML Modal
 *** Tab: Create Your Own Template
-**** Validation Form
+**** Template Editor and Validation
+**** Template Wizard
 ** GitOps Operations
-*** Pipeline activity Runs & Logs
-*** Pull Requests operations
-*** Security Alerts (Dependabot/SonarQube)
+*** Repository Health check 
+*** PR, Issue, Action, Commit and Release Management
+*** Deployment Status and Rollback
 ** Developer Analytics
-*** DORA Metrics
-*** Financial Insights
-*** Security Reports
-*** Dev Productivity Reports
+*** Security Metrics
+*** CI/CD Insights
+*** Deployment Reports
 ** Settings
 *** User Profile
-*** Integrations (GitHub/Azure DevOps)
+*** Integrations (GitHub)
 *** System Preferences
+** Admin Panel
+*** User Management
+*** System Logs
+*** Feature Flags
+*** Broadcast Announcements
 @endwbs

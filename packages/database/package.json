@@ -13,7 +13,7 @@
     "db:studio": "prisma studio",
     "lint": "echo \"Database package uses Prisma schema only - no linting needed\"",
     "check-types": "echo \"Database package uses Prisma schema only - no type checking needed\"",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Database package has no tests\""
   },
   "keywords": [],
   "author": "",

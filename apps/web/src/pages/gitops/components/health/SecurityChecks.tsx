@@ -131,12 +131,6 @@ export default function SecurityChecks(props: {
                       </span>
                       {getSeverityBadge(issue.severity)}
                     </div>
-                    {issue.autofixable && (
-                      <div className="text-[10px] mt-1 text-emerald-700 flex items-center gap-1">
-                        <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
-                        <span>Quick fix available</span>
-                      </div>
-                    )}
                   </div>
                 </div>
               </div>

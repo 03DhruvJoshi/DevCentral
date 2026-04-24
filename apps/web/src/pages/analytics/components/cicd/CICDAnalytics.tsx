@@ -7,7 +7,6 @@ import {
   RefreshCw,
   Activity,
   Timer,
-  ShieldAlert,
   ListFilter,
 } from "lucide-react";
 
@@ -24,7 +23,6 @@ import type CICD from "./types.js";
 import { conclusionColor } from "./utilities.js";
 import DoraMetricsTab from "./tabs/DoraMetricsTab.js";
 import PerformanceTab from "./tabs/PerformanceTab.js";
-import ReliabilityTab from "./tabs/ReliabilityTab.js";
 import AnalyticsLogTab from "./tabs/ActivityLogTab.js";
 
 import { API_BASE_URL } from "../types.js";
@@ -148,23 +146,16 @@ export default function CICDAnalytics({
     }),
   );
 
-  const failureReasonData = cicd?.failure_reasons ?? [];
-
   const tabItems = [
     {
       value: "overview",
       icon: <Activity className="h-3.5 w-3.5" />,
-      label: "DORA Metrics",
+      label: "Overview",
     },
     {
       value: "performance",
       icon: <Timer className="h-3.5 w-3.5" />,
       label: "Performance",
-    },
-    {
-      value: "reliability",
-      icon: <ShieldAlert className="h-3.5 w-3.5" />,
-      label: "Reliability",
     },
     {
       value: "deepdive",
@@ -263,10 +254,6 @@ export default function CICDAnalytics({
 
           <TabsContent value="performance" className="mt-4 space-y-6">
             <PerformanceTab cicd={cicd} />
-          </TabsContent>
-
-          <TabsContent value="reliability" className="mt-4 space-y-6">
-            <ReliabilityTab cicd={cicd} failureReasonData={failureReasonData} />
           </TabsContent>
 
           <TabsContent value="deepdive" className="mt-4 space-y-6">

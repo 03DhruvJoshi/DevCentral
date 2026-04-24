@@ -7,5 +7,11 @@ export default defineConfig([
       semi: "error",
       "prefer-const": "error",
     },
+    ignores: [
+      "**/dist/**",
+      "**/build/**",
+      "**/node_modules/**",
+      "src/**/*.{test,spec}.{ts,tsx}",
+    ],
   },
 ]);

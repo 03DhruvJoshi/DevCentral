@@ -4,7 +4,6 @@ import {
   Timer,
   Activity,
   ServerCrash,
-  Clock,
   CircleDashed,
 } from "lucide-react";
 import {
@@ -29,7 +28,7 @@ import {
 } from "recharts";
 import type CICD from "../types.js";
 
-import { formatDuration, formatDate, TOOLTIP_STYLE } from "../utilities.js";
+import { formatDate, TOOLTIP_STYLE } from "../utilities.js";
 
 export default function DoraMetricsTab({
   cicd,
@@ -45,7 +44,7 @@ export default function DoraMetricsTab({
 
   return (
     <>
-      <div className="grid grid-cols-2 lg:grid-cols-7 gap-3">
+      <div className="grid grid-cols-2 lg:grid-cols-6 gap-3">
         {[
           {
             label: "Pipeline Success",
@@ -81,13 +80,6 @@ export default function DoraMetricsTab({
             value: `${cicd.summary.deploy_frequency_per_day}/day`,
             valueClass: "text-blue-700",
             sub: "Successful default branch merges",
-          },
-          {
-            label: "MTTR",
-            icon: <Clock className="h-5 w-5 text-purple-500" />,
-            value: formatDuration(cicd.summary.mttr_min),
-            valueClass: "text-indigo-700",
-            sub: "Mean Time To Recovery",
           },
           {
             label: "Queue SLA Breaches",
