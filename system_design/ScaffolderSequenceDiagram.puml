@@ -1,7 +1,7 @@
 @startuml name SequenceDiagram
 autonumber
 
-actor "Platform Engineer" as User
+actor "Developer" as User
 participant "React Frontend\n(ScaffolderPage)" as FE
 participant "Express API" as API
 participant "Prisma Client" as ORM
