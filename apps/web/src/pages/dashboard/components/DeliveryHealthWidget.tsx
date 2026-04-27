@@ -16,13 +16,6 @@ import {
 } from "../../../components/ui/card.js";
 import { Badge } from "../../../components/ui/badge.js";
 import { Progress } from "../../../components/ui/progress.js";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "../../../components/ui/select.js";
 import { API_BASE_URL } from "../types.js";
 import { useDashboardContext } from "../DashboardContext.js";
 

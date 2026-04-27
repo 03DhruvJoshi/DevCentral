@@ -23,13 +23,7 @@ import {
   DialogTrigger,
   DialogFooter,
 } from "../../../components/ui/dialog.js";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "../../../components/ui/select.js";
+
 import { Textarea } from "../../../components/ui/textarea.js";
 
 import type { Category, Template } from "./../components/types.js";
@@ -200,18 +194,17 @@ function EditTemplateModal({
 
             <div className="space-y-2">
               <Label className="text-slate-600 w-full ">Category</Label>
-              <Select value={categoryName} onValueChange={setCategoryName}>
-                <SelectTrigger className="bg-slate-50 border-slate-200">
-                  <SelectValue placeholder="Select Category" />
-                </SelectTrigger>
-                <SelectContent>
-                  {categories.map((cat) => (
-                    <SelectItem key={cat.id} value={cat.name}>
-                      {cat.name}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
+              <select
+                value={categoryName}
+                onChange={(e) => setCategoryName(e.target.value)}
+                className="w-full h-9 rounded-md border border-slate-200 bg-white px-2 text-sm text-slate-800"
+              >
+                {categories.map((cat) => (
+                  <option key={cat.id} value={cat.name}>
+                    {cat.name}
+                  </option>
+                ))}
+              </select>
             </div>
 
             <div className="space-y-2">
