@@ -18,6 +18,8 @@ All environment variables and integrations are pre-configured on the remote inst
 
 > **Note:** The local instance requires a `.env` file containing API keys and database credentials. Because these values are sensitive, they are not included in the repository or the submitted ZIP. The live deployment at `https://devcentral.online` is the intended access method for assessment. If local access is required, please contact the author directly to arrange a secure transfer of the `.env` file.
 
+An `.env.example` file is provided as a placeholder, in order to guide the user for the values to add the real environment values once provided by the author. 
+
 **Prerequisites:** Node.js 18+, pnpm 8+, PostgreSQL instance (or use the Neon connection string provided separately).
 
 ```bash
