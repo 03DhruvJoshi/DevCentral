@@ -2,6 +2,16 @@
 
 A lightweight Internal Developer Platform for solo developers and small engineering teams. Centralises service scaffolding, GitOps infrastructure orchestration, and delivery analytics into a single interface.
 
+## Table of Contents
+
+- [Accessing the Platform](#accessing-the-platform)
+- [Getting Started on the Live Platform](#getting-started-on-the-live-platform)
+- [Feature Walkthrough](#feature-walkthrough)
+- [Admin Panel](#admin-panel)
+- [Tech Stack](#tech-stack)
+- [Running Tests](#running-tests)
+- [LaTeX Report](#latex-report)
+
 ---
 
 ## Accessing the Platform
@@ -18,22 +28,25 @@ All environment variables and integrations are pre-configured on the remote inst
 
 > **Note:** The local instance requires a `.env` file containing API keys and database credentials. Because these values are sensitive, they are not included in the repository or the submitted ZIP. The live deployment at `https://devcentral.online` is the intended access method for assessment. If local access is required, please contact the author directly to arrange a secure transfer of the `.env` file.
 
-An `.env.example` file is provided as a placeholder, in order to guide the user for the values to add the real environment values once provided by the author. 
+An `.env.example` file is provided as a placeholder, in order to guide the user for the values to add the real environment values once provided by the author.
 
 **Prerequisites:** Node.js 18+, pnpm 8+, PostgreSQL instance (or use the Neon connection string provided separately).
 
 ```bash
 # 1. Clone the repository
 git clone https://github.com/03DhruvJoshi/DevCentral.git
+cd DevCentral
 
-# 2. Place the .env file in the project root (provided separately)
+# 2. Place the .env file in apps/api/ (provided separately)
 
 # 3. Install dependencies
 pnpm install
 
 # 4. Run database migrations
+cd apps/api
 npx prisma migrate deploy
 npx prisma generate
+cd ../..
 
 # 5. Start all services
 pnpm dev
@@ -43,22 +56,22 @@ The frontend runs on `http://localhost:5173` and the API on `http://localhost:40
 
 ---
 
-## Getting Started on the Platform
+## Getting Started on the Live Platform
 
 ### 1. Create an Account
 
-1. Once the instance runs successfully, in the Auth page, click **Register**.
+1. Go to [https://devcentral.online](https://devcentral.online) and click **Register**.
 2. Enter your name, email address, and a password.
-3. A one-time verification code will be sent to your email. Enter it to complete registration.
+3. A one-time verification code will be sent to your email — enter it to complete registration.
 4. Log in with your credentials.
 
 > If you do not receive the verification email, check your spam folder. The email is sent from Brevo.
 
 ### 2. Connect Your GitHub Account
 
-After logging in you will be directed to the GitHub integration page. Click **Connect GitHub** and authorise the DevCentral GitHub App. This grants the platform permission to create repositories, read workflow runs, and trigger deployments on your behalf. A prerequisite is to be logged in to your GitHub account before integrating with DevCentral. 
+After logging in you will be directed to the GitHub integration page. Click **Connect GitHub** and authorise the DevCentral GitHub App. This grants the platform permission to create repositories, read workflow runs, and trigger deployments on your behalf.
 
-Note: You can disconnect or reconnect GitHub at any time from **Settings > Integrations**.
+You can disconnect or reconnect GitHub at any time from **Settings > Integrations**.
 
 ---
 
@@ -72,8 +85,8 @@ The homepage is a widget-based dashboard. Click **Add Widget** to choose which w
 
 1. Navigate to **Scaffolder** in the sidebar.
 2. Browse the template marketplace and select a template (e.g., Node.js REST API, React App).
-3. Click **Scaffold** — you can select an Existing repository, or create a new one. Enter the repository name and click **Create and Scaffold Repository**. 
-4. Alternatively, you can create your own template by clicking on the **Create Blueprint** tab, and fill in the template name and parameters, either through the form or the guided wizard (**Use Template Wizard* button on the left-hand panel). 
+3. Click **Use Template** and fill in the service name and parameters, either through the form or the guided wizard.
+4. Click **Instantiate** — the platform will create a new GitHub repository and push the rendered template as an initial commit.
 
 You can also create your own templates by clicking **New Template** and authoring a `template.yaml` manifest directly or through the wizard builder.
 
@@ -108,14 +121,16 @@ You can also create your own templates by clicking **New Template** and authorin
 
 #### Setting up Vercel or Render for Deployment Metrics
 
-1. In the integrations pane inside Dev Analytics, enter your Vercel API token and team/project ID (optional), or your Render API key and service ID.
-2. You can disconnect your service by clicking on the top-right **Disconnect** button. 
+1. Go to **Settings > Integrations**.
+2. Enter your Vercel API token and team/project ID, or your Render API key and service ID.
+3. Return to Dev Analytics — the Deployment tab will display live DORA metrics.
 
 ### User Settings
 
 Navigate to **Settings** to:
+
 - Update your display name, email, or password.
-- Manage connected integrations (GitHub).
+- Manage connected integrations (GitHub, SonarQube, Vercel, Render).
 - Delete your account.
 
 ---
@@ -124,25 +139,25 @@ Navigate to **Settings** to:
 
 Admin accounts have access to an additional **Admin** panel in the sidebar. It provides:
 
-- **Security Summary** — active users, recent logins, etc.
+- **Security Summary** — active users, recent logins, failed authentication attempts.
 - **User Directory** — modify user roles (dev/admin), suspend or reactivate accounts, export user data as CSV.
 - **Audit Log** — filterable, exportable record of all platform actions.
 - **Feature Flags** — enable or disable platform features (Scaffolder, GitOps, Analytics) in real time, and broadcast a maintenance message to all users.
 
-> A test admin account is available on the live instance for assessment purposes. Contact the author for the *admin email and password*. 
+> A test admin account is available on the live instance for assessment purposes. Credentials are provided in the project submission notes.
 
 ---
 
 ## Tech Stack
 
-| Layer | Technology |
-|---|---|
-| Frontend | React, Vite, shadcn/ui, Tailwind CSS, Recharts |
-| Backend | Node.js, Express.js, TypeScript |
-| Database | PostgreSQL (Neon), Prisma ORM |
-| Hosting | Vercel (frontend), Render (backend) |
-| Auth | JWT, bcrypt, MFA via Brevo |
-| Testing | Jest + Supertest (backend), Vitest (frontend), Grafana k6 (load) |
+| Layer    | Technology                                                       |
+| -------- | ---------------------------------------------------------------- |
+| Frontend | React, Vite, shadcn/ui, Tailwind CSS, Recharts                   |
+| Backend  | Node.js, Express.js, TypeScript                                  |
+| Database | PostgreSQL (Neon), Prisma ORM                                    |
+| Hosting  | Vercel (frontend), Render (backend)                              |
+| Auth     | JWT, bcrypt, MFA via Brevo                                       |
+| Testing  | Jest + Supertest (backend), Vitest (frontend), Grafana k6 (load) |
 
 ---
 
@@ -157,3 +172,17 @@ pnpm test:coverage
 cd apps/web
 pnpm test:ui
 ```
+
+---
+
+## LaTeX Report
+
+The `report/` directory contains the complete final year project report compiled with **pdflatex**. Key subdirectories:
+
+- **`chapters/`** — Individual LaTeX sections (background, implementation, testing, results, etc.).
+- **`figs/`** — Figures and tables: `screenshot_gallery.tex` (54 UI screenshots), `scenario*.tex` (test evidence tables), diagrams.
+- **`graphics/`** — Image assets organized by category: scenarios, results, system design, and implementation details.
+- **`utilities/`** — Other sections such as pretext, acronyms, appendix, etc. 
+- In the root, main `aston-report.tex` and generated PDF output (`aston-report.pdf`) available. Compile with: `latexmk -pdf aston-report.tex` from the `report/` directory
+
+The report is production-ready and demonstrates the complete DevCentral platform design, implementation, testing, and evaluation.
