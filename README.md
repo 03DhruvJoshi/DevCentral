@@ -185,4 +185,4 @@ The `report/` directory contains the complete final year project report compiled
 - **`utilities/`** — Other sections such as pretext, acronyms, appendix, etc. 
 - In the root, main `aston-report.tex` and generated PDF output (`aston-report.pdf`) available. Compile with: `latexmk -pdf aston-report.tex` from the `report/` directory
 
-The report is production-ready and demonstrates the complete DevCentral platform design, implementation, testing, and evaluation.
+The report demonstrates the complete DevCentral platform design, implementation, testing, and evaluation.
